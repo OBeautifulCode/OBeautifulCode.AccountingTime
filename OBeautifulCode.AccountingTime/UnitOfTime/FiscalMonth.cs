@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal month in a specified year.
     /// </summary>
-    public class FiscalMonth : FiscalUnitOfTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>, IComparable
+    public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>, IComparable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalMonth"/> class.

@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal quarter of a specified year.
     /// </summary>
-    public class FiscalQuarter : FiscalUnitOfTime, IHaveAQuarter, IEquatable<FiscalQuarter>, IComparable<FiscalQuarter>, IComparable
+    public class FiscalQuarter : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<FiscalQuarter>, IComparable<FiscalQuarter>, IComparable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalQuarter"/> class.

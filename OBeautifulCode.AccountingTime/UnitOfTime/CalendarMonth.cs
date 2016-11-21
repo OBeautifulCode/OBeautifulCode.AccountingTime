@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a calendar month in a specified year.
     /// </summary>
-    public class CalendarMonth : CalendarUnitOfTime, IHaveAMonth, IEquatable<CalendarMonth>, IComparable<CalendarMonth>, IComparable
+    public class CalendarMonth : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarMonth>, IComparable<CalendarMonth>, IComparable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarMonth"/> class.

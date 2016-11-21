@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic quarter of a specified year.
     /// </summary>
-    public class GenericQuarter : GenericUnitOfTime, IHaveAQuarter, IEquatable<GenericQuarter>, IComparable<GenericQuarter>, IComparable
+    public class GenericQuarter : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<GenericQuarter>, IComparable<GenericQuarter>, IComparable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericQuarter"/> class.
