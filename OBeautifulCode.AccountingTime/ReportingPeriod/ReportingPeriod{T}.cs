@@ -23,7 +23,7 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="end">The end of the reporting period.</param>
         /// <exception cref="ArgumentNullException"><paramref name="start"/> or <paramref name="end"/> are null.</exception>
         /// <exception cref="ArgumentException"><paramref name="start"/> and <paramref name="end"/> are not of the same type.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="start"/> must be less than equal to <paramref name="end"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="start"/> is greater than <paramref name="end"/>.</exception>
         protected ReportingPeriod(T start, T end)
         {
             if (start == null)
