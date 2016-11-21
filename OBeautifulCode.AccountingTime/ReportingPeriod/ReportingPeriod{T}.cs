@@ -43,7 +43,7 @@ namespace OBeautifulCode.AccountingTime
 
              if ((dynamic)start > (dynamic)end)
              {
-                 throw new ArgumentOutOfRangeException(nameof(start), "start must be less than or equal to end");
+                 throw new ArgumentOutOfRangeException(nameof(start), "start is great than end");
              }
 
             this.Start = start;
