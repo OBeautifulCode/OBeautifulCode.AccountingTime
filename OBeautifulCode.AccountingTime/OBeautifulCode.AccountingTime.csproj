@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriodInclusive{T}.cs" />
     <Compile Include="UnitOfTime\CalendarDay.cs" />
     <Compile Include="UnitOfTime\DayOfMonth.cs" />
     <Compile Include="UnitOfTime\FiscalMonth.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="UnitOfTime\UnitOfTime.cs" />
     <Compile Include="UnitOfTime\CalendarMonth.cs" />
     <Compile Include="UnitOfTime\CalendarYear.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriod{T}.cs" />
     <Compile Include="UnitOfTime\MonthOfYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfTime\CalendarQuarter.cs" />
