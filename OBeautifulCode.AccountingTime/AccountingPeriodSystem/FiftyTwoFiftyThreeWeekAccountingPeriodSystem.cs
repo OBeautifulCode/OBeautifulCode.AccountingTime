@@ -20,8 +20,14 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="lastDayOfWeekInAccountingYear">The day of the week that the fiscal year always ends on.</param>
         /// <param name="anchorMonth">The month that the fiscal year end is anchored to.  See <see cref="FiftyTwoFiftyThreeWeekMethodology"/>.</param>
         /// <param name="fiftyTwoFiftyThreeWeekMethodology">The methodology used to identify the last day of the accounting year.</param>
+        /// <exception cref="ArgumentException"><paramref name="anchorMonth"/> is invalid.</exception>
         public FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek lastDayOfWeekInAccountingYear, MonthOfYear anchorMonth, FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
         {
+            if (anchorMonth == MonthOfYear.Invalid)
+            {
+                throw new ArgumentException("anchor month is invalid", nameof(anchorMonth));
+            }
+
             this.LastDayOfWeekInAccountingYear = lastDayOfWeekInAccountingYear;
             this.AnchorMonth = anchorMonth;
             this.FiftyTwoFiftyThreeWeekMethodology = fiftyTwoFiftyThreeWeekMethodology;
@@ -48,11 +54,14 @@ namespace OBeautifulCode.AccountingTime
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
+        /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
         public override ReportingPeriodInclusive<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
         {
-            // validate here
-            // year.Requires(nameof(year)).IsGreaterOrEqual(1900).IsLessOrEqual(3000);
+            if (fiscalYear == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalYear));
+            }
 
             var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
             var lastDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year).ToCalendarDay();

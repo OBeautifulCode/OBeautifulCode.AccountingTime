@@ -18,10 +18,13 @@ namespace OBeautifulCode.AccountingTime
         /// Initializes a new instance of the <see cref="FiscalYearAccountingPeriodSystem"/> class.
         /// </summary>
         /// <param name="lastMonthInFiscalYear">The last month of the fiscal year.</param>
+        /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is invalid.</exception>
         public FiscalYearAccountingPeriodSystem(MonthOfYear lastMonthInFiscalYear)
         {
-            // validate here
-            // lastMonthInFiscalYear.Requires(nameof(lastMonthInFiscalYear)).IsNotEqualTo(Month.December);
+            if (lastMonthInFiscalYear == MonthOfYear.Invalid)
+            {
+                throw new ArgumentException("anchor month is invalid", nameof(lastMonthInFiscalYear));
+            }
 
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
         }
@@ -36,9 +39,13 @@ namespace OBeautifulCode.AccountingTime
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
+        /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
         public override ReportingPeriodInclusive<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
         {
-            // validate here
+            if (fiscalYear == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalYear));
+            }
 
             var lastDayInEndingMonth = DateTime.DaysInMonth(fiscalYear.Year, (int)this.LastMonthInFiscalYear);
             var lastDayInFiscalYear = new DateTime(fiscalYear.Year, (int)this.LastMonthInFiscalYear, lastDayInEndingMonth);
