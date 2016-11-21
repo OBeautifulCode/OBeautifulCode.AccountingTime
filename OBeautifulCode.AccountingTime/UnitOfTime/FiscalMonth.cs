@@ -21,15 +21,19 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="year">The year.</param>
         /// <param name="monthNumber">The month number.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is not between 1900 and 3000 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         /// <exception cref="ArgumentException"><paramref name="monthNumber"/> is invalid.</exception>
         public FiscalMonth(int year, MonthNumber monthNumber)
         {
-            // validate here
-            // if ((month < 1) || (month > 4))
-            // {
-            //     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "FiscalMonth must be between 1 and 4 (inclusive).  MonthNumber provided was: {0}", month));
-            // }
+            if ((year < 1) || (year > 9999))
+            {
+                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+            }
+
+            if (monthNumber == MonthNumber.Invalid)
+            {
+                throw new ArgumentException("month is invalid", nameof(monthNumber));
+            }
 
             this.Year = year;
             this.MonthNumber = monthNumber;
@@ -165,7 +169,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as FiscalMonth;
             if (other == null)
             {
-                throw new ArgumentException("the specified object is not a month");
+                throw new ArgumentException("object is not a fiscal month");
             }
 
             return this.CompareTo(other);

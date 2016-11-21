@@ -20,10 +20,14 @@ namespace OBeautifulCode.AccountingTime
         /// Initializes a new instance of the <see cref="GenericYear"/> class.
         /// </summary>
         /// <param name="year">The year.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is not between 1900 and 3000 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         public GenericYear(int year)
         {
-            // validate here
+            if ((year < 1) || (year > 9999))
+            {
+                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+            }
+
             this.Year = year;
         }
 
@@ -152,7 +156,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as GenericYear;
             if (other == null)
             {
-                throw new ArgumentException("the specified object is not a year");
+                throw new ArgumentException("object is not a generic year");
             }
 
             return this.CompareTo(other);

@@ -21,15 +21,19 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="year">The year.</param>
         /// <param name="monthOfYear">The month of the year.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is not between 1900 and 3000 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         /// <exception cref="ArgumentException"><paramref name="monthOfYear"/> is invalid.</exception>
         public CalendarMonth(int year, MonthOfYear monthOfYear)
         {
-            // validate here
-            // if ((month < 1) || (month > 4))
-            // {
-            //     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "CalendarMonth must be between 1 and 4 (inclusive).  MonthOfYear provided was: {0}", month));
-            // }
+            if ((year < 1) || (year > 9999))
+            {
+                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+            }
+
+            if (monthOfYear == MonthOfYear.Invalid)
+            {
+                throw new ArgumentException("month is invalid", nameof(monthOfYear));
+            }
 
             this.Year = year;
             this.MonthOfYear = monthOfYear;
@@ -170,7 +174,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as CalendarMonth;
             if (other == null)
             {
-                throw new ArgumentException("the specified object is not a month");
+                throw new ArgumentException("object is not a calendar month", nameof(obj));
             }
 
             return this.CompareTo(other);

@@ -21,15 +21,19 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="year">The year.</param>
         /// <param name="quarterNumber">The quarter number.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is invalid.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is not between 1900 and 3000 (inclusive).</exception>
         public CalendarQuarter(int year, QuarterNumber quarterNumber)
         {
-            // validate here
-            // if ((quarter < 1) || (quarter > 4))
-            // {
-            //     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Quarter must be between 1 and 4 (inclusive).  QuarterNumber provided was: {0}", quarter));
-            // }
+            if ((year < 1) || (year > 9999))
+            {
+                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+            }
+
+            if (quarterNumber == QuarterNumber.Invalid)
+            {
+                throw new ArgumentException("quarter is invalid", nameof(quarterNumber));
+            }
 
             this.Year = year;
             this.QuarterNumber = quarterNumber;
@@ -165,7 +169,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as CalendarQuarter;
             if (other == null)
             {
-                throw new ArgumentException("the specified object is not a quarter");
+                throw new ArgumentException("obj is not a calendar quarter");
             }
 
             return this.CompareTo(other);

@@ -22,16 +22,32 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="year">The year.</param>
         /// <param name="monthOfYear">The month of the year.</param>
         /// <param name="dayOfMonth">The day of the month.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is not between 1900 and 3000 (inclusive).</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         /// <exception cref="ArgumentException"><paramref name="monthOfYear"/> is invalid.</exception>
-        /// <exception cref="ArgumentException"><paramref name="dayOfMonth"/> is not a day in the specified day and year.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dayOfMonth"/> is invalid.</exception>
+        /// <exception cref="ArgumentException"><paramref name="dayOfMonth"/> is not a valid day in the specified <paramref name="monthOfYear"/> and <paramref name="year"/>.</exception>
         public CalendarDay(int year, MonthOfYear monthOfYear, DayOfMonth dayOfMonth)
         {
-            // validate here
-            // if ((day < 1) || (day > 4))
-            // {
-            //     throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "CalendarDay must be between 1 and 4 (inclusive).  MonthOfYear provided was: {0}", day));
-            // }
+            if ((year < 1) || (year > 9999))
+            {
+                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+            }
+
+            if (monthOfYear == MonthOfYear.Invalid)
+            {
+                throw new ArgumentException("month is invalid", nameof(monthOfYear));
+            }
+
+            if (dayOfMonth == DayOfMonth.Invalid)
+            {
+                throw new ArgumentException("day is invalid", nameof(dayOfMonth));
+            }
+
+            var totalDaysInMonth = DateTime.DaysInMonth(year, (int)monthOfYear);
+            if ((int)dayOfMonth > totalDaysInMonth)
+            {
+                throw new ArgumentException("day is not a valid day in the specified month and year", nameof(dayOfMonth));
+            }
 
             this.Year = year;
             this.MonthOfYear = monthOfYear;
@@ -181,7 +197,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as CalendarDay;
             if (other == null)
             {
-                throw new ArgumentException("the specified object is not a day");
+                throw new ArgumentException("object is not a calendar day", nameof(obj));
             }
 
             return this.CompareTo(other);
