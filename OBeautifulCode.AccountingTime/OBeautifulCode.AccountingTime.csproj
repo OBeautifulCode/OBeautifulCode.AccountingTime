@@ -46,7 +46,29 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
+    <Compile Include="UnitOfTime\CalendarDay.cs" />
+    <Compile Include="UnitOfTime\DayOfMonth.cs" />
+    <Compile Include="UnitOfTime\FiscalMonth.cs" />
+    <Compile Include="UnitOfTime\FiscalQuarter.cs" />
+    <Compile Include="UnitOfTime\FiscalYear.cs" />
+    <Compile Include="UnitOfTime\GenericMonth.cs" />
+    <Compile Include="UnitOfTime\GenericQuarter.cs" />
+    <Compile Include="UnitOfTime\GenericYear.cs" />
+    <Compile Include="UnitOfTime\IHaveAMonth.cs" />
+    <Compile Include="UnitOfTime\IHaveAYear.cs" />
+    <Compile Include="UnitOfTime\IHaveAQuarter.cs" />
+    <Compile Include="UnitOfTime\MonthNumber.cs" />
+    <Compile Include="UnitOfTime\QuarterNumber.cs" />
+    <Compile Include="UnitOfTime\CalendarUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\FiscalUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\GenericUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\UnitOfTime.cs" />
+    <Compile Include="UnitOfTime\CalendarMonth.cs" />
+    <Compile Include="UnitOfTime\CalendarYear.cs" />
+    <Compile Include="UnitOfTime\MonthOfYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfTime\CalendarQuarter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OBeautifulCode.AccountingTime.nuspec" />
