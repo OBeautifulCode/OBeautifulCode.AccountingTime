@@ -23,7 +23,7 @@ namespace OBeautifulCode.AccountingTime
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
             {
-                throw new ArgumentException("anchor month is invalid", nameof(lastMonthInFiscalYear));
+                throw new ArgumentException("last month in fiscal year is invalid", nameof(lastMonthInFiscalYear));
             }
 
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
