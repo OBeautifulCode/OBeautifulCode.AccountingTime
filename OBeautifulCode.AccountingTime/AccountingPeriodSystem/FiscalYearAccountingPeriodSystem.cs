@@ -19,11 +19,17 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="lastMonthInFiscalYear">The last month of the fiscal year.</param>
         /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is invalid.</exception>
+        /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is <see cref="MonthOfYear.December"/>.</exception>
         public FiscalYearAccountingPeriodSystem(MonthOfYear lastMonthInFiscalYear)
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
             {
                 throw new ArgumentException("last month in fiscal year is invalid", nameof(lastMonthInFiscalYear));
+            }
+
+            if (lastMonthInFiscalYear == MonthOfYear.December)
+            {
+                throw new ArgumentException("last month in fiscal year is December", nameof(lastMonthInFiscalYear));
             }
 
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
