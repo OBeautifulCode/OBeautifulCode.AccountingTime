@@ -201,6 +201,26 @@ namespace OBeautifulCode.AccountingTime
         // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <summary>
+        /// Converts this calendar day to an object of type <see cref="DateTime"/>.
+        /// </summary>
+        /// <returns>
+        /// Gets a <see cref="DateTime"/> version of this calendar day.
+        /// </returns>
+        public DateTime ToDateTime()
+        {
+            var result = new DateTime(this.Year, (int)this.MonthNumber, (int)this.DayOfMonth, 0, 0, 0, DateTimeKind.Unspecified);
+            return result;
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider = null)
+        {
+            var dateTime = this.ToDateTime();
+            var result = dateTime.ToString(format, formatProvider);
+            return result;
+        }
+
+        /// <summary>
         /// Gets a friendly representation of this day.
         /// </summary>
         /// <returns>
