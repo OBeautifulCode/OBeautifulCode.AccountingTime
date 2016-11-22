@@ -104,7 +104,11 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return $"{this.Start} to {this.End}";
+            // ReSharper disable RedundantToStringCall
+            var result = $"{this.Start.ToString()} to {this.End.ToString()}";
+            // ReSharper restore RedundantToStringCall
+
+            return result;
         }
     }
 }
