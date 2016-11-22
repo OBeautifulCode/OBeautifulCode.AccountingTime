@@ -52,7 +52,7 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            var result = (left.Start == right.Start) && (left.End == right.End);
+            var result = ((dynamic)left.Start == (dynamic)right.Start) && ((dynamic)left.End == (dynamic)right.End);
             return result;
         }
 
