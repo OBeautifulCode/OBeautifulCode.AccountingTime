@@ -97,6 +97,7 @@
     <Compile Include="DummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
+    <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
