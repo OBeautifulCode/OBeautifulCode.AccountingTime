@@ -85,7 +85,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand quarter to compare.</param>
         /// <param name="right">The right-hand quarter to compare.</param>
         /// <returns>true if the the left-hand quarter is less than the right-hand quarter; false otherwise.</returns>
-        public static bool operator <(FiscalQuarter left, FiscalQuarter right) => left.CompareTo(right) < 0;
+        public static bool operator <(FiscalQuarter left, FiscalQuarter right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            var result = left.CompareTo(right) < 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a quarter is greater than another quarter.
@@ -93,7 +107,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand quarter to compare.</param>
         /// <param name="right">The right-hand quarter to compare.</param>
         /// <returns>true if the the left-hand quarter is greater than the right-hand quarter; false otherwise.</returns>
-        public static bool operator >(FiscalQuarter left, FiscalQuarter right) => left.CompareTo(right) > 0;
+        public static bool operator >(FiscalQuarter left, FiscalQuarter right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            var result = left.CompareTo(right) > 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a quarter is less than or equal to than another quarter.
@@ -195,7 +223,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return $"{this.QuarterNumber}Q{this.Year}";
+            return $"{(int)this.QuarterNumber}Q{this.Year}";
         }
     }
 }

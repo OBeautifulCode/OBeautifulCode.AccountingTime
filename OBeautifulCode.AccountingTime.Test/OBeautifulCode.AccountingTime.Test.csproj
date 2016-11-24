@@ -101,6 +101,7 @@
     <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
     <Compile Include="UnitOfTime\CalendarYearTest.cs" />
     <Compile Include="UnitOfTime\FiscalMonthTest.cs" />
+    <Compile Include="UnitOfTime\FiscalQuarterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
