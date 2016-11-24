@@ -96,6 +96,7 @@
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
     <Compile Include="DummyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfTime\CalendarDayTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

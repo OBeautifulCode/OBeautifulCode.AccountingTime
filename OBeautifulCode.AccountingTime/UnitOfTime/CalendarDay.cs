@@ -113,7 +113,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is less than the right-hand day; false otherwise.</returns>
-        public static bool operator <(CalendarDay left, CalendarDay right) => left.CompareTo(right) < 0;
+        public static bool operator <(CalendarDay left, CalendarDay right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            var result = left.CompareTo(right) < 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a day is greater than another day.
@@ -121,7 +135,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is greater than the right-hand day; false otherwise.</returns>
-        public static bool operator >(CalendarDay left, CalendarDay right) => left.CompareTo(right) > 0;
+        public static bool operator >(CalendarDay left, CalendarDay right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            var result = left.CompareTo(right) > 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a day is less than or equal to than another day.
@@ -176,7 +204,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var thisDay = new DateTime(this.Year, (int)this.MonthOfYear, (int)this.DayOfMonth);
-            var otherDay = new DateTime(other.Year, (int)other.MonthOfYear, (int)this.DayOfMonth);
+            var otherDay = new DateTime(other.Year, (int)other.MonthOfYear, (int)other.DayOfMonth);
             return thisDay.CompareTo(otherDay);
         }
 
