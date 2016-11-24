@@ -155,9 +155,6 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = A.Dummy<GenericQuarter>();
-
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Quarter);
 
@@ -165,12 +162,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = systemUnderTest3a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Year);
 
             // Act
-            var result1 = systemUnderTest1a == systemUnderTest1b;
             var result2 = systemUnderTest2a == systemUnderTest2b;
             var result3 = systemUnderTest3a == systemUnderTest3b;
 
             // Assert
-            result1.Should().BeFalse();
             result2.Should().BeFalse();
             result3.Should().BeFalse();
         }
@@ -244,9 +239,6 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = A.Dummy<GenericQuarter>();
-
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Quarter);
 
@@ -254,12 +246,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = systemUnderTest3a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Year);
 
             // Act
-            var result1 = systemUnderTest1a != systemUnderTest1b;
             var result2 = systemUnderTest2a != systemUnderTest2b;
             var result3 = systemUnderTest3a != systemUnderTest3b;
 
             // Assert
-            result1.Should().BeTrue();
             result2.Should().BeTrue();
             result3.Should().BeTrue();
         }
@@ -308,9 +298,6 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Equals___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = A.Dummy<GenericQuarter>();
-
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Quarter);
 
@@ -318,12 +305,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = systemUnderTest3a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Year);
 
             // Act
-            var result1 = systemUnderTest1a.Equals(systemUnderTest1b);
             var result2 = systemUnderTest2a.Equals(systemUnderTest2b);
             var result3 = systemUnderTest3a.Equals(systemUnderTest3b);
 
             // Assert
-            result1.Should().BeFalse();
             result2.Should().BeFalse();
             result3.Should().BeFalse();
         }
@@ -390,9 +375,6 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Equals___Should_return_false___When_calling_non_typed_overload_and_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = A.Dummy<GenericQuarter>();
-
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Quarter);
 
@@ -400,12 +382,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = systemUnderTest3a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Year);
 
             // Act
-            var result1 = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result2 = systemUnderTest2a.Equals((object)systemUnderTest2b);
             var result3 = systemUnderTest3a.Equals((object)systemUnderTest3b);
 
             // Assert
-            result1.Should().BeFalse();
             result2.Should().BeFalse();
             result3.Should().BeFalse();
         }
@@ -428,9 +408,6 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetHashCode___Should_not_be_equal_for_two_GenericQuarters___When_both_objects_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = A.Dummy<GenericQuarter>();
-
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Quarter);
 
@@ -438,9 +415,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = systemUnderTest3a.TweakComponentOfGenericQuarter(GenericQuarterComponent.Year);
 
             // Act
-            var hash1a = systemUnderTest1a.GetHashCode();
-            var hash1b = systemUnderTest1b.GetHashCode();
-
             var hash2a = systemUnderTest2a.GetHashCode();
             var hash2b = systemUnderTest2b.GetHashCode();
 
@@ -448,7 +422,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var hash3b = systemUnderTest3b.GetHashCode();
 
             // Assert
-            hash1a.Should().NotBe(hash1b);
             hash2a.Should().NotBe(hash2b);
             hash3a.Should().NotBe(hash3b);
         }
