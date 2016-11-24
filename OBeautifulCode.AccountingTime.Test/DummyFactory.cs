@@ -23,7 +23,23 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var date = A.Dummy<DateTime>();
-                    var result = new FiscalYear(date.Year);
+                    var result = new GenericMonth(date.Year, A.Dummy<MonthNumber>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new GenericQuarter(date.Year, A.Dummy<QuarterNumber>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new GenericYear(date.Year);
                     return result;
                 });
 
@@ -32,6 +48,22 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     var date = A.Dummy<DateTime>();
                     var result = new FiscalMonth(date.Year, A.Dummy<MonthNumber>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new FiscalQuarter(date.Year, A.Dummy<QuarterNumber>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new FiscalYear(date.Year);
                     return result;
                 });
 

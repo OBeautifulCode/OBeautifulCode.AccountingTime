@@ -85,7 +85,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is less than the right-hand month; false otherwise.</returns>
-        public static bool operator <(FiscalMonth left, FiscalMonth right) => left.CompareTo(right) < 0;
+        public static bool operator <(FiscalMonth left, FiscalMonth right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            var result = left.CompareTo(right) < 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a month is greater than another month.
@@ -93,7 +107,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is greater than the right-hand month; false otherwise.</returns>
-        public static bool operator >(FiscalMonth left, FiscalMonth right) => left.CompareTo(right) > 0;
+        public static bool operator >(FiscalMonth left, FiscalMonth right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            var result = left.CompareTo(right) > 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a month is less than or equal to than another month.
@@ -212,7 +240,7 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return $"{(int)this.MonthNumber:D2}{monthNumberSuffix} of FY{this.Year}";
+            return $"{(int)this.MonthNumber}{monthNumberSuffix} month of FY{this.Year}";
         }
     }
 }
