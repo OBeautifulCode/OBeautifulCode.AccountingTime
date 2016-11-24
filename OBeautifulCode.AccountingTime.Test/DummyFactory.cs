@@ -59,6 +59,14 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new CalendarYear(date.Year);
+                    return result;
+                });
+
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);

@@ -99,6 +99,7 @@
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
     <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
+    <Compile Include="UnitOfTime\CalendarYearTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
