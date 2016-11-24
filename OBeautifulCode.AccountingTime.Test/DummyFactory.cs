@@ -27,6 +27,38 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new FiscalMonth(date.Year, A.Dummy<MonthNumber>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new CalendarDay(date.Year, (MonthOfYear)date.Month, (DayOfMonth)date.Day);
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new CalendarMonth(date.Year, A.Dummy<MonthOfYear>());
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var date = A.Dummy<DateTime>();
+                    var result = new CalendarQuarter(date.Year, A.Dummy<QuarterNumber>());
+                    return result;
+                });
+
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);

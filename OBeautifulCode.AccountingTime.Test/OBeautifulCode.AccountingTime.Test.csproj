@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
+    <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

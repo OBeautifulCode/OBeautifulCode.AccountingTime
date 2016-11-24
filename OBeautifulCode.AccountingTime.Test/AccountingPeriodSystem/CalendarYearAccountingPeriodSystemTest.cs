@@ -17,9 +17,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
-    /// <summary>
-    /// Tests the <see cref="CalendarYearAccountingPeriodSystemTest"/> class.
-    /// </summary>
     public static class CalendarYearAccountingPeriodSystemTest
     {
         // ReSharper disable InconsistentNaming

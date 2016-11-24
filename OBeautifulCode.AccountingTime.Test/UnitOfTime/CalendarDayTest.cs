@@ -531,7 +531,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetHashCode___Should_not_be_equal_for_two_CalendarDays___When_CalendarDays_have_different_property_values()
+        public static void GetHashCode___Should_not_be_equal_for_two_CalendarDays___When_both_objects_have_different_property_values()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
@@ -567,7 +567,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetHashCode___Should_be_equal_for_two_CalendarDays___When_both_CalendarDays_have_the_same_property_values()
+        public static void GetHashCode___Should_be_equal_for_two_CalendarDays___When_both_objects_have_the_same_property_values()
         {
             // Arrange
             var systemUnderTest1 = A.Dummy<CalendarDay>();
