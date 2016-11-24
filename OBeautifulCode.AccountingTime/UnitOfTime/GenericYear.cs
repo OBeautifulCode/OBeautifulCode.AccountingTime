@@ -74,7 +74,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is less than the right-hand year; false otherwise.</returns>
-        public static bool operator <(GenericYear left, GenericYear right) => left.CompareTo(right) < 0;
+        public static bool operator <(GenericYear left, GenericYear right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return true;
+            }
+
+            var result = left.CompareTo(right) < 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a year is greater than another year.
@@ -82,7 +96,21 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is greater than the right-hand year; false otherwise.</returns>
-        public static bool operator >(GenericYear left, GenericYear right) => left.CompareTo(right) > 0;
+        public static bool operator >(GenericYear left, GenericYear right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(left, null))
+            {
+                return false;
+            }
+
+            var result = left.CompareTo(right) > 0;
+            return result;
+        }
 
         /// <summary>
         /// Determines whether a year is less than or equal to than another year.
