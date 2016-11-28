@@ -38,10 +38,10 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("start and end are different kinds of units-of-time");
             }
 
-             if ((dynamic)start > (dynamic)end)
-             {
-                 throw new ArgumentOutOfRangeException(nameof(start), "start is great than end");
-             }
+            if (start.CompareTo(end) == 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(start), "start is greater than end");
+            }
 
             this.Start = start;
             this.End = end;
