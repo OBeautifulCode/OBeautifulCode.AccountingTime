@@ -921,6 +921,181 @@ namespace OBeautifulCode.AccountingTime.Test
             actual4d.Should().Be(expected4);
         }
 
+        [Fact]
+        public static void GetFirstCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetFirstCalendarDay<CalendarUnitOfTime>(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetFirstCalendarDay___Should_return_same_unitOfTime___When_parameter_unitOfTime_is_of_type_CalendarDay()
+        {
+            // Arrange
+            var expectedDay = A.Dummy<CalendarDay>();
+
+            // Act
+            var actualDay = expectedDay.GetFirstCalendarDay();
+
+            // Assert
+            actualDay.Should().Be(expectedDay);
+        }
+
+        [Fact]
+        public static void GetFirstCalendarDay___Should_return_first_day_of_month___When_parameter_unitOfTime_is_of_type_CalendarMonth()
+        {
+            // Arrange
+            var month = A.Dummy<CalendarMonth>();
+            var expectedDay = new CalendarDay(month.Year, month.MonthOfYear, DayOfMonth.One);
+
+            // Act
+            var actualDay = month.GetFirstCalendarDay();
+
+            // Assert
+            actualDay.Should().Be(expectedDay);
+        }
+
+        [Fact]
+        public static void GetFirstCalendarDay___Should_return_first_day_of_quarter___When_parameter_unitOfTime_is_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var quarter1 = new CalendarQuarter(2016, QuarterNumber.First);
+            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Second);
+            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Third);
+            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Fourth);
+
+            var expectedDay1 = new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One);
+            var expectedDay2 = new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One);
+            var expectedDay3 = new CalendarDay(2016, MonthOfYear.July, DayOfMonth.One);
+            var expectedDay4 = new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One);
+
+            // Act
+            var actualDay1 = quarter1.GetFirstCalendarDay();
+            var actualDay2 = quarter2.GetFirstCalendarDay();
+            var actualDay3 = quarter3.GetFirstCalendarDay();
+            var actualDay4 = quarter4.GetFirstCalendarDay();
+
+            // Assert
+            actualDay1.Should().Be(expectedDay1);
+            actualDay2.Should().Be(expectedDay2);
+            actualDay3.Should().Be(expectedDay3);
+            actualDay4.Should().Be(expectedDay4);
+        }
+
+        [Fact]
+        public static void GetFirstCalendarYear___Should_return_first_day_of_year___When_parameter_unitOfTime_is_of_type_CalendarYear()
+        {
+            // Arrange
+            var year1 = new CalendarYear(2016);
+            var year2 = new CalendarYear(2017);
+
+            var expectedDay1 = new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One);
+            var expectedDay2 = new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One);
+
+            // Act
+            var actualDay1 = year1.GetFirstCalendarDay();
+            var actualDay2 = year2.GetFirstCalendarDay();
+
+            // Assert
+            actualDay1.Should().Be(expectedDay1);
+            actualDay2.Should().Be(expectedDay2);
+        }
+
+        [Fact]
+        public static void GetLastCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetLastCalendarDay<CalendarUnitOfTime>(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetLastCalendarDay___Should_return_same_unitOfTime___When_parameter_unitOfTime_is_of_type_CalendarDay()
+        {
+            // Arrange
+            var expectedDay = A.Dummy<CalendarDay>();
+
+            // Act
+            var actualDay = expectedDay.GetLastCalendarDay();
+
+            // Assert
+            actualDay.Should().Be(expectedDay);
+        }
+
+        [Fact]
+        public static void GetLastCalendarDay___Should_return_last_day_of_month___When_parameter_unitOfTime_is_of_type_CalendarMonth()
+        {
+            // Arrange
+            var month1 = new CalendarMonth(2016, MonthOfYear.February);
+            var month2 = new CalendarMonth(2016, MonthOfYear.November);
+            var month3 = new CalendarMonth(2016, MonthOfYear.October);
+
+            var expectedDay1 = new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine);
+            var expectedDay2 = new CalendarDay(2016, MonthOfYear.November, DayOfMonth.Thirty);
+            var expectedDay3 = new CalendarDay(2016, MonthOfYear.October, DayOfMonth.ThirtyOne);
+
+            // Act
+            var actualDay1 = month1.GetLastCalendarDay();
+            var actualDay2 = month2.GetLastCalendarDay();
+            var actualDay3 = month3.GetLastCalendarDay();
+
+            // Assert
+            actualDay1.Should().Be(expectedDay1);
+            actualDay2.Should().Be(expectedDay2);
+            actualDay3.Should().Be(expectedDay3);
+        }
+
+        [Fact]
+        public static void GetLastCalendarDay___Should_return_last_day_of_quarter___When_parameter_unitOfTime_is_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var quarter1 = new CalendarQuarter(2016, QuarterNumber.First);
+            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Second);
+            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Third);
+            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Fourth);
+
+            var expectedDay1 = new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne);
+            var expectedDay2 = new CalendarDay(2016, MonthOfYear.June, DayOfMonth.Thirty);
+            var expectedDay3 = new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty);
+            var expectedDay4 = new CalendarDay(2016, MonthOfYear.December, DayOfMonth.ThirtyOne);
+
+            // Act
+            var actualDay1 = quarter1.GetLastCalendarDay();
+            var actualDay2 = quarter2.GetLastCalendarDay();
+            var actualDay3 = quarter3.GetLastCalendarDay();
+            var actualDay4 = quarter4.GetLastCalendarDay();
+
+            // Assert
+            actualDay1.Should().Be(expectedDay1);
+            actualDay2.Should().Be(expectedDay2);
+            actualDay3.Should().Be(expectedDay3);
+            actualDay4.Should().Be(expectedDay4);
+        }
+
+        [Fact]
+        public static void GetLastCalendarYear___Should_return_last_day_of_year___When_parameter_unitOfTime_is_of_type_CalendarYear()
+        {
+            // Arrange
+            var year1 = new CalendarYear(2016);
+            var year2 = new CalendarYear(2017);
+
+            var expectedDay1 = new CalendarDay(2016, MonthOfYear.December, DayOfMonth.ThirtyOne);
+            var expectedDay2 = new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne);
+
+            // Act
+            var actualDay1 = year1.GetLastCalendarDay();
+            var actualDay2 = year2.GetLastCalendarDay();
+
+            // Assert
+            actualDay1.Should().Be(expectedDay1);
+            actualDay2.Should().Be(expectedDay2);
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

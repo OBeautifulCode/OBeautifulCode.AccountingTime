@@ -252,6 +252,92 @@ namespace OBeautifulCode.AccountingTime
             return calendarQuarter;
         }
 
+        /// <summary>
+        /// Gets the first calendar day in the specified calendar-based unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time.</param>
+        /// <typeparam name="T">The type of calendar-based unit-of-time.</typeparam>
+        /// <returns>
+        /// The first calendar day in the specified calendar-based unit-of-time.
+        /// </returns>
+        public static CalendarDay GetFirstCalendarDay<T>(this T unitOfTime)
+            where T : CalendarUnitOfTime
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
+            if (unitOfTimeAsCalendarDay != null)
+            {
+                return unitOfTimeAsCalendarDay.GetFirstCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
+            if (unitOfTimeAsCalendarMonth != null)
+            {
+                return unitOfTimeAsCalendarMonth.GetFirstCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
+            if (unitOfTimeAsCalendarQuarter != null)
+            {
+                return unitOfTimeAsCalendarQuarter.GetFirstCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
+            if (unitOfTimeAsCalendarYear != null)
+            {
+                return unitOfTimeAsCalendarYear.GetFirstCalendarDay();
+            }
+
+            throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
+        }
+
+        /// <summary>
+        /// Gets the last calendar day in the specified calendar-based unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time.</param>
+        /// <typeparam name="T">The type of calendar-based unit-of-time.</typeparam>
+        /// <returns>
+        /// The last calendar day in the specified calendar-based unit-of-time.
+        /// </returns>
+        public static CalendarDay GetLastCalendarDay<T>(this T unitOfTime)
+            where T : CalendarUnitOfTime
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
+            if (unitOfTimeAsCalendarDay != null)
+            {
+                return unitOfTimeAsCalendarDay.GetLastCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
+            if (unitOfTimeAsCalendarMonth != null)
+            {
+                return unitOfTimeAsCalendarMonth.GetLastCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
+            if (unitOfTimeAsCalendarQuarter != null)
+            {
+                return unitOfTimeAsCalendarQuarter.GetLastCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
+            if (unitOfTimeAsCalendarYear != null)
+            {
+                return unitOfTimeAsCalendarYear.GetLastCalendarDay();
+            }
+
+            throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
+        }
+
         private static CalendarDay Plus(this CalendarDay unitOfTime, int unitsToAdd)
         {
             var dayAsDateTime = unitOfTime.ToDateTime().AddDays(unitsToAdd);
@@ -336,6 +422,54 @@ namespace OBeautifulCode.AccountingTime
         private static GenericYear Plus(this GenericYear unitOfTime, int unitsToAdd)
         {
             var result = new GenericYear(unitOfTime.Year + unitsToAdd);
+            return result;
+        }
+
+        private static CalendarDay GetFirstCalendarDay(this CalendarDay day)
+        {
+            return day;
+        }
+
+        private static CalendarDay GetFirstCalendarDay(this CalendarMonth month)
+        {
+            var result = new CalendarDay(month.Year, month.MonthOfYear, DayOfMonth.One);
+            return result;
+        }
+
+        private static CalendarDay GetFirstCalendarDay(this CalendarQuarter quarter)
+        {
+            var result = new CalendarDay(quarter.Year, (MonthOfYear)((((int)quarter.QuarterNumber - 1) * 3) + 1), DayOfMonth.One);
+            return result;
+        }
+
+        private static CalendarDay GetFirstCalendarDay(this CalendarYear year)
+        {
+            var result = new CalendarDay(year.Year, MonthOfYear.January, DayOfMonth.One);
+            return result;
+        }
+
+        private static CalendarDay GetLastCalendarDay(this CalendarDay day)
+        {
+            return day;
+        }
+
+        private static CalendarDay GetLastCalendarDay(this CalendarMonth month)
+        {
+            var daysInMonth = DateTime.DaysInMonth(month.Year, (int)month.MonthNumber);
+            var result = new CalendarDay(month.Year, month.MonthOfYear, (DayOfMonth)daysInMonth);
+            return result;
+        }
+
+        private static CalendarDay GetLastCalendarDay(this CalendarQuarter quarter)
+        {
+            var lastMonthInQuarter = new CalendarMonth(quarter.Year, (MonthOfYear)((int)quarter.QuarterNumber * 3));
+            var result = lastMonthInQuarter.GetLastCalendarDay();
+            return result;
+        }
+
+        private static CalendarDay GetLastCalendarDay(this CalendarYear year)
+        {
+            var result = new CalendarDay(year.Year, MonthOfYear.December, DayOfMonth.ThirtyOne);
             return result;
         }
     }
