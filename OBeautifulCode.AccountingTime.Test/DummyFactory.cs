@@ -28,6 +28,10 @@ namespace OBeautifulCode.AccountingTime.Test
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
 
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAMonth>();
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAQuarter>();
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAYear>();
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
