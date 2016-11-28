@@ -9,11 +9,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    /// <summary>
-    /// Represents a range of time over which to report.
-    /// </summary>
-    /// <typeparam name="T">The unit-of-time used to define the start and end of the reporting period.</typeparam>
-    public abstract class ReportingPeriod<T>
+    /// <inheritdoc />
+    public abstract class ReportingPeriod<T> : IReportingPeriod<T>
         where T : UnitOfTime
     {
         /// <summary>
@@ -50,15 +47,15 @@ namespace OBeautifulCode.AccountingTime
             this.End = end;
         }
 
-        /// <summary>
-        ///  Gets the start of the reporting period.
-        /// </summary>
+        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
+
+        /// <inheritdoc />
         public T Start { get; private set; }
 
-        /// <summary>
-        ///  Gets the end of the reporting period.
-        /// </summary>
+        /// <inheritdoc />
         public T End { get; private set; }
+
+        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
     }
 }
 

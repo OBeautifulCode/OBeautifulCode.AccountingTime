@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
     <Compile Include="AccountingPeriodSystem\DateTimeExtensions.cs" />
+    <Compile Include="ReportingPeriod\IReportingPeriod{T}.cs" />
+    <Compile Include="ReportingPeriod\IReportingPeriodInclusive{T}.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodInclusive{T}.cs" />
     <Compile Include="UnitOfTime\CalendarDay.cs" />
     <Compile Include="UnitOfTime\DayOfMonth.cs" />

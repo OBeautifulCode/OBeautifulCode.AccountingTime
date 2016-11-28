@@ -11,11 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
-    /// <summary>
-    /// Represents a reporting period, inclusive of the endpoints.
-    /// </summary>
-    /// <typeparam name="T">The unit-of-time used to define the start and end of the reporting period.</typeparam>
-    public class ReportingPeriodInclusive<T> : ReportingPeriod<T>, IEquatable<ReportingPeriodInclusive<T>>
+    /// <inheritdoc />
+    public class ReportingPeriodInclusive<T> : ReportingPeriod<T>, IReportingPeriodInclusive<T>, IEquatable<ReportingPeriodInclusive<T>>
         where T : UnitOfTime
     {
         /// <summary>
