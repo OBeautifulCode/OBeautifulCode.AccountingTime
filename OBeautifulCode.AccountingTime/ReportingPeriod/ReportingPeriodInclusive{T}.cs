@@ -51,7 +51,7 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            var result = ((dynamic)left.Start == (dynamic)right.Start) && ((dynamic)left.End == (dynamic)right.End);
+            var result = (left.Start.CompareTo(right.Start) == 0) && (left.End.CompareTo(right.End) == 0);
             return result;
         }
 
