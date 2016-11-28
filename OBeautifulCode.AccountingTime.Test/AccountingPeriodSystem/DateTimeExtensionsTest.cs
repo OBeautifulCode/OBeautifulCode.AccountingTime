@@ -9,6 +9,8 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
 
+    using FluentAssertions;
+
     using Xunit;
 
     public static class DateTimeExtensionsTest
@@ -167,6 +169,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var actualCalendarDay2 = dateTime2.ToCalendarDay();
             var actualCalendarDay3 = dateTime3.ToCalendarDay();
             var actualCalendarDay4 = dateTime4.ToCalendarDay();
+
+            // Assert
+            actualCalendarDay1.Should().Be(expectedCalendarDay1);
+            actualCalendarDay2.Should().Be(expectedCalendarDay2);
+            actualCalendarDay3.Should().Be(expectedCalendarDay3);
+            actualCalendarDay4.Should().Be(expectedCalendarDay4);
         }
 
         // ReSharper restore InconsistentNaming
