@@ -1185,7 +1185,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void ToString___Should_return_result_of_call_to_ToString_on_DateTime_representation_of_object___When_calling_overload_with_formatting()
+        public static void ToString___Should_return_result_of_calling_ToString_on_DateTime_representation_of_object___When_calling_overload_with_formatting()
         {
             // Arrange
             var systemUnderTest1 = new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty);
@@ -1221,6 +1221,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         // ReSharper disable ObjectCreationAsStatement
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "OBeautifulCode.AccountingTime.CalendarDay", Justification = "In this case we are trying to determine if creating the object will throw.")]
         private static CalendarDay TweakComponentOfCalendarDay(this CalendarDay calendarDay, CalendarDayComponent componentToTweak)
         {
             if (componentToTweak == CalendarDayComponent.Day)
@@ -1285,6 +1286,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this calendar day component is not supported: " + componentToTweak);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The purpose of this method is to determine if any exception has been thrown.")]
         private static bool DoesNotThrow(Action action)
         {
             try

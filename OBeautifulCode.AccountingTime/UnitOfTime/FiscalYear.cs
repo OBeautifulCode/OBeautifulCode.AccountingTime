@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Represents a fiscal year.
     /// </summary>
@@ -209,7 +211,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return $"FY{this.Year}";
+            return Invariant($"FY{this.Year}");
         }
     }
 }

@@ -72,7 +72,7 @@ namespace OBeautifulCode.AccountingTime
         private DateTime GetAccountingYearEndDate(int year)
         {
             var lastDayInYear = new DateTime(year, (int)this.AnchorMonth, DateTime.DaysInMonth(year, (int)this.AnchorMonth));
-            if (this.FiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.LastOccuranceInAnchorMonth)
+            if (this.FiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth)
             {
                 if (lastDayInYear.DayOfWeek != this.LastDayOfWeekInAccountingYear)
                 {

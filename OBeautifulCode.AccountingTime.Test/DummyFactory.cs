@@ -17,6 +17,8 @@ namespace OBeautifulCode.AccountingTime.Test
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyFactory"/> class.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
         public DummyFactory()
         {
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
@@ -119,16 +121,16 @@ namespace OBeautifulCode.AccountingTime.Test
                     return new ReportingPeriodInclusive<UnitOfTime>(end, start);
                 });
 
-            this.AddDummyCreatorForReportingPeriodInclusive<CalendarDay>();
-            this.AddDummyCreatorForReportingPeriodInclusive<CalendarQuarter>();
-            this.AddDummyCreatorForReportingPeriodInclusive<CalendarMonth>();
-            this.AddDummyCreatorForReportingPeriodInclusive<CalendarYear>();
-            this.AddDummyCreatorForReportingPeriodInclusive<FiscalMonth>();
-            this.AddDummyCreatorForReportingPeriodInclusive<FiscalQuarter>();
-            this.AddDummyCreatorForReportingPeriodInclusive<FiscalYear>();
-            this.AddDummyCreatorForReportingPeriodInclusive<GenericMonth>();
-            this.AddDummyCreatorForReportingPeriodInclusive<GenericQuarter>();
-            this.AddDummyCreatorForReportingPeriodInclusive<GenericYear>();
+            AddDummyCreatorForReportingPeriodInclusive<CalendarDay>();
+            AddDummyCreatorForReportingPeriodInclusive<CalendarQuarter>();
+            AddDummyCreatorForReportingPeriodInclusive<CalendarMonth>();
+            AddDummyCreatorForReportingPeriodInclusive<CalendarYear>();
+            AddDummyCreatorForReportingPeriodInclusive<FiscalMonth>();
+            AddDummyCreatorForReportingPeriodInclusive<FiscalQuarter>();
+            AddDummyCreatorForReportingPeriodInclusive<FiscalYear>();
+            AddDummyCreatorForReportingPeriodInclusive<GenericMonth>();
+            AddDummyCreatorForReportingPeriodInclusive<GenericQuarter>();
+            AddDummyCreatorForReportingPeriodInclusive<GenericYear>();
         }
 
         /// <inheritdoc />
@@ -146,7 +148,7 @@ namespace OBeautifulCode.AccountingTime.Test
             return null;
         }
 
-        private void AddDummyCreatorForReportingPeriodInclusive<T>()
+        private static void AddDummyCreatorForReportingPeriodInclusive<T>()
             where T : UnitOfTime
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(

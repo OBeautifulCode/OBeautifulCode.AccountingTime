@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Represents a calendar year.
     /// </summary>
@@ -209,7 +211,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return $"CY{this.Year}";
+            return Invariant($"CY{this.Year}");
         }
     }
 }

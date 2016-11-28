@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
+    using static System.FormattableString;
+
     /// <inheritdoc />
     public class ReportingPeriodInclusive<T> : ReportingPeriod<T>, IReportingPeriodInclusive<T>, IEquatable<ReportingPeriodInclusive<T>>
         where T : UnitOfTime
@@ -102,7 +104,7 @@ namespace OBeautifulCode.AccountingTime
         public override string ToString()
         {
             // ReSharper disable RedundantToStringCall
-            var result = $"{this.Start.ToString()} to {this.End.ToString()}";
+            var result = Invariant($"{this.Start.ToString()} to {this.End.ToString()}");
             // ReSharper restore RedundantToStringCall
 
             return result;

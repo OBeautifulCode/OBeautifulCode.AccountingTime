@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Represents a calendar quarter of a specified year.
     /// </summary>
@@ -223,7 +225,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return $"{(int)this.QuarterNumber}Q{this.Year:D4}";
+            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
         }
     }
 }

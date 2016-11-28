@@ -113,7 +113,7 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Day 19.
         /// </summary>
-        Ninteen = 19,
+        Nineteen = 19,
 
         /// <summary>
         /// Day 20.

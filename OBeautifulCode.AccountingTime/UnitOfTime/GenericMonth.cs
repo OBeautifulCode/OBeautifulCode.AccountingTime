@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime
 
     using Math;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Represents a generic month in a specified year.
     /// </summary>
@@ -240,7 +242,7 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return $"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year}";
+            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year}");
         }
     }
 }

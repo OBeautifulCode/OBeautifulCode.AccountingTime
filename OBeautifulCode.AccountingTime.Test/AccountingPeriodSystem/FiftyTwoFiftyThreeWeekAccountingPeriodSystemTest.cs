@@ -85,10 +85,10 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_choosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccuranceInAnchorMonth()
+        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccurrenceInAnchorMonth()
         {
             // Arrange
-            var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccuranceInAnchorMonth);
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth);
 
             var expectedReportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(27.August(2006).ToCalendarDay(), 25.August(2007).ToCalendarDay());
             var expectedReportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(26.August(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
@@ -136,7 +136,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_choosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_ClosestToLastDayOfAnchorMonth()
+        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_ClosestToLastDayOfAnchorMonth()
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth);

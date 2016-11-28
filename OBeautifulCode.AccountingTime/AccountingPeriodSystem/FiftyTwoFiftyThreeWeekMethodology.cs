@@ -15,7 +15,7 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Accounting year ends on whatever date the chosen day of the week last occurs in the anchor month.
         /// </summary>
-        LastOccuranceInAnchorMonth,
+        LastOccurrenceInAnchorMonth,
 
         /// <summary>
         /// Accounting year ends on the chosen day of week that is nearest to the last day of the anchor month.
