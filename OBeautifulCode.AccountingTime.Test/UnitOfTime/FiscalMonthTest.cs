@@ -156,7 +156,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = A.Dummy<FiscalMonth>();
+            var systemUnderTest1b = A.Dummy<FiscalMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonth(FiscalMonthComponent.Month);
@@ -245,7 +245,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = A.Dummy<FiscalMonth>();
+            var systemUnderTest1b = A.Dummy<FiscalMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonth(FiscalMonthComponent.Month);
@@ -309,7 +309,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = A.Dummy<FiscalMonth>();
+            var systemUnderTest1b = A.Dummy<FiscalMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonth(FiscalMonthComponent.Month);
@@ -391,7 +391,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = A.Dummy<FiscalMonth>();
+            var systemUnderTest1b = A.Dummy<FiscalMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonth(FiscalMonthComponent.Month);
@@ -429,7 +429,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = A.Dummy<FiscalMonth>();
+            var systemUnderTest1b = A.Dummy<FiscalMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonth(FiscalMonthComponent.Month);

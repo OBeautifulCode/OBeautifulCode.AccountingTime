@@ -156,7 +156,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
-            var systemUnderTest1b = A.Dummy<GenericMonth>();
+            var systemUnderTest1b = A.Dummy<GenericMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<GenericMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericMonth(GenericMonthComponent.Month);
@@ -245,7 +245,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
-            var systemUnderTest1b = A.Dummy<GenericMonth>();
+            var systemUnderTest1b = A.Dummy<GenericMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<GenericMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericMonth(GenericMonthComponent.Month);
@@ -309,7 +309,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
-            var systemUnderTest1b = A.Dummy<GenericMonth>();
+            var systemUnderTest1b = A.Dummy<GenericMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<GenericMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericMonth(GenericMonthComponent.Month);
@@ -391,7 +391,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
-            var systemUnderTest1b = A.Dummy<GenericMonth>();
+            var systemUnderTest1b = A.Dummy<GenericMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<GenericMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericMonth(GenericMonthComponent.Month);
@@ -429,7 +429,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
-            var systemUnderTest1b = A.Dummy<GenericMonth>();
+            var systemUnderTest1b = A.Dummy<GenericMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<GenericMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericMonth(GenericMonthComponent.Month);

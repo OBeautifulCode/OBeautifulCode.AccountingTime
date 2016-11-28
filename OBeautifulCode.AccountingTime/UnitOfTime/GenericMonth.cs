@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic month in a specified year.
     /// </summary>
-    public class GenericMonth : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<GenericMonth>, IComparable<GenericMonth>, IComparable
+    public class GenericMonth : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<GenericMonth>, IComparable<GenericMonth>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericMonth"/> class.
@@ -194,7 +194,7 @@ namespace OBeautifulCode.AccountingTime
         /// 1 if the current instance is greater than the other.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="GenericMonth"/>.</exception>
-        public int CompareTo(object obj)
+        public override int CompareTo(object obj)
         {
             var other = obj as GenericMonth;
             if (other == null)

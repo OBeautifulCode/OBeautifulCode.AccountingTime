@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal quarter of a specified year.
     /// </summary>
-    public class FiscalQuarter : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<FiscalQuarter>, IComparable<FiscalQuarter>, IComparable
+    public class FiscalQuarter : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<FiscalQuarter>, IComparable<FiscalQuarter>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalQuarter"/> class.
@@ -194,7 +194,7 @@ namespace OBeautifulCode.AccountingTime
         /// 1 if the current instance is greater than the other.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="FiscalQuarter"/>.</exception>
-        public int CompareTo(object obj)
+        public override int CompareTo(object obj)
         {
             var other = obj as FiscalQuarter;
             if (other == null)

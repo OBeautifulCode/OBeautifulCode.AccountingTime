@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a calendar day.
     /// </summary>
-    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IComparable, IFormattable
+    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarDay"/> class.
@@ -222,7 +222,7 @@ namespace OBeautifulCode.AccountingTime
         /// 1 if the current instance is greater than the other.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="CalendarDay"/>.</exception>
-        public int CompareTo(object obj)
+        public override int CompareTo(object obj)
         {
             var other = obj as CalendarDay;
             if (other == null)

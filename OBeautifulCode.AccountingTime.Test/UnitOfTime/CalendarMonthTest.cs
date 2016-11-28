@@ -174,7 +174,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarMonth>();
-            var systemUnderTest1b = A.Dummy<CalendarMonth>();
+            var systemUnderTest1b = A.Dummy<CalendarMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<CalendarMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarMonth(CalendarMonthComponent.Month);
@@ -263,7 +263,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarMonth>();
-            var systemUnderTest1b = A.Dummy<CalendarMonth>();
+            var systemUnderTest1b = A.Dummy<CalendarMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<CalendarMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarMonth(CalendarMonthComponent.Month);
@@ -327,7 +327,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarMonth>();
-            var systemUnderTest1b = A.Dummy<CalendarMonth>();
+            var systemUnderTest1b = A.Dummy<CalendarMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<CalendarMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarMonth(CalendarMonthComponent.Month);
@@ -409,7 +409,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarMonth>();
-            var systemUnderTest1b = A.Dummy<CalendarMonth>();
+            var systemUnderTest1b = A.Dummy<CalendarMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<CalendarMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarMonth(CalendarMonthComponent.Month);
@@ -447,7 +447,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarMonth>();
-            var systemUnderTest1b = A.Dummy<CalendarMonth>();
+            var systemUnderTest1b = A.Dummy<CalendarMonth>().ThatIsNot(systemUnderTest1a);
 
             var systemUnderTest2a = A.Dummy<CalendarMonth>();
             var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarMonth(CalendarMonthComponent.Month);

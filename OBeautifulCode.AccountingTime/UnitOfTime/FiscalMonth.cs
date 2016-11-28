@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal month in a specified year.
     /// </summary>
-    public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>, IComparable
+    public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalMonth"/> class.
@@ -194,7 +194,7 @@ namespace OBeautifulCode.AccountingTime
         /// 1 if the current instance is greater than the other.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="FiscalMonth"/>.</exception>
-        public int CompareTo(object obj)
+        public override int CompareTo(object obj)
         {
             var other = obj as FiscalMonth;
             if (other == null)

@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic year.
     /// </summary>
-    public class GenericYear : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<GenericYear>, IComparable<GenericYear>, IComparable
+    public class GenericYear : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<GenericYear>, IComparable<GenericYear>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericYear"/> class.
@@ -181,7 +181,7 @@ namespace OBeautifulCode.AccountingTime
         /// 1 if the current instance is greater than the other.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="GenericYear"/>.</exception>
-        public int CompareTo(object obj)
+        public override int CompareTo(object obj)
         {
             var other = obj as GenericYear;
             if (other == null)
