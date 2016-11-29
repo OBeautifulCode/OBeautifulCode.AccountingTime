@@ -16,8 +16,13 @@ namespace OBeautifulCode.AccountingTime
     {
         /// <summary>
         /// Determines if a unit-of-time is contained within a reporting period.
+        /// For example, 2Q2017 is contained within a reporting period of 1Q2017-4Q2017.
         /// </summary>
-        /// <typeparam name="T">The type unit-of-time/reporting period.</typeparam>
+        /// <remarks>
+        /// If the unit-of-time is equal to one of the endpoints of the reporting period,
+        /// that unit-of-time is considered to be within the reporting period.
+        /// </remarks>
+        /// <typeparam name="T">The type of unit-of-time/reporting period.</typeparam>
         /// <param name="unitOfTime">The unit-of-time to check against a reporting period.</param>
         /// <param name="reportingPeriod">The reporting period.</param>
         /// <returns>
@@ -57,8 +62,13 @@ namespace OBeautifulCode.AccountingTime
 
         /// <summary>
         /// Determines if two objects of type <see cref="IReportingPeriodInclusive{T}"/>, overlap.
+        /// For example, the following reporting periods have an overlap: 1Q2017-3Q2017 and 3Q2017-4Q2017.
         /// </summary>
-        /// <typeparam name="T">The type of reporting period.</typeparam>
+        /// <remarks>
+        /// If the endpoint of one reporting period is the same as the endpoint
+        /// of the second reporting period, the reporting periods are deemed to overlap.
+        /// </remarks>
+        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
         /// <param name="reportingPeriod1">A reporting period.</param>
         /// <param name="reportingPeriod2">A second reporting period to check for overlap against the first reporting period.</param>
         /// <returns>
