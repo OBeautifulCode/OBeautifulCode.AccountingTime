@@ -2,6 +2,7 @@
 <RuleSet Name="Analyzer Rules - Testing" Description="Analyzer rules for test projects." ToolsVersion="14.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1702" Action="None" />
     <Rule Id="CA1707" Action="None" />
     <Rule Id="CA1709" Action="None" />
     <Rule Id="CA2210" Action="None" />
