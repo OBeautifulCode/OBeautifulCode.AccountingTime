@@ -160,6 +160,48 @@ namespace OBeautifulCode.AccountingTime
 
             return allUnits;
         }
+
+        /// <summary>
+        /// Creates all permutations of reporting periods between the
+        /// start and end of a specified reporting period, from 1 unit
+        /// to the specified number of maximum number of units that a
+        /// reporting period can contain.
+        /// </summary>
+        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
+        /// <param name="reportingPeriod">The reporting period to permute.</param>
+        /// <param name="maxUnitsInAnyReportingPeriod">Maximum number of units-of-time in each reporting period.</param>
+        /// <returns>All possible reporting periods containing between 1 and <paramref name="maxUnitsInAnyReportingPeriod"/> units-of-time, contained within <paramref name="reportingPeriod"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
+        public static ICollection<IReportingPeriodInclusive<T>> CreatePermutations<T>(this IReportingPeriodInclusive<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
+            where T : UnitOfTime
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (maxUnitsInAnyReportingPeriod < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxUnitsInAnyReportingPeriod), "max units in any reporting period is <= 0");
+            }
+
+            var allUnits = reportingPeriod.GetUnitsWithin();
+            var allReportingPeriods = new List<IReportingPeriodInclusive<T>>();
+            for (int unitOfTimeIndex = 0; unitOfTimeIndex < allUnits.Count; unitOfTimeIndex++)
+            {
+                for (int numberOfUnits = 1; numberOfUnits <= maxUnitsInAnyReportingPeriod; numberOfUnits++)
+                {
+                    if (unitOfTimeIndex + numberOfUnits - 1 < allUnits.Count)
+                    {
+                        var subReportingPeriod = new ReportingPeriodInclusive<T>(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
+                        allReportingPeriods.Add(subReportingPeriod);
+                    }
+                }
+            }
+
+            return allReportingPeriods;
+        }
     }
 }
 

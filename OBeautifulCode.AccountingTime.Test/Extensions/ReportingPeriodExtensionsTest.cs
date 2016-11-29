@@ -9,6 +9,8 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
 
+    using AutoFakeItEasy;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -1922,6 +1924,419 @@ namespace OBeautifulCode.AccountingTime.Test
             actualUnits1.Should().Equal(new GenericYear(2016));
             actualUnits2.Should().Equal(new GenericYear(2016), new GenericYear(2017));
             actualUnits3.Should().Equal(new GenericYear(2016), new GenericYear(2017), new GenericYear(2018));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.CreatePermutations<UnitOfTime>(null, A.Dummy<PositiveInteger>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_throw_ArgumentOutOfRangeException___When_parameter_maxUnitsInAnyReportingPeriod_is_0_or_less()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriod.CreatePermutations(0));
+            var ex2 = Record.Exception(() => reportingPeriod.CreatePermutations(A.Dummy<NegativeInteger>()));
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentOutOfRangeException>();
+            ex2.Should().BeOfType<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
+                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.June));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.June)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June)),
+                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Six));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six)),
+                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Six));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Six)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six)),
+                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2017, QuarterNumber.Second));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.First), new CalendarQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Second), new CalendarQuarter(2017, QuarterNumber.Second)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.First), new CalendarQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.First), new CalendarQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Second), new CalendarQuarter(2017, QuarterNumber.Second)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2017, QuarterNumber.Second));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.First), new FiscalQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Second), new FiscalQuarter(2017, QuarterNumber.Second)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.First), new FiscalQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.First), new FiscalQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Second), new FiscalQuarter(2017, QuarterNumber.Second)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2017, QuarterNumber.Second));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.First), new GenericQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Second), new GenericQuarter(2017, QuarterNumber.Second)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Third)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2016, QuarterNumber.Fourth)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.First), new GenericQuarter(2017, QuarterNumber.First)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.First), new GenericQuarter(2017, QuarterNumber.Second)),
+                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Second), new GenericQuarter(2017, QuarterNumber.Second)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2019));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2019)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019)),
+                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2019));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2019)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019)),
+                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
+        }
+
+        [Fact]
+        public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2019));
+
+            // Act
+            var permutations1a = reportingPeriod1.CreatePermutations(1);
+            var permutations1b = reportingPeriod1.CreatePermutations(5);
+
+            var permutations2a = reportingPeriod2.CreatePermutations(1);
+            var permutations2b = reportingPeriod2.CreatePermutations(3);
+
+            // Assert
+            permutations1a.Should().Equal(reportingPeriod1);
+            permutations1b.Should().Equal(reportingPeriod1);
+
+            permutations2a.Should().Equal(
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
+
+            permutations2b.Should().Equal(
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2017)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2019)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2019)),
+                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
         }
 
         // ReSharper restore InconsistentNaming
