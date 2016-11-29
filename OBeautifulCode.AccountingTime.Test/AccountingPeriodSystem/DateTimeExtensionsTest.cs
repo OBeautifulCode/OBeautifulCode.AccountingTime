@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime.Test
     {
         // ReSharper disable InconsistentNaming
         [Fact]
-        public static void Next___Should_return_next_occurence_of_specified_day_of_week___When_called()
+        public static void Next___Should_return_next_occurrence_of_specified_day_of_week___When_called()
         {
             var referenceDate1 = new DateTime(2010, 11, 21);
             Assert.Equal(new DateTime(2010, 11, 28), referenceDate1.Next(DayOfWeek.Sunday));
@@ -84,7 +84,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Previous___Should_return_occurence_of_specified_day_of_week___When_called()
+        public static void Previous___Should_return_occurrence_of_specified_day_of_week___When_called()
         {
             var referenceDate1 = new DateTime(2010, 11, 7);
             Assert.Equal(new DateTime(2010, 10, 31), referenceDate1.Previous(DayOfWeek.Sunday));
