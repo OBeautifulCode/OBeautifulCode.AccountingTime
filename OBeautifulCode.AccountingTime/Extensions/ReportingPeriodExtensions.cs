@@ -8,6 +8,7 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Extension methods on <see cref="ReportingPeriod{T}"/>.
@@ -123,20 +124,41 @@ namespace OBeautifulCode.AccountingTime
         public static int NumberOfUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
             where T : UnitOfTime
         {
+            var result = GetUnitsWithin(reportingPeriod).Count;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the distinct <typeparamref name="T"/> contained within a specified reporting period.
+        /// For example, a reporting period of 2Q2017-4Q2017, contains 2Q2017, 3Q2017, and 4Q2017.
+        /// </summary>
+        /// <remarks>
+        /// The endpoints are considered units within the reporting period.
+        /// </remarks>
+        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The units-of-time contained within the specified reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static IList<T> GetUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
+            where T : UnitOfTime
+        {
             if (reportingPeriod == null)
             {
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            var numberOfUnits = 1;
-            var currentUnit = (UnitOfTime)reportingPeriod.Start;
-            while (currentUnit.CompareTo(reportingPeriod.End) < 0)
+            var allUnits = new List<T>();
+            var currentUnit = reportingPeriod.Start;
+            do
             {
-                numberOfUnits++;
-                currentUnit = currentUnit.Plus(1);
+                allUnits.Add(currentUnit);
+                currentUnit = (T)currentUnit.Plus(1);
             }
+            while (currentUnit.CompareTo(reportingPeriod.End) <= 0);
 
-            return numberOfUnits;
+            return allUnits;
         }
     }
 }

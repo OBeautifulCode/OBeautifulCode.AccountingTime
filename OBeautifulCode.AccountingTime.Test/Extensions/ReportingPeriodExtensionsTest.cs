@@ -1727,6 +1727,203 @@ namespace OBeautifulCode.AccountingTime.Test
             actualUnits3.Should().Be(3);
         }
 
+        [Fact]
+        public static void GetUnitsWithin___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.GetUnitsWithin<UnitOfTime>(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            actualUnits2.Should().Equal(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new CalendarMonth(2016, MonthOfYear.February));
+            actualUnits2.Should().Equal(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April));
+            actualUnits3.Should().Equal(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.July), new CalendarMonth(2016, MonthOfYear.August), new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2016, MonthOfYear.October), new CalendarMonth(2016, MonthOfYear.November), new CalendarMonth(2016, MonthOfYear.December), new CalendarMonth(2017, MonthOfYear.January));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new FiscalMonth(2016, MonthNumber.Two));
+            actualUnits2.Should().Equal(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            actualUnits3.Should().Equal(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Seven), new FiscalMonth(2016, MonthNumber.Eight), new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2016, MonthNumber.Ten), new FiscalMonth(2016, MonthNumber.Eleven), new FiscalMonth(2016, MonthNumber.Twelve), new FiscalMonth(2017, MonthNumber.One));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new GenericMonth(2016, MonthNumber.Two));
+            actualUnits2.Should().Equal(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            actualUnits3.Should().Equal(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Seven), new GenericMonth(2016, MonthNumber.Eight), new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2016, MonthNumber.Ten), new GenericMonth(2016, MonthNumber.Eleven), new GenericMonth(2016, MonthNumber.Twelve), new GenericMonth(2017, MonthNumber.One));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2017, QuarterNumber.Third));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new CalendarQuarter(2016, QuarterNumber.Second));
+            actualUnits2.Should().Equal(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Fourth));
+            actualUnits3.Should().Equal(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2017, QuarterNumber.First), new CalendarQuarter(2017, QuarterNumber.Second), new CalendarQuarter(2017, QuarterNumber.Third));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2017, QuarterNumber.Third));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new FiscalQuarter(2016, QuarterNumber.Second));
+            actualUnits2.Should().Equal(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Fourth));
+            actualUnits3.Should().Equal(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2017, QuarterNumber.First), new FiscalQuarter(2017, QuarterNumber.Second), new FiscalQuarter(2017, QuarterNumber.Third));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod3 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2017, QuarterNumber.Third));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new GenericQuarter(2016, QuarterNumber.Second));
+            actualUnits2.Should().Equal(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Fourth));
+            actualUnits3.Should().Equal(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2017, QuarterNumber.First), new GenericQuarter(2017, QuarterNumber.Second), new GenericQuarter(2017, QuarterNumber.Third));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
+            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new CalendarYear(2016));
+            actualUnits2.Should().Equal(new CalendarYear(2016), new CalendarYear(2017));
+            actualUnits3.Should().Equal(new CalendarYear(2016), new CalendarYear(2017), new CalendarYear(2018));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
+            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new FiscalYear(2016));
+            actualUnits2.Should().Equal(new FiscalYear(2016), new FiscalYear(2017));
+            actualUnits3.Should().Equal(new FiscalYear(2016), new FiscalYear(2017), new FiscalYear(2018));
+        }
+
+        [Fact]
+        public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2017));
+            var reportingPeriod3 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+
+            // Act
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+
+            // Assert
+            actualUnits1.Should().Equal(new GenericYear(2016));
+            actualUnits2.Should().Equal(new GenericYear(2016), new GenericYear(2017));
+            actualUnits3.Should().Equal(new GenericYear(2016), new GenericYear(2017), new GenericYear(2018));
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }
