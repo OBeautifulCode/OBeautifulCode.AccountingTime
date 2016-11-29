@@ -32,6 +32,24 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAQuarter>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAYear>();
 
+            // note: this customization is required because AutoFixture doesn't use A.Dummy<>
+            // and thus will, from time-to-time, try to create this type with MonthOfYear.Invalid
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>());
+                    return result;
+                });
+
+            // note: this customization is required because AutoFixture doesn't use A.Dummy<>
+            // and thus will, from time-to-time, try to create this type with MonthOfYear.Invalid
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(A.Dummy<DayOfWeek>(), A.Dummy<MonthOfYear>(), A.Dummy<FiftyTwoFiftyThreeWeekMethodology>());
+                    return result;
+                });
+
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
