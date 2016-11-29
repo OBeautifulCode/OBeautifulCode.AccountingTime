@@ -8,6 +8,8 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Extension methods on <see cref="UnitOfTime"/>.
@@ -336,6 +338,36 @@ namespace OBeautifulCode.AccountingTime
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
+        }
+
+        /// <summary>
+        /// Gets a list with the first <typeparamref name="T"/> in the same year as <paramref name="lastUnitOfTimeInYear"/>,
+        /// up to and including <paramref name="lastUnitOfTimeInYear"/>, in sequential/ascending order.
+        /// </summary>
+        /// <param name="lastUnitOfTimeInYear">The last unit-of-time.</param>
+        /// <typeparam name="T">The type of the unit-of-time.</typeparam>
+        /// <returns>
+        /// A list with the first <typeparamref name="T"/> in the same year as <paramref name="lastUnitOfTimeInYear"/>,
+        /// up to and including <paramref name="lastUnitOfTimeInYear"/>, in sequential/ascending order.
+        /// </returns>
+        public static IList<T> GetUnitsToDate<T>(this T lastUnitOfTimeInYear)
+            where T : UnitOfTime, IHaveAYear
+        {
+            if (lastUnitOfTimeInYear == null)
+            {
+                throw new ArgumentNullException(nameof(lastUnitOfTimeInYear));
+            }
+
+            var unitsToDate = new Stack<T>();
+            var thisYear = lastUnitOfTimeInYear.Year;
+            while (lastUnitOfTimeInYear.Year == thisYear)
+            {
+                unitsToDate.Push(lastUnitOfTimeInYear);
+                lastUnitOfTimeInYear = (T)lastUnitOfTimeInYear.Plus(-1);
+            }
+
+            var result = unitsToDate.ToList();
+            return result;
         }
 
         private static CalendarDay Plus(this CalendarDay unitOfTime, int unitsToAdd)
