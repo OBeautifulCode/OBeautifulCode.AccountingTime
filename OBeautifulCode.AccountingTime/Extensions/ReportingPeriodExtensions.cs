@@ -105,6 +105,39 @@ namespace OBeautifulCode.AccountingTime
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the number of distinct <typeparamref name="T"/> contained within a specified reporting period.
+        /// For example, a reporting period of 2Q2017-4Q2017, contains 3 distinct quarters.
+        /// </summary>
+        /// <remarks>
+        /// The endpoints are considered one unit each, unless they are the same, in which case
+        /// there is a total of 1 unit within the reporting period.
+        /// </remarks>
+        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The number of units-of-time contained within the specified reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static int NumberOfUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
+            where T : UnitOfTime
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var numberOfUnits = 1;
+            var currentUnit = (UnitOfTime)reportingPeriod.Start;
+            while (currentUnit.CompareTo(reportingPeriod.End) < 0)
+            {
+                numberOfUnits++;
+                currentUnit = currentUnit.Plus(1);
+            }
+
+            return numberOfUnits;
+        }
     }
 }
 
