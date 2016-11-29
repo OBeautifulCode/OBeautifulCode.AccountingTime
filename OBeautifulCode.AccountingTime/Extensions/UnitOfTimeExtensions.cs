@@ -260,6 +260,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// The first calendar day in the specified calendar-based unit-of-time.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         public static CalendarDay GetFirstCalendarDay<T>(this T unitOfTime)
             where T : CalendarUnitOfTime
         {
@@ -303,6 +304,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// The last calendar day in the specified calendar-based unit-of-time.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         public static CalendarDay GetLastCalendarDay<T>(this T unitOfTime)
             where T : CalendarUnitOfTime
         {
@@ -348,6 +350,7 @@ namespace OBeautifulCode.AccountingTime
         /// A list with the first <typeparamref name="T"/> in the same year as <paramref name="lastUnitOfTimeInYear"/>,
         /// up to and including <paramref name="lastUnitOfTimeInYear"/>, in sequential/ascending order.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="lastUnitOfTimeInYear"/> is null.</exception>
         public static IList<T> GetUnitsToDate<T>(this T lastUnitOfTimeInYear)
             where T : UnitOfTime, IHaveAYear
         {
