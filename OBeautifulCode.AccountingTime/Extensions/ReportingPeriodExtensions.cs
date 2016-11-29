@@ -55,6 +55,46 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <summary>
+        /// Determines if two objects of type <see cref="IReportingPeriodInclusive{T}"/>, overlap.
+        /// </summary>
+        /// <typeparam name="T">The type of reporting period.</typeparam>
+        /// <param name="reportingPeriod1">A reporting period.</param>
+        /// <param name="reportingPeriod2">A second reporting period to check for overlap against the first reporting period.</param>
+        /// <returns>
+        /// true if there is an overlap between the reporting periods; false otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
+        public static bool HasOverlapWith<T>(this IReportingPeriodInclusive<T> reportingPeriod1, IReportingPeriodInclusive<T> reportingPeriod2)
+            where T : UnitOfTime
+        {
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
+            bool result;
+            try
+            {
+                result = reportingPeriod2.Start.IsInReportingPeriod(reportingPeriod1) ||
+                         reportingPeriod2.End.IsInReportingPeriod(reportingPeriod1) ||
+                         reportingPeriod1.Start.IsInReportingPeriod(reportingPeriod2) ||
+                         reportingPeriod1.End.IsInReportingPeriod(reportingPeriod2);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException("reportingPeriod1 cannot be compared against reportingPeriod2 because they represent different concrete subclasses of UnitOfTime.", ex);
+            }
+
+            return result;
+        }
     }
 }
 

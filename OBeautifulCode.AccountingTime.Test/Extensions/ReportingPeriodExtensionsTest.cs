@@ -722,6 +722,811 @@ namespace OBeautifulCode.AccountingTime.Test
             isInReportingPeriod2.Should().BeTrue();
         }
 
+        [Fact]
+        public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.HasOverlapWith(null, reportingPeriod));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod2_is_null()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.HasOverlapWith(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_throw_ArgumentException___When_parameters_reportingPeriod1_and_reportingPeriod1_represent_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var reportingPeriod1a = A.Dummy<ReportingPeriodInclusive<FiscalQuarter>>();
+            var reportingPeriod1b = A.Dummy<ReportingPeriodInclusive<FiscalYear>>();
+
+            var reportingPeriod2a = A.Dummy<ReportingPeriodInclusive<CalendarQuarter>>();
+            var reportingPeriod2b = A.Dummy<ReportingPeriodInclusive<GenericQuarter>>();
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriod1a.HasOverlapWith<FiscalUnitOfTime>(reportingPeriod1b));
+            var ex2 = Record.Exception(() => reportingPeriod2a.HasOverlapWith<UnitOfTime>(reportingPeriod2b));
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentySeven));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Five));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
+            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
+            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
+            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne));
+            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2014, MonthOfYear.January), new CalendarMonth(2016, MonthOfYear.January));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.July));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.June));
+            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2014, MonthNumber.One), new FiscalMonth(2016, MonthNumber.One));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Seven));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four));
+            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Six));
+            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2014, MonthNumber.One), new GenericMonth(2016, MonthNumber.One));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Seven));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2c = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2d = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2e = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four));
+            var reportingPeriod2f = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Six));
+            var reportingPeriod2g = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2014, QuarterNumber.First), new CalendarQuarter(2016, QuarterNumber.First));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.First), new CalendarQuarter(2018, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Second), new CalendarQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Third), new CalendarQuarter(2017, QuarterNumber.First));
+            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Fourth), new CalendarQuarter(2017, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2014, QuarterNumber.First), new FiscalQuarter(2016, QuarterNumber.First));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.First), new FiscalQuarter(2018, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Second), new FiscalQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Third), new FiscalQuarter(2017, QuarterNumber.First));
+            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Fourth), new FiscalQuarter(2017, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2014, QuarterNumber.First), new GenericQuarter(2016, QuarterNumber.First));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.First), new GenericQuarter(2018, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Fourth));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2c = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Third));
+            var reportingPeriod2d = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Second), new GenericQuarter(2016, QuarterNumber.Second));
+            var reportingPeriod2e = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2016, QuarterNumber.Fourth));
+            var reportingPeriod2f = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Third), new GenericQuarter(2017, QuarterNumber.First));
+            var reportingPeriod2g = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Fourth), new GenericQuarter(2017, QuarterNumber.First));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2010));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2015), new CalendarYear(2018));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2011));
+            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2012));
+            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2013));
+            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2013));
+            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2014));
+            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2016));
+            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2014), new CalendarYear(2017));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2010));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2015), new FiscalYear(2018));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2011));
+            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2012));
+            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2013));
+            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2013));
+            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2014));
+            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2016));
+            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2014), new FiscalYear(2017));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2010));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2015), new GenericYear(2018));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeFalse();
+            hasOverlap1b.Should().BeFalse();
+            hasOverlap2a.Should().BeFalse();
+            hasOverlap2b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2014));
+
+            var reportingPeriod2a = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2011));
+            var reportingPeriod2b = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2012));
+            var reportingPeriod2c = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2013));
+            var reportingPeriod2d = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2013));
+            var reportingPeriod2e = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2014));
+            var reportingPeriod2f = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2016));
+            var reportingPeriod2g = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2014), new GenericYear(2017));
+
+            // Act
+            var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
+            var hasOverlap1b = reportingPeriod2a.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap2a = reportingPeriod1.HasOverlapWith(reportingPeriod2b);
+            var hasOverlap2b = reportingPeriod2b.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap3a = reportingPeriod1.HasOverlapWith(reportingPeriod2c);
+            var hasOverlap3b = reportingPeriod2c.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap4a = reportingPeriod1.HasOverlapWith(reportingPeriod2d);
+            var hasOverlap4b = reportingPeriod2d.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap5a = reportingPeriod1.HasOverlapWith(reportingPeriod2e);
+            var hasOverlap5b = reportingPeriod2e.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap6a = reportingPeriod1.HasOverlapWith(reportingPeriod2f);
+            var hasOverlap6b = reportingPeriod2f.HasOverlapWith(reportingPeriod1);
+
+            var hasOverlap7a = reportingPeriod1.HasOverlapWith(reportingPeriod2g);
+            var hasOverlap7b = reportingPeriod2g.HasOverlapWith(reportingPeriod1);
+
+            // Assert
+            hasOverlap1a.Should().BeTrue();
+            hasOverlap1b.Should().BeTrue();
+            hasOverlap2a.Should().BeTrue();
+            hasOverlap2b.Should().BeTrue();
+            hasOverlap3a.Should().BeTrue();
+            hasOverlap3b.Should().BeTrue();
+            hasOverlap4a.Should().BeTrue();
+            hasOverlap4b.Should().BeTrue();
+            hasOverlap5a.Should().BeTrue();
+            hasOverlap5b.Should().BeTrue();
+            hasOverlap6a.Should().BeTrue();
+            hasOverlap6b.Should().BeTrue();
+            hasOverlap7a.Should().BeTrue();
+            hasOverlap7b.Should().BeTrue();
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }
