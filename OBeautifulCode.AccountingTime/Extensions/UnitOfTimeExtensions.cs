@@ -16,8 +16,6 @@ namespace OBeautifulCode.AccountingTime
     /// </summary>
     public static class UnitOfTimeExtensions
     {
-        // need to support UnitOfTime, CalendarUnitOfTime?, IHaveAQuarter?
-
         /// <summary>
         /// Converts the specified <see cref="IHaveAMonth"/> to a <see cref="GenericMonth"/>.
         /// </summary>
