@@ -32,6 +32,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The logic is different based on the type of reporting period (inclusive, exclusive, etc.)")]
         public static bool IsInReportingPeriod<T>(this T unitOfTime, IReportingPeriodInclusive<T> reportingPeriod)
             where T : UnitOfTime
         {
@@ -141,6 +142,7 @@ namespace OBeautifulCode.AccountingTime
         /// The units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The logic is different based on the type of reporting period (inclusive, exclusive, etc.)")]
         public static IList<T> GetUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
             where T : UnitOfTime
         {
@@ -173,6 +175,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>All possible reporting periods containing between 1 and <paramref name="maxUnitsInAnyReportingPeriod"/> units-of-time, contained within <paramref name="reportingPeriod"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
         public static ICollection<IReportingPeriodInclusive<T>> CreatePermutations<T>(this IReportingPeriodInclusive<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
             where T : UnitOfTime
         {
