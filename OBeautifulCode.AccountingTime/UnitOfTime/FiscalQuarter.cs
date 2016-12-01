@@ -225,7 +225,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{(int)this.QuarterNumber}Q{this.Year}");
+            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
         }
     }
 }

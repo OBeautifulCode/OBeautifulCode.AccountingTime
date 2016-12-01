@@ -242,7 +242,7 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year}");
+            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
         }
     }
 }

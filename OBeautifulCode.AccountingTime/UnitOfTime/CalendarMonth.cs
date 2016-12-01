@@ -230,7 +230,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{this.Year}-{(int)this.MonthOfYear:D2}");
+            return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
         }
     }
 }
