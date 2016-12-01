@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using FakeItEasy;
 
@@ -1341,6 +1342,188 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             actualUnitsToDate.Should().Equal(expectedUnitsToDate);
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarDay()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "cd-2017-01-03", new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
+                { "cd-2017-11-09", new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Nine) },
+                { "cd-2017-07-21", new CalendarDay(2017, MonthOfYear.July, DayOfMonth.TwentyOne) },
+                { "cd-2017-10-08", new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Eight) },
+                { "cd-2017-11-30",  new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarMonth()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "cm-2017-01", new CalendarMonth(2017, MonthOfYear.January) },
+                { "cm-2017-07", new CalendarMonth(2017, MonthOfYear.July) },
+                { "cm-2017-11", new CalendarMonth(2017, MonthOfYear.November) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_FiscalMonth()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "fm-2017-01", new FiscalMonth(2017, MonthNumber.One) },
+                { "fm-2017-07", new FiscalMonth(2017, MonthNumber.Seven) },
+                { "fm-2017-11", new FiscalMonth(2017, MonthNumber.Eleven) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_GenericMonth()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "gm-2017-01", new GenericMonth(2017, MonthNumber.One) },
+                { "gm-2017-07", new GenericMonth(2017, MonthNumber.Seven) },
+                { "gm-2017-11", new GenericMonth(2017, MonthNumber.Eleven) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarQuarter()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "cq-2017-1", new CalendarQuarter(2017, QuarterNumber.First) },
+                { "cq-2017-2", new CalendarQuarter(2017, QuarterNumber.Second) },
+                { "cq-2017-3", new CalendarQuarter(2017, QuarterNumber.Third) },
+                { "cq-2017-4", new CalendarQuarter(2017, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_FiscalQuarter()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "fq-2017-1", new FiscalQuarter(2017, QuarterNumber.First) },
+                { "fq-2017-2", new FiscalQuarter(2017, QuarterNumber.Second) },
+                { "fq-2017-3", new FiscalQuarter(2017, QuarterNumber.Third) },
+                { "fq-2017-4", new FiscalQuarter(2017, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_GenericQuarter()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "gq-2017-1", new GenericQuarter(2017, QuarterNumber.First) },
+                { "gq-2017-2", new GenericQuarter(2017, QuarterNumber.Second) },
+                { "gq-2017-3", new GenericQuarter(2017, QuarterNumber.Third) },
+                { "gq-2017-4", new GenericQuarter(2017, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarYear()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "cy-2017", new CalendarYear(2017) },
+                { "cy-2009", new CalendarYear(2009) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_FiscalYear()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "fy-2017", new FiscalYear(2017) },
+                { "fy-2009", new FiscalYear(2009) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_GenericYear()
+        {
+            // Arrange
+            var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "gy-2017", new GenericYear(2017) },
+                { "gy-2009", new GenericYear(2009) }
+            };
+
+            // Act
+            var results = calendarDaysBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
         }
 
         // ReSharper restore InconsistentNaming

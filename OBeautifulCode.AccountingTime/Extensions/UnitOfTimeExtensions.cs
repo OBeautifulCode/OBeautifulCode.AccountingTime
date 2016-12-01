@@ -11,11 +11,27 @@ namespace OBeautifulCode.AccountingTime
     using System.Collections.Generic;
     using System.Linq;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Extension methods on <see cref="UnitOfTime"/>.
     /// </summary>
     public static class UnitOfTimeExtensions
     {
+        private static readonly IDictionary<Type, string> UnitOfTimeSerializedStringPrefixByType = new Dictionary<Type, string>
+        {
+            { typeof(CalendarDay), "cd" },
+            { typeof(CalendarMonth), "cm" },
+            { typeof(CalendarQuarter), "cq" },
+            { typeof(CalendarYear), "cy" },
+            { typeof(FiscalMonth), "fm" },
+            { typeof(FiscalQuarter), "fq" },
+            { typeof(FiscalYear), "fy" },
+            { typeof(GenericMonth), "gm" },
+            { typeof(GenericQuarter), "gq" },
+            { typeof(GenericYear), "gy" }
+        };
+
         /// <summary>
         /// Converts the specified <see cref="IHaveAMonth"/> to a <see cref="GenericMonth"/>.
         /// </summary>
@@ -369,6 +385,98 @@ namespace OBeautifulCode.AccountingTime
 
             var result = unitsToDate.ToList();
             return result;
+        }
+
+        /// <summary>
+        /// Serializes a <see cref="UnitOfTime"/> to a sortable string.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time to serialize.</param>
+        /// <returns>
+        /// Gets a string representation of a unit-of-time that can be deserialized
+        /// into the same unit-of-time and which sorts in the same way that the
+        /// other unit-of-times (of the same type) would sort (earlier time first, later time last).
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        public static string SerializeToSortableString(this UnitOfTime unitOfTime)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var unitOfTimeType = unitOfTime.GetType();
+
+            var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
+            if (unitOfTimeAsCalendarDay != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+                return result;
+            }
+
+            var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
+            if (unitOfTimeAsCalendarMonth != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+                return result;
+            }
+
+            var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
+            if (unitOfTimeAsCalendarQuarter != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsCalendarQuarter.Year:D4}-{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+                return result;
+            }
+
+            var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
+            if (unitOfTimeAsCalendarYear != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsCalendarYear.Year:D4}");
+                return result;
+            }
+
+            var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
+            if (unitOfTimeAsFiscalMonth != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+                return result;
+            }
+
+            var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
+            if (unitOfTimeAsFiscalQuarter != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsFiscalQuarter.Year:D4}-{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+                return result;
+            }
+
+            var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
+            if (unitOfTimeAsFiscalYear != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsFiscalYear.Year:D4}");
+                return result;
+            }
+
+            var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
+            if (unitOfTimeAsGenericMonth != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+                return result;
+            }
+
+            var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
+            if (unitOfTimeAsGenericQuarter != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsGenericQuarter.Year:D4}-{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+                return result;
+            }
+
+            var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
+            if (unitOfTimeAsGenericYear != null)
+            {
+                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType]}-{unitOfTimeAsGenericYear.Year:D4}");
+                return result;
+            }
+
+            throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
         }
 
         private static CalendarDay Plus(this CalendarDay unitOfTime, int unitsToAdd)
