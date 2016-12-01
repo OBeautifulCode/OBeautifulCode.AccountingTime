@@ -274,7 +274,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{this.Year}-{(int)this.MonthNumber:D2}-{(int)this.DayOfMonth:D2}");
+            return Invariant($"{this.Year:D4}-{(int)this.MonthNumber:D2}-{(int)this.DayOfMonth:D2}");
         }
     }
 }
