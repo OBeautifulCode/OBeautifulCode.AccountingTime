@@ -10,6 +10,8 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
 
+    using static System.FormattableString;
+
     /// <summary>
     /// Extension methods on <see cref="ReportingPeriod{T}"/>.
     /// </summary>
@@ -204,6 +206,32 @@ namespace OBeautifulCode.AccountingTime
             }
 
             return allReportingPeriods;
+        }
+
+        /// <summary>
+        /// Serializes a <see cref="IReportingPeriodInclusive{UnitOfTime}"/> to a string.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to serialize.</param>
+        /// <returns>
+        /// Gets a string representation of a reporting period that can be deserialized
+        /// into the same reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static string SerializeToString(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var reportingPeriodInclusive = reportingPeriod as IReportingPeriodInclusive<UnitOfTime>;
+            if (reportingPeriodInclusive != null)
+            {
+                var result = Invariant($"rpi({reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()})");
+                return result;
+            }
+
+            throw new NotSupportedException("this type of reporting period is not supported: " + reportingPeriod.GetType());
         }
     }
 }

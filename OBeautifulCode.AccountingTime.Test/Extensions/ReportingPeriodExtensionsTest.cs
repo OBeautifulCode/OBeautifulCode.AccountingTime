@@ -8,6 +8,8 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using AutoFakeItEasy;
 
@@ -2337,6 +2339,41 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
                 new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2019)),
                 new ReportingPeriodInclusive<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
+        }
+
+        [Fact]
+        public static void SerializeToString__Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.SerializeToString(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void SerializeToString__Should_return_expected_serialized_string_representation_of_reportingPeriod___When_reportingPeriod_is_a_IReportingPeriodInclusive()
+        {
+            // Arrange
+            var reportingPeriods = new Dictionary<string, IReportingPeriodInclusive<UnitOfTime>>
+            {
+                { "rpi(cd-2017-05-17,cd-2018-12-09)", new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
+                { "rpi(cm-2017-05,cm-2018-12)", new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
+                { "rpi(fm-2017-05,fm-2018-12)", new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
+                { "rpi(gm-2017-05,gm-2018-12)", new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
+                { "rpi(cq-2017-2,cq-2018-4)", new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
+                { "rpi(fq-2017-2,fq-2018-4)", new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
+                { "rpi(gq-2017-2,gq-2018-4)", new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
+                { "rpi(cy-2017,cy-2018)", new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
+                { "rpi(fy-2017,fy-2018)", new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
+                { "rpi(gy-2017,gy-2018)", new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2018)) }
+            };
+
+            // Act
+            var serialized = reportingPeriods.Select(_ => new { Actual = _.Value.SerializeToString(), Expected = _.Key }).ToList();
+
+            // Assert
+            serialized.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
         // ReSharper restore InconsistentNaming
