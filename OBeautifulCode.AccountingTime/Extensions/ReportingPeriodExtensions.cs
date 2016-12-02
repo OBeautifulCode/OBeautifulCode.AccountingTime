@@ -25,7 +25,6 @@ namespace OBeautifulCode.AccountingTime
         /// If the unit-of-time is equal to one of the endpoints of the reporting period,
         /// that unit-of-time is considered to be within the reporting period.
         /// </remarks>
-        /// <typeparam name="T">The type of unit-of-time/reporting period.</typeparam>
         /// <param name="unitOfTime">The unit-of-time to check against a reporting period.</param>
         /// <param name="reportingPeriod">The reporting period.</param>
         /// <returns>
@@ -35,8 +34,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The logic is different based on the type of reporting period (inclusive, exclusive, etc.)")]
-        public static bool IsInReportingPeriod<T>(this T unitOfTime, IReportingPeriodInclusive<T> reportingPeriod)
-            where T : UnitOfTime
+        public static bool IsInReportingPeriod(this UnitOfTime unitOfTime, IReportingPeriodInclusive<UnitOfTime> reportingPeriod)
         {
             if (unitOfTime == null)
             {
@@ -72,7 +70,6 @@ namespace OBeautifulCode.AccountingTime
         /// If the endpoint of one reporting period is the same as the endpoint
         /// of the second reporting period, the reporting periods are deemed to overlap.
         /// </remarks>
-        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
         /// <param name="reportingPeriod1">A reporting period.</param>
         /// <param name="reportingPeriod2">A second reporting period to check for overlap against the first reporting period.</param>
         /// <returns>
@@ -81,8 +78,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
-        public static bool HasOverlapWith<T>(this IReportingPeriodInclusive<T> reportingPeriod1, IReportingPeriodInclusive<T> reportingPeriod2)
-            where T : UnitOfTime
+        public static bool HasOverlapWith(this IReportingPeriodInclusive<UnitOfTime> reportingPeriod1, IReportingPeriodInclusive<UnitOfTime> reportingPeriod2)
         {
             if (reportingPeriod1 == null)
             {
@@ -111,21 +107,19 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Gets the number of distinct <typeparamref name="T"/> contained within a specified reporting period.
+        /// Gets the number of distinct units-of-time contained within a specified reporting period.
         /// For example, a reporting period of 2Q2017-4Q2017, contains 3 distinct quarters.
         /// </summary>
         /// <remarks>
         /// The endpoints are considered one unit each, unless they are the same, in which case
         /// there is a total of 1 unit within the reporting period.
         /// </remarks>
-        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
         /// <param name="reportingPeriod">The reporting period.</param>
         /// <returns>
         /// The number of units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static int NumberOfUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
-            where T : UnitOfTime
+        public static int NumberOfUnitsWithin(this IReportingPeriodInclusive<UnitOfTime> reportingPeriod)
         {
             var result = GetUnitsWithin(reportingPeriod).Count;
             return result;
