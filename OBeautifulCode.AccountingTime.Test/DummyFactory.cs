@@ -143,6 +143,13 @@ namespace OBeautifulCode.AccountingTime.Test
                     return new ReportingPeriodInclusive<UnitOfTime>(end, start);
                 });
 
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriodInclusive<UnitOfTime>>(
+                () =>
+                {
+                    var result = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+                    return result;
+                });
+
             AddDummyCreatorForReportingPeriodInclusive<CalendarDay>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarQuarter>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarMonth>();
@@ -184,6 +191,13 @@ namespace OBeautifulCode.AccountingTime.Test
                     }
 
                     return new ReportingPeriodInclusive<T>(end, start);
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriodInclusive<T>>(
+                () =>
+                {
+                    var result = A.Dummy<ReportingPeriodInclusive<T>>();
+                    return result;
                 });
         }
     }
