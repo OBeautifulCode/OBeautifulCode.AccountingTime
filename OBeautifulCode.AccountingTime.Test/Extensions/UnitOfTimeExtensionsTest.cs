@@ -98,7 +98,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.Plus<UnitOfTime>(null, A.Dummy<int>()));
+            var ex = Record.Exception(() => UnitOfTimeExtensions.Plus(null, A.Dummy<int>()));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -927,7 +927,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetFirstCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.GetFirstCalendarDay<CalendarUnitOfTime>(null));
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetFirstCalendarDay(null));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -1010,7 +1010,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetLastCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.GetLastCalendarDay<CalendarUnitOfTime>(null));
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetLastCalendarDay(null));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();

@@ -100,13 +100,11 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time to add to.</param>
         /// <param name="unitsToAdd">The number of units to add (use negative numbers to subtract units).</param>
-        /// <typeparam name="T">The type of the unit-of-time.</typeparam>
         /// <returns>
         /// The result of adding the specified number of units to the specified units-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static UnitOfTime Plus<T>(this T unitOfTime, int unitsToAdd)
-            where T : UnitOfTime
+        public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd)
         {
             if (unitOfTime == null)
             {
@@ -278,13 +276,11 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the first calendar day in the specified calendar-based unit-of-time.
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time.</param>
-        /// <typeparam name="T">The type of calendar-based unit-of-time.</typeparam>
         /// <returns>
         /// The first calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static CalendarDay GetFirstCalendarDay<T>(this T unitOfTime)
-            where T : CalendarUnitOfTime
+        public static CalendarDay GetFirstCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
@@ -322,13 +318,11 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the last calendar day in the specified calendar-based unit-of-time.
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time.</param>
-        /// <typeparam name="T">The type of calendar-based unit-of-time.</typeparam>
         /// <returns>
         /// The last calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static CalendarDay GetLastCalendarDay<T>(this T unitOfTime)
-            where T : CalendarUnitOfTime
+        public static CalendarDay GetLastCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
