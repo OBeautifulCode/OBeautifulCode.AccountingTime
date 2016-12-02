@@ -9,6 +9,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
 
     using static System.FormattableString;
 
@@ -226,6 +228,99 @@ namespace OBeautifulCode.AccountingTime
             }
 
             throw new NotSupportedException("this type of reporting period is not supported: " + reportingPeriod.GetType());
+        }
+
+        /// <summary>
+        /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
+        /// </summary>
+        /// <typeparam name="TReportingPeriod">The type of reporting period.</typeparam>
+        /// <typeparam name="TReportingPeriodUnitOfTime">The unit-of-time used to define the start and end of the reporting period.</typeparam>
+        /// <param name="reportingPeriod">The serialized reperiod period string to deserialize.</param>
+        /// <returns>
+        /// Gets a reporting period deserialized from it's string representation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
+        /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
+        public static TReportingPeriod DeserializeFromString<TReportingPeriod, TReportingPeriodUnitOfTime>(this string reportingPeriod)
+            where TReportingPeriod : class, IReportingPeriod<TReportingPeriodUnitOfTime>
+            where TReportingPeriodUnitOfTime : UnitOfTime
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (string.IsNullOrWhiteSpace(reportingPeriod))
+            {
+                throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
+            }
+
+            string errorMessage = "Cannot deserialize string; it is not valid reporting period.";
+            if (!reportingPeriod.EndsWith(")", StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            reportingPeriod = reportingPeriod.Remove(reportingPeriod.Length - 1, 1);
+
+            Type serializedType;
+            if (reportingPeriod.StartsWith("rpi(",  StringComparison.Ordinal))
+            {
+                serializedType = typeof(ReportingPeriodInclusive<TReportingPeriodUnitOfTime>);
+                reportingPeriod = reportingPeriod.Remove(0, 4);
+            }
+            else
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            var returnType = typeof(TReportingPeriod);
+
+            if (!returnType.IsAssignableFrom(serializedType))
+            {
+                throw new InvalidOperationException(Invariant($"The unit-of-time appears to be a {serializedType.Name} which cannot be casted to a {returnType.Name}."));
+            }
+
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {serializedType.Name} but it is malformed.");
+            var tokens = reportingPeriod.Split(',');
+            if (tokens.Length != 2)
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            if (tokens.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            TReportingPeriodUnitOfTime start;
+            TReportingPeriodUnitOfTime end;
+            try
+            {
+                start = tokens[0].DeserializeFromSortableString<TReportingPeriodUnitOfTime>();
+                end = tokens[1].DeserializeFromSortableString<TReportingPeriodUnitOfTime>();
+            }
+            catch (InvalidOperationException)
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            if (serializedType == typeof(ReportingPeriodInclusive<TReportingPeriodUnitOfTime>))
+            {
+                try
+                {
+                    var result = new ReportingPeriodInclusive<TReportingPeriodUnitOfTime>(start, end);
+                    return result as TReportingPeriod;
+                }
+                catch (ArgumentException)
+                {
+                    throw new InvalidOperationException(errorMessage);
+                }
+            }
+
+            throw new NotSupportedException("this type of reporting period is not supported: " + serializedType);
         }
     }
 }

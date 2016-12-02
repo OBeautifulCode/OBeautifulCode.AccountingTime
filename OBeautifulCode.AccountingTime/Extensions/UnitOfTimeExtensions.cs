@@ -514,7 +514,7 @@ namespace OBeautifulCode.AccountingTime
             var serializationFormat = serializationFormats.Single();
             var serializedType = serializationFormat.Key;
             var returnType = typeof(T);
-            if (!serializedType.IsCastableTo(returnType))
+            if (!returnType.IsAssignableFrom(serializedType))
             {
                 throw new InvalidOperationException(Invariant($"The unit-of-time appears to be a {serializedType.Name} which cannot be casted to a {returnType.Name}."));
             }
@@ -853,16 +853,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             return enumValue;
-        }
-
-        private static bool IsCastableTo(this Type from, Type to)
-        {
-            if (to.IsAssignableFrom(from))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private class SerializationFormat
