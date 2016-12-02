@@ -197,19 +197,19 @@ namespace OBeautifulCode.AccountingTime
             }
 
             int offset;
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Fourth)
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
             {
                 offset = 1;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Third)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
             {
                 offset = 2;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Second)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
             {
                 offset = 3;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.First)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
             {
                 offset = 0;
             }
@@ -246,19 +246,19 @@ namespace OBeautifulCode.AccountingTime
             }
 
             int offset;
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Fourth)
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
             {
                 offset = -1;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Third)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
             {
                 offset = -2;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Second)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
             {
                 offset = -3;
             }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.First)
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
             {
                 offset = 0;
             }

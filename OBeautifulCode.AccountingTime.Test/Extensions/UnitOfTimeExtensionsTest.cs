@@ -380,16 +380,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_add_calendar_quarters___When_parameter_unitOfTime_is_a_CalendarQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
-            var systemUnderTest = new CalendarQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new CalendarQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new CalendarQuarter(2016, QuarterNumber.Third);
-            var expectedUnitOfTime2 = new CalendarQuarter(2016, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new CalendarQuarter(2017, QuarterNumber.First);
-            var expectedUnitOfTime4 = new CalendarQuarter(2017, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new CalendarQuarter(2017, QuarterNumber.Third);
-            var expectedUnitOfTime6 = new CalendarQuarter(2017, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new CalendarQuarter(2018, QuarterNumber.First);
-            var expectedUnitOfTime8 = new CalendarQuarter(2018, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new CalendarQuarter(2016, QuarterNumber.Q3);
+            var expectedUnitOfTime2 = new CalendarQuarter(2016, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new CalendarQuarter(2017, QuarterNumber.Q1);
+            var expectedUnitOfTime4 = new CalendarQuarter(2017, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new CalendarQuarter(2017, QuarterNumber.Q3);
+            var expectedUnitOfTime6 = new CalendarQuarter(2017, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new CalendarQuarter(2018, QuarterNumber.Q1);
+            var expectedUnitOfTime8 = new CalendarQuarter(2018, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(1);
@@ -416,16 +416,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_subtract_calendar_quarters___When_parameter_unitOfTime_is_a_CalendarQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
-            var systemUnderTest = new CalendarQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new CalendarQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new CalendarQuarter(2016, QuarterNumber.First);
-            var expectedUnitOfTime2 = new CalendarQuarter(2015, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new CalendarQuarter(2015, QuarterNumber.Third);
-            var expectedUnitOfTime4 = new CalendarQuarter(2015, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new CalendarQuarter(2015, QuarterNumber.First);
-            var expectedUnitOfTime6 = new CalendarQuarter(2014, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new CalendarQuarter(2014, QuarterNumber.Third);
-            var expectedUnitOfTime8 = new CalendarQuarter(2014, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new CalendarQuarter(2016, QuarterNumber.Q1);
+            var expectedUnitOfTime2 = new CalendarQuarter(2015, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new CalendarQuarter(2015, QuarterNumber.Q3);
+            var expectedUnitOfTime4 = new CalendarQuarter(2015, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new CalendarQuarter(2015, QuarterNumber.Q1);
+            var expectedUnitOfTime6 = new CalendarQuarter(2014, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new CalendarQuarter(2014, QuarterNumber.Q3);
+            var expectedUnitOfTime8 = new CalendarQuarter(2014, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(-1);
@@ -465,16 +465,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_add_fiscal_quarters___When_parameter_unitOfTime_is_a_FiscalQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
-            var systemUnderTest = new FiscalQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new FiscalQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new FiscalQuarter(2016, QuarterNumber.Third);
-            var expectedUnitOfTime2 = new FiscalQuarter(2016, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new FiscalQuarter(2017, QuarterNumber.First);
-            var expectedUnitOfTime4 = new FiscalQuarter(2017, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new FiscalQuarter(2017, QuarterNumber.Third);
-            var expectedUnitOfTime6 = new FiscalQuarter(2017, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new FiscalQuarter(2018, QuarterNumber.First);
-            var expectedUnitOfTime8 = new FiscalQuarter(2018, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new FiscalQuarter(2016, QuarterNumber.Q3);
+            var expectedUnitOfTime2 = new FiscalQuarter(2016, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new FiscalQuarter(2017, QuarterNumber.Q1);
+            var expectedUnitOfTime4 = new FiscalQuarter(2017, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new FiscalQuarter(2017, QuarterNumber.Q3);
+            var expectedUnitOfTime6 = new FiscalQuarter(2017, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new FiscalQuarter(2018, QuarterNumber.Q1);
+            var expectedUnitOfTime8 = new FiscalQuarter(2018, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(1);
@@ -501,16 +501,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_subtract_fiscal_quarters___When_parameter_unitOfTime_is_a_FiscalQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
-            var systemUnderTest = new FiscalQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new FiscalQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new FiscalQuarter(2016, QuarterNumber.First);
-            var expectedUnitOfTime2 = new FiscalQuarter(2015, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new FiscalQuarter(2015, QuarterNumber.Third);
-            var expectedUnitOfTime4 = new FiscalQuarter(2015, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new FiscalQuarter(2015, QuarterNumber.First);
-            var expectedUnitOfTime6 = new FiscalQuarter(2014, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new FiscalQuarter(2014, QuarterNumber.Third);
-            var expectedUnitOfTime8 = new FiscalQuarter(2014, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new FiscalQuarter(2016, QuarterNumber.Q1);
+            var expectedUnitOfTime2 = new FiscalQuarter(2015, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new FiscalQuarter(2015, QuarterNumber.Q3);
+            var expectedUnitOfTime4 = new FiscalQuarter(2015, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new FiscalQuarter(2015, QuarterNumber.Q1);
+            var expectedUnitOfTime6 = new FiscalQuarter(2014, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new FiscalQuarter(2014, QuarterNumber.Q3);
+            var expectedUnitOfTime8 = new FiscalQuarter(2014, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(-1);
@@ -550,16 +550,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_add_generic_quarters___When_parameter_unitOfTime_is_a_GenericQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
-            var systemUnderTest = new GenericQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new GenericQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new GenericQuarter(2016, QuarterNumber.Third);
-            var expectedUnitOfTime2 = new GenericQuarter(2016, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new GenericQuarter(2017, QuarterNumber.First);
-            var expectedUnitOfTime4 = new GenericQuarter(2017, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new GenericQuarter(2017, QuarterNumber.Third);
-            var expectedUnitOfTime6 = new GenericQuarter(2017, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new GenericQuarter(2018, QuarterNumber.First);
-            var expectedUnitOfTime8 = new GenericQuarter(2018, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new GenericQuarter(2016, QuarterNumber.Q3);
+            var expectedUnitOfTime2 = new GenericQuarter(2016, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new GenericQuarter(2017, QuarterNumber.Q1);
+            var expectedUnitOfTime4 = new GenericQuarter(2017, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new GenericQuarter(2017, QuarterNumber.Q3);
+            var expectedUnitOfTime6 = new GenericQuarter(2017, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new GenericQuarter(2018, QuarterNumber.Q1);
+            var expectedUnitOfTime8 = new GenericQuarter(2018, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(1);
@@ -586,16 +586,16 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus___Should_subtract_generic_quarters___When_parameter_unitOfTime_is_a_GenericQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
-            var systemUnderTest = new GenericQuarter(2016, QuarterNumber.Second);
+            var systemUnderTest = new GenericQuarter(2016, QuarterNumber.Q2);
 
-            var expectedUnitOfTime1 = new GenericQuarter(2016, QuarterNumber.First);
-            var expectedUnitOfTime2 = new GenericQuarter(2015, QuarterNumber.Fourth);
-            var expectedUnitOfTime3 = new GenericQuarter(2015, QuarterNumber.Third);
-            var expectedUnitOfTime4 = new GenericQuarter(2015, QuarterNumber.Second);
-            var expectedUnitOfTime5 = new GenericQuarter(2015, QuarterNumber.First);
-            var expectedUnitOfTime6 = new GenericQuarter(2014, QuarterNumber.Fourth);
-            var expectedUnitOfTime7 = new GenericQuarter(2014, QuarterNumber.Third);
-            var expectedUnitOfTime8 = new GenericQuarter(2014, QuarterNumber.Second);
+            var expectedUnitOfTime1 = new GenericQuarter(2016, QuarterNumber.Q1);
+            var expectedUnitOfTime2 = new GenericQuarter(2015, QuarterNumber.Q4);
+            var expectedUnitOfTime3 = new GenericQuarter(2015, QuarterNumber.Q3);
+            var expectedUnitOfTime4 = new GenericQuarter(2015, QuarterNumber.Q2);
+            var expectedUnitOfTime5 = new GenericQuarter(2015, QuarterNumber.Q1);
+            var expectedUnitOfTime6 = new GenericQuarter(2014, QuarterNumber.Q4);
+            var expectedUnitOfTime7 = new GenericQuarter(2014, QuarterNumber.Q3);
+            var expectedUnitOfTime8 = new GenericQuarter(2014, QuarterNumber.Q2);
 
             // Act
             var actualUnitOfTime1 = systemUnderTest.Plus(-1);
@@ -808,10 +808,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             // note: See green and yellow highlighted area in embedded spreadsheet FiscalQuarterToCalendarQuarter.xlsx
-            var calQuarter2 = new CalendarQuarter(2013, QuarterNumber.Second);
-            var calQuarter1 = new CalendarQuarter(2013, QuarterNumber.First);
-            var calQuarter3 = new CalendarQuarter(2013, QuarterNumber.Third);
-            var calQuarter4 = new CalendarQuarter(2013, QuarterNumber.Fourth);
+            var calQuarter2 = new CalendarQuarter(2013, QuarterNumber.Q2);
+            var calQuarter1 = new CalendarQuarter(2013, QuarterNumber.Q1);
+            var calQuarter3 = new CalendarQuarter(2013, QuarterNumber.Q3);
+            var calQuarter4 = new CalendarQuarter(2013, QuarterNumber.Q4);
 
             // Act
             var fiscalQuarter1a = calQuarter1.ToFiscalQuarter((QuarterNumber)4);
@@ -964,10 +964,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetFirstCalendarDay___Should_return_first_day_of_quarter___When_parameter_unitOfTime_is_of_type_CalendarQuarter()
         {
             // Arrange
-            var quarter1 = new CalendarQuarter(2016, QuarterNumber.First);
-            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Second);
-            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Third);
-            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Fourth);
+            var quarter1 = new CalendarQuarter(2016, QuarterNumber.Q1);
+            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Q2);
+            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Q3);
+            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Q4);
 
             var expectedDay1 = new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One);
             var expectedDay2 = new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One);
@@ -1056,10 +1056,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetLastCalendarDay___Should_return_last_day_of_quarter___When_parameter_unitOfTime_is_of_type_CalendarQuarter()
         {
             // Arrange
-            var quarter1 = new CalendarQuarter(2016, QuarterNumber.First);
-            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Second);
-            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Third);
-            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Fourth);
+            var quarter1 = new CalendarQuarter(2016, QuarterNumber.Q1);
+            var quarter2 = new CalendarQuarter(2016, QuarterNumber.Q2);
+            var quarter3 = new CalendarQuarter(2016, QuarterNumber.Q3);
+            var quarter4 = new CalendarQuarter(2016, QuarterNumber.Q4);
 
             var expectedDay1 = new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne);
             var expectedDay2 = new CalendarDay(2016, MonthOfYear.June, DayOfMonth.Thirty);
@@ -1225,10 +1225,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsToDate___Should_return_all_quarters_from_1Q_to_lastUnitOfTimeInYear___When_lastUnitOfTimeInYear_is_of_type_CalendarQuarter()
         {
             // Arrange
-            var lastUnitOfTimeInYear1 = new CalendarQuarter(2016, QuarterNumber.First);
-            var lastUnitOfTimeInYear2 = new CalendarQuarter(2016, QuarterNumber.Second);
-            var lastUnitOfTimeInYear3 = new CalendarQuarter(2016, QuarterNumber.Third);
-            var lastUnitOfTimeInYear4 = new CalendarQuarter(2016, QuarterNumber.Fourth);
+            var lastUnitOfTimeInYear1 = new CalendarQuarter(2016, QuarterNumber.Q1);
+            var lastUnitOfTimeInYear2 = new CalendarQuarter(2016, QuarterNumber.Q2);
+            var lastUnitOfTimeInYear3 = new CalendarQuarter(2016, QuarterNumber.Q3);
+            var lastUnitOfTimeInYear4 = new CalendarQuarter(2016, QuarterNumber.Q4);
 
             var expectedUnitsToDate1 = new List<CalendarQuarter> { lastUnitOfTimeInYear1 };
             var expectedUnitsToDate2 = new List<CalendarQuarter> { lastUnitOfTimeInYear1, lastUnitOfTimeInYear2 };
@@ -1252,10 +1252,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsToDate___Should_return_all_quarters_from_1Q_to_lastUnitOfTimeInYear___When_lastUnitOfTimeInYear_is_of_type_FiscalQuarter()
         {
             // Arrange
-            var lastUnitOfTimeInYear1 = new FiscalQuarter(2016, QuarterNumber.First);
-            var lastUnitOfTimeInYear2 = new FiscalQuarter(2016, QuarterNumber.Second);
-            var lastUnitOfTimeInYear3 = new FiscalQuarter(2016, QuarterNumber.Third);
-            var lastUnitOfTimeInYear4 = new FiscalQuarter(2016, QuarterNumber.Fourth);
+            var lastUnitOfTimeInYear1 = new FiscalQuarter(2016, QuarterNumber.Q1);
+            var lastUnitOfTimeInYear2 = new FiscalQuarter(2016, QuarterNumber.Q2);
+            var lastUnitOfTimeInYear3 = new FiscalQuarter(2016, QuarterNumber.Q3);
+            var lastUnitOfTimeInYear4 = new FiscalQuarter(2016, QuarterNumber.Q4);
 
             var expectedUnitsToDate1 = new List<FiscalQuarter> { lastUnitOfTimeInYear1 };
             var expectedUnitsToDate2 = new List<FiscalQuarter> { lastUnitOfTimeInYear1, lastUnitOfTimeInYear2 };
@@ -1279,10 +1279,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsToDate___Should_return_all_quarters_from_1Q_to_lastUnitOfTimeInYear___When_lastUnitOfTimeInYear_is_of_type_GenericQuarter()
         {
             // Arrange
-            var lastUnitOfTimeInYear1 = new GenericQuarter(2016, QuarterNumber.First);
-            var lastUnitOfTimeInYear2 = new GenericQuarter(2016, QuarterNumber.Second);
-            var lastUnitOfTimeInYear3 = new GenericQuarter(2016, QuarterNumber.Third);
-            var lastUnitOfTimeInYear4 = new GenericQuarter(2016, QuarterNumber.Fourth);
+            var lastUnitOfTimeInYear1 = new GenericQuarter(2016, QuarterNumber.Q1);
+            var lastUnitOfTimeInYear2 = new GenericQuarter(2016, QuarterNumber.Q2);
+            var lastUnitOfTimeInYear3 = new GenericQuarter(2016, QuarterNumber.Q3);
+            var lastUnitOfTimeInYear4 = new GenericQuarter(2016, QuarterNumber.Q4);
 
             var expectedUnitsToDate1 = new List<GenericQuarter> { lastUnitOfTimeInYear1 };
             var expectedUnitsToDate2 = new List<GenericQuarter> { lastUnitOfTimeInYear1, lastUnitOfTimeInYear2 };
@@ -1434,10 +1434,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cq-2017-1", new CalendarQuarter(2017, QuarterNumber.First) },
-                { "cq-2017-2", new CalendarQuarter(2017, QuarterNumber.Second) },
-                { "cq-2017-3", new CalendarQuarter(2017, QuarterNumber.Third) },
-                { "cq-2017-4", new CalendarQuarter(2017, QuarterNumber.Fourth) }
+                { "cq-2017-1", new CalendarQuarter(2017, QuarterNumber.Q1) },
+                { "cq-2017-2", new CalendarQuarter(2017, QuarterNumber.Q2) },
+                { "cq-2017-3", new CalendarQuarter(2017, QuarterNumber.Q3) },
+                { "cq-2017-4", new CalendarQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -1453,10 +1453,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "fq-2017-1", new FiscalQuarter(2017, QuarterNumber.First) },
-                { "fq-2017-2", new FiscalQuarter(2017, QuarterNumber.Second) },
-                { "fq-2017-3", new FiscalQuarter(2017, QuarterNumber.Third) },
-                { "fq-2017-4", new FiscalQuarter(2017, QuarterNumber.Fourth) }
+                { "fq-2017-1", new FiscalQuarter(2017, QuarterNumber.Q1) },
+                { "fq-2017-2", new FiscalQuarter(2017, QuarterNumber.Q2) },
+                { "fq-2017-3", new FiscalQuarter(2017, QuarterNumber.Q3) },
+                { "fq-2017-4", new FiscalQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -1472,10 +1472,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "gq-2017-1", new GenericQuarter(2017, QuarterNumber.First) },
-                { "gq-2017-2", new GenericQuarter(2017, QuarterNumber.Second) },
-                { "gq-2017-3", new GenericQuarter(2017, QuarterNumber.Third) },
-                { "gq-2017-4", new GenericQuarter(2017, QuarterNumber.Fourth) }
+                { "gq-2017-1", new GenericQuarter(2017, QuarterNumber.Q1) },
+                { "gq-2017-2", new GenericQuarter(2017, QuarterNumber.Q2) },
+                { "gq-2017-3", new GenericQuarter(2017, QuarterNumber.Q3) },
+                { "gq-2017-4", new GenericQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2029,10 +2029,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarQuarter>
             {
-                { "cq-2001-1", new CalendarQuarter(2001, QuarterNumber.First) },
-                { "cq-2002-2", new CalendarQuarter(2002, QuarterNumber.Second) },
-                { "cq-2010-3", new CalendarQuarter(2010, QuarterNumber.Third) },
-                { "cq-2016-4", new CalendarQuarter(2016, QuarterNumber.Fourth) }
+                { "cq-2001-1", new CalendarQuarter(2001, QuarterNumber.Q1) },
+                { "cq-2002-2", new CalendarQuarter(2002, QuarterNumber.Q2) },
+                { "cq-2010-3", new CalendarQuarter(2010, QuarterNumber.Q3) },
+                { "cq-2016-4", new CalendarQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2052,10 +2052,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, FiscalQuarter>
             {
-                { "fq-2001-1", new FiscalQuarter(2001, QuarterNumber.First) },
-                { "fq-2002-2", new FiscalQuarter(2002, QuarterNumber.Second) },
-                { "fq-2010-3", new FiscalQuarter(2010, QuarterNumber.Third) },
-                { "fq-2016-4", new FiscalQuarter(2016, QuarterNumber.Fourth) }
+                { "fq-2001-1", new FiscalQuarter(2001, QuarterNumber.Q1) },
+                { "fq-2002-2", new FiscalQuarter(2002, QuarterNumber.Q2) },
+                { "fq-2010-3", new FiscalQuarter(2010, QuarterNumber.Q3) },
+                { "fq-2016-4", new FiscalQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2075,10 +2075,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, GenericQuarter>
             {
-                { "gq-2001-1", new GenericQuarter(2001, QuarterNumber.First) },
-                { "gq-2002-2", new GenericQuarter(2002, QuarterNumber.Second) },
-                { "gq-2010-3", new GenericQuarter(2010, QuarterNumber.Third) },
-                { "gq-2016-4", new GenericQuarter(2016, QuarterNumber.Fourth) }
+                { "gq-2001-1", new GenericQuarter(2001, QuarterNumber.Q1) },
+                { "gq-2002-2", new GenericQuarter(2002, QuarterNumber.Q2) },
+                { "gq-2010-3", new GenericQuarter(2010, QuarterNumber.Q3) },
+                { "gq-2016-4", new GenericQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act

@@ -966,8 +966,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void ToString___Should_return_friendly_string_representation_of_object___When_called()
         {
             // Arrange
-            var systemUnderTest1 = new GenericQuarter(2017, QuarterNumber.First);
-            var systemUnderTest2 = new GenericQuarter(2017, QuarterNumber.Fourth);
+            var systemUnderTest1 = new GenericQuarter(2017, QuarterNumber.Q1);
+            var systemUnderTest2 = new GenericQuarter(2017, QuarterNumber.Q4);
 
             // Act
             var toString1 = systemUnderTest1.ToString();
