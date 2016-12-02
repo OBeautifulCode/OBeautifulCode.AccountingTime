@@ -213,6 +213,13 @@ namespace OBeautifulCode.AccountingTime
         {
             return Invariant($"FY{this.Year:D4}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new FiscalYear(this.Year);
+            return clone;
+        }
     }
 }
 

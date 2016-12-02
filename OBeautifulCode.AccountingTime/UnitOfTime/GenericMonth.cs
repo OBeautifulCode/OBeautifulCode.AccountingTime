@@ -244,6 +244,13 @@ namespace OBeautifulCode.AccountingTime
 
             return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericMonth(this.Year, this.MonthNumber);
+            return clone;
+        }
     }
 }
 

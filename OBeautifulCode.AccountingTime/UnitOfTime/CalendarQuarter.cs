@@ -227,6 +227,13 @@ namespace OBeautifulCode.AccountingTime
         {
             return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new CalendarQuarter(this.Year, this.QuarterNumber);
+            return clone;
+        }
     }
 }
 

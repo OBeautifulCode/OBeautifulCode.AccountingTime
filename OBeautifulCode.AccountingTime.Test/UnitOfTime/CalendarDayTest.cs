@@ -1220,6 +1220,20 @@ namespace OBeautifulCode.AccountingTime.Test
             toString2.Should().Be("2017-02-03");
         }
 
+        [Fact]
+        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<CalendarDay>();
+
+            // Act
+            var clone = systemUnderTest.Clone();
+
+            // Assert
+            clone.Should().Be(systemUnderTest);
+            clone.Should().NotBeSameAs(systemUnderTest);
+        }
+
         // ReSharper disable ObjectCreationAsStatement
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "OBeautifulCode.AccountingTime.CalendarDay", Justification = "In this case we are trying to determine if creating the object will throw.")]
         private static CalendarDay TweakComponentOfCalendarDay(this CalendarDay calendarDay, CalendarDayComponent componentToTweak)

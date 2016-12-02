@@ -978,6 +978,20 @@ namespace OBeautifulCode.AccountingTime.Test
             toString2.Should().Be("4Q2017");
         }
 
+        [Fact]
+        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<CalendarQuarter>();
+
+            // Act
+            var clone = systemUnderTest.Clone();
+
+            // Assert
+            clone.Should().Be(systemUnderTest);
+            clone.Should().NotBeSameAs(systemUnderTest);
+        }
+
         private static CalendarQuarter TweakComponentOfCalendarQuarter(this CalendarQuarter calendarQuarter, CalendarQuarterComponent componentToTweak)
         {
             if (componentToTweak == CalendarQuarterComponent.Quarter)

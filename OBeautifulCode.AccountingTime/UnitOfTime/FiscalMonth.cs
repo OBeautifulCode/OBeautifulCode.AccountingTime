@@ -244,6 +244,13 @@ namespace OBeautifulCode.AccountingTime
 
             return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of FY{this.Year:D4}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new FiscalMonth(this.Year, this.MonthNumber);
+            return clone;
+        }
     }
 }
 

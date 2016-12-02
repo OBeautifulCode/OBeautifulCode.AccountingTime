@@ -213,6 +213,13 @@ namespace OBeautifulCode.AccountingTime
         {
             return Invariant($"{this.Year:D4}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericYear(this.Year);
+            return clone;
+        }
     }
 }
 

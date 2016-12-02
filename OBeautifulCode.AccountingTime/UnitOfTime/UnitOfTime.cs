@@ -28,6 +28,13 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of the same type as this object.</exception>
         public abstract int CompareTo(object obj);
+        /// <summary>
+        /// Deep clones this unit-of-time.
+        /// </summary>
+        /// <returns>
+        /// A deep clone of this unit-of-time.
+        /// </returns>
+        public abstract UnitOfTime Clone();
     }
 }
 

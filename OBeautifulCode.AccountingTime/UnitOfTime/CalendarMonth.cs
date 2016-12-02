@@ -232,6 +232,13 @@ namespace OBeautifulCode.AccountingTime
         {
             return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
         }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new CalendarMonth(this.Year, this.MonthOfYear);
+            return clone;
+        }
     }
 }
 

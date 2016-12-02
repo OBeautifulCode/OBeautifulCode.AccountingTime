@@ -847,6 +847,20 @@ namespace OBeautifulCode.AccountingTime.Test
             toString.Should().Be("FY2017");
         }
 
+        [Fact]
+        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiscalYear>();
+
+            // Act
+            var clone = systemUnderTest.Clone();
+
+            // Assert
+            clone.Should().Be(systemUnderTest);
+            clone.Should().NotBeSameAs(systemUnderTest);
+        }
+
         private static FiscalYear TweakYear(this FiscalYear fiscalYear)
         {
             var tweakedYear = A.Dummy<PositiveInteger>().ThatIs(y => y != fiscalYear.Year && y <= 9999);
