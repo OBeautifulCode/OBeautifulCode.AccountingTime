@@ -1345,6 +1345,16 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void SerializeToSortableString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.SerializeToSortableString(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
         public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarDay()
         {
             // Arrange
@@ -1524,6 +1534,625 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.DeserializeFromSortableString<UnitOfTime>(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_ArgumentException___When_parameter_unitOfTime_is_whitespace()
+        {
+            // Arrange
+            var unitsOfTime = new[] { string.Empty, "  ", "  \r\n " };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<ArgumentException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_parameter_unitOfTime_does_not_start_with_a_known_identifier_for_any_kind_of_unit_of_time()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cd", "cm", "cq", "cy", "fm", "fq", "fy", "gm", "gq", "gy",
+                "2015-11-11", "2017-03", "2017-1", "2017",
+                "cd2015-11-11", "cm2017-03", "cq2017-1", "cy2017",
+                "fm2017-03", "fq2017-1", "fy2017",
+                "gm2017-03", "gq2017-1", "gy2017"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_time_encoded_cannot_be_casted_to_specified_generic_type_parameter()
+        {
+            // Arrange
+            var allTypes = new[]
+            {
+                typeof(CalendarUnitOfTime), typeof(CalendarDay), typeof(CalendarMonth), typeof(CalendarQuarter), typeof(CalendarYear),
+                typeof(FiscalUnitOfTime), typeof(FiscalMonth), typeof(FiscalQuarter), typeof(FiscalYear),
+                typeof(GenericUnitOfTime), typeof(GenericQuarter), typeof(GenericQuarter), typeof(GenericYear)
+            };
+
+            var unitsOfTime = new Dictionary<string, IEnumerable<Type>>
+            {
+                { "cd-2015-11-11", allTypes.Where(_ => (_ != typeof(CalendarDay)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "cm-2017-03", allTypes.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "cq-2017-1", allTypes.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "cy-2017", allTypes.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "fm-2017-03", allTypes.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "fq-2017-1", allTypes.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "fy-2017", allTypes.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "gm-2017-03", allTypes.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
+                { "gq-2017-1", allTypes.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
+                { "gy-2017",  allTypes.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) }
+            };
+
+            var deserializeFromSortableString = typeof(UnitOfTimeExtensions).GetMethod(nameof(UnitOfTimeExtensions.DeserializeFromSortableString));
+
+            // Act
+            var exceptions = new List<Exception>();
+            foreach (var unitOfTime in unitsOfTime.Keys)
+            {
+                foreach (var type in unitsOfTime[unitOfTime])
+                {
+                    var genericMethod = deserializeFromSortableString.MakeGenericMethod(type);
+                    // ReSharper disable PossibleNullReferenceException
+                    exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { unitOfTime })).InnerException);
+                    // ReSharper restore PossibleNullReferenceException
+                }
+            }
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_has_the_wrong_number_of_tokens()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cd-2015-11-11-11", "cd-2015-11-11-", "cd-2015-11-", "cd-2015-11", "cd-2015-", "cd-2015", "cd-",
+                "cm-2017-03-03", "cm-2017-03-", "cm-2017-", "cm-2017", "cm-",
+                "cq-2017-1-3", "cq-2017-1-", "cq-2017-", "cq-2017", "cq-",
+                "cy-2017-2018", "cy-2017-", "cy-",
+                "fm-2017-03-03", "fm-2017-03-", "fm-2017-", "fm-2017", "fm-",
+                "fq-2017-1-3", "fq-2017-1-", "fq-2017-", "fq-2017", "fq-",
+                "fy-2017-2018", "fy-2017-", "fy-",
+                "gm-2017-03-03", "gm-2017-03-", "gm-2017-", "gm-2017", "gm-",
+                "gq-2017-1-3", "gq-2017-1-", "gq-2017-", "gq-2017", "gq-",
+                "gy-2017-2018", "gy-2017-", "gy-"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarDay()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cd-201a-11-11",
+                "cd-xxxx-11-11",
+                "cd-10000-11-11",
+                "cd-T001-11-11",
+                "cd-0-11-11",
+                "cd-200-11-11",
+                "cd-0000-11-11",
+                "cd-999-11-11",
+                "cd-2007-1-11",
+                "cd-2007-9-11",
+                "cd-2007-13-11",
+                "cd-2007-99-11",
+                "cd-2007-00-11",
+                "cd-2007-001-11",
+                "cd-2007-012-11",
+                "cd-2007-11-1",
+                "cd-2007-11-9",
+                "cd-2007-11-32",
+                "cd-2007-11-31",
+                "cd-2015-02-29",
+                "cd-2015-03-00",
+                "cd-2015-03-001",
+                "cd-2015-03-030"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarMonth()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cm-201a-11",
+                "cm-xxxx-11",
+                "cm-10000-11",
+                "cm-T001-11",
+                "cm-0-11",
+                "cm-200-11",
+                "cm-0000-11",
+                "cm-999-11",
+                "cm-2007-1",
+                "cm-2007-9",
+                "cm-2007-13",
+                "cm-2007-99",
+                "cm-2007-00",
+                "cm-2007-001",
+                "cm-2007-012"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_FiscalMonth()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "fm-201a-11",
+                "fm-xxxx-11",
+                "fm-10000-11",
+                "fm-T001-11",
+                "fm-0-11",
+                "fm-200-11",
+                "fm-0000-11",
+                "fm-999-11",
+                "fm-2007-1",
+                "fm-2007-9",
+                "fm-2007-13",
+                "fm-2007-99",
+                "fm-2007-00",
+                "fm-2007-001",
+                "fm-2007-012"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_GenericMonth()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "gm-201a-11",
+                "gm-xxxx-11",
+                "gm-10000-11",
+                "gm-T001-11",
+                "gm-0-11",
+                "gm-200-11",
+                "gm-0000-11",
+                "gm-999-11",
+                "gm-2007-1",
+                "gm-2007-9",
+                "gm-2007-13",
+                "gm-2007-99",
+                "gm-2007-00",
+                "gm-2007-001",
+                "gm-2007-012"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cq-201a-3",
+                "cq-xxxx-3",
+                "cq-10000-3",
+                "cq-T001-3",
+                "cq-0-3",
+                "cq-200-3",
+                "cq-0000-3",
+                "cq-999-3",
+                "cq-2007-01",
+                "cq-2007-00",
+                "cq-2007-004",
+                "cq-2007-5",
+                "cq-2007-31"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_FiscalQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "fq-201a-3",
+                "fq-xxxx-3",
+                "fq-10000-3",
+                "fq-T001-3",
+                "fq-0-3",
+                "fq-200-3",
+                "fq-0000-3",
+                "fq-999-3",
+                "fq-2007-01",
+                "fq-2007-00",
+                "fq-2007-004",
+                "fq-2007-5",
+                "fq-2007-31"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_GenericQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "gq-201a-3",
+                "gq-xxxx-3",
+                "gq-10000-3",
+                "gq-T001-3",
+                "gq-0-3",
+                "gq-200-3",
+                "gq-0000-3",
+                "gq-999-3",
+                "gq-2007-01",
+                "gq-2007-00",
+                "gq-2007-004",
+                "gq-2007-5",
+                "gq-2007-31"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarYear()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cy-201a",
+                "cy-xxxx",
+                "cy-10000",
+                "cy-T001",
+                "cy-0",
+                "cy-200",
+                "cy-0000",
+                "cy-999"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_FiscalYear()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "fy-201a",
+                "fy-xxxx",
+                "fy-10000",
+                "fy-T001",
+                "fy-0",
+                "fy-200",
+                "fy-0000",
+                "fy-999"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_GenericYear()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "gy-201a",
+                "gy-xxxx",
+                "gy-10000",
+                "gy-T001",
+                "gy-0",
+                "gy-200",
+                "gy-0000",
+                "gy-999"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_CalendarDay___When_unitOfTime_is_a_well_formed_CalendarDay()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, CalendarDay>
+            {
+                { "cd-2001-01-09", new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Nine) },
+                { "cd-2016-02-29", new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine) },
+                { "cd-2001-11-04", new CalendarDay(2001, MonthOfYear.November, DayOfMonth.Four) },
+                { "cd-2001-12-30", new CalendarDay(2001, MonthOfYear.December, DayOfMonth.Thirty) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarDay>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_CalendarMonth___When_unitOfTime_is_a_well_formed_CalendarMonth()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, CalendarMonth>
+            {
+                { "cm-2001-01", new CalendarMonth(2001, MonthOfYear.January) },
+                { "cm-2002-07", new CalendarMonth(2002, MonthOfYear.July) },
+                { "cm-2010-11", new CalendarMonth(2010, MonthOfYear.November) },
+                { "cm-2016-12", new CalendarMonth(2016, MonthOfYear.December) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarMonth>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_FiscalMonth___When_unitOfTime_is_a_well_formed_FiscalMonth()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, FiscalMonth>
+            {
+                { "fm-2001-01", new FiscalMonth(2001, MonthNumber.One) },
+                { "fm-2002-07", new FiscalMonth(2002, MonthNumber.Seven) },
+                { "fm-2010-11", new FiscalMonth(2010, MonthNumber.Eleven) },
+                { "fm-2016-12", new FiscalMonth(2016, MonthNumber.Twelve) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalMonth>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_GenericMonth___When_unitOfTime_is_a_well_formed_GenericMonth()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, GenericMonth>
+            {
+                { "gm-2001-01", new GenericMonth(2001, MonthNumber.One) },
+                { "gm-2002-07", new GenericMonth(2002, MonthNumber.Seven) },
+                { "gm-2010-11", new GenericMonth(2010, MonthNumber.Eleven) },
+                { "gm-2016-12", new GenericMonth(2016, MonthNumber.Twelve) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericMonth>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_CalendarQuarter___When_unitOfTime_is_a_well_formed_CalendarQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, CalendarQuarter>
+            {
+                { "cq-2001-1", new CalendarQuarter(2001, QuarterNumber.First) },
+                { "cq-2002-2", new CalendarQuarter(2002, QuarterNumber.Second) },
+                { "cq-2010-3", new CalendarQuarter(2010, QuarterNumber.Third) },
+                { "cq-2016-4", new CalendarQuarter(2016, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarQuarter>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_FiscalQuarter___When_unitOfTime_is_a_well_formed_FiscalQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, FiscalQuarter>
+            {
+                { "fq-2001-1", new FiscalQuarter(2001, QuarterNumber.First) },
+                { "fq-2002-2", new FiscalQuarter(2002, QuarterNumber.Second) },
+                { "fq-2010-3", new FiscalQuarter(2010, QuarterNumber.Third) },
+                { "fq-2016-4", new FiscalQuarter(2016, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalQuarter>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_GenericQuarter___When_unitOfTime_is_a_well_formed_GenericQuarter()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, GenericQuarter>
+            {
+                { "gq-2001-1", new GenericQuarter(2001, QuarterNumber.First) },
+                { "gq-2002-2", new GenericQuarter(2002, QuarterNumber.Second) },
+                { "gq-2010-3", new GenericQuarter(2010, QuarterNumber.Third) },
+                { "gq-2016-4", new GenericQuarter(2016, QuarterNumber.Fourth) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericQuarter>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_CalendarYear___When_unitOfTime_is_a_well_formed_CalendarYear()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, CalendarYear>
+            {
+                { "cy-2001", new CalendarYear(2001) },
+                { "cy-2016", new CalendarYear(2016) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarYear>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_FiscalYear___When_unitOfTime_is_a_well_formed_FiscalYear()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, FiscalYear>
+            {
+                { "fy-2001", new FiscalYear(2001) },
+                { "fy-2016", new FiscalYear(2016) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalYear>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_GenericYear___When_unitOfTime_is_a_well_formed_GenericYear()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, GenericYear>
+            {
+                { "gy-2001", new GenericYear(2001) },
+                { "gy-2016", new GenericYear(2016) }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericYear>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
         // ReSharper restore InconsistentNaming
