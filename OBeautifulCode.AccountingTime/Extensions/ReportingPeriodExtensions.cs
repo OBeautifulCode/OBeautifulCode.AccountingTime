@@ -10,7 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
+    using System.Reflection;
 
     using static System.FormattableString;
 
@@ -244,8 +244,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
         public static TReportingPeriod DeserializeFromString<TReportingPeriod, TReportingPeriodUnitOfTime>(this string reportingPeriod)
-            where TReportingPeriod : class, IReportingPeriod<TReportingPeriodUnitOfTime>
-            where TReportingPeriodUnitOfTime : UnitOfTime
+            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             if (reportingPeriod == null)
             {
@@ -265,10 +264,10 @@ namespace OBeautifulCode.AccountingTime
 
             reportingPeriod = reportingPeriod.Remove(reportingPeriod.Length - 1, 1);
 
-            Type serializedType;
+            Type nonGenericTypeToCreate;
             if (reportingPeriod.StartsWith("rpi(",  StringComparison.Ordinal))
             {
-                serializedType = typeof(ReportingPeriodInclusive<TReportingPeriodUnitOfTime>);
+                nonGenericTypeToCreate = typeof(ReportingPeriodInclusive<>);
                 reportingPeriod = reportingPeriod.Remove(0, 4);
             }
             else
@@ -276,14 +275,17 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            var returnType = typeof(TReportingPeriod);
-
-            if (!returnType.IsAssignableFrom(serializedType))
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is not assignable to type of reporting period requested.");
+            var requestedType = typeof(TReportingPeriod);
+            Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
+            var typeArgs = new[] { requestedUnitOfTimeType };
+            var genericTypeToCreate = nonGenericTypeToCreate.MakeGenericType(typeArgs);
+            if (!requestedType.IsAssignableFrom(genericTypeToCreate))
             {
-                throw new InvalidOperationException(Invariant($"The unit-of-time appears to be a {serializedType.Name} which cannot be casted to a {returnType.Name}."));
+                throw new InvalidOperationException(errorMessage);
             }
 
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {serializedType.Name} but it is malformed.");
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is malformed.");
             var tokens = reportingPeriod.Split(',');
             if (tokens.Length != 2)
             {
@@ -295,32 +297,49 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            TReportingPeriodUnitOfTime start;
-            TReportingPeriodUnitOfTime end;
+            UnitOfTime start;
+            UnitOfTime end;
             try
             {
-                start = tokens[0].DeserializeFromSortableString<TReportingPeriodUnitOfTime>();
-                end = tokens[1].DeserializeFromSortableString<TReportingPeriodUnitOfTime>();
+                start = tokens[0].DeserializeFromSortableString<UnitOfTime>();
+                end = tokens[1].DeserializeFromSortableString<UnitOfTime>();
             }
             catch (InvalidOperationException)
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
-            if (serializedType == typeof(ReportingPeriodInclusive<TReportingPeriodUnitOfTime>))
+            // ReSharper disable UseMethodIsInstanceOfType
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
+            if (!requestedUnitOfTimeType.IsAssignableFrom(start.GetType()))
             {
-                try
-                {
-                    var result = new ReportingPeriodInclusive<TReportingPeriodUnitOfTime>(start, end);
-                    return result as TReportingPeriod;
-                }
-                catch (ArgumentException)
-                {
-                    throw new InvalidOperationException(errorMessage);
-                }
+                throw new InvalidOperationException(errorMessage);
             }
 
-            throw new NotSupportedException("this type of reporting period is not supported: " + serializedType);
+            if (!requestedUnitOfTimeType.IsAssignableFrom(end.GetType()))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            // ReSharper restore UseMethodIsInstanceOfType
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is malformed.  The following error occured when attempting to create it: ");
+            if (nonGenericTypeToCreate == typeof(ReportingPeriodInclusive<>))
+            {
+                object result;
+
+                try
+                {
+                    result = Activator.CreateInstance(genericTypeToCreate, start, end);
+                }
+                catch (TargetInvocationException ex)
+                {
+                    throw new InvalidOperationException(errorMessage + ex.InnerException?.Message);
+                }
+
+                return result as TReportingPeriod;
+            }
+
+            throw new InvalidOperationException("should not get here");
         }
     }
 }

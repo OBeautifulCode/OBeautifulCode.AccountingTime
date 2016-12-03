@@ -2426,7 +2426,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_reporting_period_encoded_cannot_be_casted_to_return_type()
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_reporting_period_encoded_cannot_be_assigned_to_the_return_type()
         {
             // Arrange
             var allTypes = new[]
@@ -2462,6 +2462,50 @@ namespace OBeautifulCode.AccountingTime.Test
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { unitOfTime })).InnerException);
                     // ReSharper restore PossibleNullReferenceException
                 }
+            }
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_encoded_cannot_be_assigned_to_the_return_types_unit_of_time()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new { ReportingPeriod = "rpi(cd-2015-11-11,cd-2016-11-11)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cm-2017-03,cm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fm-2017-03,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gm-2017-03,gm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fq-2017-3,fq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cy-2017,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fy-2017,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gy-2017,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cd-2015-11-11,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cq-2017-3,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gm-2017-03,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cd-2015-11-11,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gy-2018,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(gy-2017,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
+            };
+
+            var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
+
+            // Act
+            var exceptions = new List<Exception>();
+            foreach (var reportingPeriod in reportingPeriods)
+            {
+                var genericMethod = deserializeFromString.MakeGenericMethod(reportingPeriod.ReportingPeriodType, reportingPeriod.UnitOfTimeType);
+                // ReSharper disable PossibleNullReferenceException
+                exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { reportingPeriod.ReportingPeriod })).InnerException);
+                // ReSharper restore PossibleNullReferenceException
             }
 
             // Assert
@@ -2556,18 +2600,26 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_throw_InvalidOperationException___When_token_representing_start_and_end_of_reporting_period_do_not_deserialize_into_same_concrete_type()
         {
             // Arrange
-            var unitsOfTime = new[]
+            var unitsOfTime1 = new[]
             {
                 "rpi(cm-2017-04,cd-2017-04-11)",
                 "rpi(fq-2017-4,gq-2018-1)",
                 "rpi(cy-2017,fm-2018-05)"
             };
 
+            var unitsOfTime2 = new[]
+            {
+                "rpi(cm-2017-04,cd-2017-04-11)",
+                "rpi(cy-2017,cm-2018-05)"
+            };
+
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions1 = unitsOfTime1.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions2 = unitsOfTime2.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, UnitOfTime>())).ToList();
 
             // Assert
-            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+            exceptions1.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+            exceptions2.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
