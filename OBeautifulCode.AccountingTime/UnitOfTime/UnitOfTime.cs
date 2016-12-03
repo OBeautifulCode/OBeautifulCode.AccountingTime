@@ -28,6 +28,30 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of the same type as this object.</exception>
         public abstract int CompareTo(object obj);
+
+        /// <summary>
+        /// Deep clones a unit-of-time.
+        /// </summary>
+        /// <typeparam name="T">The type of unit-of-time to return.</typeparam>
+        /// <returns>
+        /// A deep clone of the specified unit-of-time.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">The cloned object cannot be casted to the specified generic type.</exception>
+        public T Clone<T>()
+            where T : UnitOfTime
+        {
+            var clone = this.Clone();
+
+            var cloneType = clone.GetType();
+            var returnType = typeof(T);
+            if (!returnType.IsAssignableFrom(cloneType))
+            {
+                throw new InvalidOperationException("The cloned object cannot be casted to the specified generic type.");
+            }
+
+            return clone as T;
+        }
+
         /// <summary>
         /// Deep clones this unit-of-time.
         /// </summary>
