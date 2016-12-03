@@ -3038,6 +3038,11 @@ namespace OBeautifulCode.AccountingTime.Test
             : base(start, end)
             {
             }
+
+            public override IReportingPeriod<T> Clone()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         // ReSharper restore InconsistentNaming

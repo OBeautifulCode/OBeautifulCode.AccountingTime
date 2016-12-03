@@ -151,6 +151,12 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <inheritdoc />
+        public override IReportingPeriod<T> Clone()
+        {
+            throw new NotImplementedException();
+        }
+
         private static bool IsEqual(IReportingPeriodInclusive<T> left, IReportingPeriodInclusive<T> right)
         {
             if (ReferenceEquals(left, right))

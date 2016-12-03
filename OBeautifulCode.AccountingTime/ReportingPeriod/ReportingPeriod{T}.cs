@@ -56,6 +56,16 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public T End { get; private set; }
 
+        /// <inheritdoc />
+        public TReportingPeriod Clone<TReportingPeriod>()
+            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public abstract IReportingPeriod<T> Clone();
+
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
     }
 }
