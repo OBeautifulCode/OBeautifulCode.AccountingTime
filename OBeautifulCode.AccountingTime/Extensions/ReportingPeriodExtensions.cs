@@ -234,7 +234,6 @@ namespace OBeautifulCode.AccountingTime
         /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
         /// </summary>
         /// <typeparam name="TReportingPeriod">The type of reporting period.</typeparam>
-        /// <typeparam name="TReportingPeriodUnitOfTime">The unit-of-time used to define the start and end of the reporting period.</typeparam>
         /// <param name="reportingPeriod">The serialized reperiod period string to deserialize.</param>
         /// <returns>
         /// Gets a reporting period deserialized from it's string representation.
@@ -243,7 +242,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
-        public static TReportingPeriod DeserializeFromString<TReportingPeriod, TReportingPeriodUnitOfTime>(this string reportingPeriod)
+        public static TReportingPeriod DeserializeFromString<TReportingPeriod>(this string reportingPeriod)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             if (reportingPeriod == null)

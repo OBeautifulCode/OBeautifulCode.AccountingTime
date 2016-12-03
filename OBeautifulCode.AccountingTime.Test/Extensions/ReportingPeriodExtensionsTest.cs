@@ -2385,7 +2385,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>(null));
+            var ex = Record.Exception(() => ReportingPeriodExtensions.DeserializeFromString<IReportingPeriod<UnitOfTime>>(null));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -2398,7 +2398,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriods = new[] { string.Empty, "  ", "  \r\n " };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<ArgumentException>());
@@ -2419,7 +2419,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2431,8 +2431,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var allTypes = new[]
             {
-                new { ReportingPeriodType = typeof(ReportingPeriodTest<UnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriodType = typeof(IReportingPeriodTest<UnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriodType = typeof(ReportingPeriodTest<UnitOfTime>) },
+                new { ReportingPeriodType = typeof(IReportingPeriodTest<UnitOfTime>) },
             };
 
             var unitsOfTime = new[]
@@ -2457,7 +2457,7 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 foreach (var type in allTypes)
                 {
-                    var genericMethod = deserializeFromString.MakeGenericMethod(type.ReportingPeriodType, type.UnitOfTimeType);
+                    var genericMethod = deserializeFromString.MakeGenericMethod(type.ReportingPeriodType);
                     // ReSharper disable PossibleNullReferenceException
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { unitOfTime })).InnerException);
                     // ReSharper restore PossibleNullReferenceException
@@ -2474,26 +2474,26 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new[]
             {
-                new { ReportingPeriod = "rpi(cd-2015-11-11,cd-2016-11-11)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cm-2017-03,cm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fm-2017-03,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gm-2017-03,gm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fq-2017-3,fq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cy-2017,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fy-2017,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gy-2017,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cd-2015-11-11,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cq-2017-3,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gm-2017-03,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(cd-2015-11-11,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gy-2018,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>), UnitOfTimeType = typeof(UnitOfTime) },
-                new { ReportingPeriod = "rpi(gy-2017,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>), UnitOfTimeType = typeof(UnitOfTime) },
+                new { ReportingPeriod = "rpi(cd-2015-11-11,cd-2016-11-11)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(cm-2017-03,cm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(fm-2017-03,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "rpi(gm-2017-03,gm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>) },
+                new { ReportingPeriod = "rpi(cq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "rpi(fq-2017-3,fq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
+                new { ReportingPeriod = "rpi(gq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>) },
+                new { ReportingPeriod = "rpi(cy-2017,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>) },
+                new { ReportingPeriod = "rpi(fy-2017,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(gy-2017,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
+                new { ReportingPeriod = "rpi(cd-2015-11-11,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(cq-2017-3,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "rpi(gm-2017-03,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>) },
+                new { ReportingPeriod = "rpi(fq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "rpi(fq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
+                new { ReportingPeriod = "rpi(cd-2015-11-11,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>) },
+                new { ReportingPeriod = "rpi(gy-2018,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>) },
+                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
+                new { ReportingPeriod = "rpi(gy-2017,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -2502,7 +2502,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var exceptions = new List<Exception>();
             foreach (var reportingPeriod in reportingPeriods)
             {
-                var genericMethod = deserializeFromString.MakeGenericMethod(reportingPeriod.ReportingPeriodType, reportingPeriod.UnitOfTimeType);
+                var genericMethod = deserializeFromString.MakeGenericMethod(reportingPeriod.ReportingPeriodType);
                 // ReSharper disable PossibleNullReferenceException
                 exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { reportingPeriod.ReportingPeriod })).InnerException);
                 // ReSharper restore PossibleNullReferenceException
@@ -2530,7 +2530,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2560,7 +2560,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2590,7 +2590,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2614,8 +2614,8 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions1 = unitsOfTime1.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
-            var exceptions2 = unitsOfTime2.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions1 = unitsOfTime1.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
+            var exceptions2 = unitsOfTime2.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>())).ToList();
 
             // Assert
             exceptions1.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2635,7 +2635,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>())).ToList();
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
@@ -2649,20 +2649,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarDay>, CalendarDay>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarDay>, CalendarDay>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarDay>, CalendarDay>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarDay>, CalendarDay>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarDay>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarDay>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarDay>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarDay>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2688,20 +2688,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2001, MonthOfYear.January), new CalendarMonth(2001, MonthOfYear.February));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarMonth>, CalendarMonth>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarMonth>, CalendarMonth>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarMonth>, CalendarMonth>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarMonth>, CalendarMonth>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarMonth>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarMonth>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarMonth>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2727,20 +2727,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2001, MonthNumber.One), new FiscalMonth(2001, MonthNumber.Two));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalMonth>, FiscalMonth>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalMonth>, FiscalMonth>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalMonth>, FiscalMonth>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalMonth>, FiscalMonth>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalMonth>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalMonth>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalMonth>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2766,20 +2766,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2001, MonthNumber.One), new GenericMonth(2001, MonthNumber.Two));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericMonth>, GenericMonth>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericMonth>, GenericMonth>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericMonth>, GenericMonth>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericMonth>, GenericMonth>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericMonth>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericMonth>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericMonth>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2805,20 +2805,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2001, QuarterNumber.Q1), new CalendarQuarter(2001, QuarterNumber.Q2));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarQuarter>, CalendarQuarter>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarQuarter>, CalendarQuarter>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarQuarter>, CalendarQuarter>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarQuarter>, CalendarQuarter>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarQuarter>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarQuarter>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarQuarter>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2844,20 +2844,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2001, QuarterNumber.Q1), new FiscalQuarter(2001, QuarterNumber.Q2));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalQuarter>, FiscalQuarter>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalQuarter>, FiscalQuarter>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalQuarter>, FiscalQuarter>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalQuarter>, FiscalQuarter>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalQuarter>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalQuarter>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalQuarter>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2883,20 +2883,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2001, QuarterNumber.Q1), new GenericQuarter(2001, QuarterNumber.Q2));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericQuarter>, GenericQuarter>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericQuarter>, GenericQuarter>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericQuarter>, GenericQuarter>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericQuarter>, GenericQuarter>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericQuarter>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericQuarter>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericQuarter>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2922,20 +2922,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2001), new CalendarYear(2002));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>, CalendarUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>, CalendarUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarYear>, CalendarYear>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarYear>, CalendarYear>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarYear>, CalendarYear>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarYear>, CalendarYear>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarYear>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarYear>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarYear>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -2961,20 +2961,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2001), new FiscalYear(2002));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>, FiscalUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>, FiscalUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalYear>, FiscalYear>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalYear>, FiscalYear>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalYear>, FiscalYear>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalYear>, FiscalYear>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalYear>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalYear>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalYear>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
@@ -3000,20 +3000,20 @@ namespace OBeautifulCode.AccountingTime.Test
             var expected = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2001), new GenericYear(2002));
 
             // Act
-            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>, UnitOfTime>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>, UnitOfTime>();
+            var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>, GenericUnitOfTime>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>, GenericUnitOfTime>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericYear>, GenericYear>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericYear>, GenericYear>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericYear>, GenericYear>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericYear>, GenericYear>();
+            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericYear>>();
+            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericYear>>();
+            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericYear>>();
+            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
