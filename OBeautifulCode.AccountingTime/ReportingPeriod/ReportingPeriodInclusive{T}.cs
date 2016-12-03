@@ -14,6 +14,7 @@ namespace OBeautifulCode.AccountingTime
     using static System.FormattableString;
 
     /// <inheritdoc />
+    [Serializable]
     public class ReportingPeriodInclusive<T> : ReportingPeriod<T>, IReportingPeriodInclusive<T>, IEquatable<ReportingPeriodInclusive<T>>, IEquatable<IReportingPeriodInclusive<T>>
         where T : UnitOfTime
     {

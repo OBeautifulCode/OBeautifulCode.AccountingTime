@@ -13,6 +13,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a unit of time, such as a month, quarter, or year.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
+    [Serializable]
     public abstract class UnitOfTime : IComparable
     {
         /// <summary>

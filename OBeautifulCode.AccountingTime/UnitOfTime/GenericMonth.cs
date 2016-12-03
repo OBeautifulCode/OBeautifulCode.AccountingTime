@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic month in a specified year.
     /// </summary>
+    [Serializable]
     public class GenericMonth : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<GenericMonth>, IComparable<GenericMonth>
     {
         /// <summary>

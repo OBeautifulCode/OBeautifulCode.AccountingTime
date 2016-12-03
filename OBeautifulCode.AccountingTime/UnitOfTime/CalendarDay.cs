@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a calendar day.
     /// </summary>
+    [Serializable]
     public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
     {
         /// <summary>

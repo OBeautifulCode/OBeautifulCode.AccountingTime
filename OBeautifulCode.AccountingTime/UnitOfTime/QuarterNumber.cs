@@ -7,9 +7,12 @@
 // ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
+    using System;
+
     /// <summary>
     /// A quarter number.
     /// </summary>
+    [Serializable]
     public enum QuarterNumber
     {
         /// <summary>

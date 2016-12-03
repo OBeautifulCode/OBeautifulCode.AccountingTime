@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic year.
     /// </summary>
+    [Serializable]
     public class GenericYear : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<GenericYear>, IComparable<GenericYear>
     {
         /// <summary>

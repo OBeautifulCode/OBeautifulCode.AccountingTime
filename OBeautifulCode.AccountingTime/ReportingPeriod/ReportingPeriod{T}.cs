@@ -10,6 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <inheritdoc />
+    [Serializable]
     public abstract class ReportingPeriod<T> : IReportingPeriod<T>
         where T : UnitOfTime
     {

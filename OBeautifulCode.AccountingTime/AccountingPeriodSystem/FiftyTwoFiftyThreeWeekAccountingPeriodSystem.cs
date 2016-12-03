@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
     /// </summary>
+    [Serializable]
     public class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>
