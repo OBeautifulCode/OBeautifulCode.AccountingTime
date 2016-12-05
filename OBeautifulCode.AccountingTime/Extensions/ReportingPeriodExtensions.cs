@@ -263,10 +263,10 @@ namespace OBeautifulCode.AccountingTime
 
             reportingPeriod = reportingPeriod.Remove(reportingPeriod.Length - 1, 1);
 
-            Type nonGenericTypeToCreate;
+            Type unboundGenericType;
             if (reportingPeriod.StartsWith("rpi(",  StringComparison.Ordinal))
             {
-                nonGenericTypeToCreate = typeof(ReportingPeriodInclusive<>);
+                unboundGenericType = typeof(ReportingPeriodInclusive<>);
                 reportingPeriod = reportingPeriod.Remove(0, 4);
             }
             else
@@ -274,17 +274,17 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is not assignable to type of reporting period requested.");
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
             var requestedType = typeof(TReportingPeriod);
             Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
             var typeArgs = new[] { requestedUnitOfTimeType };
-            var genericTypeToCreate = nonGenericTypeToCreate.MakeGenericType(typeArgs);
+            var genericTypeToCreate = unboundGenericType.MakeGenericType(typeArgs);
             if (!requestedType.IsAssignableFrom(genericTypeToCreate))
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is malformed.");
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.");
             var tokens = reportingPeriod.Split(',');
             if (tokens.Length != 2)
             {
@@ -309,7 +309,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             // ReSharper disable UseMethodIsInstanceOfType
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
             if (!requestedUnitOfTimeType.IsAssignableFrom(start.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
@@ -321,8 +321,8 @@ namespace OBeautifulCode.AccountingTime
             }
 
             // ReSharper restore UseMethodIsInstanceOfType
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {nonGenericTypeToCreate.Name} but it is malformed.  The following error occured when attempting to create it: ");
-            if (nonGenericTypeToCreate == typeof(ReportingPeriodInclusive<>))
+            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.  The following error occured when attempting to create it: ");
+            if (unboundGenericType == typeof(ReportingPeriodInclusive<>))
             {
                 object result;
 

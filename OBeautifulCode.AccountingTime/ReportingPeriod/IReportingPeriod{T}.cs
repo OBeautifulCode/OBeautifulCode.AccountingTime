@@ -28,12 +28,13 @@ namespace OBeautifulCode.AccountingTime
         T End { get; }
 
         /// <summary>
-        /// Deep clones a reporting period..
+        /// Deep clones a reporting period.
         /// </summary>
         /// <typeparam name="TReportingPeriod">The type of reporting-period to return.</typeparam>
         /// <returns>
         /// A deep clone of the specified reporting period.
         /// </returns>
+        /// <exception cref="InvalidOperationException">A clone of this reporting-period cannot be assigned to the specified type.</exception>
         TReportingPeriod Clone<TReportingPeriod>()
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>;
 
