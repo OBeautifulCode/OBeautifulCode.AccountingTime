@@ -154,7 +154,10 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override IReportingPeriod<T> Clone()
         {
-            throw new NotImplementedException();
+            var startClone = this.Start.Clone<T>();
+            var endClone = this.End.Clone<T>();
+            var result = new ReportingPeriodInclusive<T>(startClone, endClone);
+            return result;
         }
 
         private static bool IsEqual(IReportingPeriodInclusive<T> left, IReportingPeriodInclusive<T> right)

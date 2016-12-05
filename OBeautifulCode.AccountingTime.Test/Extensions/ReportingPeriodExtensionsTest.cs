@@ -3041,7 +3041,10 @@ namespace OBeautifulCode.AccountingTime.Test
 
             public override IReportingPeriod<T> Clone()
             {
-                throw new NotImplementedException();
+                var startClone = this.Start.Clone<T>();
+                var endClone = this.End.Clone<T>();
+                var result = new ReportingPeriodTest<T>(startClone, endClone);
+                return result;
             }
         }
 

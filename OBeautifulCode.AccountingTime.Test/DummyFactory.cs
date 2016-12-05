@@ -27,6 +27,9 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(QuarterNumber.Invalid);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
+            AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<CalendarUnitOfTime>();
+            AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<FiscalUnitOfTime>();
+            AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<GenericUnitOfTime>();
 
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAMonth>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAQuarter>();
@@ -130,26 +133,10 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var start = A.Dummy<UnitOfTime>();
-                    var end = A.Dummy<UnitOfTime>().ThatIs(u => u.GetType() == start.GetType());
-                    if ((dynamic)start <= (dynamic)end)
-                    {
-                        return new ReportingPeriodInclusive<UnitOfTime>(start, end);
-                    }
-
-                    return new ReportingPeriodInclusive<UnitOfTime>(end, start);
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriodInclusive<UnitOfTime>>(
-                () =>
-                {
-                    var result = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
-                    return result;
-                });
-
+            AddDummyCreatorForReportingPeriodInclusive<UnitOfTime>();
+            AddDummyCreatorForReportingPeriodInclusive<CalendarUnitOfTime>();
+            AddDummyCreatorForReportingPeriodInclusive<FiscalUnitOfTime>();
+            AddDummyCreatorForReportingPeriodInclusive<GenericUnitOfTime>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarDay>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarQuarter>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarMonth>();
@@ -184,7 +171,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var start = A.Dummy<T>();
-                    var end = A.Dummy<T>();
+                    var end = A.Dummy<T>().ThatIs(u => u.GetType() == start.GetType());
                     if ((dynamic)start <= (dynamic)end)
                     {
                         return new ReportingPeriodInclusive<T>(start, end);

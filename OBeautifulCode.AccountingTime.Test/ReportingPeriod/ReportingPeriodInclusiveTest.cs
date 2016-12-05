@@ -8,6 +8,8 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using AutoFakeItEasy;
 
@@ -726,6 +728,39 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             toString1.Should().Be("2017-11-30 to 2018-03-24");
             toString2.Should().Be("2017-11-30 to 2018-03-24");
+        }
+
+        [Fact]
+        public static void Clone___Should_return_deep_clone_of_reporting_period___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new List<IReportingPeriod<UnitOfTime>>
+            {
+                A.Dummy<ReportingPeriodInclusive<UnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarDay>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarYear>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalYear>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericYear>>(),
+            };
+
+            // Act
+            var clones = reportingPeriods.Select(_ => new { Original = _, Clone = _.Clone() }).ToList();
+
+            // Assert
+            clones.ForEach(_ => _.Clone.Should().Be(_.Original));
+            clones.ForEach(_ => _.Clone.Should().BeOfType(_.Original.GetType()));
+            clones.ForEach(_ => _.Clone.Should().NotBeSameAs(_.Original));
+            clones.ForEach(_ => _.Clone.Start.Should().NotBeSameAs(_.Original.Start));
+            clones.ForEach(_ => _.Clone.End.Should().NotBeSameAs(_.Original.End));
         }
 
         // ReSharper restore InconsistentNaming
