@@ -15,6 +15,8 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
+    using Naos.Recipes.TupleInitializers;
+
     using Xunit;
 
     public static class ReportingPeriodTest
@@ -98,7 +100,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Clone_with_type_parameter___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_cloned_cannot_be_assigned_to_the_return_types_unit_of_time()
         {
             // Arrange
-            var reportingPeriods = new Dictionary<IReportingPeriod<UnitOfTime>, Type>
+            var reportingPeriods = new List<Tuple<IReportingPeriod<UnitOfTime>, Type>>
             {
                 { A.Dummy<ReportingPeriodInclusive<CalendarUnitOfTime>>(), typeof(ReportingPeriodInclusive<FiscalUnitOfTime>) },
                 { A.Dummy<ReportingPeriodInclusive<FiscalUnitOfTime>>(), typeof(ReportingPeriodInclusive<GenericUnitOfTime>) },
@@ -119,10 +121,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var exceptions = new List<Exception>();
             foreach (var reportingPeriod in reportingPeriods)
             {
-                var cloneMethod = reportingPeriod.Key.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
-                var genericMethod = cloneMethod.MakeGenericMethod(reportingPeriod.Value);
+                var cloneMethod = reportingPeriod.Item1.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
+                var genericMethod = cloneMethod.MakeGenericMethod(reportingPeriod.Item2);
                 // ReSharper disable PossibleNullReferenceException
-                exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod.Key, null)).InnerException);
+                exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod.Item1, null)).InnerException);
                 // ReSharper restore PossibleNullReferenceException
             }
 
