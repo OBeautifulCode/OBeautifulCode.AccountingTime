@@ -22,11 +22,6 @@ namespace OBeautifulCode.AccountingTime.Test
     public static class ReportingPeriodExtensionsTest
     {
         // ReSharper disable InconsistentNaming
-        private interface IReportingPeriodTest<out T> : IReportingPeriod<T>
-        where T : UnitOfTime
-        {
-        }
-
         [Fact]
         public static void IsInReportingPeriod___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
@@ -2426,16 +2421,43 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
         public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_reporting_period_encoded_cannot_be_assigned_to_the_return_type()
         {
             // Arrange
             var allTypes = new[]
             {
-                new { ReportingPeriodType = typeof(ReportingPeriodTest<UnitOfTime>) },
-                new { ReportingPeriodType = typeof(IReportingPeriodTest<UnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<UnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<UnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnitOfTime>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarDay>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarDay>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarMonth>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarMonth>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarQuarter>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarQuarter>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarYear>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarYear>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalMonth>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalMonth>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalQuarter>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalQuarter>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalYear>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalYear>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericMonth>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericMonth>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericQuarter>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericQuarter>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericYear>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) }
             };
 
-            var unitsOfTime = new[]
+            var reportingPeriods = new[]
             {
                 "rpi(cd-2015-11-11,cd-2016-11-11)",
                 "rpi(cm-2017-03,cm-2017-04)",
@@ -2453,13 +2475,13 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Act
             var exceptions = new List<Exception>();
-            foreach (var unitOfTime in unitsOfTime)
+            foreach (var reportingPeriod in reportingPeriods)
             {
                 foreach (var type in allTypes)
                 {
                     var genericMethod = deserializeFromString.MakeGenericMethod(type.ReportingPeriodType);
                     // ReSharper disable PossibleNullReferenceException
-                    exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { unitOfTime })).InnerException);
+                    exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { reportingPeriod })).InnerException);
                     // ReSharper restore PossibleNullReferenceException
                 }
             }
@@ -2645,6 +2667,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarDay_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(cd-2001-01-10,cd-2016-02-29)";
             var expected = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
 
@@ -2684,6 +2707,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarMonth_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(cm-2001-01,cm-2001-02)";
             var expected = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2001, MonthOfYear.January), new CalendarMonth(2001, MonthOfYear.February));
 
@@ -2723,6 +2747,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalMonth_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(fm-2001-01,fm-2001-02)";
             var expected = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2001, MonthNumber.One), new FiscalMonth(2001, MonthNumber.Two));
 
@@ -2762,6 +2787,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericMonth_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(gm-2001-01,gm-2001-02)";
             var expected = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2001, MonthNumber.One), new GenericMonth(2001, MonthNumber.Two));
 
@@ -2801,6 +2827,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarQuarter_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(cq-2001-1,cq-2001-2)";
             var expected = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2001, QuarterNumber.Q1), new CalendarQuarter(2001, QuarterNumber.Q2));
 
@@ -2840,6 +2867,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalQuarter_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(fq-2001-1,fq-2001-2)";
             var expected = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2001, QuarterNumber.Q1), new FiscalQuarter(2001, QuarterNumber.Q2));
 
@@ -2879,6 +2907,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericQuarter_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(gq-2001-1,gq-2001-2)";
             var expected = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2001, QuarterNumber.Q1), new GenericQuarter(2001, QuarterNumber.Q2));
 
@@ -2918,6 +2947,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarYear_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(cy-2001,cy-2002)";
             var expected = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2001), new CalendarYear(2002));
 
@@ -2957,6 +2987,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalYear_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(fy-2001,fy-2002)";
             var expected = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2001), new FiscalYear(2002));
 
@@ -2996,6 +3027,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericYear_string()
         {
+            // Arrange
             var reportingPeriod = "rpi(gy-2001,gy-2002)";
             var expected = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2001), new GenericYear(2002));
 
@@ -3029,23 +3061,6 @@ namespace OBeautifulCode.AccountingTime.Test
             deserialized10.Should().Be(expected);
             deserialized11.Should().Be(expected);
             deserialized12.Should().Be(expected);
-        }
-
-        private class ReportingPeriodTest<T> : ReportingPeriod<T>, IReportingPeriodTest<T>
-            where T : UnitOfTime
-        {
-            public ReportingPeriodTest(T start, T end)
-            : base(start, end)
-            {
-            }
-
-            public override IReportingPeriod<T> Clone()
-            {
-                var startClone = this.Start.Clone<T>();
-                var endClone = this.End.Clone<T>();
-                var result = new ReportingPeriodTest<T>(startClone, endClone);
-                return result;
-            }
         }
 
         // ReSharper restore InconsistentNaming
