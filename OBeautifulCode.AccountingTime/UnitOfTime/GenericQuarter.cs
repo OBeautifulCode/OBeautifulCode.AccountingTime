@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic quarter of a specified year.
     /// </summary>
+    [Serializable]
     public class GenericQuarter : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<GenericQuarter>, IComparable<GenericQuarter>
     {
         /// <summary>
@@ -225,7 +226,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{(int)this.QuarterNumber}Q{this.Year}");
+            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericQuarter(this.Year, this.QuarterNumber);
+            return clone;
         }
     }
 }

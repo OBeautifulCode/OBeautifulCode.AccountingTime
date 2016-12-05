@@ -10,6 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <inheritdoc />
+    [Serializable]
     public abstract class ReportingPeriod<T> : IReportingPeriod<T>
         where T : UnitOfTime
     {
@@ -56,6 +57,41 @@ namespace OBeautifulCode.AccountingTime
         public T End { get; private set; }
 
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
+
+        /// <inheritdoc />
+        public TReportingPeriod Clone<TReportingPeriod>()
+            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
+        {
+            var requestedType = typeof(TReportingPeriod);
+            Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
+
+            var thisUnboundGenericType = this.GetType().GetGenericTypeDefinition();
+            var typeArgs = new[] { requestedUnitOfTimeType };
+            var genericTypeToCreate = thisUnboundGenericType.MakeGenericType(typeArgs);
+
+            string errorMessage = "A clone of this reporting-period is not assignable to the type of reporting period requested.";
+            if (!requestedType.IsAssignableFrom(genericTypeToCreate))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            // ReSharper disable UseMethodIsInstanceOfType
+            if (!requestedUnitOfTimeType.IsAssignableFrom(this.Start.GetType()))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            if (!requestedUnitOfTimeType.IsAssignableFrom(this.End.GetType()))
+            {
+                throw new InvalidOperationException(errorMessage);
+            }
+
+            var result = Activator.CreateInstance(genericTypeToCreate, this.Start.Clone(), this.End.Clone());
+            return result as TReportingPeriod;
+        }
+
+        /// <inheritdoc />
+        public abstract IReportingPeriod<T> Clone();
     }
 }
 

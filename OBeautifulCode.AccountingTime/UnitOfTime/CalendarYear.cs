@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a calendar year.
     /// </summary>
+    [Serializable]
     public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
     {
         /// <summary>
@@ -211,7 +212,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"CY{this.Year}");
+            return Invariant($"CY{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new CalendarYear(this.Year);
+            return clone;
         }
     }
 }

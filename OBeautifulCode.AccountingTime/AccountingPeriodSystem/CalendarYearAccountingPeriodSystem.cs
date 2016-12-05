@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// A calendar year is 12 consecutive months beginning on January 1st and ending on December 31st.
     /// </summary>
+    [Serializable]
     public class CalendarYearAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <inheritdoc />

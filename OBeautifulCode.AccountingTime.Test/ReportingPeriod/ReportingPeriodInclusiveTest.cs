@@ -8,6 +8,8 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using AutoFakeItEasy;
 
@@ -104,7 +106,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        public static void EqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_true___When_both_sides_of_operator_are_null()
         {
             // Arrange
             ReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
@@ -120,7 +122,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        public static void EqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
         {
             // Arrange
             ReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
@@ -138,7 +140,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void EqualsOperator___Should_return_true___When_same_object_is_on_both_sides_of_operator()
+        public static void EqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_true___When_same_object_is_on_both_sides_of_operator()
         {
             // Arrange
             var systemUnderTest = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -155,7 +157,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
+        public static void EqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_false___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
@@ -179,7 +181,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
+        public static void EqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_true___When_objects_being_compared_have_same_property_values()
         {
             // Arrange
             var systemUnderTest1 = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -193,7 +195,93 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        public static void EqualsOperator_left_or_right_is_IReportingPeriod___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            IReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
+            ReportingPeriodInclusive<UnitOfTime> systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result1 = systemUnderTest1 == systemUnderTest2;
+            var result2 = systemUnderTest2 == systemUnderTest1;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void EqualsOperator_left_or_right_is_IReportingPeriod___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            IReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 == systemUnderTest2;
+            var result2 = systemUnderTest2 == systemUnderTest1;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void EqualsOperator_left_or_right_is_IReportingPeriod___Should_return_false___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<IReportingPeriodInclusive<CalendarDay>>();
+            var systemUnderTest1b = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
+
+            var systemUnderTest2a = A.Dummy<IReportingPeriodInclusive<FiscalQuarter>>();
+            var systemUnderTest2b = new ReportingPeriodInclusive<FiscalQuarter>(systemUnderTest2a.Start, A.Dummy<FiscalQuarter>().ThatIs(q => (q != systemUnderTest2a.End) && (q >= systemUnderTest2a.Start)));
+
+            var systemUnderTest3a = A.Dummy<IReportingPeriodInclusive<CalendarMonth>>();
+            var systemUnderTest3b = new ReportingPeriodInclusive<CalendarMonth>(A.Dummy<CalendarMonth>().ThatIs(m => (m != systemUnderTest3a.Start) && (m <= systemUnderTest3a.End)), systemUnderTest3a.End);
+
+            // Act
+            var result1a = systemUnderTest1a == systemUnderTest1b;
+            var result1b = systemUnderTest1b == systemUnderTest1a;
+
+            var result2a = systemUnderTest2a == systemUnderTest2b;
+            var result2b = systemUnderTest2b == systemUnderTest2a;
+
+            var result3a = systemUnderTest3a == systemUnderTest3b;
+            var result3b = systemUnderTest3b == systemUnderTest3a;
+
+            // Assert
+            result1a.Should().BeFalse();
+            result1b.Should().BeFalse();
+
+            result2a.Should().BeFalse();
+            result2b.Should().BeFalse();
+
+            result3a.Should().BeFalse();
+            result3b.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void EqualsOperator_left_or_right_is_IReportingPeriod___Should_return_true___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<IReportingPeriodInclusive<UnitOfTime>>();
+            var systemUnderTest2 = new ReportingPeriodInclusive<UnitOfTime>(systemUnderTest1.Start, systemUnderTest1.End);
+
+            // Act
+            var result1 = systemUnderTest1 == systemUnderTest2;
+            var result2 = systemUnderTest2 == systemUnderTest1;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_false___When_both_sides_of_operator_are_null()
         {
             // Arrange
             ReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
@@ -209,7 +297,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        public static void NotEqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
         {
             // Arrange
             ReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
@@ -227,7 +315,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_same_object_is_on_both_sides_of_operator()
+        public static void NotEqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_false___When_same_object_is_on_both_sides_of_operator()
         {
             // Arrange
             var systemUnderTest = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -244,7 +332,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
+        public static void NotEqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_true___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
@@ -268,7 +356,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
+        public static void NotEqualsOperator_neither_left_nor_right_are_IReportingPeriod___Should_return_false___When_objects_being_compared_have_same_property_values()
         {
             // Arrange
             var systemUnderTest1 = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -282,7 +370,93 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Equals___Should_return_false___When_calling_typed_overload_and_parameter_other_is_null()
+        public static void NotEqualsOperator_left_or_right_is_IReportingPeriod___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            IReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
+            ReportingPeriodInclusive<UnitOfTime> systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result1 = systemUnderTest1 != systemUnderTest2;
+            var result2 = systemUnderTest2 != systemUnderTest1;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void NotEqualsOperator_left_or_right_is_IReportingPeriod___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            IReportingPeriodInclusive<UnitOfTime> systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 != systemUnderTest2;
+            var result2 = systemUnderTest2 != systemUnderTest1;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void NotEqualsOperator_left_or_right_is_IReportingPeriod___Should_return_true___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<IReportingPeriodInclusive<CalendarDay>>();
+            var systemUnderTest1b = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
+
+            var systemUnderTest2a = A.Dummy<IReportingPeriodInclusive<FiscalQuarter>>();
+            var systemUnderTest2b = new ReportingPeriodInclusive<FiscalQuarter>(systemUnderTest2a.Start, A.Dummy<FiscalQuarter>().ThatIs(q => (q != systemUnderTest2a.End) && (q >= systemUnderTest2a.Start)));
+
+            var systemUnderTest3a = A.Dummy<IReportingPeriodInclusive<CalendarMonth>>();
+            var systemUnderTest3b = new ReportingPeriodInclusive<CalendarMonth>(A.Dummy<CalendarMonth>().ThatIs(m => (m != systemUnderTest3a.Start) && (m <= systemUnderTest3a.End)), systemUnderTest3a.End);
+
+            // Act
+            var result1a = systemUnderTest1a != systemUnderTest1b;
+            var result1b = systemUnderTest1b != systemUnderTest1a;
+
+            var result2a = systemUnderTest2a != systemUnderTest2b;
+            var result2b = systemUnderTest2b != systemUnderTest2a;
+
+            var result3a = systemUnderTest3a != systemUnderTest3b;
+            var result3b = systemUnderTest3b != systemUnderTest3a;
+
+            // Assert
+            result1a.Should().BeTrue();
+            result1b.Should().BeTrue();
+
+            result2a.Should().BeTrue();
+            result2b.Should().BeTrue();
+
+            result3a.Should().BeTrue();
+            result3b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator_left_or_right_is_IReportingPeriod___Should_return_false___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<IReportingPeriodInclusive<UnitOfTime>>();
+            var systemUnderTest2 = new ReportingPeriodInclusive<UnitOfTime>(systemUnderTest1.Start, systemUnderTest1.End);
+
+            // Act
+            var result1 = systemUnderTest1 != systemUnderTest2;
+            var result2 = systemUnderTest2 != systemUnderTest1;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals_for_ReportingPeriodInclusive___Should_return_false___When_calling_typed_overload_and_parameter_other_is_null()
         {
             // Arrange
             var systemUnderTest = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -295,7 +469,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Equals___Should_return_true___When_calling_typed_overload_and_parameter_other_is_same_object()
+        public static void Equals_for_ReportingPeriodInclusive___Should_return_true___When_calling_typed_overload_and_parameter_other_is_same_object()
         {
             // Arrange
             var systemUnderTest = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -308,7 +482,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Equals___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
+        public static void Equals_for_ReportingPeriodInclusive___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
@@ -332,7 +506,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Equals___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
+        public static void Equals_for_ReportingPeriodInclusive___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
         {
             // Arrange
             var systemUnderTest1 = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
@@ -340,6 +514,72 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Act
             var result = systemUnderTest1.Equals(systemUnderTest2);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals_for_IReportingPeriodInclusive___Should_return_false___When_calling_typed_overload_and_parameter_other_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<IReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            var result = systemUnderTest.Equals(null);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals_for_IReportingPeriodInclusive___Should_return_true___When_calling_typed_overload_and_parameter_other_is_same_object()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<IReportingPeriodInclusive<UnitOfTime>>();
+
+            // Act
+            // ReSharper disable EqualExpressionComparison
+            var result = systemUnderTest.Equals(systemUnderTest);
+            // ReSharper restore EqualExpressionComparison
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals_for_IReportingPeriodInclusive___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<IReportingPeriodInclusive<CalendarDay>>();
+            var systemUnderTest1b = A.Dummy<ReportingPeriodInclusive<CalendarDay>>();
+
+            var systemUnderTest2a = A.Dummy<IReportingPeriodInclusive<FiscalQuarter>>();
+            var systemUnderTest2b = new ReportingPeriodInclusive<FiscalQuarter>(systemUnderTest2a.Start, A.Dummy<FiscalQuarter>().ThatIs(q => (q != systemUnderTest2a.End) && (q >= systemUnderTest2a.Start)));
+
+            var systemUnderTest3a = A.Dummy<IReportingPeriodInclusive<CalendarMonth>>();
+            var systemUnderTest3b = new ReportingPeriodInclusive<CalendarMonth>(A.Dummy<CalendarMonth>().ThatIs(m => (m != systemUnderTest3a.Start) && (m <= systemUnderTest3a.End)), systemUnderTest3a.End);
+
+            // Act
+            var result1 = systemUnderTest1b.Equals(systemUnderTest1a);
+            var result2 = systemUnderTest2b.Equals(systemUnderTest2a);
+            var result3 = systemUnderTest3b.Equals(systemUnderTest3a);
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals_for_IReportingPeriodInclusive___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<IReportingPeriodInclusive<UnitOfTime>>();
+            var systemUnderTest2 = new ReportingPeriodInclusive<UnitOfTime>(systemUnderTest1.Start, systemUnderTest1.End);
+
+            // Act
+            var result = systemUnderTest2.Equals(systemUnderTest1);
 
             // Assert
             result.Should().BeTrue();
@@ -488,6 +728,39 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             toString1.Should().Be("2017-11-30 to 2018-03-24");
             toString2.Should().Be("2017-11-30 to 2018-03-24");
+        }
+
+        [Fact]
+        public static void Clone___Should_return_deep_clone_of_reporting_period___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new List<IReportingPeriod<UnitOfTime>>
+            {
+                A.Dummy<ReportingPeriodInclusive<UnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericUnitOfTime>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarDay>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<CalendarYear>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<FiscalYear>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericMonth>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericQuarter>>(),
+                A.Dummy<ReportingPeriodInclusive<GenericYear>>(),
+            };
+
+            // Act
+            var clones = reportingPeriods.Select(_ => new { Original = _, Clone = _.Clone() }).ToList();
+
+            // Assert
+            clones.ForEach(_ => _.Clone.Should().Be(_.Original));
+            clones.ForEach(_ => _.Clone.Should().BeOfType(_.Original.GetType()));
+            clones.ForEach(_ => _.Clone.Should().NotBeSameAs(_.Original));
+            clones.ForEach(_ => _.Clone.Start.Should().NotBeSameAs(_.Original.Start));
+            clones.ForEach(_ => _.Clone.End.Should().NotBeSameAs(_.Original.End));
         }
 
         // ReSharper restore InconsistentNaming

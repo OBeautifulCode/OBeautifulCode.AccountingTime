@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal quarter of a specified year.
     /// </summary>
+    [Serializable]
     public class FiscalQuarter : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<FiscalQuarter>, IComparable<FiscalQuarter>
     {
         /// <summary>
@@ -225,7 +226,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{(int)this.QuarterNumber}Q{this.Year}");
+            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new FiscalQuarter(this.Year, this.QuarterNumber);
+            return clone;
         }
     }
 }

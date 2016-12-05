@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic month in a specified year.
     /// </summary>
+    [Serializable]
     public class GenericMonth : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<GenericMonth>, IComparable<GenericMonth>
     {
         /// <summary>
@@ -242,7 +243,14 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year}");
+            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericMonth(this.Year, this.MonthNumber);
+            return clone;
         }
     }
 }

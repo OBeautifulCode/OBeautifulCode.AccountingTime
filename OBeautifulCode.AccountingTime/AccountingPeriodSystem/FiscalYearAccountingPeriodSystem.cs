@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// A fiscal year is 12 consecutive months ending on the last day of any month except December 31st.
     /// </summary>
+    [Serializable]
     public class FiscalYearAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>

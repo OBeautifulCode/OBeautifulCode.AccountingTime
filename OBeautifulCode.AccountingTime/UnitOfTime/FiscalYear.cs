@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal year.
     /// </summary>
+    [Serializable]
     public class FiscalYear : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<FiscalYear>, IComparable<FiscalYear>
     {
         /// <summary>
@@ -211,7 +212,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"FY{this.Year}");
+            return Invariant($"FY{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new FiscalYear(this.Year);
+            return clone;
         }
     }
 }

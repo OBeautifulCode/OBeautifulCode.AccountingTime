@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a generic year.
     /// </summary>
+    [Serializable]
     public class GenericYear : GenericUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<GenericYear>, IComparable<GenericYear>
     {
         /// <summary>
@@ -211,7 +212,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{this.Year}");
+            return Invariant($"{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericYear(this.Year);
+            return clone;
         }
     }
 }

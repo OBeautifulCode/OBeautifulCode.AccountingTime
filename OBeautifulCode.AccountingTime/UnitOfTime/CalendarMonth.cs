@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a calendar month in a specified year.
     /// </summary>
+    [Serializable]
     public class CalendarMonth : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarMonth>, IComparable<CalendarMonth>
     {
         /// <summary>
@@ -230,7 +231,14 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            return Invariant($"{this.Year}-{(int)this.MonthOfYear:D2}");
+            return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new CalendarMonth(this.Year, this.MonthOfYear);
+            return clone;
         }
     }
 }

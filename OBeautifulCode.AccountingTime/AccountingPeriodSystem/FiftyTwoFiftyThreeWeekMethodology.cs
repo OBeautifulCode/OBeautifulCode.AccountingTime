@@ -7,9 +7,12 @@
 // ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
+    using System;
+
     /// <summary>
     /// Determines the methodology used to identify the last day of the accounting year, in a 52-53 week accounting period system.
     /// </summary>
+    [Serializable]
     public enum FiftyTwoFiftyThreeWeekMethodology
     {
         /// <summary>

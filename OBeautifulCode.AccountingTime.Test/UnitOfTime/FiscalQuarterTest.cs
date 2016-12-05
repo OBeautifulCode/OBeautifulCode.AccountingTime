@@ -966,8 +966,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void ToString___Should_return_friendly_string_representation_of_object___When_called()
         {
             // Arrange
-            var systemUnderTest1 = new FiscalQuarter(2017, QuarterNumber.First);
-            var systemUnderTest2 = new FiscalQuarter(2017, QuarterNumber.Fourth);
+            var systemUnderTest1 = new FiscalQuarter(2017, QuarterNumber.Q1);
+            var systemUnderTest2 = new FiscalQuarter(2017, QuarterNumber.Q4);
 
             // Act
             var toString1 = systemUnderTest1.ToString();
@@ -976,6 +976,20 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             toString1.Should().Be("1Q2017");
             toString2.Should().Be("4Q2017");
+        }
+
+        [Fact]
+        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiscalQuarter>();
+
+            // Act
+            var clone = systemUnderTest.Clone();
+
+            // Assert
+            clone.Should().Be(systemUnderTest);
+            clone.Should().NotBeSameAs(systemUnderTest);
         }
 
         private static FiscalQuarter TweakComponentOfFiscalQuarter(this FiscalQuarter fiscalQuarter, FiscalQuarterComponent componentToTweak)

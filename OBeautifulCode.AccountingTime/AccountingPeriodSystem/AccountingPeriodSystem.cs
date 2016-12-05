@@ -13,6 +13,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a system for defining an entity's annual accounting period.
     /// </summary>
+    [Serializable]
     [Bindable(BindableSupport.Default)]
     public abstract class AccountingPeriodSystem
     {

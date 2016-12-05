@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Represents a fiscal month in a specified year.
     /// </summary>
+    [Serializable]
     public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>
     {
         /// <summary>
@@ -242,7 +243,14 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of FY{this.Year}");
+            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of FY{this.Year:D4}");
+        }
+
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new FiscalMonth(this.Year, this.MonthNumber);
+            return clone;
         }
     }
 }

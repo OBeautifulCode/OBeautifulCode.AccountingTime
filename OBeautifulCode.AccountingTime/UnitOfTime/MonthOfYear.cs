@@ -7,9 +7,12 @@
 // ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
+    using System;
+
     /// <summary>
     /// Represents a month.
     /// </summary>
+    [Serializable]
     public enum MonthOfYear
     {
         /// <summary>

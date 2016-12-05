@@ -97,11 +97,13 @@
     <Compile Include="AccountingPeriodSystem\DateTimeExtensionsTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="DummyFactory.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodInclusiveTest.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
     <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="UnitOfTime\GenericMonthTest.cs" />
     <Compile Include="UnitOfTime\GenericQuarterTest.cs" />
     <Compile Include="UnitOfTime\GenericYearTest.cs" />
+    <Compile Include="UnitOfTime\UnitOfTimeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />

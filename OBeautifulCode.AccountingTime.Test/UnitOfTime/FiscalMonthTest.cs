@@ -1035,6 +1035,20 @@ namespace OBeautifulCode.AccountingTime.Test
             toString12.Should().Be("12th month of FY2017");
         }
 
+        [Fact]
+        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiscalMonth>();
+
+            // Act
+            var clone = systemUnderTest.Clone();
+
+            // Assert
+            clone.Should().Be(systemUnderTest);
+            clone.Should().NotBeSameAs(systemUnderTest);
+        }
+
         private static FiscalMonth TweakComponentOfFiscalMonth(this FiscalMonth fiscalMonth, FiscalMonthComponent componentToTweak)
         {
             if (componentToTweak == FiscalMonthComponent.Month)
