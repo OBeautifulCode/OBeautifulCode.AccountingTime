@@ -34,7 +34,7 @@ namespace Spritely.Recipes
     [System.CodeDom.Compiler.GeneratedCode("Spritely.Recipes", "See package version number")]
 #pragma warning disable 0436
 #endif
-    internal abstract class InheritedTypeJsonConverter : JsonConverter
+    internal abstract partial class InheritedTypeJsonConverter : JsonConverter
     {
         protected readonly string TypeTokenName = "$concreteType";
 
@@ -70,17 +70,17 @@ namespace Spritely.Recipes
             return allChildTypes[type];
         }
 
-        protected BindableAttribute GetBindableAttribute(Type objectType)
+        protected static BindableAttribute GetBindableAttribute(Type objectType)
         {
             // If multiple types in the hierarchy have a Bindable attribute, only one is returned.
-            // If the type is Bindable then that attribute it returned.  Otherwise, the attribute on
-            // the type that is closeset to the current type, going up the hierarchy, is returned.
+            // If the type is Bindable then that attribute is returned.  Otherwise, the attribute on
+            // the type that is closest to the current type, going up the hierarchy, is returned.
             // A single type cannot specify Bindable multiple times, the compiler throws with CS0579.
             var attribute = Attribute.GetCustomAttributes(objectType, typeof(BindableAttribute)).OfType<BindableAttribute>().SingleOrDefault();
             return attribute;
         }
 
-        protected bool IsTwoWayBindable(BindableAttribute bindableAttribute)
+        protected static bool IsTwoWayBindable(BindableAttribute bindableAttribute)
         {
             var bindingDirectionIsTwoWay = bindableAttribute.Direction == BindingDirection.TwoWay;
             return bindingDirectionIsTwoWay;
@@ -96,7 +96,7 @@ namespace Spritely.Recipes
     [System.CodeDom.Compiler.GeneratedCode("Spritely.Recipes", "See package version number")]
 #pragma warning disable 0436
 #endif
-    internal class InheritedTypeReaderJsonConverter : InheritedTypeJsonConverter
+    internal partial class InheritedTypeReaderJsonConverter : InheritedTypeJsonConverter
     {
         /// <inheritdoc />
         public override bool CanRead
@@ -351,7 +351,7 @@ namespace Spritely.Recipes
     [System.CodeDom.Compiler.GeneratedCode("Spritely.Recipes", "See package version number")]
 #pragma warning disable 0436
 #endif
-    internal class InheritedTypeWriterJsonConverter : InheritedTypeJsonConverter
+    internal partial class InheritedTypeWriterJsonConverter : InheritedTypeJsonConverter
     {
         private static readonly ThreadLocal<bool> WriteJsonCalled = new ThreadLocal<bool>(() => false);
 
@@ -414,6 +414,11 @@ namespace Spritely.Recipes
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
             string typeName = value.GetType().FullName + ", " + value.GetType().Assembly.GetName().Name;
             WriteJsonCalled.Value = true;
             var jo = JObject.FromObject(value, serializer);
