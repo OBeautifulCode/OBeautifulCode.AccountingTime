@@ -21,7 +21,7 @@ after_build:
 - ps: . "$($env:appveyor_build_folder)\Nuget-Functions.ps1"
 - ps: $version = Nuget-CreatePreReleaseSupportedVersion -version $env:appveyor_build_version -branchName $env:appveyor_repo_branch
 - ps: ls . -filter *.recipe-nuspec -recurse | %{Nuget-OverrideNuSpecIntoNewFile -templateFile "$($env:appveyor_build_folder)\OBeautifulCode.AccountingTime.BsonSerialization\OBeautifulCode.AccountingTime.BsonSerialization.template-nuspec" -overrideFile $_.FullName -targetFile $_.FullName.Replace('.recipe-nuspec','.nuspec')}
-- ps: ls . -filter *.nuspec -recurse | %{nuget pack $_.FullName -Version $version }
+- ps: ls . -filter *.nuspec -recurse | %{nuget pack $_.FullName -Version $version -Prop Platform=AnyCPU }
 artifacts:
 - path: OBeautifulCode.AccountingTime.zip
 - path: OBeautifulCode.AccountingTime.BsonSerialization.zip
