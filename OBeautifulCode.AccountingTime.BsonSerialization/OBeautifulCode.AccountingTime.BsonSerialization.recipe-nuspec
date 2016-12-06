@@ -6,9 +6,7 @@
     <tags>accounting time bson mongo mongodb</tags>
     <developmentDependency>true</developmentDependency>
     <dependencies>
-      <group targetFramework="net461">
         <dependency id="OBeautifulCode.AccountingTime" />
-      </group>
     </dependencies>
   </metadata>
   <files>
