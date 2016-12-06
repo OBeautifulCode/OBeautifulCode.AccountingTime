@@ -8,9 +8,11 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.ComponentModel;
 
     /// <inheritdoc />
     [Serializable]
+    [Bindable(true, BindingDirection.TwoWay)]
     public abstract class ReportingPeriod<T> : IReportingPeriod<T>
         where T : UnitOfTime
     {
