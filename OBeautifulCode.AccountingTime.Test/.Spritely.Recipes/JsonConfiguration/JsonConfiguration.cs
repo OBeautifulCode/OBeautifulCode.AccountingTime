@@ -32,7 +32,8 @@ namespace Spritely.Recipes
         /// <value>
         ///     The JSON serialization settings.
         /// </value>
-        public static JsonSerializerSettings DefaultSerializerSettings {
+        public static JsonSerializerSettings DefaultSerializerSettings
+        {
             get
             {
                 return new JsonSerializerSettings
@@ -44,7 +45,8 @@ namespace Spritely.Recipes
                     {
                         new StringEnumConverter { CamelCaseText = true },
                         new SecureStringJsonConverter(),
-                        new InheritedTypeJsonConverter()
+                        new InheritedTypeReaderJsonConverter(),
+                        new InheritedTypeWriterJsonConverter()
                     }
                 };
             }
@@ -68,8 +70,8 @@ namespace Spritely.Recipes
                     Converters = new List<JsonConverter>
                     {
                         new StringEnumConverter { CamelCaseText = true },
-                        new SecureStringJsonConverter(),
-                        new InheritedTypeJsonConverter()
+                        new InheritedTypeReaderJsonConverter(),
+                        new InheritedTypeWriterJsonConverter()
                     }
                 };
             }
@@ -93,8 +95,8 @@ namespace Spritely.Recipes
                     Converters = new List<JsonConverter>
                     {
                         new StringEnumConverter { CamelCaseText = true },
-                        new SecureStringJsonConverter(),
-                        new InheritedTypeJsonConverter()
+                        new InheritedTypeReaderJsonConverter(),
+                        new InheritedTypeWriterJsonConverter()
                     }
                 };
             }
