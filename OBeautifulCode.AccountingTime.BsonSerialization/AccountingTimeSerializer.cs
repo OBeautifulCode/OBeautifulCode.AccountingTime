@@ -20,7 +20,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     public static class AccountingTimeSerializer
     {
         /// <summary>
-        /// Registers this serializer.
+        /// Registers this serializer
         /// </summary>
         public static void Register()
         {
