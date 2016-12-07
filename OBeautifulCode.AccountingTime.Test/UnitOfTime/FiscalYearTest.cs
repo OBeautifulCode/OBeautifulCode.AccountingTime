@@ -15,6 +15,10 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
+    using Newtonsoft.Json;
+
+    using Spritely.Recipes;
+
     using Xunit;
 
     public static class FiscalYearTest
@@ -859,6 +863,25 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             clone.Should().Be(systemUnderTest);
             clone.Should().NotBeSameAs(systemUnderTest);
+        }
+
+        [Fact]
+        public static void Deserialize___Should_return_equivalent_object_of_type_FiscalYear___When_an_object_of_that_type_is_serialized_to_json_and_deserialized_as_abstract_type()
+        {
+            // Arrange
+            var settings = JsonConfiguration.DefaultSerializerSettings;
+            var expectedUnitOfTime = A.Dummy<FiscalYear>();
+            var serializedJson = JsonConvert.SerializeObject(expectedUnitOfTime, settings);
+
+            // Act
+            var systemUnderTest1 = JsonConvert.DeserializeObject<UnitOfTime>(serializedJson, settings) as FiscalYear;
+            var systemUnderTest2 = JsonConvert.DeserializeObject<FiscalUnitOfTime>(serializedJson, settings) as FiscalYear;
+
+            // Assert
+            // ReSharper disable PossibleNullReferenceException
+            systemUnderTest1.Should().Be(expectedUnitOfTime);
+            systemUnderTest2.Should().Be(expectedUnitOfTime);
+            // ReSharper restore PossibleNullReferenceException
         }
 
         private static FiscalYear TweakYear(this FiscalYear fiscalYear)

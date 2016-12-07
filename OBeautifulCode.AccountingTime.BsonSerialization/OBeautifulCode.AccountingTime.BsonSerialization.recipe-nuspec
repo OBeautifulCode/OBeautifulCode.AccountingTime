@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OBeautifulCode.AccountingTime.BsonSerialization</id>
+    <description>BSON serializers for AccountingTime types.</description>
+    <tags>accounting time bson mongo mongodb</tags>
+    <developmentDependency>true</developmentDependency>
+    <dependencies>
+        <dependency id="OBeautifulCode.AccountingTime" />
+        <dependency id="MongoDB.Bson" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="AccountingTimeSerializer.cs" target="content\net45\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\AccountingTimeSerializer.cs" />
+    <file src="UnitOfTimeSerializer{TValue}.cs" target="content\net45\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\UnitOfTimeSerializer{TValue}.cs" />
+    <file src="IReportingPeriodSerializer{TValue}.cs" target="content\net45\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\IReportingPeriodSerializer{TValue}.cs" />
+  </files>
+</package>

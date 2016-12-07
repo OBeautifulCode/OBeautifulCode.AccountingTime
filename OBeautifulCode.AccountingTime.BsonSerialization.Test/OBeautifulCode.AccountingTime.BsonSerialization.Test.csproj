@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{953257BE-D695-4374-A6E1-0F60618CF5DD}</ProjectGuid>
+    <ProjectGuid>{0BA40593-40F0-4984-A8AE-98B3C62EEB51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.AccountingTime.Test</RootNamespace>
-    <AssemblyName>OBeautifulCode.AccountingTime.Test</AssemblyName>
+    <RootNamespace>OBeautifulCode.AccountingTime.BsonSerialization.Test</RootNamespace>
+    <AssemblyName>OBeautifulCode.AccountingTime.BsonSerialization.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -53,8 +53,16 @@
       <HintPath>..\packages\FluentAssertions.4.18.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="MongoDB.Bson, Version=2.4.0.70, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.0\lib\net45\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.4.0.70, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.4.0\lib\net45\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.4.0.70, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.4.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.75.0, Culture=neutral, processorArchitecture=MSIL">
@@ -64,6 +72,10 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
@@ -84,42 +96,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include=".Naos.Recipes\TupleInitializers\Initializers.cs" />
+    <Compile Include="..\OBeautifulCode.AccountingTime.Test\DummyFactory.cs">
+      <Link>DummyFactory.cs</Link>
+    </Compile>
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
-    <Compile Include=".Spritely.Recipes\CamelStrictConstructorContractResolver\CamelStrictConstructorContractResolver.cs" />
-    <Compile Include=".Spritely.Recipes\InheritedTypeJsonConverter\InheritedTypeJsonConverter.cs" />
-    <Compile Include=".Spritely.Recipes\JsonConfiguration\CompactJsonSerializer.cs" />
-    <Compile Include=".Spritely.Recipes\JsonConfiguration\DefaultJsonSerializer.cs" />
-    <Compile Include=".Spritely.Recipes\JsonConfiguration\JsonConfiguration.cs" />
-    <Compile Include=".Spritely.Recipes\JsonConfiguration\MinimalJsonSerializer.cs" />
-    <Compile Include=".Spritely.Recipes\SecureStringJsonConverter\SecureStringJsonConverter.cs" />
-    <Compile Include=".Spritely.Recipes\SecureString\SecureString.cs" />
-    <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystemTest.cs" />
-    <Compile Include="AccountingPeriodSystem\DateTimeExtensionsTest.cs" />
-    <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
-    <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
-    <Compile Include="Common.cs" />
-    <Compile Include="DummyFactory.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
-    <Compile Include="Extensions\UnitOfTimeExtensionsTest.cs" />
+    <Compile Include="AccountingTimeSerializerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriodInclusiveTest.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
-    <Compile Include="UnitOfTime\CalendarDayTest.cs" />
-    <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
-    <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
-    <Compile Include="UnitOfTime\CalendarYearTest.cs" />
-    <Compile Include="UnitOfTime\FiscalMonthTest.cs" />
-    <Compile Include="UnitOfTime\FiscalQuarterTest.cs" />
-    <Compile Include="UnitOfTime\FiscalYearTest.cs" />
-    <Compile Include="UnitOfTime\GenericMonthTest.cs" />
-    <Compile Include="UnitOfTime\GenericQuarterTest.cs" />
-    <Compile Include="UnitOfTime\GenericYearTest.cs" />
-    <Compile Include="UnitOfTime\UnitOfTimeTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
     <None Include="packages.config" />
     <AdditionalFiles Include="..\common\stylecop.json">
       <Link>stylecop.json</Link>
@@ -138,6 +123,10 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.BsonSerialization\OBeautifulCode.AccountingTime.BsonSerialization.csproj">
+      <Project>{d9b73cfe-77e1-4fd6-9c7a-3a0cc410b561}</Project>
+      <Name>OBeautifulCode.AccountingTime.BsonSerialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj">
       <Project>{fa79388d-2555-42ee-ab7b-55b1ea1e2676}</Project>
       <Name>OBeautifulCode.AccountingTime</Name>

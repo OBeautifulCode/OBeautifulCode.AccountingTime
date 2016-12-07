@@ -7,10 +7,13 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Linq;
 
     using AutoFakeItEasy;
 
     using FakeItEasy;
+
+    using Math;
 
     public class DummyFactory : IDummyFactory
     {
@@ -133,6 +136,21 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
+            AddDummyCreatorForReportingPeriod<UnitOfTime>();
+            AddDummyCreatorForReportingPeriod<CalendarUnitOfTime>();
+            AddDummyCreatorForReportingPeriod<FiscalUnitOfTime>();
+            AddDummyCreatorForReportingPeriod<GenericUnitOfTime>();
+            AddDummyCreatorForReportingPeriod<CalendarDay>();
+            AddDummyCreatorForReportingPeriod<CalendarQuarter>();
+            AddDummyCreatorForReportingPeriod<CalendarMonth>();
+            AddDummyCreatorForReportingPeriod<CalendarYear>();
+            AddDummyCreatorForReportingPeriod<FiscalMonth>();
+            AddDummyCreatorForReportingPeriod<FiscalQuarter>();
+            AddDummyCreatorForReportingPeriod<FiscalYear>();
+            AddDummyCreatorForReportingPeriod<GenericMonth>();
+            AddDummyCreatorForReportingPeriod<GenericQuarter>();
+            AddDummyCreatorForReportingPeriod<GenericYear>();
+
             AddDummyCreatorForReportingPeriodInclusive<UnitOfTime>();
             AddDummyCreatorForReportingPeriodInclusive<CalendarUnitOfTime>();
             AddDummyCreatorForReportingPeriodInclusive<FiscalUnitOfTime>();
@@ -162,6 +180,33 @@ namespace OBeautifulCode.AccountingTime.Test
         public object Create(Type type)
         {
             return null;
+        }
+
+        private static void AddDummyCreatorForReportingPeriod<T>()
+           where T : UnitOfTime
+        {
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var reportingPeriodType = typeof(ReportingPeriod<T>);
+                    var reportingPeriodConcreteTypes =
+                        reportingPeriodType.Assembly.GetTypes()
+                            .Where(type => type.IsGenericType)
+                            .Select(type => type.MakeGenericType(typeof(T)))
+                            .Where(type => type.IsSubclassOf(reportingPeriodType))
+                            .ToList();
+
+                    var typeToCreate = reportingPeriodConcreteTypes[ThreadSafeRandom.Next(0, reportingPeriodConcreteTypes.Count)];
+                    var result = AD.ummy(typeToCreate);
+                    return result as ReportingPeriod<T>;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriod<T>>(
+                () =>
+                {
+                    var result = A.Dummy<ReportingPeriod<T>>();
+                    return result;
+                });
         }
 
         private static void AddDummyCreatorForReportingPeriodInclusive<T>()

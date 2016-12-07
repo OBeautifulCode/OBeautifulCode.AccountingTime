@@ -1,5 +1,7 @@
 version: 1.0.{build}
 os: Visual Studio 2015
+services:
+  - mongodb
 configuration:
 - Release
 - Debug
@@ -16,12 +18,16 @@ build:
   verbosity: minimal
 after_build:
 - 7z a OBeautifulCode.AccountingTime.zip %APPVEYOR_BUILD_FOLDER%\OBeautifulCode.AccountingTime\bin\%CONFIGURATION%\*.* -r
+- 7z a OBeautifulCode.AccountingTime.BsonSerialization.zip %APPVEYOR_BUILD_FOLDER%\OBeautifulCode.AccountingTime.BsonSerialization\bin\%CONFIGURATION%\*.* -r
 - ps: (New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/NaosProject/Naos.Powershell/master/Build/Nuget-Functions.ps1', "$($env:appveyor_build_folder)\Nuget-Functions.ps1")
 - ps: . "$($env:appveyor_build_folder)\Nuget-Functions.ps1"
 - ps: $version = Nuget-CreatePreReleaseSupportedVersion -version $env:appveyor_build_version -branchName $env:appveyor_repo_branch
 - ps: nuget pack "$($env:appveyor_build_folder)\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj" -Version $version -Prop Platform=AnyCPU
+- ps: ls . -filter *.recipe-nuspec -recurse | %{Nuget-OverrideNuSpecIntoNewFile -templateFile "$($env:appveyor_build_folder)\OBeautifulCode.AccountingTime.BsonSerialization\OBeautifulCode.AccountingTime.BsonSerialization.template-nuspec" -overrideFile $_.FullName -targetFile $_.FullName.Replace('.recipe-nuspec','.nuspec')}
+- ps: ls . -filter *.nuspec -recurse | Where-Object {$_.Name -ne 'OBeautifulCode.AccountingTime.nuspec' } | %{nuget pack $_.FullName -Version $version -Prop Platform=AnyCPU }
 artifacts:
 - path: OBeautifulCode.AccountingTime.zip
+- path: OBeautifulCode.AccountingTime.BsonSerialization.zip
 - path: '*.nupkg'
 - path: Nuget-Functions.ps1
 deploy:
