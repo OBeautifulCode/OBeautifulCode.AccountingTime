@@ -14,6 +14,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
 
     using MongoDB.Bson.Serialization;
 
+    using OBeautifulCode.AccountingTime;
+
     /// <summary>
     /// A serializer for Accounting Time types.
     /// </summary>
