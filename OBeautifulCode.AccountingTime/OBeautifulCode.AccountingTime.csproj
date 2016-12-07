@@ -84,6 +84,8 @@
     <Compile Include="UnitOfTime\MonthOfYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfTime\CalendarQuarter.cs" />
+    <Compile Include="UnitOfTime\UnitOfTimeKind.cs" />
+    <Compile Include="UnitOfTime\UnitOfTimeGranularity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OBeautifulCode.AccountingTime.nuspec" />

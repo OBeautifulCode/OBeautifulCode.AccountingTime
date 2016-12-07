@@ -10,11 +10,13 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <summary>
-    /// Repressents a unit of time tied to the (gregorian) calendar.
+    /// Represents a unit of time tied to the (gregorian) calendar.
     /// </summary>
     [Serializable]
     public abstract class CalendarUnitOfTime : UnitOfTime
     {
+        /// <inheritdoc />
+        public override UnitOfTimeKind UnitOfTimeKind => UnitOfTimeKind.Calendar;
     }
 }
 

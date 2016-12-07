@@ -52,6 +52,9 @@ namespace OBeautifulCode.AccountingTime
 
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
+        /// <inheritdoc />
+        public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Month;
+
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericMonth" /> are equal.
         /// </summary>

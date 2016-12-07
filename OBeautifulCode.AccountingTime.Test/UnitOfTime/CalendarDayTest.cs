@@ -1257,6 +1257,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Calendar___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<CalendarDay>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Calendar);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Day___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<CalendarDay>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Day);
+        }
+
         // ReSharper disable ObjectCreationAsStatement
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "OBeautifulCode.AccountingTime.CalendarDay", Justification = "In this case we are trying to determine if creating the object will throw.")]
         private static CalendarDay TweakComponentOfCalendarDay(this CalendarDay calendarDay, CalendarDayComponent componentToTweak)

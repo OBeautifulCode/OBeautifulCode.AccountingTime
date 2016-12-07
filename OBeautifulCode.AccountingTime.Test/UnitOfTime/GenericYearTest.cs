@@ -884,6 +884,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Generic___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<GenericYear>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Generic);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Year___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<GenericYear>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Year);
+        }
+
         private static GenericYear TweakYear(this GenericYear genericYear)
         {
             var tweakedYear = A.Dummy<PositiveInteger>().ThatIs(y => y != genericYear.Year && y <= 9999);

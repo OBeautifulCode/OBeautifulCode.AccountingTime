@@ -1072,6 +1072,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Generic___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<GenericMonth>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Generic);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Month___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<GenericMonth>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Month);
+        }
+
         private static GenericMonth TweakComponentOfGenericMonth(this GenericMonth genericMonth, GenericMonthComponent componentToTweak)
         {
             if (componentToTweak == GenericMonthComponent.Month)

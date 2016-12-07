@@ -41,6 +41,9 @@ namespace OBeautifulCode.AccountingTime
 
         // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
+        /// <inheritdoc />
+        public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Year;
+
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericYear" /> are equal.
         /// </summary>
