@@ -15,8 +15,6 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.Serializers;
 
-    using OBeautifulCode.AccountingTime;
-
     using static System.FormattableString;
 
     /// <inheritdoc />
