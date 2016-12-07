@@ -6,7 +6,7 @@
     <tags>accounting time bson mongo mongodb</tags>
     <developmentDependency>true</developmentDependency>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="Highest" />
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.26" />
         <dependency id="MongoDB.Bson" />
     </dependencies>
   </metadata>
