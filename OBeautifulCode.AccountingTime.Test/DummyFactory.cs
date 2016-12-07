@@ -186,6 +186,20 @@ namespace OBeautifulCode.AccountingTime.Test
                     var result = A.Dummy<ReportingPeriodInclusive<T>>();
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator<ReportingPeriod<T>>(
+                () =>
+                {
+                    var result = A.Dummy<ReportingPeriodInclusive<T>>();
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriod<T>>(
+                () =>
+                {
+                    var result = A.Dummy<ReportingPeriodInclusive<T>>();
+                    return result;
+                });
         }
     }
 }
