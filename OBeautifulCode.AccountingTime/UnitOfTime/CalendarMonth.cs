@@ -57,6 +57,9 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public MonthNumber MonthNumber => (MonthNumber)(int)this.MonthOfYear;
 
+        /// <inheritdoc />
+        public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Month;
+
         /// <summary>
         /// Determines whether two objects of type <see cref="CalendarMonth" /> are equal.
         /// </summary>

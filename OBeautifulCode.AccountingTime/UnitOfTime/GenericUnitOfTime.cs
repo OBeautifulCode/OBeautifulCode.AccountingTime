@@ -15,6 +15,8 @@ namespace OBeautifulCode.AccountingTime
     [Serializable]
     public abstract class GenericUnitOfTime : UnitOfTime
     {
+        /// <inheritdoc />
+        public override UnitOfTimeKind UnitOfTimeKind => UnitOfTimeKind.Generic;
     }
 }
 

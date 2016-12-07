@@ -1072,6 +1072,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Fiscal___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<FiscalMonth>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Fiscal);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Month___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<FiscalMonth>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Month);
+        }
+
         private static FiscalMonth TweakComponentOfFiscalMonth(this FiscalMonth fiscalMonth, FiscalMonthComponent componentToTweak)
         {
             if (componentToTweak == FiscalMonthComponent.Month)

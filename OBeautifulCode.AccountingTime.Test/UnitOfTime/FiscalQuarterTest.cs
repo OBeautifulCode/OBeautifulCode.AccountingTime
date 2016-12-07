@@ -1015,6 +1015,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Fiscal___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<FiscalQuarter>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Fiscal);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Quarter___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<FiscalQuarter>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Quarter);
+        }
+
         private static FiscalQuarter TweakComponentOfFiscalQuarter(this FiscalQuarter fiscalQuarter, FiscalQuarterComponent componentToTweak)
         {
             if (componentToTweak == FiscalQuarterComponent.Quarter)

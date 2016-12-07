@@ -19,6 +19,16 @@ namespace OBeautifulCode.AccountingTime
     public abstract class UnitOfTime : IComparable
     {
         /// <summary>
+        /// Gets the kind of the unit-of-time.
+        /// </summary>
+        public abstract UnitOfTimeKind UnitOfTimeKind { get; }
+
+        /// <summary>
+        /// Gets the granuarlity of the unit-of-time.
+        /// </summary>
+        public abstract UnitOfTimeGranularity UnitOfTimeGranularity { get; }
+
+        /// <summary>
         /// Compares the current instance with another object and returns an integer
         /// that indicates whether the current instance precedes,
         /// follows, or occurs in the same position in the sort order as the other object

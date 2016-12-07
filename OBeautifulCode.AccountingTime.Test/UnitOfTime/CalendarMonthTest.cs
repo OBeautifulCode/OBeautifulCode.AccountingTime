@@ -1060,6 +1060,32 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper restore PossibleNullReferenceException
         }
 
+        [Fact]
+        public static void UnitOfTimeKind__Should_return_Calendar___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<CalendarMonth>();
+
+            // Act
+            var kind = unitOfTime.UnitOfTimeKind;
+
+            // Assert
+            kind.Should().Be(UnitOfTimeKind.Calendar);
+        }
+
+        [Fact]
+        public static void UnitOfTimeGranularity__Should_return_Month___When_called()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<CalendarMonth>();
+
+            // Act
+            var granularity = unitOfTime.UnitOfTimeGranularity;
+
+            // Assert
+            granularity.Should().Be(UnitOfTimeGranularity.Month);
+        }
+
         private static CalendarMonth TweakComponentOfCalendarMonth(this CalendarMonth calendarMonth, CalendarMonthComponent componentToTweak)
         {
             if (componentToTweak == CalendarMonthComponent.Month)

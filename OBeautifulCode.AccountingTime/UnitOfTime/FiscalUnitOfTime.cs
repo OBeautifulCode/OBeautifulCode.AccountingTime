@@ -15,6 +15,8 @@ namespace OBeautifulCode.AccountingTime
     [Serializable]
     public abstract class FiscalUnitOfTime : UnitOfTime
     {
+        /// <inheritdoc />
+        public override UnitOfTimeKind UnitOfTimeKind => UnitOfTimeKind.Fiscal;
     }
 }
 
