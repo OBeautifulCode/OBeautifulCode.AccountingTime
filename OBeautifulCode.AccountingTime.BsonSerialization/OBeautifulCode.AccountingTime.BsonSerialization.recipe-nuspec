@@ -12,5 +12,6 @@
   </metadata>
   <files>
     <file src="AccountingTimeSerializer.cs" target="content\net45\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\AccountingTimeSerializer.cs" />
+    <file src="UnitOfTimeSerializer{TValue}.cs" target="content\net45\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\UnitOfTimeSerializer{TValue}.cs" />
   </files>
 </package>

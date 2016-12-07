@@ -9,6 +9,11 @@
 
 namespace OBeautifulCode.AccountingTime.BsonSerialization
 {
+    using System;
+    using System.Linq;
+
+    using MongoDB.Bson.Serialization;
+
     /// <summary>
     /// A serializer for Accounting Time types.
     /// </summary>
@@ -20,10 +25,18 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     public static class AccountingTimeSerializer
     {
         /// <summary>
-        /// Registers this serializer
+        /// Registers this serializer.
         /// </summary>
         public static void Register()
         {
+            var unitOfTimeTypes =
+                typeof(UnitOfTime).Assembly.GetTypes()
+                .Where(type => type.IsSubclassOf(typeof(UnitOfTime)))
+                .ToList();
+
+            unitOfTimeTypes.Add(typeof(UnitOfTime));
+
+            unitOfTimeTypes.ForEach(t => BsonSerializer.RegisterSerializer(t, Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as IBsonSerializer));
         }
     }
 }
