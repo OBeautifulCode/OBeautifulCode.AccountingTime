@@ -340,6 +340,42 @@ namespace OBeautifulCode.AccountingTime
 
             throw new InvalidOperationException("should not get here");
         }
+
+        /// <summary>
+        /// Gets the kind of the unit-of-time used in a reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The kind of the unit-of-time used in the specified reporting period.
+        /// </returns>
+        public static UnitOfTimeKind GetUnitOfTimeKind(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = reportingPeriod.Start.UnitOfTimeKind;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the granularity of the unit-of-time used in a reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The granularity of the unit-of-time used in the specified reporting period.
+        /// </returns>
+        public static UnitOfTimeGranularity GetUnitOfTimeGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = reportingPeriod.Start.UnitOfTimeGranularity;
+            return result;
+        }
     }
 }
 
