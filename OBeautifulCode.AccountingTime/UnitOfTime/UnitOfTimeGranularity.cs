@@ -13,6 +13,14 @@ namespace OBeautifulCode.AccountingTime
     public enum UnitOfTimeGranularity
     {
         /// <summary>
+        /// Invalid granularity.
+        /// </summary>
+        /// <remarks>
+        /// This is required so that there is a default value for the enum.
+        /// </remarks>
+        Invalid,
+
+        /// <summary>
         /// Day-level granularity.
         /// </summary>
         Day,

@@ -13,6 +13,14 @@ namespace OBeautifulCode.AccountingTime
     public enum UnitOfTimeKind
     {
         /// <summary>
+        /// Invalid kind.
+        /// </summary>
+        /// <remarks>
+        /// This is required so that there is a default value for the enum.
+        /// </remarks>
+        Invalid,
+
+        /// <summary>
         /// Represents a unit of time tied to the (gregorian) calendar.
         /// </summary>
         Calendar,
