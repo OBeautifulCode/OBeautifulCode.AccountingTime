@@ -23,7 +23,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.BsonSerialization", "See package version number")]
 #endif
-    public class UnitOfTimeSerializer<TValue> : SerializerBase<TValue>
+    internal class UnitOfTimeSerializer<TValue> : SerializerBase<TValue>
         where TValue : UnitOfTime
     {
         /// <inheritdoc />

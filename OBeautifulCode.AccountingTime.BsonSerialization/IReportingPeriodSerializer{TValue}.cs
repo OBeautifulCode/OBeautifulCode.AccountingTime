@@ -24,7 +24,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.BsonSerialization", "See package version number")]
 #endif
     // ReSharper disable InconsistentNaming
-    public class IReportingPeriodSerializer<TValue> : SerializerBase<TValue>
+    internal class IReportingPeriodSerializer<TValue> : SerializerBase<TValue>
     // ReSharper restore InconsistentNaming
         where TValue : class, IReportingPeriod<UnitOfTime>
     {

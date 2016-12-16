@@ -22,7 +22,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.BsonSerialization", "See package version number")]
 #endif
-    public static class AccountingTimeSerializer
+    internal static class AccountingTimeSerializer
     {
         /// <summary>
         /// Registers this serializer.
