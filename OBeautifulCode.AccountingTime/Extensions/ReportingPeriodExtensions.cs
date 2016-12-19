@@ -35,8 +35,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The logic is different based on the type of reporting period (inclusive, exclusive, etc.)")]
-        public static bool IsInReportingPeriod(this UnitOfTime unitOfTime, IReportingPeriodInclusive<UnitOfTime> reportingPeriod)
+        public static bool IsInReportingPeriod(this UnitOfTime unitOfTime, IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (unitOfTime == null)
             {
@@ -65,7 +64,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines if two objects of type <see cref="IReportingPeriodInclusive{T}"/>, overlap.
+        /// Determines if two objects of type <see cref="IReportingPeriod{T}"/>, overlap.
         /// For example, the following reporting periods have an overlap: 1Q2017-3Q2017 and 3Q2017-4Q2017.
         /// </summary>
         /// <remarks>
@@ -80,7 +79,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
-        public static bool HasOverlapWith(this IReportingPeriodInclusive<UnitOfTime> reportingPeriod1, IReportingPeriodInclusive<UnitOfTime> reportingPeriod2)
+        public static bool HasOverlapWith(this IReportingPeriod<UnitOfTime> reportingPeriod1, IReportingPeriod<UnitOfTime> reportingPeriod2)
         {
             if (reportingPeriod1 == null)
             {
@@ -121,7 +120,7 @@ namespace OBeautifulCode.AccountingTime
         /// The number of units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static int NumberOfUnitsWithin(this IReportingPeriodInclusive<UnitOfTime> reportingPeriod)
+        public static int NumberOfUnitsWithin(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             var result = GetUnitsWithin(reportingPeriod).Count;
             return result;
@@ -140,8 +139,7 @@ namespace OBeautifulCode.AccountingTime
         /// The units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "The logic is different based on the type of reporting period (inclusive, exclusive, etc.)")]
-        public static IList<T> GetUnitsWithin<T>(this IReportingPeriodInclusive<T> reportingPeriod)
+        public static IList<T> GetUnitsWithin<T>(this IReportingPeriod<T> reportingPeriod)
             where T : UnitOfTime
         {
             if (reportingPeriod == null)
@@ -174,7 +172,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
-        public static ICollection<IReportingPeriodInclusive<T>> CreatePermutations<T>(this IReportingPeriodInclusive<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
+        public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(this IReportingPeriod<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
             where T : UnitOfTime
         {
             if (reportingPeriod == null)
@@ -188,14 +186,14 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var allUnits = reportingPeriod.GetUnitsWithin();
-            var allReportingPeriods = new List<IReportingPeriodInclusive<T>>();
+            var allReportingPeriods = new List<IReportingPeriod<T>>();
             for (int unitOfTimeIndex = 0; unitOfTimeIndex < allUnits.Count; unitOfTimeIndex++)
             {
                 for (int numberOfUnits = 1; numberOfUnits <= maxUnitsInAnyReportingPeriod; numberOfUnits++)
                 {
                     if (unitOfTimeIndex + numberOfUnits - 1 < allUnits.Count)
                     {
-                        var subReportingPeriod = new ReportingPeriodInclusive<T>(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
+                        var subReportingPeriod = new ReportingPeriod<T>(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
                         allReportingPeriods.Add(subReportingPeriod);
                     }
                 }
@@ -205,7 +203,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Serializes a <see cref="IReportingPeriodInclusive{UnitOfTime}"/> to a string.
+        /// Serializes a <see cref="IReportingPeriod{UnitOfTime}"/> to a string.
         /// </summary>
         /// <param name="reportingPeriod">The reporting period to serialize.</param>
         /// <returns>
@@ -220,14 +218,8 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            var reportingPeriodInclusive = reportingPeriod as IReportingPeriodInclusive<UnitOfTime>;
-            if (reportingPeriodInclusive != null)
-            {
-                var result = Invariant($"rpi({reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()})");
-                return result;
-            }
-
-            throw new NotSupportedException("this type of reporting period is not supported: " + reportingPeriod.GetType());
+            var result = Invariant($"{reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()}");
+            return result;
         }
 
         /// <summary>
@@ -255,26 +247,8 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
             }
 
-            string errorMessage = "Cannot deserialize string; it is not valid reporting period.";
-            if (!reportingPeriod.EndsWith(")", StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            reportingPeriod = reportingPeriod.Remove(reportingPeriod.Length - 1, 1);
-
-            Type unboundGenericType;
-            if (reportingPeriod.StartsWith("rpi(",  StringComparison.Ordinal))
-            {
-                unboundGenericType = typeof(ReportingPeriodInclusive<>);
-                reportingPeriod = reportingPeriod.Remove(0, 4);
-            }
-            else
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
+            Type unboundGenericType = typeof(ReportingPeriod<>);
+            string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
             var requestedType = typeof(TReportingPeriod);
             Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
             var typeArgs = new[] { requestedUnitOfTimeType };
@@ -322,23 +296,16 @@ namespace OBeautifulCode.AccountingTime
 
             // ReSharper restore UseMethodIsInstanceOfType
             errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.  The following error occured when attempting to create it: ");
-            if (unboundGenericType == typeof(ReportingPeriodInclusive<>))
+
+            try
             {
-                object result;
-
-                try
-                {
-                    result = Activator.CreateInstance(genericTypeToCreate, start, end);
-                }
-                catch (TargetInvocationException ex)
-                {
-                    throw new InvalidOperationException(errorMessage + ex.InnerException?.Message);
-                }
-
+                var result = Activator.CreateInstance(genericTypeToCreate, start, end);
                 return result as TReportingPeriod;
             }
-
-            throw new InvalidOperationException("should not get here");
+            catch (TargetInvocationException ex)
+            {
+                throw new InvalidOperationException(errorMessage + ex.InnerException?.Message);
+            }
         }
 
         /// <summary>

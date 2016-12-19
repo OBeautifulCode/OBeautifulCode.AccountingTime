@@ -86,7 +86,6 @@
   <ItemGroup>
     <Compile Include=".Naos.Recipes\TupleInitializers\Initializers.cs" />
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
-    <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
     <Compile Include=".Spritely.Recipes\CamelStrictConstructorContractResolver\CamelStrictConstructorContractResolver.cs" />
     <Compile Include=".Spritely.Recipes\InheritedTypeJsonConverter\InheritedTypeJsonConverter.cs" />
     <Compile Include=".Spritely.Recipes\JsonConfiguration\CompactJsonSerializer.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriodInclusiveTest.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\CalendarMonthTest.cs" />

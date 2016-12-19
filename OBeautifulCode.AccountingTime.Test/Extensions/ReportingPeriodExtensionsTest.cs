@@ -29,7 +29,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
             var ex = Record.Exception(() => ReportingPeriodExtensions.IsInReportingPeriod(null, reportingPeriod));
@@ -56,10 +56,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var unitOfTime1 = A.Dummy<CalendarDay>();
-            var reportingPeriod1 = A.Dummy<ReportingPeriodInclusive<CalendarMonth>>();
+            var reportingPeriod1 = A.Dummy<ReportingPeriod<CalendarMonth>>();
 
             var unitOfTime2 = A.Dummy<FiscalQuarter>();
-            var reportingPeriod2 = A.Dummy<ReportingPeriodInclusive<GenericQuarter>>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod<GenericQuarter>>();
 
             // Act
             var ex1 = Record.Exception(() => unitOfTime1.IsInReportingPeriod(reportingPeriod1));
@@ -74,8 +74,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
 
             var unitOfTime1a = new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentySeven);
             var unitOfTime1b = new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne);
@@ -117,8 +117,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
 
             var unitOfTime1a = new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight);
             var unitOfTime1b = new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty);
@@ -148,8 +148,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2016, MonthOfYear.September));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2016, MonthOfYear.September));
 
             var unitOfTime1a = new CalendarMonth(2016, MonthOfYear.August);
             var unitOfTime1b = new CalendarMonth(2017, MonthOfYear.March);
@@ -185,8 +185,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2016, MonthOfYear.September));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2016, MonthOfYear.September));
 
             var unitOfTime1a = new CalendarMonth(2016, MonthOfYear.September);
             var unitOfTime1b = new CalendarMonth(2017, MonthOfYear.February);
@@ -213,8 +213,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2016, MonthNumber.Nine));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2016, MonthNumber.Nine));
 
             var unitOfTime1a = new FiscalMonth(2016, MonthNumber.Eight);
             var unitOfTime1b = new FiscalMonth(2017, MonthNumber.Three);
@@ -250,8 +250,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2016, MonthNumber.Nine));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2016, MonthNumber.Nine));
 
             var unitOfTime1a = new FiscalMonth(2016, MonthNumber.Nine);
             var unitOfTime1b = new FiscalMonth(2017, MonthNumber.Two);
@@ -278,8 +278,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2016, MonthNumber.Nine));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2016, MonthNumber.Nine));
 
             var unitOfTime1a = new GenericMonth(2016, MonthNumber.Eight);
             var unitOfTime1b = new GenericMonth(2017, MonthNumber.Three);
@@ -315,8 +315,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2016, MonthNumber.Nine));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2016, MonthNumber.Nine));
 
             var unitOfTime1a = new GenericMonth(2016, MonthNumber.Nine);
             var unitOfTime1b = new GenericMonth(2017, MonthNumber.Two);
@@ -343,8 +343,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new CalendarQuarter(2016, QuarterNumber.Q1);
             var unitOfTime1b = new CalendarQuarter(2017, QuarterNumber.Q4);
@@ -380,8 +380,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new CalendarQuarter(2016, QuarterNumber.Q2);
             var unitOfTime1b = new CalendarQuarter(2016, QuarterNumber.Q3);
@@ -417,8 +417,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new FiscalQuarter(2016, QuarterNumber.Q1);
             var unitOfTime1b = new FiscalQuarter(2017, QuarterNumber.Q4);
@@ -454,8 +454,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new FiscalQuarter(2016, QuarterNumber.Q2);
             var unitOfTime1b = new FiscalQuarter(2016, QuarterNumber.Q3);
@@ -491,8 +491,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new GenericQuarter(2016, QuarterNumber.Q1);
             var unitOfTime1b = new GenericQuarter(2017, QuarterNumber.Q4);
@@ -528,8 +528,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
 
             var unitOfTime1a = new GenericQuarter(2016, QuarterNumber.Q2);
             var unitOfTime1b = new GenericQuarter(2016, QuarterNumber.Q3);
@@ -565,8 +565,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
 
             var unitOfTime1a = new CalendarYear(2015);
             var unitOfTime1b = new CalendarYear(2019);
@@ -593,8 +593,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
 
             var unitOfTime1a = new CalendarYear(2016);
             var unitOfTime1b = new CalendarYear(2017);
@@ -621,8 +621,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
 
             var unitOfTime1a = new FiscalYear(2015);
             var unitOfTime1b = new FiscalYear(2019);
@@ -649,8 +649,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
 
             var unitOfTime1a = new FiscalYear(2016);
             var unitOfTime1b = new FiscalYear(2017);
@@ -677,8 +677,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
 
             var unitOfTime1a = new GenericYear(2015);
             var unitOfTime1b = new GenericYear(2019);
@@ -705,8 +705,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
 
             var unitOfTime1a = new GenericYear(2016);
             var unitOfTime1b = new GenericYear(2017);
@@ -733,7 +733,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
             var ex = Record.Exception(() => ReportingPeriodExtensions.HasOverlapWith(null, reportingPeriod));
@@ -746,7 +746,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod2_is_null()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
             var ex = Record.Exception(() => reportingPeriod.HasOverlapWith(null));
@@ -759,11 +759,11 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_throw_ArgumentException___When_parameters_reportingPeriod1_and_reportingPeriod1_represent_different_concrete_subclasses_of_UnitOfTime()
         {
             // Arrange
-            var reportingPeriod1a = A.Dummy<ReportingPeriodInclusive<FiscalQuarter>>();
-            var reportingPeriod1b = A.Dummy<ReportingPeriodInclusive<FiscalYear>>();
+            var reportingPeriod1a = A.Dummy<ReportingPeriod<FiscalQuarter>>();
+            var reportingPeriod1b = A.Dummy<ReportingPeriod<FiscalYear>>();
 
-            var reportingPeriod2a = A.Dummy<ReportingPeriodInclusive<CalendarQuarter>>();
-            var reportingPeriod2b = A.Dummy<ReportingPeriodInclusive<GenericQuarter>>();
+            var reportingPeriod2a = A.Dummy<ReportingPeriod<CalendarQuarter>>();
+            var reportingPeriod2b = A.Dummy<ReportingPeriod<GenericQuarter>>();
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod1a.HasOverlapWith(reportingPeriod1b));
@@ -778,10 +778,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentySeven));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Five));
+            var reportingPeriod2a = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentySeven));
+            var reportingPeriod2b = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Five));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -801,15 +801,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
-            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
-            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
-            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
-            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne));
-            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten));
+            var reportingPeriod2a = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2b = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
+            var reportingPeriod2c = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
+            var reportingPeriod2d = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine));
+            var reportingPeriod2e = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2f = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne));
+            var reportingPeriod2g = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -854,10 +854,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2014, MonthOfYear.January), new CalendarMonth(2016, MonthOfYear.January));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.July));
+            var reportingPeriod2a = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2014, MonthOfYear.January), new CalendarMonth(2016, MonthOfYear.January));
+            var reportingPeriod2b = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.July));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -877,15 +877,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
-            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
-            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March));
-            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April));
-            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.June));
-            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June));
+            var reportingPeriod2a = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2b = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2c = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2d = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March));
+            var reportingPeriod2e = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod2f = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.June));
+            var reportingPeriod2g = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -930,10 +930,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2014, MonthNumber.One), new FiscalMonth(2016, MonthNumber.One));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Seven));
+            var reportingPeriod2a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.One), new FiscalMonth(2016, MonthNumber.One));
+            var reportingPeriod2b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Seven));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -953,15 +953,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four));
-            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Six));
-            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six));
+            var reportingPeriod2a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2c = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2d = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod2e = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four));
+            var reportingPeriod2f = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Six));
+            var reportingPeriod2g = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1006,10 +1006,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2014, MonthNumber.One), new GenericMonth(2016, MonthNumber.One));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Seven));
+            var reportingPeriod2a = new ReportingPeriod<GenericMonth>(new GenericMonth(2014, MonthNumber.One), new GenericMonth(2016, MonthNumber.One));
+            var reportingPeriod2b = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Seven));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1029,15 +1029,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod2c = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod2d = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod2e = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four));
-            var reportingPeriod2f = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Six));
-            var reportingPeriod2g = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six));
+            var reportingPeriod2a = new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2b = new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2c = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2d = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod2e = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four));
+            var reportingPeriod2f = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Six));
+            var reportingPeriod2g = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1082,10 +1082,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2014, QuarterNumber.Q1), new CalendarQuarter(2016, QuarterNumber.Q1));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2014, QuarterNumber.Q1), new CalendarQuarter(2016, QuarterNumber.Q1));
+            var reportingPeriod2b = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1105,15 +1105,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q1));
-            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2b = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2c = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2d = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2e = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod2f = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2g = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1158,10 +1158,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2014, QuarterNumber.Q1), new FiscalQuarter(2016, QuarterNumber.Q1));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2014, QuarterNumber.Q1), new FiscalQuarter(2016, QuarterNumber.Q1));
+            var reportingPeriod2b = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1181,15 +1181,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q1));
-            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2b = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2c = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2d = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2e = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod2f = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2g = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1234,10 +1234,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2014, QuarterNumber.Q1), new GenericQuarter(2016, QuarterNumber.Q1));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2014, QuarterNumber.Q1), new GenericQuarter(2016, QuarterNumber.Q1));
+            var reportingPeriod2b = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1257,15 +1257,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2c = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
-            var reportingPeriod2d = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2e = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod2f = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q1));
-            var reportingPeriod2g = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2a = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2b = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2c = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2d = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2e = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod2f = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q1));
+            var reportingPeriod2g = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1310,10 +1310,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2010));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2015), new CalendarYear(2018));
+            var reportingPeriod2a = new ReportingPeriod<CalendarYear>(new CalendarYear(2009), new CalendarYear(2010));
+            var reportingPeriod2b = new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2018));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1333,15 +1333,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2011), new CalendarYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2011));
-            var reportingPeriod2b = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2009), new CalendarYear(2012));
-            var reportingPeriod2c = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2011), new CalendarYear(2013));
-            var reportingPeriod2d = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2013));
-            var reportingPeriod2e = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2014));
-            var reportingPeriod2f = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2012), new CalendarYear(2016));
-            var reportingPeriod2g = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2014), new CalendarYear(2017));
+            var reportingPeriod2a = new ReportingPeriod<CalendarYear>(new CalendarYear(2009), new CalendarYear(2011));
+            var reportingPeriod2b = new ReportingPeriod<CalendarYear>(new CalendarYear(2009), new CalendarYear(2012));
+            var reportingPeriod2c = new ReportingPeriod<CalendarYear>(new CalendarYear(2011), new CalendarYear(2013));
+            var reportingPeriod2d = new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2013));
+            var reportingPeriod2e = new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2014));
+            var reportingPeriod2f = new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2016));
+            var reportingPeriod2g = new ReportingPeriod<CalendarYear>(new CalendarYear(2014), new CalendarYear(2017));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1386,10 +1386,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2010));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2015), new FiscalYear(2018));
+            var reportingPeriod2a = new ReportingPeriod<FiscalYear>(new FiscalYear(2009), new FiscalYear(2010));
+            var reportingPeriod2b = new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2018));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1409,15 +1409,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2011), new FiscalYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2011));
-            var reportingPeriod2b = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2009), new FiscalYear(2012));
-            var reportingPeriod2c = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2011), new FiscalYear(2013));
-            var reportingPeriod2d = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2013));
-            var reportingPeriod2e = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2014));
-            var reportingPeriod2f = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2012), new FiscalYear(2016));
-            var reportingPeriod2g = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2014), new FiscalYear(2017));
+            var reportingPeriod2a = new ReportingPeriod<FiscalYear>(new FiscalYear(2009), new FiscalYear(2011));
+            var reportingPeriod2b = new ReportingPeriod<FiscalYear>(new FiscalYear(2009), new FiscalYear(2012));
+            var reportingPeriod2c = new ReportingPeriod<FiscalYear>(new FiscalYear(2011), new FiscalYear(2013));
+            var reportingPeriod2d = new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2013));
+            var reportingPeriod2e = new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2014));
+            var reportingPeriod2f = new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2016));
+            var reportingPeriod2g = new ReportingPeriod<FiscalYear>(new FiscalYear(2014), new FiscalYear(2017));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1462,10 +1462,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_false___When_parameters_reportingPeriod1_and_reportingPeriod2_do_not_overlap_and_are_of_type_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2011), new GenericYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2010));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2015), new GenericYear(2018));
+            var reportingPeriod2a = new ReportingPeriod<GenericYear>(new GenericYear(2009), new GenericYear(2010));
+            var reportingPeriod2b = new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2018));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1485,15 +1485,15 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2014));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2011), new GenericYear(2014));
 
-            var reportingPeriod2a = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2011));
-            var reportingPeriod2b = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2009), new GenericYear(2012));
-            var reportingPeriod2c = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2011), new GenericYear(2013));
-            var reportingPeriod2d = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2013));
-            var reportingPeriod2e = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2014));
-            var reportingPeriod2f = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2012), new GenericYear(2016));
-            var reportingPeriod2g = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2014), new GenericYear(2017));
+            var reportingPeriod2a = new ReportingPeriod<GenericYear>(new GenericYear(2009), new GenericYear(2011));
+            var reportingPeriod2b = new ReportingPeriod<GenericYear>(new GenericYear(2009), new GenericYear(2012));
+            var reportingPeriod2c = new ReportingPeriod<GenericYear>(new GenericYear(2011), new GenericYear(2013));
+            var reportingPeriod2d = new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2013));
+            var reportingPeriod2e = new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2014));
+            var reportingPeriod2f = new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2016));
+            var reportingPeriod2g = new ReportingPeriod<GenericYear>(new GenericYear(2014), new GenericYear(2017));
 
             // Act
             var hasOverlap1a = reportingPeriod1.HasOverlapWith(reportingPeriod2a);
@@ -1548,9 +1548,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Two));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+            var reportingPeriod3 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Two));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1567,9 +1567,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod3 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1586,9 +1586,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1605,9 +1605,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1624,9 +1624,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1643,9 +1643,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1662,9 +1662,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1681,9 +1681,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1700,9 +1700,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1719,9 +1719,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NumberOfUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.NumberOfUnitsWithin();
@@ -1748,8 +1748,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1764,9 +1764,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod3 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1783,9 +1783,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1802,9 +1802,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1821,9 +1821,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1840,9 +1840,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1859,9 +1859,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1878,9 +1878,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1897,9 +1897,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1916,9 +1916,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2017));
-            var reportingPeriod3 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017));
+            var reportingPeriod3 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
 
             // Act
             var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
@@ -1945,7 +1945,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void CreatePermutations___Should_throw_ArgumentOutOfRangeException___When_parameter_maxUnitsInAnyReportingPeriod_is_0_or_less()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<ReportingPeriodInclusive<UnitOfTime>>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod.CreatePermutations(0));
@@ -1960,8 +1960,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -1975,33 +1975,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
-                new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.June));
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.June));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2015,33 +2015,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.May)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.May)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.June)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June)),
-                new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.March)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.June)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.May)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.June)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Six));
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Six));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2055,33 +2055,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six)),
-                new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Six)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Six));
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Six));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2095,33 +2095,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Six)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six)),
-                new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Three)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Six)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Five)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Six)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2135,33 +2135,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2175,33 +2175,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2));
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2215,33 +2215,33 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2016, QuarterNumber.Q4)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2)),
-                new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)));
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2016, QuarterNumber.Q4)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2019));
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2019));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2255,29 +2255,29 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2019)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019)),
-                new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2019)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2018)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019)),
+                new ReportingPeriod<CalendarYear>(new CalendarYear(2019), new CalendarYear(2019)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2019));
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2019));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2291,29 +2291,29 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2019)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019)),
-                new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2019)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2018)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2019), new FiscalYear(2019)));
         }
 
         [Fact]
         public static void CreatePermutations___Should_return_permutations___When_called_for_reporting_period_of_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016));
-            var reportingPeriod2 = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2019));
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2019));
 
             // Act
             var permutations1a = reportingPeriod1.CreatePermutations(1);
@@ -2327,21 +2327,21 @@ namespace OBeautifulCode.AccountingTime.Test
             permutations1b.Should().Equal(reportingPeriod1);
 
             permutations2a.Should().Equal(
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
+                new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
 
             permutations2b.Should().Equal(
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2017)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2016), new GenericYear(2018)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2019)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2018), new GenericYear(2019)),
-                new ReportingPeriodInclusive<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
+                new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2019)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2018)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2019)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2019), new GenericYear(2019)));
         }
 
         [Fact]
@@ -2355,21 +2355,21 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void SerializeToString__Should_return_expected_serialized_string_representation_of_reportingPeriod___When_reportingPeriod_is_a_IReportingPeriodInclusive()
+        public static void SerializeToString__Should_return_expected_serialized_string_representation_of_reportingPeriod___When_reportingPeriod_is_a_IReportingPeriod()
         {
             // Arrange
-            var reportingPeriods = new Dictionary<string, IReportingPeriodInclusive<UnitOfTime>>
+            var reportingPeriods = new Dictionary<string, IReportingPeriod<UnitOfTime>>
             {
-                { "rpi(cd-2017-05-17,cd-2018-12-09)", new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
-                { "rpi(cm-2017-05,cm-2018-12)", new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
-                { "rpi(fm-2017-05,fm-2018-12)", new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
-                { "rpi(gm-2017-05,gm-2018-12)", new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
-                { "rpi(cq-2017-2,cq-2018-4)", new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
-                { "rpi(fq-2017-2,fq-2018-4)", new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
-                { "rpi(gq-2017-2,gq-2018-4)", new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
-                { "rpi(cy-2017,cy-2018)", new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
-                { "rpi(fy-2017,fy-2018)", new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
-                { "rpi(gy-2017,gy-2018)", new ReportingPeriodInclusive<GenericYear>(new GenericYear(2017), new GenericYear(2018)) }
+                { "cd-2017-05-17,cd-2018-12-09", new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
+                { "cm-2017-05,cm-2018-12", new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
+                { "fm-2017-05,fm-2018-12", new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
+                { "gm-2017-05,gm-2018-12", new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
+                { "cq-2017-2,cq-2018-4", new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
+                { "fq-2017-2,fq-2018-4", new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
+                { "gq-2017-2,gq-2018-4", new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
+                { "cy-2017,cy-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
+                { "fy-2017,fy-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
+                { "gy-2017,gy-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) }
             };
 
             // Act
@@ -2403,29 +2403,8 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_parameter_reportingPeriod_does_not_start_with_a_known_identifier_for_any_kind_of_reporting_period_plus_open_and_close_parenthesis()
-        {
-            // Arrange
-            var unitsOfTime = new[]
-            {
-                "RPI(cq-2017-2,cq-2018-4)",
-                "(cq-2017-2,cq-2018-4)",
-                "cq-2017-2,cq-2018-4",
-                "rpii(cq-2017-2,cq-2018-4)",
-                "rpi(cq-2017-2,cq-2018-4",
-                "rpicq-2017-2,cq-2018-4"
-            };
-
-            // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
-
-            // Assert
-            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
-        }
-
-        [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
-        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_reporting_period_encoded_cannot_be_assigned_to_the_return_type()
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_return_type_cannot_be_assigned_to_a_ReportingPeriod()
         {
             // Arrange
             var allTypes = new[]
@@ -2462,16 +2441,16 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var reportingPeriods = new[]
             {
-                "rpi(cd-2015-11-11,cd-2016-11-11)",
-                "rpi(cm-2017-03,cm-2017-04)",
-                "rpi(fm-2017-03,fm-2017-04)",
-                "rpi(gm-2017-03,gm-2017-04)",
-                "rpi(cq-2017-3,cq-2017-4)",
-                "rpi(fq-2017-3,fq-2017-4)",
-                "rpi(gq-2017-3,gq-2017-4)",
-                "rpi(cy-2017,cy-2018)",
-                "rpi(fy-2017,fy-2018)",
-                "rpi(gy-2017,gy-2018)"
+                "cd-2015-11-11,cd-2016-11-11",
+                "cm-2017-03,cm-2017-04",
+                "fm-2017-03,fm-2017-04",
+                "gm-2017-03,gm-2017-04",
+                "cq-2017-3,cq-2017-4",
+                "fq-2017-3,fq-2017-4",
+                "gq-2017-3,gq-2017-4",
+                "cy-2017,cy-2018",
+                "fy-2017,fy-2018",
+                "gy-2017,gy-2018"
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -2499,26 +2478,26 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new[]
             {
-                new { ReportingPeriod = "rpi(cd-2015-11-11,cd-2016-11-11)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(cm-2017-03,cm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(fm-2017-03,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>) },
-                new { ReportingPeriod = "rpi(gm-2017-03,gm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>) },
-                new { ReportingPeriod = "rpi(cq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>) },
-                new { ReportingPeriod = "rpi(fq-2017-3,fq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
-                new { ReportingPeriod = "rpi(gq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>) },
-                new { ReportingPeriod = "rpi(cy-2017,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>) },
-                new { ReportingPeriod = "rpi(fy-2017,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(gy-2017,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
-                new { ReportingPeriod = "rpi(cd-2015-11-11,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(cq-2017-3,fm-2017-04)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarUnitOfTime>) },
-                new { ReportingPeriod = "rpi(gm-2017-03,gy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericYear>) },
-                new { ReportingPeriod = "rpi(fq-2017-3,cq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalUnitOfTime>) },
-                new { ReportingPeriod = "rpi(fq-2017-3,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
-                new { ReportingPeriod = "rpi(cd-2015-11-11,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<CalendarDay>) },
-                new { ReportingPeriod = "rpi(gy-2018,cy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericUnitOfTime>) },
-                new { ReportingPeriod = "rpi(fm-2017-04,fy-2018)", ReportingPeriodType = typeof(ReportingPeriodInclusive<FiscalMonth>) },
-                new { ReportingPeriod = "rpi(gy-2017,gq-2017-4)", ReportingPeriodType = typeof(ReportingPeriodInclusive<GenericQuarter>) },
+                new { ReportingPeriod = "cd-2015-11-11,cd-2016-11-11", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "cm-2017-03,cm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "fm-2017-03,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "gm-2017-03,gm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
+                new { ReportingPeriod = "cq-2017-3,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "fq-2017-3,fq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "gq-2017-3,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "cy-2017,cy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "fy-2017,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "gy-2017,gy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "cd-2015-11-11,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "fm-2017-04,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "cq-2017-3,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "gm-2017-03,gy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
+                new { ReportingPeriod = "fq-2017-3,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "fq-2017-3,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "cd-2015-11-11,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "gy-2018,cy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "fm-2017-04,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "gy-2017,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -2543,15 +2522,14 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "rpi()",
-                "rpi(,)",
-                "rpi(cm-2017-04)",
-                "rpi(,cm-2017-04)",
-                "rpi(cm-2017-04,)",
-                "rpi(cm-2017-03,,)",
-                "rpi(,cm-2017-03,)",
-                "rpi(cm-2017-03,cm-2017-04,)",
-                "rpi(cm-2017-03,cm-2017-04,cm-2017-04)"
+                ",",
+                "cm-2017-04",
+                ",cm-2017-04",
+                "cm-2017-04,",
+                "cm-2017-03,,",
+                ",cm-2017-03,",
+                "cm-2017-03,cm-2017-04,",
+                "cm-2017-03,cm-2017-04,cm-2017-04"
             };
 
             // Act
@@ -2567,21 +2545,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "rpi(cm-201a-11,cm-2017-10)",
-                "rpi(cm-xxxx-11,cm-2017-10)",
-                "rpi(cm-10000-11,cm-2017-10)",
-                "rpi(cm-T001-11,cm-2017-10)",
-                "rpi(cm-0-11,cm-2017-10)",
-                "rpi(cm-200-11,cm-2017-10)",
-                "rpi(cm-0000-11,cm-2017-10)",
-                "rpi(cm-999-11,cm-2017-10)",
-                "rpi(cm-2007-1,cm-2017-10)",
-                "rpi(cm-2007-9,cm-2017-10)",
-                "rpi(cm-2007-13,cm-2017-10)",
-                "rpi(cm-2007-99,cm-2017-10)",
-                "rpi(cm-2007-00,cm-2017-10)",
-                "rpi(cm-2007-001,cm-2017-10)",
-                "rpi(cm-2007-012,cm-2017-10)"
+                "cm-201a-11,cm-2017-10",
+                "cm-xxxx-11,cm-2017-10",
+                "cm-10000-11,cm-2017-10",
+                "cm-T001-11,cm-2017-10",
+                "cm-0-11,cm-2017-10",
+                "cm-200-11,cm-2017-10",
+                "cm-0000-11,cm-2017-10",
+                "cm-999-11,cm-2017-10",
+                "cm-2007-1,cm-2017-10",
+                "cm-2007-9,cm-2017-10",
+                "cm-2007-13,cm-2017-10",
+                "cm-2007-99,cm-2017-10",
+                "cm-2007-00,cm-2017-10",
+                "cm-2007-001,cm-2017-10",
+                "cm-2007-012,cm-2017-10"
             };
 
             // Act
@@ -2597,21 +2575,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "rpi(cm-2017-04,cm-201a-11)",
-                "rpi(cm-2017-04,cm-xxxx-11)",
-                "rpi(cm-2017-04,cm-10000-11)",
-                "rpi(cm-2017-04,cm-T001-11)",
-                "rpi(cm-2017-04,cm-0-11)",
-                "rpi(cm-2017-04,cm-200-11)",
-                "rpi(cm-2017-04,cm-0000-11)",
-                "rpi(cm-2017-04,cm-999-11)",
-                "rpi(cm-2017-04,cm-2007-1)",
-                "rpi(cm-2017-04,cm-2007-9)",
-                "rpi(cm-2017-04,cm-2007-13)",
-                "rpi(cm-2017-04,cm-2007-99)",
-                "rpi(cm-2017-04,cm-2007-00)",
-                "rpi(cm-2017-04,cm-2007-001)",
-                "rpi(cm-2017-04,cm-2007-012)"
+                "cm-2017-04,cm-201a-11",
+                "cm-2017-04,cm-xxxx-11",
+                "cm-2017-04,cm-10000-11",
+                "cm-2017-04,cm-T001-11",
+                "cm-2017-04,cm-0-11",
+                "cm-2017-04,cm-200-11",
+                "cm-2017-04,cm-0000-11",
+                "cm-2017-04,cm-999-11",
+                "cm-2017-04,cm-2007-1",
+                "cm-2017-04,cm-2007-9",
+                "cm-2017-04,cm-2007-13",
+                "cm-2017-04,cm-2007-99",
+                "cm-2017-04,cm-2007-00",
+                "cm-2017-04,cm-2007-001",
+                "cm-2017-04,cm-2007-012"
             };
 
             // Act
@@ -2627,15 +2605,15 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime1 = new[]
             {
-                "rpi(cm-2017-04,cd-2017-04-11)",
-                "rpi(fq-2017-4,gq-2018-1)",
-                "rpi(cy-2017,fm-2018-05)"
+                "cm-2017-04,cd-2017-04-11",
+                "fq-2017-4,gq-2018-1",
+                "cy-2017,fm-2018-05"
             };
 
             var unitsOfTime2 = new[]
             {
-                "rpi(cm-2017-04,cd-2017-04-11)",
-                "rpi(cy-2017,cm-2018-05)"
+                "cm-2017-04,cd-2017-04-11",
+                "cy-2017,cm-2018-05"
             };
 
             // Act
@@ -2653,10 +2631,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "rpi(cm-2017-04,cm-2016-04)",
-                "rpi(cq-2017-3,cq-2017-2)",
-                "rpi(cd-2017-03-04,cd-2017-03-01)",
-                "rpi(fy-2017,fy-2016)"
+                "cm-2017-04,cm-2016-04",
+                "cq-2017-3,cq-2017-2",
+                "cd-2017-03-04,cd-2017-03-01",
+                "fy-2017,fy-2016"
             };
 
             // Act
@@ -2668,402 +2646,272 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarDay_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarDay_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(cd-2001-01-10,cd-2016-02-29)";
-            var expected = new ReportingPeriodInclusive<CalendarDay>(new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
+            var reportingPeriod = "cd-2001-01-10,cd-2016-02-29";
+            var expected = new ReportingPeriod<CalendarDay>(new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarDay>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarDay>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarDay>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarDay>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarDay>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarDay>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarMonth_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarMonth_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(cm-2001-01,cm-2001-02)";
-            var expected = new ReportingPeriodInclusive<CalendarMonth>(new CalendarMonth(2001, MonthOfYear.January), new CalendarMonth(2001, MonthOfYear.February));
+            var reportingPeriod = "cm-2001-01,cm-2001-02";
+            var expected = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2001, MonthOfYear.January), new CalendarMonth(2001, MonthOfYear.February));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarMonth>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarMonth>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarMonth>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarMonth>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarMonth>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalMonth_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalMonth_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(fm-2001-01,fm-2001-02)";
-            var expected = new ReportingPeriodInclusive<FiscalMonth>(new FiscalMonth(2001, MonthNumber.One), new FiscalMonth(2001, MonthNumber.Two));
+            var reportingPeriod = "fm-2001-01,fm-2001-02";
+            var expected = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2001, MonthNumber.One), new FiscalMonth(2001, MonthNumber.Two));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalMonth>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalMonth>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalMonth>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalMonth>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalMonth>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericMonth_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericMonth_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(gm-2001-01,gm-2001-02)";
-            var expected = new ReportingPeriodInclusive<GenericMonth>(new GenericMonth(2001, MonthNumber.One), new GenericMonth(2001, MonthNumber.Two));
+            var reportingPeriod = "gm-2001-01,gm-2001-02";
+            var expected = new ReportingPeriod<GenericMonth>(new GenericMonth(2001, MonthNumber.One), new GenericMonth(2001, MonthNumber.Two));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericMonth>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericMonth>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericMonth>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericMonth>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericMonth>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericMonth>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarQuarter_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(cq-2001-1,cq-2001-2)";
-            var expected = new ReportingPeriodInclusive<CalendarQuarter>(new CalendarQuarter(2001, QuarterNumber.Q1), new CalendarQuarter(2001, QuarterNumber.Q2));
+            var reportingPeriod = "cq-2001-1,cq-2001-2";
+            var expected = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2001, QuarterNumber.Q1), new CalendarQuarter(2001, QuarterNumber.Q2));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarQuarter>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarQuarter>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarQuarter>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarQuarter>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarQuarter>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalQuarter_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(fq-2001-1,fq-2001-2)";
-            var expected = new ReportingPeriodInclusive<FiscalQuarter>(new FiscalQuarter(2001, QuarterNumber.Q1), new FiscalQuarter(2001, QuarterNumber.Q2));
+            var reportingPeriod = "fq-2001-1,fq-2001-2";
+            var expected = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2001, QuarterNumber.Q1), new FiscalQuarter(2001, QuarterNumber.Q2));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalQuarter>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalQuarter>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalQuarter>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalQuarter>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalQuarter>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericQuarter_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(gq-2001-1,gq-2001-2)";
-            var expected = new ReportingPeriodInclusive<GenericQuarter>(new GenericQuarter(2001, QuarterNumber.Q1), new GenericQuarter(2001, QuarterNumber.Q2));
+            var reportingPeriod = "gq-2001-1,gq-2001-2";
+            var expected = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2001, QuarterNumber.Q1), new GenericQuarter(2001, QuarterNumber.Q2));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericQuarter>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericQuarter>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericQuarter>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericQuarter>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericQuarter>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericQuarter>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_CalendarYear_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarYear_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(cy-2001,cy-2002)";
-            var expected = new ReportingPeriodInclusive<CalendarYear>(new CalendarYear(2001), new CalendarYear(2002));
+            var reportingPeriod = "cy-2001,cy-2002";
+            var expected = new ReportingPeriod<CalendarYear>(new CalendarYear(2001), new CalendarYear(2002));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarYear>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<CalendarYear>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarYear>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<CalendarYear>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<CalendarYear>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<CalendarYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_FiscalYear_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalYear_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(fy-2001,fy-2002)";
-            var expected = new ReportingPeriodInclusive<FiscalYear>(new FiscalYear(2001), new FiscalYear(2002));
+            var reportingPeriod = "fy-2001,fy-2002";
+            var expected = new ReportingPeriod<FiscalYear>(new FiscalYear(2001), new FiscalYear(2002));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalYear>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<FiscalYear>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalYear>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<FiscalYear>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<FiscalYear>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<FiscalYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriodInclusive_of_GenericYear_string()
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericYear_string()
         {
             // Arrange
-            var reportingPeriod = "rpi(gy-2001,gy-2002)";
-            var expected = new ReportingPeriodInclusive<GenericYear>(new GenericYear(2001), new GenericYear(2002));
+            var reportingPeriod = "gy-2001,gy-2002";
+            var expected = new ReportingPeriod<GenericYear>(new GenericYear(2001), new GenericYear(2002));
 
             // Act
             var deserialized1 = reportingPeriod.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
-            var deserialized2 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<UnitOfTime>>();
-            var deserialized3 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
-            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<UnitOfTime>>();
+            var deserialized2 = reportingPeriod.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
 
-            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
-            var deserialized6 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericUnitOfTime>>();
-            var deserialized7 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
-            var deserialized8 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericUnitOfTime>>();
+            var deserialized3 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized4 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
 
-            var deserialized9 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericYear>>();
-            var deserialized10 = reportingPeriod.DeserializeFromString<IReportingPeriodInclusive<GenericYear>>();
-            var deserialized11 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericYear>>();
-            var deserialized12 = reportingPeriod.DeserializeFromString<ReportingPeriodInclusive<GenericYear>>();
+            var deserialized5 = reportingPeriod.DeserializeFromString<IReportingPeriod<GenericYear>>();
+            var deserialized6 = reportingPeriod.DeserializeFromString<ReportingPeriod<GenericYear>>();
 
             // Assert
             deserialized1.Should().Be(expected);
-            deserialized2.Should().Be(expected);
             deserialized2.Should().Be(expected);
             deserialized3.Should().Be(expected);
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
-            deserialized7.Should().Be(expected);
-            deserialized8.Should().Be(expected);
-            deserialized9.Should().Be(expected);
-            deserialized10.Should().Be(expected);
-            deserialized11.Should().Be(expected);
-            deserialized12.Should().Be(expected);
         }
 
         [Fact]

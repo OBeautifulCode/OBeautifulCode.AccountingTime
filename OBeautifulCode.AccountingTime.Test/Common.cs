@@ -17,25 +17,33 @@ namespace OBeautifulCode.AccountingTime.Test
             typeof(GenericUnitOfTime), typeof(GenericQuarter), typeof(GenericQuarter), typeof(GenericYear)
         };
 
-        internal interface IReportingPeriodTest<out T> : IReportingPeriod<T>
-        where T : UnitOfTime
+        public interface IReportingPeriodTest<out T> : IReportingPeriod<T>
+            where T : UnitOfTime
         {
         }
 
-        internal class ReportingPeriodTest<T> : ReportingPeriod<T>, IReportingPeriodTest<T>
+        internal class ReportingPeriodTest<T> : IReportingPeriod<T>
             where T : UnitOfTime
         {
             public ReportingPeriodTest(T start, T end)
-            : base(start, end)
             {
+                this.Start = start;
+                this.End = end;
             }
 
-            public override IReportingPeriod<T> Clone()
+            public T Start { get; }
+
+            public T End { get; }
+
+            public TReportingPeriod Clone<TReportingPeriod>()
+                where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
             {
-                var startClone = this.Start.Clone<T>();
-                var endClone = this.End.Clone<T>();
-                var result = new ReportingPeriodTest<T>(startClone, endClone);
-                return result;
+                throw new NotImplementedException();
+            }
+
+            public IReportingPeriod<T> Clone()
+            {
+                throw new NotImplementedException();
             }
         }
     }

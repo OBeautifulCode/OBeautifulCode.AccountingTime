@@ -120,25 +120,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
         {
             // Arrange
             var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
-            var collection2 = Database.GetCollection<ReportingPeriodInclusiveModel>(nameof(ReportingPeriodInclusiveModel));
-            var collection3 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
-            var collection4 = Database.GetCollection<IReportingPeriodInclusiveModel>(nameof(IReportingPeriodInclusiveModel));
+            var collection2 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
 
             var expectedModel1 = A.Dummy<ReportingPeriodModel>();
-            var expectedModel2 = A.Dummy<ReportingPeriodInclusiveModel>();
-            var expectedModel3 = A.Dummy<IReportingPeriodModel>();
-            var expectedModel4 = A.Dummy<IReportingPeriodInclusiveModel>();
+            var expectedModel2 = A.Dummy<IReportingPeriodModel>();
 
             // Act
             collection1.InsertOne(expectedModel1);
             collection2.InsertOne(expectedModel2);
-            collection3.InsertOne(expectedModel3);
-            collection4.InsertOne(expectedModel4);
 
             var actualModel1 = (await collection1.Find(_ => _.Id == expectedModel1.Id).ToListAsync()).Single();
             var actualModel2 = (await collection2.Find(_ => _.Id == expectedModel2.Id).ToListAsync()).Single();
-            var actualModel3 = (await collection3.Find(_ => _.Id == expectedModel3.Id).ToListAsync()).Single();
-            var actualModel4 = (await collection4.Find(_ => _.Id == expectedModel4.Id).ToListAsync()).Single();
 
             // Assert
             actualModel1.UnitOfTime.Should().Be(expectedModel1.UnitOfTime);
@@ -170,36 +162,6 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel2.GenericMonth.Should().Be(expectedModel2.GenericMonth);
             actualModel2.GenericQuarter.Should().Be(expectedModel2.GenericQuarter);
             actualModel2.GenericYear.Should().Be(expectedModel2.GenericYear);
-
-            actualModel3.UnitOfTime.Should().Be(expectedModel3.UnitOfTime);
-            actualModel3.CalendarUnitOfTime.Should().Be(expectedModel3.CalendarUnitOfTime);
-            actualModel3.CalendarDay.Should().Be(expectedModel3.CalendarDay);
-            actualModel3.CalendarMonth.Should().Be(expectedModel3.CalendarMonth);
-            actualModel3.CalendarQuarter.Should().Be(expectedModel3.CalendarQuarter);
-            actualModel3.CalendarYear.Should().Be(expectedModel3.CalendarYear);
-            actualModel3.FiscalUnitOfTime.Should().Be(expectedModel3.FiscalUnitOfTime);
-            actualModel3.FiscalMonth.Should().Be(expectedModel3.FiscalMonth);
-            actualModel3.FiscalQuarter.Should().Be(expectedModel3.FiscalQuarter);
-            actualModel3.FiscalYear.Should().Be(expectedModel3.FiscalYear);
-            actualModel3.GenericUnitOfTime.Should().Be(expectedModel3.GenericUnitOfTime);
-            actualModel3.GenericMonth.Should().Be(expectedModel3.GenericMonth);
-            actualModel3.GenericQuarter.Should().Be(expectedModel3.GenericQuarter);
-            actualModel3.GenericYear.Should().Be(expectedModel3.GenericYear);
-
-            actualModel4.UnitOfTime.Should().Be(expectedModel4.UnitOfTime);
-            actualModel4.CalendarUnitOfTime.Should().Be(expectedModel4.CalendarUnitOfTime);
-            actualModel4.CalendarDay.Should().Be(expectedModel4.CalendarDay);
-            actualModel4.CalendarMonth.Should().Be(expectedModel4.CalendarMonth);
-            actualModel4.CalendarQuarter.Should().Be(expectedModel4.CalendarQuarter);
-            actualModel4.CalendarYear.Should().Be(expectedModel4.CalendarYear);
-            actualModel4.FiscalUnitOfTime.Should().Be(expectedModel4.FiscalUnitOfTime);
-            actualModel4.FiscalMonth.Should().Be(expectedModel4.FiscalMonth);
-            actualModel4.FiscalQuarter.Should().Be(expectedModel4.FiscalQuarter);
-            actualModel4.FiscalYear.Should().Be(expectedModel4.FiscalYear);
-            actualModel4.GenericUnitOfTime.Should().Be(expectedModel4.GenericUnitOfTime);
-            actualModel4.GenericMonth.Should().Be(expectedModel4.GenericMonth);
-            actualModel4.GenericQuarter.Should().Be(expectedModel4.GenericQuarter);
-            actualModel4.GenericYear.Should().Be(expectedModel4.GenericYear);
         }
 
         [Fact]
@@ -207,25 +169,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
         {
             // Arrange
             var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
-            var collection2 = Database.GetCollection<ReportingPeriodInclusiveModel>(nameof(ReportingPeriodInclusiveModel));
-            var collection3 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
-            var collection4 = Database.GetCollection<IReportingPeriodInclusiveModel>(nameof(IReportingPeriodInclusiveModel));
+            var collection2 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
 
             var expectedModel1 = new ReportingPeriodModel();
-            var expectedModel2 = new ReportingPeriodInclusiveModel();
-            var expectedModel3 = new IReportingPeriodModel();
-            var expectedModel4 = new IReportingPeriodInclusiveModel();
+            var expectedModel2 = new IReportingPeriodModel();
 
             // Act
             collection1.InsertOne(expectedModel1);
             collection2.InsertOne(expectedModel2);
-            collection3.InsertOne(expectedModel3);
-            collection4.InsertOne(expectedModel4);
 
             var actualModel1 = (await collection1.Find(_ => _.Id == expectedModel1.Id).ToListAsync()).Single();
             var actualModel2 = (await collection2.Find(_ => _.Id == expectedModel2.Id).ToListAsync()).Single();
-            var actualModel3 = (await collection3.Find(_ => _.Id == expectedModel3.Id).ToListAsync()).Single();
-            var actualModel4 = (await collection4.Find(_ => _.Id == expectedModel4.Id).ToListAsync()).Single();
 
             // Assert
             actualModel1.UnitOfTime.Should().BeNull();
@@ -257,36 +211,6 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel2.GenericMonth.Should().BeNull();
             actualModel2.GenericQuarter.Should().BeNull();
             actualModel2.GenericYear.Should().BeNull();
-
-            actualModel3.UnitOfTime.Should().BeNull();
-            actualModel3.CalendarUnitOfTime.Should().BeNull();
-            actualModel3.CalendarDay.Should().BeNull();
-            actualModel3.CalendarMonth.Should().BeNull();
-            actualModel3.CalendarQuarter.Should().BeNull();
-            actualModel3.CalendarYear.Should().BeNull();
-            actualModel3.FiscalUnitOfTime.Should().BeNull();
-            actualModel3.FiscalMonth.Should().BeNull();
-            actualModel3.FiscalQuarter.Should().BeNull();
-            actualModel3.FiscalYear.Should().BeNull();
-            actualModel3.GenericUnitOfTime.Should().BeNull();
-            actualModel3.GenericMonth.Should().BeNull();
-            actualModel3.GenericQuarter.Should().BeNull();
-            actualModel3.GenericYear.Should().BeNull();
-
-            actualModel4.UnitOfTime.Should().BeNull();
-            actualModel4.CalendarUnitOfTime.Should().BeNull();
-            actualModel4.CalendarDay.Should().BeNull();
-            actualModel4.CalendarMonth.Should().BeNull();
-            actualModel4.CalendarQuarter.Should().BeNull();
-            actualModel4.CalendarYear.Should().BeNull();
-            actualModel4.FiscalUnitOfTime.Should().BeNull();
-            actualModel4.FiscalMonth.Should().BeNull();
-            actualModel4.FiscalQuarter.Should().BeNull();
-            actualModel4.FiscalYear.Should().BeNull();
-            actualModel4.GenericUnitOfTime.Should().BeNull();
-            actualModel4.GenericMonth.Should().BeNull();
-            actualModel4.GenericQuarter.Should().BeNull();
-            actualModel4.GenericYear.Should().BeNull();
         }
 
         [Fact]
@@ -294,9 +218,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
         {
             // Arrange
             var model1 = A.Dummy<ReportingPeriodModel>();
-            var model2 = A.Dummy<ReportingPeriodInclusiveModel>();
-            var model3 = A.Dummy<IReportingPeriodModel>();
-            var model4 = A.Dummy<IReportingPeriodInclusiveModel>();
+            var model2 = A.Dummy<IReportingPeriodModel>();
 
             var expectedJson1 =
                 "\"" + nameof(model1.UnitOfTime) + "\" : \"" + model1.UnitOfTime.SerializeToString() + "\", " +
@@ -330,49 +252,13 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
                 "\"" + nameof(model2.GenericQuarter) + "\" : \"" + model2.GenericQuarter.SerializeToString() + "\", " +
                 "\"" + nameof(model2.GenericYear) + "\" : \"" + model2.GenericYear.SerializeToString() + "\"";
 
-            var expectedJson3 =
-                "\"" + nameof(model3.UnitOfTime) + "\" : \"" + model3.UnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model3.CalendarUnitOfTime) + "\" : \"" + model3.CalendarUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model3.CalendarDay) + "\" : \"" + model3.CalendarDay.SerializeToString() + "\", " +
-                "\"" + nameof(model3.CalendarMonth) + "\" : \"" + model3.CalendarMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model3.CalendarQuarter) + "\" : \"" + model3.CalendarQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model3.CalendarYear) + "\" : \"" + model3.CalendarYear.SerializeToString() + "\", " +
-                "\"" + nameof(model3.FiscalUnitOfTime) + "\" : \"" + model3.FiscalUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model3.FiscalMonth) + "\" : \"" + model3.FiscalMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model3.FiscalQuarter) + "\" : \"" + model3.FiscalQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model3.FiscalYear) + "\" : \"" + model3.FiscalYear.SerializeToString() + "\", " +
-                "\"" + nameof(model3.GenericUnitOfTime) + "\" : \"" + model3.GenericUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model3.GenericMonth) + "\" : \"" + model3.GenericMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model3.GenericQuarter) + "\" : \"" + model3.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model3.GenericYear) + "\" : \"" + model3.GenericYear.SerializeToString() + "\"";
-
-            var expectedJson4 =
-                "\"" + nameof(model4.UnitOfTime) + "\" : \"" + model4.UnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model4.CalendarUnitOfTime) + "\" : \"" + model4.CalendarUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model4.CalendarDay) + "\" : \"" + model4.CalendarDay.SerializeToString() + "\", " +
-                "\"" + nameof(model4.CalendarMonth) + "\" : \"" + model4.CalendarMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model4.CalendarQuarter) + "\" : \"" + model4.CalendarQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model4.CalendarYear) + "\" : \"" + model4.CalendarYear.SerializeToString() + "\", " +
-                "\"" + nameof(model4.FiscalUnitOfTime) + "\" : \"" + model4.FiscalUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model4.FiscalMonth) + "\" : \"" + model4.FiscalMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model4.FiscalQuarter) + "\" : \"" + model4.FiscalQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model4.FiscalYear) + "\" : \"" + model4.FiscalYear.SerializeToString() + "\", " +
-                "\"" + nameof(model4.GenericUnitOfTime) + "\" : \"" + model4.GenericUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model4.GenericMonth) + "\" : \"" + model4.GenericMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model4.GenericQuarter) + "\" : \"" + model4.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model4.GenericYear) + "\" : \"" + model4.GenericYear.SerializeToString() + "\"";
-
             // Act
             var actualJson1 = model1.ToJson();
             var actualJson2 = model2.ToJson();
-            var actualJson3 = model3.ToJson();
-            var actualJson4 = model4.ToJson();
 
             // Assert
             actualJson1.Should().Contain(expectedJson1);
             actualJson2.Should().Contain(expectedJson2);
-            actualJson3.Should().Contain(expectedJson3);
-            actualJson4.Should().Contain(expectedJson4);
         }
 
         private class UnitOfTimeModel
@@ -451,44 +337,6 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
-        private class ReportingPeriodInclusiveModel
-        {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
-            public Guid Id { get; set; }
-
-            public ReportingPeriodInclusive<UnitOfTime> UnitOfTime { get; set; }
-
-            public ReportingPeriodInclusive<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
-
-            public ReportingPeriodInclusive<CalendarDay> CalendarDay { get; set; }
-
-            public ReportingPeriodInclusive<CalendarMonth> CalendarMonth { get; set; }
-
-            public ReportingPeriodInclusive<CalendarQuarter> CalendarQuarter { get; set; }
-
-            public ReportingPeriodInclusive<CalendarYear> CalendarYear { get; set; }
-
-            public ReportingPeriodInclusive<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
-
-            public ReportingPeriodInclusive<FiscalMonth> FiscalMonth { get; set; }
-
-            public ReportingPeriodInclusive<FiscalQuarter> FiscalQuarter { get; set; }
-
-            public ReportingPeriodInclusive<FiscalYear> FiscalYear { get; set; }
-
-            public ReportingPeriodInclusive<GenericUnitOfTime> GenericUnitOfTime { get; set; }
-
-            public ReportingPeriodInclusive<GenericMonth> GenericMonth { get; set; }
-
-            public ReportingPeriodInclusive<GenericQuarter> GenericQuarter { get; set; }
-
-            public ReportingPeriodInclusive<GenericYear> GenericYear { get; set; }
-
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
-        }
-
         // ReSharper disable InconsistentNaming
         private class IReportingPeriodModel
         // ReSharper restore InconsistentNaming
@@ -524,46 +372,6 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             public IReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
 
             public IReportingPeriod<GenericYear> GenericYear { get; set; }
-
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
-        }
-
-        // ReSharper disable InconsistentNaming
-        private class IReportingPeriodInclusiveModel
-        // ReSharper restore InconsistentNaming
-        {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
-            public Guid Id { get; set; }
-
-            public IReportingPeriodInclusive<UnitOfTime> UnitOfTime { get; set; }
-
-            public IReportingPeriodInclusive<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
-
-            public IReportingPeriodInclusive<CalendarDay> CalendarDay { get; set; }
-
-            public IReportingPeriodInclusive<CalendarMonth> CalendarMonth { get; set; }
-
-            public IReportingPeriodInclusive<CalendarQuarter> CalendarQuarter { get; set; }
-
-            public IReportingPeriodInclusive<CalendarYear> CalendarYear { get; set; }
-
-            public IReportingPeriodInclusive<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
-
-            public IReportingPeriodInclusive<FiscalMonth> FiscalMonth { get; set; }
-
-            public IReportingPeriodInclusive<FiscalQuarter> FiscalQuarter { get; set; }
-
-            public IReportingPeriodInclusive<FiscalYear> FiscalYear { get; set; }
-
-            public IReportingPeriodInclusive<GenericUnitOfTime> GenericUnitOfTime { get; set; }
-
-            public IReportingPeriodInclusive<GenericMonth> GenericMonth { get; set; }
-
-            public IReportingPeriodInclusive<GenericQuarter> GenericQuarter { get; set; }
-
-            public IReportingPeriodInclusive<GenericYear> GenericYear { get; set; }
 
             // ReSharper restore MemberCanBePrivate.Local
             // ReSharper restore UnusedAutoPropertyAccessor.Local

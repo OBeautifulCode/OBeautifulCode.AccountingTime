@@ -36,4 +36,5 @@ namespace OBeautifulCode.AccountingTime
         Both
     }
 }
+
 // ReSharper restore CheckNamespace

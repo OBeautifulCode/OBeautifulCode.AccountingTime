@@ -53,9 +53,7 @@
     <Compile Include="Extensions\ReportingPeriodExtensions.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.cs" />
     <Compile Include="ReportingPeriod\IReportingPeriod{T}.cs" />
-    <Compile Include="ReportingPeriod\IReportingPeriodInclusive{T}.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodComponent.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriodInclusive{T}.cs" />
     <Compile Include="UnitOfTime\CalendarDay.cs" />
     <Compile Include="UnitOfTime\DayOfMonth.cs" />
     <Compile Include="UnitOfTime\FiscalMonth.cs" />

@@ -26,7 +26,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var fiscalYear = A.Dummy<FiscalYear>();
             var systemUnderTest = new CalendarYearAccountingPeriodSystem();
-            var expectedReportingPeriod = new ReportingPeriodInclusive<CalendarDay>(
+            var expectedReportingPeriod = new ReportingPeriod<CalendarDay>(
                 1.January(fiscalYear.Year).ToCalendarDay(),
                 31.December(fiscalYear.Year).ToCalendarDay());
 

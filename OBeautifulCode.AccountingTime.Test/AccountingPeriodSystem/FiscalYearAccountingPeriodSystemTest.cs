@@ -77,29 +77,29 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest10 = new FiscalYearAccountingPeriodSystem(MonthOfYear.October);
             var systemUnderTest11 = new FiscalYearAccountingPeriodSystem(MonthOfYear.November);
 
-            var expectedReportingPeriod1NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod2NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod3NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.April(nonLeapYear - 1).ToCalendarDay(), 31.March(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod4NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.May(nonLeapYear - 1).ToCalendarDay(), 30.April(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod5NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.June(nonLeapYear - 1).ToCalendarDay(), 31.May(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod6NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.July(nonLeapYear - 1).ToCalendarDay(), 30.June(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod7NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.August(nonLeapYear - 1).ToCalendarDay(), 31.July(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod8NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.September(nonLeapYear - 1).ToCalendarDay(), 31.August(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod9NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.October(nonLeapYear - 1).ToCalendarDay(), 30.September(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod10NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.November(nonLeapYear - 1).ToCalendarDay(), 31.October(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod11NonLeapYear = new ReportingPeriodInclusive<CalendarDay>(1.December(nonLeapYear - 1).ToCalendarDay(), 30.November(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod1NonLeapYear = new ReportingPeriod<CalendarDay>(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod2NonLeapYear = new ReportingPeriod<CalendarDay>(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod3NonLeapYear = new ReportingPeriod<CalendarDay>(1.April(nonLeapYear - 1).ToCalendarDay(), 31.March(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod4NonLeapYear = new ReportingPeriod<CalendarDay>(1.May(nonLeapYear - 1).ToCalendarDay(), 30.April(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod5NonLeapYear = new ReportingPeriod<CalendarDay>(1.June(nonLeapYear - 1).ToCalendarDay(), 31.May(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod6NonLeapYear = new ReportingPeriod<CalendarDay>(1.July(nonLeapYear - 1).ToCalendarDay(), 30.June(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod7NonLeapYear = new ReportingPeriod<CalendarDay>(1.August(nonLeapYear - 1).ToCalendarDay(), 31.July(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod8NonLeapYear = new ReportingPeriod<CalendarDay>(1.September(nonLeapYear - 1).ToCalendarDay(), 31.August(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod9NonLeapYear = new ReportingPeriod<CalendarDay>(1.October(nonLeapYear - 1).ToCalendarDay(), 30.September(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod10NonLeapYear = new ReportingPeriod<CalendarDay>(1.November(nonLeapYear - 1).ToCalendarDay(), 31.October(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod11NonLeapYear = new ReportingPeriod<CalendarDay>(1.December(nonLeapYear - 1).ToCalendarDay(), 30.November(nonLeapYear).ToCalendarDay());
 
-            var expectedReportingPeriod1LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.February(leapYear - 1).ToCalendarDay(), 31.January(leapYear).ToCalendarDay());
-            var expectedReportingPeriod2LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.March(leapYear - 1).ToCalendarDay(), 29.February(leapYear).ToCalendarDay());
-            var expectedReportingPeriod3LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.April(leapYear - 1).ToCalendarDay(), 31.March(leapYear).ToCalendarDay());
-            var expectedReportingPeriod4LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.May(leapYear - 1).ToCalendarDay(), 30.April(leapYear).ToCalendarDay());
-            var expectedReportingPeriod5LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.June(leapYear - 1).ToCalendarDay(), 31.May(leapYear).ToCalendarDay());
-            var expectedReportingPeriod6LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.July(leapYear - 1).ToCalendarDay(), 30.June(leapYear).ToCalendarDay());
-            var expectedReportingPeriod7LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.August(leapYear - 1).ToCalendarDay(), 31.July(leapYear).ToCalendarDay());
-            var expectedReportingPeriod8LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.September(leapYear - 1).ToCalendarDay(), 31.August(leapYear).ToCalendarDay());
-            var expectedReportingPeriod9LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.October(leapYear - 1).ToCalendarDay(), 30.September(leapYear).ToCalendarDay());
-            var expectedReportingPeriod10LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.November(leapYear - 1).ToCalendarDay(), 31.October(leapYear).ToCalendarDay());
-            var expectedReportingPeriod11LeapYear = new ReportingPeriodInclusive<CalendarDay>(1.December(leapYear - 1).ToCalendarDay(), 30.November(leapYear).ToCalendarDay());
+            var expectedReportingPeriod1LeapYear = new ReportingPeriod<CalendarDay>(1.February(leapYear - 1).ToCalendarDay(), 31.January(leapYear).ToCalendarDay());
+            var expectedReportingPeriod2LeapYear = new ReportingPeriod<CalendarDay>(1.March(leapYear - 1).ToCalendarDay(), 29.February(leapYear).ToCalendarDay());
+            var expectedReportingPeriod3LeapYear = new ReportingPeriod<CalendarDay>(1.April(leapYear - 1).ToCalendarDay(), 31.March(leapYear).ToCalendarDay());
+            var expectedReportingPeriod4LeapYear = new ReportingPeriod<CalendarDay>(1.May(leapYear - 1).ToCalendarDay(), 30.April(leapYear).ToCalendarDay());
+            var expectedReportingPeriod5LeapYear = new ReportingPeriod<CalendarDay>(1.June(leapYear - 1).ToCalendarDay(), 31.May(leapYear).ToCalendarDay());
+            var expectedReportingPeriod6LeapYear = new ReportingPeriod<CalendarDay>(1.July(leapYear - 1).ToCalendarDay(), 30.June(leapYear).ToCalendarDay());
+            var expectedReportingPeriod7LeapYear = new ReportingPeriod<CalendarDay>(1.August(leapYear - 1).ToCalendarDay(), 31.July(leapYear).ToCalendarDay());
+            var expectedReportingPeriod8LeapYear = new ReportingPeriod<CalendarDay>(1.September(leapYear - 1).ToCalendarDay(), 31.August(leapYear).ToCalendarDay());
+            var expectedReportingPeriod9LeapYear = new ReportingPeriod<CalendarDay>(1.October(leapYear - 1).ToCalendarDay(), 30.September(leapYear).ToCalendarDay());
+            var expectedReportingPeriod10LeapYear = new ReportingPeriod<CalendarDay>(1.November(leapYear - 1).ToCalendarDay(), 31.October(leapYear).ToCalendarDay());
+            var expectedReportingPeriod11LeapYear = new ReportingPeriod<CalendarDay>(1.December(leapYear - 1).ToCalendarDay(), 30.November(leapYear).ToCalendarDay());
 
             // Act
             var actualReportingPeriod1NonLeapYear = systemUnderTest1.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
