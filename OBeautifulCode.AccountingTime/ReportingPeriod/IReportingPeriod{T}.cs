@@ -39,10 +39,10 @@ namespace OBeautifulCode.AccountingTime
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>;
 
         /// <summary>
-        /// Deep clones this unit-of-time.
+        /// Deep clones this reporting period.
         /// </summary>
         /// <returns>
-        /// A deep clone of this unit-of-time.
+        /// A deep clone of this reporting period.
         /// </returns>
         IReportingPeriod<T> Clone();
     }
