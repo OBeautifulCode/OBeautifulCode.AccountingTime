@@ -28,6 +28,9 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(QuarterNumber.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeKind.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeGranularity.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodComponent.Invalid);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<CalendarUnitOfTime>();

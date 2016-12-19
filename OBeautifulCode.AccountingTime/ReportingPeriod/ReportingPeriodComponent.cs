@@ -4,7 +4,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.ReportingPeriod
+// ReSharper disable CheckNamespace
+namespace OBeautifulCode.AccountingTime
 {
     /// <summary>
     /// Represents the start, end, or both, of a reporting period.
@@ -35,3 +36,4 @@ namespace OBeautifulCode.AccountingTime.ReportingPeriod
         Both
     }
 }
+// ReSharper restore CheckNamespace
