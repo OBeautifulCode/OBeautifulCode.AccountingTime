@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a fiscal year.
     /// </summary>
     [Serializable]
-    public class FiscalYear : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<FiscalYear>, IComparable<FiscalYear>
+    public class FiscalYear : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<FiscalYear>, IComparable<FiscalYear>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalYear"/> class.

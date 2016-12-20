@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar year.
     /// </summary>
     [Serializable]
-    public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
+    public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarYear"/> class.

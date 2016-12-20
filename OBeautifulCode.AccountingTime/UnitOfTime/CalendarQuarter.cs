@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar quarter of a specified year.
     /// </summary>
     [Serializable]
-    public class CalendarQuarter : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAQuarter, IEquatable<CalendarQuarter>, IComparable<CalendarQuarter>
+    public class CalendarQuarter : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAQuarter, IEquatable<CalendarQuarter>, IComparable<CalendarQuarter>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarQuarter"/> class.

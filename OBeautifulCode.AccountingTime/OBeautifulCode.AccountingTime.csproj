@@ -63,6 +63,8 @@
     <Compile Include="UnitOfTime\GenericQuarter.cs" />
     <Compile Include="UnitOfTime\GenericYear.cs" />
     <Compile Include="UnitOfTime\IAmAConcreteUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\IAmBoundedTime.cs" />
+    <Compile Include="UnitOfTime\IAmUnboundedTime.cs" />
     <Compile Include="UnitOfTime\IHaveAMonth.cs" />
     <Compile Include="UnitOfTime\IHaveAYear.cs" />
     <Compile Include="UnitOfTime\IHaveAQuarter.cs" />

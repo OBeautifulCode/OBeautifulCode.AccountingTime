@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar day.
     /// </summary>
     [Serializable]
-    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
+    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarDay"/> class.
