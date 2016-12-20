@@ -2425,18 +2425,24 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarQuarter>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarYear>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarYear>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<CalendarUnbounded>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<CalendarUnbounded>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalMonth>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalMonth>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalQuarter>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalQuarter>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalYear>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalYear>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<FiscalUnbounded>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<FiscalUnbounded>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericMonth>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericMonth>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericQuarter>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericQuarter>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericYear>) },
-                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) }
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) },
+                new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericUnbounded>) },
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) }
             };
 
             var reportingPeriods = new[]
@@ -2450,7 +2456,16 @@ namespace OBeautifulCode.AccountingTime.Test
                 "gq-2017-3,gq-2017-4",
                 "cy-2017,cy-2018",
                 "fy-2017,fy-2018",
-                "gy-2017,gy-2018"
+                "gy-2017,gy-2018",
+                "cu,cu",
+                "cu,cy-2018",
+                "cq-2017-3,cu",
+                "fu,fu",
+                "fu,fy-2018",
+                "fq-2017-3,fu",
+                "gu,gu",
+                "gu,gy-2018",
+                "gq-2017-3,gu"
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -2473,6 +2488,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test various flavors of unit-of-time.")]
         public static void DeserializeFromString___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_encoded_cannot_be_assigned_to_the_return_types_unit_of_time()
         {
             // Arrange
@@ -2498,6 +2514,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriod = "gy-2018,cy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
                 new { ReportingPeriod = "fm-2017-04,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
                 new { ReportingPeriod = "gy-2017,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "cu,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "cq-2017-4,cu", ReportingPeriodType = typeof(ReportingPeriod<CalendarQuarter>) },
+                new { ReportingPeriod = "cu,cu", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "fu,fq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalQuarter>) },
+                new { ReportingPeriod = "fq-2017-4,fu", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "fu,fu", ReportingPeriodType = typeof(ReportingPeriod<FiscalYear>) },
+                new { ReportingPeriod = "gu,gm-2017-10", ReportingPeriodType = typeof(ReportingPeriod<GenericMonth>) },
+                new { ReportingPeriod = "gm-2017-10,gu", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "gu,gu", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) }
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -2600,7 +2625,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_token_representing_start_and_end_of_reporting_period_do_not_deserialize_into_same_concrete_type()
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_tokens_representing_start_and_end_of_reporting_period_are_bounded_and_do_not_deserialize_into_same_concrete_type()
         {
             // Arrange
             var unitsOfTime1 = new[]
@@ -2626,7 +2651,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_token_representing_start_of_reporting_period_is_greater_than_token_representing_end()
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_tokens_representing_start_and_end_of_reporting_period_are_bounded_and_start_is_greater_than_end()
         {
             // Arrange
             var unitsOfTime = new[]
@@ -2642,6 +2667,27 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromString___Should_throw_InvalidOperationException___When_one_or_both_tokens_representing_start_and_end_of_reporting_period_are_unbounded_and_are_different_kinds_of_unit_of_time()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "gu,cm-2016-04",
+                "cq-2017-3,gu",
+                "cu,gu",
+                "fu,cu"
+            };
+
+            // Act
+            var exceptions1 = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<UnitOfTime>>())).ToList();
+            var exceptions2 = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>())).ToList();
+
+            // Assert
+            exceptions1.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+            exceptions2.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
@@ -2912,6 +2958,156 @@ namespace OBeautifulCode.AccountingTime.Test
             deserialized4.Should().Be(expected);
             deserialized5.Should().Be(expected);
             deserialized6.Should().Be(expected);
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarUnbounded_string()
+        {
+            // Arrange
+            var reportingPeriod1 = "cu,cy-2002";
+            var reportingPeriod2 = "cy-2002,cu";
+            var reportingPeriod3 = "cu,cu";
+
+            var expected1 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarYear(2002));
+            var expected2 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarYear(2002), new CalendarUnbounded());
+            var expected3 = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
+
+            // Act
+            var deserialized1a = reportingPeriod1.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized1b = reportingPeriod1.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized1c = reportingPeriod1.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized1d = reportingPeriod1.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+
+            var deserialized2a = reportingPeriod2.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2b = reportingPeriod2.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized2c = reportingPeriod2.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized2d = reportingPeriod2.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+
+            var deserialized3a = reportingPeriod3.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized3b = reportingPeriod3.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized3c = reportingPeriod3.DeserializeFromString<IReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized3d = reportingPeriod3.DeserializeFromString<ReportingPeriod<CalendarUnitOfTime>>();
+            var deserialized3e = reportingPeriod3.DeserializeFromString<IReportingPeriod<CalendarUnbounded>>();
+            var deserialized3f = reportingPeriod3.DeserializeFromString<ReportingPeriod<CalendarUnbounded>>();
+
+            // Assert
+            deserialized1a.Should().Be(expected1);
+            deserialized1b.Should().Be(expected1);
+            deserialized1c.Should().Be(expected1);
+            deserialized1d.Should().Be(expected1);
+
+            deserialized2a.Should().Be(expected2);
+            deserialized2b.Should().Be(expected2);
+            deserialized2c.Should().Be(expected2);
+            deserialized2d.Should().Be(expected2);
+
+            deserialized3a.Should().Be(expected3);
+            deserialized3b.Should().Be(expected3);
+            deserialized3c.Should().Be(expected3);
+            deserialized3d.Should().Be(expected3);
+            deserialized3e.Should().Be(expected3);
+            deserialized3f.Should().Be(expected3);
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalUnbounded_string()
+        {
+            // Arrange
+            var reportingPeriod1 = "fu,fy-2002";
+            var reportingPeriod2 = "fy-2002,fu";
+            var reportingPeriod3 = "fu,fu";
+
+            var expected1 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalYear(2002));
+            var expected2 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalYear(2002), new FiscalUnbounded());
+            var expected3 = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
+
+            // Act
+            var deserialized1a = reportingPeriod1.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized1b = reportingPeriod1.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized1c = reportingPeriod1.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized1d = reportingPeriod1.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+
+            var deserialized2a = reportingPeriod2.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2b = reportingPeriod2.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized2c = reportingPeriod2.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized2d = reportingPeriod2.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+
+            var deserialized3a = reportingPeriod3.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized3b = reportingPeriod3.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized3c = reportingPeriod3.DeserializeFromString<IReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized3d = reportingPeriod3.DeserializeFromString<ReportingPeriod<FiscalUnitOfTime>>();
+            var deserialized3e = reportingPeriod3.DeserializeFromString<IReportingPeriod<FiscalUnbounded>>();
+            var deserialized3f = reportingPeriod3.DeserializeFromString<ReportingPeriod<FiscalUnbounded>>();
+
+            // Assert
+            deserialized1a.Should().Be(expected1);
+            deserialized1b.Should().Be(expected1);
+            deserialized1c.Should().Be(expected1);
+            deserialized1d.Should().Be(expected1);
+
+            deserialized2a.Should().Be(expected2);
+            deserialized2b.Should().Be(expected2);
+            deserialized2c.Should().Be(expected2);
+            deserialized2d.Should().Be(expected2);
+
+            deserialized3a.Should().Be(expected3);
+            deserialized3b.Should().Be(expected3);
+            deserialized3c.Should().Be(expected3);
+            deserialized3d.Should().Be(expected3);
+            deserialized3e.Should().Be(expected3);
+            deserialized3f.Should().Be(expected3);
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericUnbounded_string()
+        {
+            // Arrange
+            var reportingPeriod1 = "gu,gy-2002";
+            var reportingPeriod2 = "gy-2002,gu";
+            var reportingPeriod3 = "gu,gu";
+
+            var expected1 = new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericYear(2002));
+            var expected2 = new ReportingPeriod<GenericUnitOfTime>(new GenericYear(2002), new GenericUnbounded());
+            var expected3 = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
+
+            // Act
+            var deserialized1a = reportingPeriod1.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized1b = reportingPeriod1.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized1c = reportingPeriod1.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized1d = reportingPeriod1.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+
+            var deserialized2a = reportingPeriod2.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized2b = reportingPeriod2.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized2c = reportingPeriod2.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized2d = reportingPeriod2.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+
+            var deserialized3a = reportingPeriod3.DeserializeFromString<IReportingPeriod<UnitOfTime>>();
+            var deserialized3b = reportingPeriod3.DeserializeFromString<ReportingPeriod<UnitOfTime>>();
+            var deserialized3c = reportingPeriod3.DeserializeFromString<IReportingPeriod<GenericUnitOfTime>>();
+            var deserialized3d = reportingPeriod3.DeserializeFromString<ReportingPeriod<GenericUnitOfTime>>();
+            var deserialized3e = reportingPeriod3.DeserializeFromString<IReportingPeriod<GenericUnbounded>>();
+            var deserialized3f = reportingPeriod3.DeserializeFromString<ReportingPeriod<GenericUnbounded>>();
+
+            // Assert
+            deserialized1a.Should().Be(expected1);
+            deserialized1b.Should().Be(expected1);
+            deserialized1c.Should().Be(expected1);
+            deserialized1d.Should().Be(expected1);
+
+            deserialized2a.Should().Be(expected2);
+            deserialized2b.Should().Be(expected2);
+            deserialized2c.Should().Be(expected2);
+            deserialized2d.Should().Be(expected2);
+
+            deserialized3a.Should().Be(expected3);
+            deserialized3b.Should().Be(expected3);
+            deserialized3c.Should().Be(expected3);
+            deserialized3d.Should().Be(expected3);
+            deserialized3e.Should().Be(expected3);
+            deserialized3f.Should().Be(expected3);
         }
 
         [Fact]
