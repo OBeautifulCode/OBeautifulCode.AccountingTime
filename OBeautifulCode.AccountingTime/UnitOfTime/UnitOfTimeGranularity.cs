@@ -38,7 +38,12 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Year-level granularity.
         /// </summary>
-        Year
+        Year,
+
+        /// <summary>
+        /// Unbounded granularity.
+        /// </summary>
+        Unbounded
     }
 }
 

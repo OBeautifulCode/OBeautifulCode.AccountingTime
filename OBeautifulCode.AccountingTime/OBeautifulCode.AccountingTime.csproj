@@ -58,9 +58,11 @@
     <Compile Include="UnitOfTime\DayOfMonth.cs" />
     <Compile Include="UnitOfTime\FiscalMonth.cs" />
     <Compile Include="UnitOfTime\FiscalQuarter.cs" />
+    <Compile Include="UnitOfTime\FiscalUnbounded.cs" />
     <Compile Include="UnitOfTime\FiscalYear.cs" />
     <Compile Include="UnitOfTime\GenericMonth.cs" />
     <Compile Include="UnitOfTime\GenericQuarter.cs" />
+    <Compile Include="UnitOfTime\GenericUnbounded.cs" />
     <Compile Include="UnitOfTime\GenericYear.cs" />
     <Compile Include="UnitOfTime\IAmAConcreteUnitOfTime.cs" />
     <Compile Include="UnitOfTime\IAmBoundedTime.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="UnitOfTime\CalendarUnitOfTime.cs" />
     <Compile Include="UnitOfTime\FiscalUnitOfTime.cs" />
     <Compile Include="UnitOfTime\GenericUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\CalendarUnbounded.cs" />
     <Compile Include="UnitOfTime\UnitOfTime.cs" />
     <Compile Include="UnitOfTime\CalendarMonth.cs" />
     <Compile Include="UnitOfTime\CalendarYear.cs" />

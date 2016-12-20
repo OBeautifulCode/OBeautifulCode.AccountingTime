@@ -12,9 +12,9 @@ namespace OBeautifulCode.AccountingTime.Test
     {
         public static readonly Type[] AllUnitOfTimeTypesExceptUnitOfTime =
         {
-            typeof(CalendarUnitOfTime), typeof(CalendarDay), typeof(CalendarMonth), typeof(CalendarQuarter), typeof(CalendarYear),
-            typeof(FiscalUnitOfTime), typeof(FiscalMonth), typeof(FiscalQuarter), typeof(FiscalYear),
-            typeof(GenericUnitOfTime), typeof(GenericQuarter), typeof(GenericQuarter), typeof(GenericYear)
+            typeof(CalendarUnitOfTime), typeof(CalendarDay), typeof(CalendarMonth), typeof(CalendarQuarter), typeof(CalendarYear), typeof(CalendarUnbounded),
+            typeof(FiscalUnitOfTime), typeof(FiscalMonth), typeof(FiscalQuarter), typeof(FiscalYear), typeof(FiscalUnbounded),
+            typeof(GenericUnitOfTime), typeof(GenericQuarter), typeof(GenericQuarter), typeof(GenericYear), typeof(GenericUnbounded)
         };
 
         public interface IReportingPeriodTest<out T> : IReportingPeriod<T>

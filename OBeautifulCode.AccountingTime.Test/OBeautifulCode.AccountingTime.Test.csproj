@@ -110,11 +110,14 @@
     <Compile Include="UnitOfTime\CalendarYearTest.cs" />
     <Compile Include="UnitOfTime\FiscalMonthTest.cs" />
     <Compile Include="UnitOfTime\FiscalQuarterTest.cs" />
+    <Compile Include="UnitOfTime\FiscalUnboundedTest.cs" />
     <Compile Include="UnitOfTime\FiscalYearTest.cs" />
     <Compile Include="UnitOfTime\GenericMonthTest.cs" />
     <Compile Include="UnitOfTime\GenericQuarterTest.cs" />
+    <Compile Include="UnitOfTime\GenericUnboundedTest.cs" />
     <Compile Include="UnitOfTime\GenericYearTest.cs" />
     <Compile Include="UnitOfTime\UnitOfTimeTest.cs" />
+    <Compile Include="UnitOfTime\CalendarUnboundedTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
