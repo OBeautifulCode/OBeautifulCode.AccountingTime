@@ -170,6 +170,7 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="maxUnitsInAnyReportingPeriod">Maximum number of units-of-time in each reporting period.</param>
         /// <returns>All possible reporting periods containing between 1 and <paramref name="maxUnitsInAnyReportingPeriod"/> units-of-time, contained within <paramref name="reportingPeriod"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
         public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(this IReportingPeriod<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
@@ -178,6 +179,11 @@ namespace OBeautifulCode.AccountingTime
             if (reportingPeriod == null)
             {
                 throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if ((reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded))
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
             }
 
             if (maxUnitsInAnyReportingPeriod < 1)
