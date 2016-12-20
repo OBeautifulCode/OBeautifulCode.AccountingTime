@@ -1603,6 +1603,54 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_CalendarUnbounded()
+        {
+            // Arrange
+            var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "cu", new CalendarUnbounded() },
+            };
+
+            // Act
+            var results = calendarUnboundedBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_FiscalUnbounded()
+        {
+            // Arrange
+            var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "fu", new FiscalUnbounded() },
+            };
+
+            // Act
+            var results = calendarUnboundedBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
+        public static void SerializeToSortableString___Should_return_expected_serialized_sortable_string_representation_of_unitOfTime___When_unitOfTime_is_a_GenericUnbounded()
+        {
+            // Arrange
+            var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
+            {
+                { "gu", new GenericUnbounded() },
+            };
+
+            // Act
+            var results = calendarUnboundedBySerializedString.Select(_ => new { Expected = _.Key, Actual = _.Value.SerializeToSortableString() }).ToList();
+
+            // Assert
+            results.All(_ => _.Actual == _.Expected).Should().BeTrue();
+        }
+
+        [Fact]
         public static void DeserializeFromSortableString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
