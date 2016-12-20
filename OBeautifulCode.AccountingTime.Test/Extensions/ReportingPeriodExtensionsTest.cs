@@ -3121,6 +3121,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all flavors of unit-of-time")]
         public static void GetUnitOfTimeKind___Should_return_the_kind_of_unit_of_time_used_in_the_reporting_period___When_called()
         {
             // Arrange
@@ -3131,14 +3132,17 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<IReportingPeriod<CalendarMonth>>(), UnitOfTimeKind.Calendar },
                 { A.Dummy<IReportingPeriod<CalendarQuarter>>(), UnitOfTimeKind.Calendar },
                 { A.Dummy<IReportingPeriod<CalendarYear>>(), UnitOfTimeKind.Calendar },
+                { A.Dummy<IReportingPeriod<CalendarUnbounded>>(), UnitOfTimeKind.Calendar },
                 { A.Dummy<IReportingPeriod<FiscalUnitOfTime>>(), UnitOfTimeKind.Fiscal },
                 { A.Dummy<IReportingPeriod<FiscalMonth>>(), UnitOfTimeKind.Fiscal },
                 { A.Dummy<IReportingPeriod<FiscalQuarter>>(), UnitOfTimeKind.Fiscal },
                 { A.Dummy<IReportingPeriod<FiscalYear>>(), UnitOfTimeKind.Fiscal },
+                { A.Dummy<IReportingPeriod<FiscalUnbounded>>(), UnitOfTimeKind.Fiscal },
                 { A.Dummy<IReportingPeriod<GenericUnitOfTime>>(), UnitOfTimeKind.Generic },
                 { A.Dummy<IReportingPeriod<GenericMonth>>(), UnitOfTimeKind.Generic },
                 { A.Dummy<IReportingPeriod<GenericQuarter>>(), UnitOfTimeKind.Generic },
-                { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeKind.Generic }
+                { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeKind.Generic },
+                { A.Dummy<IReportingPeriod<GenericUnbounded>>(), UnitOfTimeKind.Generic },
             };
 
             // Act
