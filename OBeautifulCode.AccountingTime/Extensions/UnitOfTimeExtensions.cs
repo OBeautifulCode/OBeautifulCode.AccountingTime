@@ -104,6 +104,7 @@ namespace OBeautifulCode.AccountingTime
         /// The result of adding the specified number of units to the specified units-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd)
         {
             if (unitOfTime == null)
@@ -135,6 +136,12 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsCalendarYear.Plus(unitsToAdd);
             }
 
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
+            }
+
             var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
             if (unitOfTimeAsFiscalMonth != null)
             {
@@ -153,6 +160,12 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsFiscalYear.Plus(unitsToAdd);
             }
 
+            var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
+            if (unitOfTimeAsFiscalUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
+            }
+
             var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
             if (unitOfTimeAsGenericMonth != null)
             {
@@ -169,6 +182,12 @@ namespace OBeautifulCode.AccountingTime
             if (unitOfTimeAsGenericYear != null)
             {
                 return unitOfTimeAsGenericYear.Plus(unitsToAdd);
+            }
+
+            var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
+            if (unitOfTimeAsGenericUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());

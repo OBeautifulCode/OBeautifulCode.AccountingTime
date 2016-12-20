@@ -17,6 +17,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static class UnitOfTimeExtensionsTest
     {
         // ReSharper disable InconsistentNaming
@@ -781,6 +782,45 @@ namespace OBeautifulCode.AccountingTime.Test
             actualUnitOfTime1.Should().Be(expectedUnitOfTime1);
             actualUnitOfTime2.Should().Be(expectedUnitOfTime2);
             actualUnitOfTime3.Should().Be(expectedUnitOfTime3);
+        }
+
+        [Fact]
+        public static void Plus___Should_throw_InvalidOperationException___When_parameter_unitOfTime_is_CalendarUnbounded()
+        {
+            // Arrange
+            var expectedUnitOfTime = A.Dummy<CalendarUnbounded>();
+
+            // Act
+            var ex = Record.Exception(() => expectedUnitOfTime.Plus(A.Dummy<int>()));
+
+            // Assert
+            ex.Should().BeOfType<InvalidOperationException>();
+        }
+
+        [Fact]
+        public static void Plus___Should_throw_InvalidOperationException___When_parameter_unitOfTime_is_FiscalUnbounded()
+        {
+            // Arrange
+            var expectedUnitOfTime = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var ex = Record.Exception(() => expectedUnitOfTime.Plus(A.Dummy<int>()));
+
+            // Assert
+            ex.Should().BeOfType<InvalidOperationException>();
+        }
+
+        [Fact]
+        public static void Plus___Should_throw_InvalidOperationException___When_parameter_unitOfTime_is_GenericUnbounded()
+        {
+            // Arrange
+            var expectedUnitOfTime = A.Dummy<GenericUnbounded>();
+
+            // Act
+            var ex = Record.Exception(() => expectedUnitOfTime.Plus(A.Dummy<int>()));
+
+            // Assert
+            ex.Should().BeOfType<InvalidOperationException>();
         }
 
         [Fact]
