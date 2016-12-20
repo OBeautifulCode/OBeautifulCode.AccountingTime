@@ -2371,8 +2371,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 { "cy-2017,cy-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
                 { "fy-2017,fy-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
                 { "gy-2017,gy-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
-                { "cu,cm-2018-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
-                { "gm-2018-02,gu", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
+                { "cu,cm-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
+                { "gm-2012-02,gu", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
                 { "fu,fu", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
             };
 
