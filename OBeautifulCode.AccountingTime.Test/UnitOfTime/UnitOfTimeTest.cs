@@ -32,12 +32,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<CalendarMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<CalendarQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<CalendarYear>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
+                { A.Dummy<CalendarUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarUnbounded)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<FiscalMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<FiscalQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<FiscalYear>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
+                { A.Dummy<FiscalUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalUnbounded)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<GenericQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
                 { A.Dummy<GenericMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericMonth)) && (_ != typeof(GenericUnitOfTime))) },
-                { A.Dummy<GenericYear>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) }
+                { A.Dummy<GenericYear>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) },
+                { A.Dummy<GenericUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) },
             };
 
             var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
@@ -70,12 +73,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<CalendarMonth>(), new[] { typeof(CalendarMonth), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<CalendarQuarter>(), new[] { typeof(CalendarQuarter), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<CalendarYear>(), new[] { typeof(CalendarYear), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<CalendarUnbounded>(), new[] { typeof(CalendarUnbounded), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalMonth>(), new[] { typeof(FiscalMonth), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalQuarter>(), new[] { typeof(FiscalQuarter), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalYear>(), new[] { typeof(FiscalYear), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<FiscalUnbounded>(), new[] { typeof(FiscalUnbounded), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericQuarter>(), new[] { typeof(GenericQuarter), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericMonth>(), new[] { typeof(GenericMonth), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericYear>(), new[] { typeof(GenericYear), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<GenericUnbounded>(), new[] { typeof(GenericUnbounded), typeof(GenericUnitOfTime), typeof(UnitOfTime) } }
             };
 
             var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
