@@ -2952,40 +2952,6 @@ namespace OBeautifulCode.AccountingTime.Test
             unitOfTimeKinds.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
-        [Fact]
-        public static void GetUnitOfTimeGranularity___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.GetUnitOfTimeGranularity(null));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        public static void GetUnitOfTimeGranularity__Should_return_the_granularity_of_the_unit_of_time_used_in_the_reporting_period___When_called()
-        {
-            // Arrange
-            var reportingPeriods = new List<Tuple<IReportingPeriod<UnitOfTime>, UnitOfTimeGranularity>>
-            {
-                { A.Dummy<IReportingPeriod<CalendarDay>>(), UnitOfTimeGranularity.Day },
-                { A.Dummy<IReportingPeriod<CalendarMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<CalendarQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<CalendarYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<FiscalMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<FiscalQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<FiscalYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<GenericMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<GenericQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeGranularity.Year }
-            };
-
-            // Act
-            var unitOfTimeKinds = reportingPeriods.Select(_ => new { Actual = _.Item1.GetUnitOfTimeKind(), Expected = _.Item2 }).ToList();
-
-            // Assert
-            unitOfTimeKinds.ForEach(_ => _.Actual.Should().Be(_.Expected));
-        }
-
         // ReSharper restore InconsistentNaming
     }
 }

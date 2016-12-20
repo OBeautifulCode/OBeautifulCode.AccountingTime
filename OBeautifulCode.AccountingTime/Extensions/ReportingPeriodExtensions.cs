@@ -325,24 +325,6 @@ namespace OBeautifulCode.AccountingTime
             var result = reportingPeriod.Start.UnitOfTimeKind;
             return result;
         }
-
-        /// <summary>
-        /// Gets the granularity of the unit-of-time used in a reporting period.
-        /// </summary>
-        /// <param name="reportingPeriod">The reporting period.</param>
-        /// <returns>
-        /// The granularity of the unit-of-time used in the specified reporting period.
-        /// </returns>
-        public static UnitOfTimeGranularity GetUnitOfTimeGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
-        {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
-            var result = reportingPeriod.Start.UnitOfTimeGranularity;
-            return result;
-        }
     }
 }
 
