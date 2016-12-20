@@ -1745,6 +1745,25 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetUnitsWithin___Should_throw_ArgumentException___When_parameter_reportingPeriod_Start_and_or_End_is_unbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), A.Dummy<CalendarUnitOfTime>());
+            var reportingPeriod2 = new ReportingPeriod<GenericUnitOfTime>(A.Dummy<GenericUnitOfTime>(), new GenericUnbounded());
+            var reportingPeriod3 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded());
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriod1.GetUnitsWithin());
+            var ex2 = Record.Exception(() => reportingPeriod2.GetUnitsWithin());
+            var ex3 = Record.Exception(() => reportingPeriod3.GetUnitsWithin());
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+            ex3.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarDay()
         {
             // Arrange

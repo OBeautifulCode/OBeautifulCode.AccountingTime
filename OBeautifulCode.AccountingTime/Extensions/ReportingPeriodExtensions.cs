@@ -139,12 +139,18 @@ namespace OBeautifulCode.AccountingTime
         /// The units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
         public static IList<T> GetUnitsWithin<T>(this IReportingPeriod<T> reportingPeriod)
             where T : UnitOfTime
         {
             if (reportingPeriod == null)
             {
                 throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if ((reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded))
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
             }
 
             var allUnits = new List<T>();
