@@ -1679,11 +1679,11 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cd", "cm", "cq", "cy", "fm", "fq", "fy", "gm", "gq", "gy",
+                "cd", "cm", "cq", "cy", "cu-", "fm", "fq", "fy", "fu-", "gm", "gq", "gy", "gu-",
                 "2015-11-11", "2017-03", "2017-1", "2017",
                 "cd2015-11-11", "cm2017-03", "cq2017-1", "cy2017",
                 "fm2017-03", "fq2017-1", "fy2017",
-                "gm2017-03", "gq2017-1", "gy2017"
+                "gm2017-03", "gq2017-1", "gy2017",
             };
 
             // Act
@@ -1705,12 +1705,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 { "cm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
                 { "cq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
                 { "cy-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "cu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarUnbounded)) && (_ != typeof(CalendarUnitOfTime))) },
                 { "fm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
                 { "fq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
                 { "fy-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "fu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalUnbounded)) && (_ != typeof(FiscalUnitOfTime))) },
                 { "gm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
                 { "gq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
-                { "gy-2017",  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) }
+                { "gy-2017",  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) },
+                { "gu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) }
             };
 
             var deserializeFromSortableString = typeof(UnitOfTimeExtensions).GetMethod(nameof(UnitOfTimeExtensions.DeserializeFromSortableString));
@@ -1742,12 +1745,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 "cm-2017-03-03", "cm-2017-03-", "cm-2017-", "cm-2017", "cm-",
                 "cq-2017-1-3", "cq-2017-1-", "cq-2017-", "cq-2017", "cq-",
                 "cy-2017-2018", "cy-2017-", "cy-",
+                "cu-", "cu--",
                 "fm-2017-03-03", "fm-2017-03-", "fm-2017-", "fm-2017", "fm-",
                 "fq-2017-1-3", "fq-2017-1-", "fq-2017-", "fq-2017", "fq-",
                 "fy-2017-2018", "fy-2017-", "fy-",
+                "fu-", "fu--",
                 "gm-2017-03-03", "gm-2017-03-", "gm-2017-", "gm-2017", "gm-",
                 "gq-2017-1-3", "gq-2017-1-", "gq-2017-", "gq-2017", "gq-",
-                "gy-2017-2018", "gy-2017-", "gy-"
+                "gy-2017-2018", "gy-2017-", "gy-",
+                "gu-", "gu--"
             };
 
             // Act
@@ -2039,6 +2045,63 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "cu-",
+                "cu--",
+                "cunbounded",
+                "cu-unbounded"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_FiscalUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "fu-",
+                "fu--",
+                "funbounded",
+                "fu-unbounded"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_GenericUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new[]
+            {
+                "gu-",
+                "gu--",
+                "gunbounded",
+                "gu-unbounded"
+            };
+
+            // Act
+            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
         public static void DeserializeFromSortableString___Should_deserialize_a_CalendarDay___When_unitOfTime_is_a_well_formed_CalendarDay()
         {
             // Arrange
@@ -2255,6 +2318,66 @@ namespace OBeautifulCode.AccountingTime.Test
             var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
             var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnitOfTime>(), Expected = _.Value }).ToList();
             var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericYear>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_CalendarUnbounded___When_unitOfTime_is_a_well_formed_CalendarUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, CalendarUnbounded>
+            {
+                { "cu", new CalendarUnbounded() }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<CalendarUnbounded>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_FiscalUnbounded___When_unitOfTime_is_a_well_formed_FiscalUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, FiscalUnbounded>
+            {
+                { "fu", new FiscalUnbounded() }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<FiscalUnbounded>(), Expected = _.Value }).ToList();
+
+            // Assert
+            deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized2.ForEach(_ => _.Actual.Should().Be(_.Expected));
+            deserialized3.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void DeserializeFromSortableString___Should_deserialize_a_GenericUnbounded___When_unitOfTime_is_a_well_formed_GenericUnbounded()
+        {
+            // Arrange
+            var unitsOfTime = new Dictionary<string, GenericUnbounded>
+            {
+                { "gu", new GenericUnbounded() }
+            };
+
+            // Act
+            var deserialized1 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<UnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized2 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnitOfTime>(), Expected = _.Value }).ToList();
+            var deserialized3 = unitsOfTime.Select(_ => new { Actual = _.Key.DeserializeFromSortableString<GenericUnbounded>(), Expected = _.Value }).ToList();
 
             // Assert
             deserialized1.ForEach(_ => _.Actual.Should().Be(_.Expected));

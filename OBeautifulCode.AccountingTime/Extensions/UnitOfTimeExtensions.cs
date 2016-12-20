@@ -23,19 +23,19 @@ namespace OBeautifulCode.AccountingTime
             #pragma warning disable SA1025 // Code must not contain multiple whitespace in a row
             #pragma warning disable SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning disable SA1001 // Commas must be spaced correctly
-            { typeof(CalendarDay)       , new SerializationFormat { Prefix = "cd", TokensExpected = 3, CharactersPerToken = new[] { 4, 2, 2 } } },
-            { typeof(CalendarMonth)     , new SerializationFormat { Prefix = "cm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(CalendarQuarter)   , new SerializationFormat { Prefix = "cq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(CalendarYear)      , new SerializationFormat { Prefix = "cy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(CalendarUnbounded) , new SerializationFormat { Prefix = "cu", TokensExpected = 1, CharactersPerToken = new[] { 0 } } },
-            { typeof(FiscalMonth)       , new SerializationFormat { Prefix = "fm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(FiscalQuarter)     , new SerializationFormat { Prefix = "fq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(FiscalYear)        , new SerializationFormat { Prefix = "fy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(FiscalUnbounded)   , new SerializationFormat { Prefix = "fu", TokensExpected = 1, CharactersPerToken = new[] { 0 } } },
-            { typeof(GenericMonth)      , new SerializationFormat { Prefix = "gm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(GenericQuarter)    , new SerializationFormat { Prefix = "gq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(GenericYear)       , new SerializationFormat { Prefix = "gy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(GenericUnbounded)  , new SerializationFormat { Prefix = "gu", TokensExpected = 1, CharactersPerToken = new[] { 0 } } }
+            { typeof(CalendarDay)       , new SerializationFormat { Prefix = "cd-", TokensExpected = 3, CharactersPerToken = new[] { 4, 2, 2 } } },
+            { typeof(CalendarMonth)     , new SerializationFormat { Prefix = "cm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
+            { typeof(CalendarQuarter)   , new SerializationFormat { Prefix = "cq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
+            { typeof(CalendarYear)      , new SerializationFormat { Prefix = "cy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
+            { typeof(CalendarUnbounded) , new SerializationFormat { Prefix = "cu" , TokensExpected = 0, CharactersPerToken = null } },
+            { typeof(FiscalMonth)       , new SerializationFormat { Prefix = "fm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
+            { typeof(FiscalQuarter)     , new SerializationFormat { Prefix = "fq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
+            { typeof(FiscalYear)        , new SerializationFormat { Prefix = "fy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
+            { typeof(FiscalUnbounded)   , new SerializationFormat { Prefix = "fu" , TokensExpected = 0, CharactersPerToken = null } },
+            { typeof(GenericMonth)      , new SerializationFormat { Prefix = "gm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
+            { typeof(GenericQuarter)    , new SerializationFormat { Prefix = "gq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
+            { typeof(GenericYear)       , new SerializationFormat { Prefix = "gy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
+            { typeof(GenericUnbounded)  , new SerializationFormat { Prefix = "gu" , TokensExpected = 0, CharactersPerToken = null } }
             #pragma warning restore SA1001 // Commas must be spaced correctly
             #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning restore SA1025 // Code must not contain multiple whitespace in a row
@@ -446,28 +446,28 @@ namespace OBeautifulCode.AccountingTime
             var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
             if (unitOfTimeAsCalendarDay != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+                result = Invariant($"{result}{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
             if (unitOfTimeAsCalendarMonth != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+                result = Invariant($"{result}{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
             if (unitOfTimeAsCalendarQuarter != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsCalendarQuarter.Year:D4}-{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+                result = Invariant($"{result}{unitOfTimeAsCalendarQuarter.Year:D4}-{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
             if (unitOfTimeAsCalendarYear != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsCalendarYear.Year:D4}");
+                result = Invariant($"{result}{unitOfTimeAsCalendarYear.Year:D4}");
                 return result;
             }
 
@@ -480,21 +480,21 @@ namespace OBeautifulCode.AccountingTime
             var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
             if (unitOfTimeAsFiscalMonth != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+                result = Invariant($"{result}{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
             if (unitOfTimeAsFiscalQuarter != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsFiscalQuarter.Year:D4}-{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+                result = Invariant($"{result}{unitOfTimeAsFiscalQuarter.Year:D4}-{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
             if (unitOfTimeAsFiscalYear != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsFiscalYear.Year:D4}");
+                result = Invariant($"{result}{unitOfTimeAsFiscalYear.Year:D4}");
                 return result;
             }
 
@@ -507,21 +507,21 @@ namespace OBeautifulCode.AccountingTime
             var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
             if (unitOfTimeAsGenericMonth != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+                result = Invariant($"{result}{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
             if (unitOfTimeAsGenericQuarter != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsGenericQuarter.Year:D4}-{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+                result = Invariant($"{result}{unitOfTimeAsGenericQuarter.Year:D4}-{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
             if (unitOfTimeAsGenericYear != null)
             {
-                result = Invariant($"{result}-{unitOfTimeAsGenericYear.Year:D4}");
+                result = Invariant($"{result}{unitOfTimeAsGenericYear.Year:D4}");
                 return result;
             }
 
@@ -560,7 +560,7 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("unit-of-time string is whitespace", nameof(unitOfTime));
             }
 
-            var serializationFormats = UnitOfTimeSerializedStringPrefixByType.Where(_ => unitOfTime.StartsWith(_.Value.Prefix + "-", StringComparison.Ordinal)).ToList();
+            var serializationFormats = UnitOfTimeSerializedStringPrefixByType.Where(_ => unitOfTime.StartsWith(_.Value.Prefix, StringComparison.Ordinal)).ToList();
             if (!serializationFormats.Any())
             {
                 throw new InvalidOperationException("Cannot deserialize string; it is not valid unit-of-time.");
@@ -575,18 +575,23 @@ namespace OBeautifulCode.AccountingTime
             }
 
             string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {serializedType.Name} but it is malformed.");
-            var tokens = unitOfTime.Split('-').Skip(1).ToArray();
+            unitOfTime = unitOfTime.Remove(0, serializationFormat.Value.Prefix.Length);
+            var tokens = unitOfTime.Length == 0 ? new string[] { } : unitOfTime.Split('-').ToArray();
             if (tokens.Length != serializationFormat.Value.TokensExpected)
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
-            for (int i = 0; i < serializationFormat.Value.CharactersPerToken.Length; i++)
+            int chracterPerTokenCount = serializationFormat.Value.CharactersPerToken?.Length ?? 0;
+            for (int i = 0; i < chracterPerTokenCount; i++)
             {
+                // ReSharper disable PossibleNullReferenceException
                 if (tokens[i].Length != serializationFormat.Value.CharactersPerToken[i])
                 {
                     throw new InvalidOperationException(errorMessage);
                 }
+
+                // ReSharper restore PossibleNullReferenceException
             }
 
             if (serializedType == typeof(CalendarDay))
@@ -653,6 +658,12 @@ namespace OBeautifulCode.AccountingTime
                 }
             }
 
+            if (serializedType == typeof(CalendarUnbounded))
+            {
+                var deserialized = new CalendarUnbounded();
+                return deserialized as T;
+            }
+
             if (serializedType == typeof(FiscalMonth))
             {
                 var year = ParseIntOrThrow(tokens[0], errorMessage);
@@ -700,6 +711,12 @@ namespace OBeautifulCode.AccountingTime
                 }
             }
 
+            if (serializedType == typeof(FiscalUnbounded))
+            {
+                var deserialized = new FiscalUnbounded();
+                return deserialized as T;
+            }
+
             if (serializedType == typeof(GenericMonth))
             {
                 var year = ParseIntOrThrow(tokens[0], errorMessage);
@@ -745,6 +762,12 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new InvalidOperationException(errorMessage);
                 }
+            }
+
+            if (serializedType == typeof(GenericUnbounded))
+            {
+                var deserialized = new GenericUnbounded();
+                return deserialized as T;
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + serializedType);
