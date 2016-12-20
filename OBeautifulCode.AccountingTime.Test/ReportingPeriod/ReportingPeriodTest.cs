@@ -79,6 +79,19 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void Constructor___Should_not_throw___When_parameter_start_is_equal_to_parameter_end()
+        {
+            // Arrange
+            var start = A.Dummy<UnitOfTime>();
+
+            // Act
+            var ex = Record.Exception(() => new ReportingPeriod<UnitOfTime>(start, start));
+
+            // Assert
+            ex.Should().BeNull();
+        }
+
+        [Fact]
         public static void Start___Should_return_same_start_passed_to_constructor___When_getting()
         {
             // Arrange
