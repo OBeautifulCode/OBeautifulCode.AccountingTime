@@ -299,6 +299,7 @@ namespace OBeautifulCode.AccountingTime
         /// The first calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetFirstCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
@@ -330,6 +331,12 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsCalendarYear.GetFirstCalendarDay();
             }
 
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("There is no first day in unbounded time.");
+            }
+
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
         }
 
@@ -341,6 +348,7 @@ namespace OBeautifulCode.AccountingTime
         /// The last calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetLastCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
@@ -370,6 +378,12 @@ namespace OBeautifulCode.AccountingTime
             if (unitOfTimeAsCalendarYear != null)
             {
                 return unitOfTimeAsCalendarYear.GetLastCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("There is no last day in unbounded time.");
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
