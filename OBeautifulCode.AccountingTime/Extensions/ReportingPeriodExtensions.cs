@@ -120,6 +120,7 @@ namespace OBeautifulCode.AccountingTime
         /// The number of units-of-time contained within the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
         public static int NumberOfUnitsWithin(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             var result = GetUnitsWithin(reportingPeriod).Count;
