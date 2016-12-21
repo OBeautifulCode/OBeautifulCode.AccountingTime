@@ -160,10 +160,10 @@ namespace OBeautifulCode.AccountingTime
             }
 
             bool result =
-                reportingPeriod2.Start.Contains(reportingPeriod1) ||
-                reportingPeriod2.End.Contains(reportingPeriod1) ||
-                reportingPeriod1.Start.Contains(reportingPeriod2) ||
-                reportingPeriod1.End.Contains(reportingPeriod2);
+                reportingPeriod1.Contains(reportingPeriod2.Start) ||
+                reportingPeriod1.Contains(reportingPeriod2.End) ||
+                reportingPeriod2.Contains(reportingPeriod1.Start) ||
+                reportingPeriod2.Contains(reportingPeriod1.End);
             return result;
         }
 
