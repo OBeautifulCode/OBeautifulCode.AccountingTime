@@ -34,7 +34,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool IsInReportingPeriod(this UnitOfTime unitOfTime, IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (unitOfTime == null)
@@ -47,19 +47,87 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            // note: CompareTo will throw if the unit-of-time is a different concrete
-            // sub-class of UnitOfTime than what is stored in the reporting period
-            bool result;
-            try
+            if (unitOfTime.UnitOfTimeKind != reportingPeriod.GetUnitOfTimeKind())
             {
-                result = (unitOfTime.CompareTo(reportingPeriod.Start) >= 0) &&
-                         (unitOfTime.CompareTo(reportingPeriod.End) <= 0);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException("unitOfTime cannot be compared against reportingPeriod because they represent different concrete subclasses of UnitOfTime", ex);
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} cannot be compared against {nameof(reportingPeriod)} because they represent different {nameof(UnitOfTimeKind)}"));
             }
 
+            var result = reportingPeriod.Contains(new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime));
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if an <see cref="IReportingPeriod{T}"/> is contained within another <see cref="IReportingPeriod{T}"/>
+        /// For example, 1Q2017-3Q2017 contains 2Q2017-3Q2017.
+        /// </summary>
+        /// <remarks>
+        /// If an endpoint in the second reporting period equals an endpoint in the first reporting period, that endpoint
+        /// is considered to be contained within the first reporting period.  Of course, both endpoints must be contained
+        /// within the reporting period for this method to return true.
+        /// </remarks>
+        /// <param name="reportingPeriod1">A reporting period.</param>
+        /// <param name="reportingPeriod2">A second reporting period to check for containment within the first reporting period.</param>
+        /// <returns>
+        /// true if the first reporting period contains the second one; false if not.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
+        public static bool Contains(this IReportingPeriod<UnitOfTime> reportingPeriod1, IReportingPeriod<UnitOfTime> reportingPeriod2)
+        {
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
+            if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}"));
+            }
+
+            reportingPeriod1 = reportingPeriod1.ConvertToMostGranular();
+            reportingPeriod2 = reportingPeriod2.ConvertToMostGranular();
+
+            bool startIsContained;
+            if (reportingPeriod1.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                startIsContained = true;
+            }
+            else
+            {
+                if (reportingPeriod2.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+                {
+                    startIsContained = false;
+                }
+                else
+                {
+                    startIsContained = reportingPeriod1.Start.CompareTo(reportingPeriod2.Start) <= 0;
+                }
+            }
+
+            bool endIsContained;
+            if (reportingPeriod1.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                endIsContained = true;
+            }
+            else
+            {
+                if (reportingPeriod2.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+                {
+                    endIsContained = false;
+                }
+                else
+                {
+                    endIsContained = reportingPeriod1.End.CompareTo(reportingPeriod2.End) >= 0;
+                }
+            }
+
+            var result = startIsContained && endIsContained;
             return result;
         }
 
@@ -78,7 +146,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different concrete subclasses of <see cref="UnitOfTime"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool HasOverlapWith(this IReportingPeriod<UnitOfTime> reportingPeriod1, IReportingPeriod<UnitOfTime> reportingPeriod2)
         {
             if (reportingPeriod1 == null)
@@ -91,19 +159,11 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod2));
             }
 
-            bool result;
-            try
-            {
-                result = reportingPeriod2.Start.IsInReportingPeriod(reportingPeriod1) ||
-                         reportingPeriod2.End.IsInReportingPeriod(reportingPeriod1) ||
-                         reportingPeriod1.Start.IsInReportingPeriod(reportingPeriod2) ||
-                         reportingPeriod1.End.IsInReportingPeriod(reportingPeriod2);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException("reportingPeriod1 cannot be compared against reportingPeriod2 because they represent different concrete subclasses of UnitOfTime.", ex);
-            }
-
+            bool result =
+                reportingPeriod2.Start.IsInReportingPeriod(reportingPeriod1) ||
+                reportingPeriod2.End.IsInReportingPeriod(reportingPeriod1) ||
+                reportingPeriod1.Start.IsInReportingPeriod(reportingPeriod2) ||
+                reportingPeriod1.End.IsInReportingPeriod(reportingPeriod2);
             return result;
         }
 
@@ -337,6 +397,121 @@ namespace OBeautifulCode.AccountingTime
 
             var result = reportingPeriod.Start.UnitOfTimeKind;
             return result;
+        }
+
+        private static IReportingPeriod<UnitOfTime> ConvertToMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            var moreGranularStart = ConvertToMostGranular(reportingPeriod.Start);
+            var moreGranularEnd = ConvertToMostGranular(reportingPeriod.End);
+            var result = new ReportingPeriod<UnitOfTime>(moreGranularStart.Start, moreGranularEnd.End);
+            return result;
+        }
+
+        private static IReportingPeriod<UnitOfTime> ConvertToMostGranular(this UnitOfTime unitOfTime)
+        {
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                return result;
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
+            {
+                var year = unitOfTime as IHaveAYear;
+                ReportingPeriod<UnitOfTime> reportingPeriodInQuarters;
+                var startQuarter = QuarterNumber.Q1;
+                var endQuarter = QuarterNumber.Q4;
+
+                // ReSharper disable PossibleNullReferenceException
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
+                {
+                    reportingPeriodInQuarters = new ReportingPeriod<UnitOfTime>(new CalendarQuarter(year.Year, startQuarter), new CalendarQuarter(year.Year, endQuarter));
+                }
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                {
+                    reportingPeriodInQuarters = new ReportingPeriod<UnitOfTime>(new FiscalQuarter(year.Year, startQuarter), new FiscalQuarter(year.Year, endQuarter));
+                }
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                {
+                    reportingPeriodInQuarters = new ReportingPeriod<UnitOfTime>(new GenericQuarter(year.Year, startQuarter), new GenericQuarter(year.Year, endQuarter));
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+                }
+
+                // ReSharper restore PossibleNullReferenceException
+                var result = ConvertToMostGranular(reportingPeriodInQuarters);
+                return result;
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
+            {
+                var quarter = unitOfTime as IHaveAQuarter;
+
+                // ReSharper disable PossibleNullReferenceException
+                var startMonth = (((int)quarter.QuarterNumber - 1) * 3) + 1;
+                var endMonth = (int)quarter.QuarterNumber * 3;
+                ReportingPeriod<UnitOfTime> reportingPeriodInMonths;
+
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
+                {
+                    reportingPeriodInMonths = new ReportingPeriod<UnitOfTime>(new CalendarMonth(quarter.Year, (MonthOfYear)startMonth), new CalendarMonth(quarter.Year, (MonthOfYear)endMonth));
+                }
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                {
+                    reportingPeriodInMonths = new ReportingPeriod<UnitOfTime>(new FiscalMonth(quarter.Year, (MonthNumber)startMonth), new FiscalMonth(quarter.Year, (MonthNumber)endMonth));
+                }
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                {
+                    reportingPeriodInMonths = new ReportingPeriod<UnitOfTime>(new GenericMonth(quarter.Year, (MonthNumber)startMonth), new GenericMonth(quarter.Year, (MonthNumber)endMonth));
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+                }
+
+                // ReSharper restore PossibleNullReferenceException
+                var result = ConvertToMostGranular(reportingPeriodInMonths);
+                return result;
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+            {
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
+                {
+                    var calendarMonth = unitOfTime as CalendarMonth;
+                    var result = new ReportingPeriod<UnitOfTime>(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                {
+                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                {
+                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                    return result;
+                }
+
+                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+            {
+                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
+                {
+                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                    return result;
+                }
+
+                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+            }
+
+            throw new NotSupportedException("This granularity is not supported: " + unitOfTime.UnitOfTimeGranularity);
         }
     }
 }

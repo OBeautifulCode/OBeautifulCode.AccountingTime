@@ -52,25 +52,6 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_throw_ArgumentException___When_parameter_unitOfTime_and_reportingPeriod_represent_different_concrete_subclasses_of_UnitOfTime()
-        {
-            // Arrange
-            var unitOfTime1 = A.Dummy<CalendarDay>();
-            var reportingPeriod1 = A.Dummy<ReportingPeriod<CalendarMonth>>();
-
-            var unitOfTime2 = A.Dummy<FiscalQuarter>();
-            var reportingPeriod2 = A.Dummy<ReportingPeriod<GenericQuarter>>();
-
-            // Act
-            var ex1 = Record.Exception(() => unitOfTime1.IsInReportingPeriod(reportingPeriod1));
-            var ex2 = Record.Exception(() => unitOfTime2.IsInReportingPeriod(reportingPeriod2));
-
-            // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
-        }
-
-        [Fact]
         public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
@@ -753,25 +734,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        public static void HasOverlapWith___Should_throw_ArgumentException___When_parameters_reportingPeriod1_and_reportingPeriod1_represent_different_concrete_subclasses_of_UnitOfTime()
-        {
-            // Arrange
-            var reportingPeriod1a = A.Dummy<ReportingPeriod<FiscalQuarter>>();
-            var reportingPeriod1b = A.Dummy<ReportingPeriod<FiscalYear>>();
-
-            var reportingPeriod2a = A.Dummy<ReportingPeriod<CalendarQuarter>>();
-            var reportingPeriod2b = A.Dummy<ReportingPeriod<GenericQuarter>>();
-
-            // Act
-            var ex1 = Record.Exception(() => reportingPeriod1a.HasOverlapWith(reportingPeriod1b));
-            var ex2 = Record.Exception(() => reportingPeriod2a.HasOverlapWith(reportingPeriod2b));
-
-            // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
         }
 
         [Fact]
