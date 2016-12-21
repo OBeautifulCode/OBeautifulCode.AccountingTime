@@ -1964,7 +1964,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void CreatePermutations___Should_throw_ArgumentOutOfRangeException___When_parameter_maxUnitsInAnyReportingPeriod_is_0_or_less()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod.CreatePermutations(0));
