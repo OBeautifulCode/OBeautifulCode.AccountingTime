@@ -197,6 +197,107 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Adds the specified number of units of a specified granularity to a unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time to add to.</param>
+        /// <param name="unitsToAdd">The number of units to add (use negative numbers to subtract units).</param>
+        /// <param name="granularityOfUnitsToAdd">The granularity of the units to add.  Must be as or less granular than the <paramref name="unitOfTime"/> (e.g. can add CalendarYear to a CalendarQuarter, but not vice-versa)</param>
+        /// <returns>
+        /// The result of adding the specified number of units of the specified granularity to a unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="ArgumentException">Cannot add or subtract from a unit-of-time whose granularity is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the <paramref name="unitOfTime"/>.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "3*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "12*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "4*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granuarlity is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Unbounded)}.  Cannot add units of that granularity."));
+            }
+
+            if (granularityOfUnitsToAdd.IsMoreGranularThan(unitOfTime.UnitOfTimeGranularity))
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is more granular than {nameof(unitOfTime)}.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time."));
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == granularityOfUnitsToAdd)
+            {
+                var result = unitOfTime.Plus(unitsToAdd);
+                return result;
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Year)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
+                {
+                    var result = unitOfTime.Plus(4 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+                {
+                    var result = unitOfTime.Plus(12 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new NotSupportedException("Adding to a day is not supported");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Quarter)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+                {
+                    var result = unitOfTime.Plus(3 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new InvalidOperationException("should not get here");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Month)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new InvalidOperationException("should not get here");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            throw new InvalidOperationException("should not get here");
+        }
+
+        /// <summary>
         /// Converts a <see cref="FiscalQuarter"/> to a <see cref="CalendarQuarter"/>.
         /// </summary>
         /// <param name="calendarQuarter">The calendar quarter to convert.</param>

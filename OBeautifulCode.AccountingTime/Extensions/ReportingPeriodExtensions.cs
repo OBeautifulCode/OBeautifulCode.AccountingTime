@@ -20,6 +20,50 @@ namespace OBeautifulCode.AccountingTime
     public static class ReportingPeriodExtensions
     {
         /// <summary>
+        /// Clones a reporting period while adjusting the start or end of the reporting period, or both.
+        /// </summary>
+        /// <typeparam name="TReportingPeriod">The type of reporting period to return.</typeparam>
+        /// <param name="reportingPeriod">The reporting period to clone.</param>
+        /// <param name="component">The component(s) of the reporting period to adjust.</param>
+        /// <param name="unitsToAdd">The number of units to add when adjusting the reporting period component.  Use negative numbers to subtract units.</param>
+        /// <param name="granularityOfUnitsToAdd">The granularity of the units to add to the specified reporting period component(s).  Must be as or less granular than the reporting period component (e.g. can add CalendarYear to a CalendarQuarter, but not vice-versa).</param>
+        /// <returns>A clone of the specified reporting period with the specified adjustment made to the start or end of the reporting period, or both.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="component"/> is <see cref="ReportingPeriodComponent.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException">Cannot add or subtract from a unit-of-time whose granularity is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the reporting period component.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
+        public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(this IReportingPeriod<UnitOfTime> reportingPeriod, ReportingPeriodComponent component, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
+            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (component == ReportingPeriodComponent.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(component)} is {nameof(ReportingPeriodComponent.Invalid)}"));
+            }
+
+            var start = reportingPeriod.Start;
+            var end = reportingPeriod.End;
+            if ((component == ReportingPeriodComponent.Start) || (component == ReportingPeriodComponent.Both))
+            {
+                start = start.Plus(unitsToAdd, granularityOfUnitsToAdd);
+            }
+
+            if ((component == ReportingPeriodComponent.End) || (component == ReportingPeriodComponent.Both))
+            {
+                end = end.Plus(unitsToAdd, granularityOfUnitsToAdd);
+            }
+
+            var result = new ReportingPeriod<UnitOfTime>(start, end).Clone<TReportingPeriod>();
+            return result;
+        }
+
+        /// <summary>
         /// Determines if a unit-of-time is contained within a reporting period.
         /// For example, 2Q2017 is contained within a reporting period of 1Q2017-4Q2017.
         /// </summary>
