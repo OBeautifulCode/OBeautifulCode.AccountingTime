@@ -27,15 +27,15 @@ namespace OBeautifulCode.AccountingTime
         /// If the unit-of-time is equal to one of the endpoints of the reporting period,
         /// that unit-of-time is considered to be within the reporting period.
         /// </remarks>
-        /// <param name="unitOfTime">The unit-of-time to check against a reporting period.</param>
         /// <param name="reportingPeriod">The reporting period.</param>
+        /// <param name="unitOfTime">The unit-of-time to check against a reporting period.</param>
         /// <returns>
         /// true if the unit-of-time is contained within the reporting period; false otherwise.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
-        public static bool IsInReportingPeriod(this UnitOfTime unitOfTime, IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static bool Contains(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
@@ -160,10 +160,10 @@ namespace OBeautifulCode.AccountingTime
             }
 
             bool result =
-                reportingPeriod2.Start.IsInReportingPeriod(reportingPeriod1) ||
-                reportingPeriod2.End.IsInReportingPeriod(reportingPeriod1) ||
-                reportingPeriod1.Start.IsInReportingPeriod(reportingPeriod2) ||
-                reportingPeriod1.End.IsInReportingPeriod(reportingPeriod2);
+                reportingPeriod2.Start.Contains(reportingPeriod1) ||
+                reportingPeriod2.End.Contains(reportingPeriod1) ||
+                reportingPeriod1.Start.Contains(reportingPeriod2) ||
+                reportingPeriod1.End.Contains(reportingPeriod2);
             return result;
         }
 

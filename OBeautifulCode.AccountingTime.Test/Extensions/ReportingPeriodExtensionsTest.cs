@@ -26,33 +26,36 @@ namespace OBeautifulCode.AccountingTime.Test
     {
         // ReSharper disable InconsistentNaming
         [Fact]
-        public static void IsInReportingPeriod___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        public static void Contains___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            UnitOfTime unitOfTime = null;
 
             // Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.IsInReportingPeriod(null, reportingPeriod));
+            // ReSharper disable ExpressionIsAlwaysNull
+            var ex = Record.Exception(() => reportingPeriod.Contains(unitOfTime));
+            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        public static void Contains___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange
             var unitOfTime = A.Dummy<UnitOfTime>();
 
             // Act
-            var ex = Record.Exception(() => unitOfTime.IsInReportingPeriod(null));
+            var ex = Record.Exception(() => ReportingPeriodExtensions.Contains(null, unitOfTime));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
@@ -70,32 +73,32 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyEight);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1d = unitOfTime1d.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1e = unitOfTime1e.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains1d = reportingPeriod1.Contains(unitOfTime1d);
+            var contains1e = reportingPeriod1.Contains(unitOfTime1e);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
-            isInReportingPeriod1d.Should().BeFalse();
-            isInReportingPeriod1e.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
+            contains1d.Should().BeFalse();
+            contains1e.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
@@ -109,24 +112,24 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1d = unitOfTime1d.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains1d = reportingPeriod1.Contains(unitOfTime1d);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
-            isInReportingPeriod1d.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
+            contains1d.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
@@ -142,28 +145,27 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new CalendarMonth(2015, MonthOfYear.September);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
@@ -176,22 +178,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new CalendarMonth(2016, MonthOfYear.September);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
@@ -207,28 +209,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new FiscalMonth(2015, MonthNumber.Nine);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
@@ -241,22 +243,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new FiscalMonth(2016, MonthNumber.Nine);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
@@ -272,28 +274,27 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new GenericMonth(2015, MonthNumber.Nine);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
@@ -306,22 +307,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new GenericMonth(2016, MonthNumber.Nine);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
@@ -337,28 +338,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new CalendarQuarter(2015, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
@@ -374,28 +375,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new CalendarQuarter(2016, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1d = unitOfTime1d.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1e = unitOfTime1e.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1f = unitOfTime1f.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains1d = reportingPeriod1.Contains(unitOfTime1d);
+            var contains1e = reportingPeriod1.Contains(unitOfTime1e);
+            var contains1f = reportingPeriod1.Contains(unitOfTime1f);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
-            isInReportingPeriod1d.Should().BeTrue();
-            isInReportingPeriod1e.Should().BeTrue();
-            isInReportingPeriod1f.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
+            contains1d.Should().BeTrue();
+            contains1e.Should().BeTrue();
+            contains1f.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
@@ -411,28 +412,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new FiscalQuarter(2015, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
@@ -448,28 +449,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new FiscalQuarter(2016, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1d = unitOfTime1d.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1e = unitOfTime1e.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1f = unitOfTime1f.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains1d = reportingPeriod1.Contains(unitOfTime1d);
+            var contains1e = reportingPeriod1.Contains(unitOfTime1e);
+            var contains1f = reportingPeriod1.Contains(unitOfTime1f);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
-            isInReportingPeriod1d.Should().BeTrue();
-            isInReportingPeriod1e.Should().BeTrue();
-            isInReportingPeriod1f.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
+            contains1d.Should().BeTrue();
+            contains1e.Should().BeTrue();
+            contains1f.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
@@ -485,28 +486,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2d = new GenericQuarter(2015, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2c = unitOfTime2c.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2d = unitOfTime2d.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
+            var contains2c = reportingPeriod2.Contains(unitOfTime2c);
+            var contains2d = reportingPeriod2.Contains(unitOfTime2d);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
-            isInReportingPeriod1c.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
+            contains1c.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
-            isInReportingPeriod2c.Should().BeFalse();
-            isInReportingPeriod2d.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
+            contains2c.Should().BeFalse();
+            contains2d.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
@@ -522,28 +523,28 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new GenericQuarter(2016, QuarterNumber.Q2);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1d = unitOfTime1d.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1e = unitOfTime1e.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1f = unitOfTime1f.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
+            var contains1d = reportingPeriod1.Contains(unitOfTime1d);
+            var contains1e = reportingPeriod1.Contains(unitOfTime1e);
+            var contains1f = reportingPeriod1.Contains(unitOfTime1f);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
-            isInReportingPeriod1d.Should().BeTrue();
-            isInReportingPeriod1e.Should().BeTrue();
-            isInReportingPeriod1f.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
+            contains1d.Should().BeTrue();
+            contains1e.Should().BeTrue();
+            contains1f.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
@@ -556,22 +557,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2b = new CalendarYear(2017);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
@@ -584,22 +585,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new CalendarYear(2016);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
@@ -612,22 +613,21 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2b = new FiscalYear(2017);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
@@ -640,22 +640,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new FiscalYear(2016);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
+        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
@@ -668,22 +668,22 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2b = new GenericYear(2017);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
 
-            var isInReportingPeriod2a = unitOfTime2a.IsInReportingPeriod(reportingPeriod2);
-            var isInReportingPeriod2b = unitOfTime2b.IsInReportingPeriod(reportingPeriod2);
+            var contains2a = reportingPeriod2.Contains(unitOfTime2a);
+            var contains2b = reportingPeriod2.Contains(unitOfTime2b);
 
             // Assert
-            isInReportingPeriod1a.Should().BeFalse();
-            isInReportingPeriod1b.Should().BeFalse();
+            contains1a.Should().BeFalse();
+            contains1b.Should().BeFalse();
 
-            isInReportingPeriod2a.Should().BeFalse();
-            isInReportingPeriod2b.Should().BeFalse();
+            contains2a.Should().BeFalse();
+            contains2b.Should().BeFalse();
         }
 
         [Fact]
-        public static void IsInReportingPeriod___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
+        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
@@ -696,18 +696,18 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitOfTime2 = new GenericYear(2016);
 
             // Act
-            var isInReportingPeriod1a = unitOfTime1a.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1b = unitOfTime1b.IsInReportingPeriod(reportingPeriod1);
-            var isInReportingPeriod1c = unitOfTime1c.IsInReportingPeriod(reportingPeriod1);
+            var contains1a = reportingPeriod1.Contains(unitOfTime1a);
+            var contains1b = reportingPeriod1.Contains(unitOfTime1b);
+            var contains1c = reportingPeriod1.Contains(unitOfTime1c);
 
-            var isInReportingPeriod2 = unitOfTime2.IsInReportingPeriod(reportingPeriod2);
+            var contains2 = reportingPeriod2.Contains(unitOfTime2);
 
             // Assert
-            isInReportingPeriod1a.Should().BeTrue();
-            isInReportingPeriod1b.Should().BeTrue();
-            isInReportingPeriod1c.Should().BeTrue();
+            contains1a.Should().BeTrue();
+            contains1b.Should().BeTrue();
+            contains1c.Should().BeTrue();
 
-            isInReportingPeriod2.Should().BeTrue();
+            contains2.Should().BeTrue();
         }
 
         [Fact]
