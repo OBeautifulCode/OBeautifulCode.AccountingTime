@@ -49,14 +49,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel.CalendarMonth.Should().Be(expectedModel.CalendarMonth);
             actualModel.CalendarQuarter.Should().Be(expectedModel.CalendarQuarter);
             actualModel.CalendarYear.Should().Be(expectedModel.CalendarYear);
+            actualModel.CalendarUnbounded.Should().Be(expectedModel.CalendarUnbounded);
             actualModel.FiscalUnitOfTime.Should().Be(expectedModel.FiscalUnitOfTime);
             actualModel.FiscalMonth.Should().Be(expectedModel.FiscalMonth);
             actualModel.FiscalQuarter.Should().Be(expectedModel.FiscalQuarter);
             actualModel.FiscalYear.Should().Be(expectedModel.FiscalYear);
+            actualModel.FiscalUnbounded.Should().Be(expectedModel.FiscalUnbounded);
             actualModel.GenericUnitOfTime.Should().Be(expectedModel.GenericUnitOfTime);
             actualModel.GenericMonth.Should().Be(expectedModel.GenericMonth);
             actualModel.GenericQuarter.Should().Be(expectedModel.GenericQuarter);
             actualModel.GenericYear.Should().Be(expectedModel.GenericYear);
+            actualModel.GenericUnbounded.Should().Be(expectedModel.GenericUnbounded);
         }
 
         [Fact]
@@ -77,14 +80,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel.CalendarMonth.Should().BeNull();
             actualModel.CalendarQuarter.Should().BeNull();
             actualModel.CalendarYear.Should().BeNull();
+            actualModel.CalendarUnbounded.Should().BeNull();
             actualModel.FiscalUnitOfTime.Should().BeNull();
             actualModel.FiscalMonth.Should().BeNull();
             actualModel.FiscalQuarter.Should().BeNull();
             actualModel.FiscalYear.Should().BeNull();
+            actualModel.FiscalUnbounded.Should().BeNull();
             actualModel.GenericUnitOfTime.Should().BeNull();
             actualModel.GenericMonth.Should().BeNull();
             actualModel.GenericQuarter.Should().BeNull();
             actualModel.GenericYear.Should().BeNull();
+            actualModel.GenericUnbounded.Should().BeNull();
         }
 
         [Fact]
@@ -99,14 +105,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
                 "\"" + nameof(model.CalendarMonth) + "\" : \"" + model.CalendarMonth.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.CalendarQuarter) + "\" : \"" + model.CalendarQuarter.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.CalendarYear) + "\" : \"" + model.CalendarYear.SerializeToSortableString() + "\", " +
+                "\"" + nameof(model.CalendarUnbounded) + "\" : \"" + model.CalendarUnbounded.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.FiscalUnitOfTime) + "\" : \"" + model.FiscalUnitOfTime.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.FiscalMonth) + "\" : \"" + model.FiscalMonth.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.FiscalQuarter) + "\" : \"" + model.FiscalQuarter.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.FiscalYear) + "\" : \"" + model.FiscalYear.SerializeToSortableString() + "\", " +
+                "\"" + nameof(model.FiscalUnbounded) + "\" : \"" + model.FiscalUnbounded.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.GenericUnitOfTime) + "\" : \"" + model.GenericUnitOfTime.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.GenericMonth) + "\" : \"" + model.GenericMonth.SerializeToSortableString() + "\", " +
                 "\"" + nameof(model.GenericQuarter) + "\" : \"" + model.GenericQuarter.SerializeToSortableString() + "\", " +
-                "\"" + nameof(model.GenericYear) + "\" : \"" + model.GenericYear.SerializeToSortableString() + "\"";
+                "\"" + nameof(model.GenericYear) + "\" : \"" + model.GenericYear.SerializeToSortableString() + "\", " +
+                "\"" + nameof(model.GenericUnbounded) + "\" : \"" + model.GenericUnbounded.SerializeToSortableString() + "\"";
 
             // Act
             var actualJson = model.ToJson();
@@ -139,14 +148,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel1.CalendarMonth.Should().Be(expectedModel1.CalendarMonth);
             actualModel1.CalendarQuarter.Should().Be(expectedModel1.CalendarQuarter);
             actualModel1.CalendarYear.Should().Be(expectedModel1.CalendarYear);
+            actualModel1.CalendarUnbounded.Should().Be(expectedModel1.CalendarUnbounded);
             actualModel1.FiscalUnitOfTime.Should().Be(expectedModel1.FiscalUnitOfTime);
             actualModel1.FiscalMonth.Should().Be(expectedModel1.FiscalMonth);
             actualModel1.FiscalQuarter.Should().Be(expectedModel1.FiscalQuarter);
             actualModel1.FiscalYear.Should().Be(expectedModel1.FiscalYear);
+            actualModel1.FiscalUnbounded.Should().Be(expectedModel1.FiscalUnbounded);
             actualModel1.GenericUnitOfTime.Should().Be(expectedModel1.GenericUnitOfTime);
             actualModel1.GenericMonth.Should().Be(expectedModel1.GenericMonth);
             actualModel1.GenericQuarter.Should().Be(expectedModel1.GenericQuarter);
             actualModel1.GenericYear.Should().Be(expectedModel1.GenericYear);
+            actualModel1.GenericUnbounded.Should().Be(expectedModel1.GenericUnbounded);
 
             actualModel2.UnitOfTime.Should().Be(expectedModel2.UnitOfTime);
             actualModel2.CalendarUnitOfTime.Should().Be(expectedModel2.CalendarUnitOfTime);
@@ -154,14 +166,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel2.CalendarMonth.Should().Be(expectedModel2.CalendarMonth);
             actualModel2.CalendarQuarter.Should().Be(expectedModel2.CalendarQuarter);
             actualModel2.CalendarYear.Should().Be(expectedModel2.CalendarYear);
+            actualModel2.CalendarUnbounded.Should().Be(expectedModel2.CalendarUnbounded);
             actualModel2.FiscalUnitOfTime.Should().Be(expectedModel2.FiscalUnitOfTime);
             actualModel2.FiscalMonth.Should().Be(expectedModel2.FiscalMonth);
             actualModel2.FiscalQuarter.Should().Be(expectedModel2.FiscalQuarter);
             actualModel2.FiscalYear.Should().Be(expectedModel2.FiscalYear);
+            actualModel2.FiscalUnbounded.Should().Be(expectedModel2.FiscalUnbounded);
             actualModel2.GenericUnitOfTime.Should().Be(expectedModel2.GenericUnitOfTime);
             actualModel2.GenericMonth.Should().Be(expectedModel2.GenericMonth);
             actualModel2.GenericQuarter.Should().Be(expectedModel2.GenericQuarter);
             actualModel2.GenericYear.Should().Be(expectedModel2.GenericYear);
+            actualModel2.GenericUnbounded.Should().Be(expectedModel2.GenericUnbounded);
         }
 
         [Fact]
@@ -188,14 +203,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel1.CalendarMonth.Should().BeNull();
             actualModel1.CalendarQuarter.Should().BeNull();
             actualModel1.CalendarYear.Should().BeNull();
+            actualModel1.CalendarUnbounded.Should().BeNull();
             actualModel1.FiscalUnitOfTime.Should().BeNull();
             actualModel1.FiscalMonth.Should().BeNull();
             actualModel1.FiscalQuarter.Should().BeNull();
             actualModel1.FiscalYear.Should().BeNull();
+            actualModel1.FiscalUnbounded.Should().BeNull();
             actualModel1.GenericUnitOfTime.Should().BeNull();
             actualModel1.GenericMonth.Should().BeNull();
             actualModel1.GenericQuarter.Should().BeNull();
             actualModel1.GenericYear.Should().BeNull();
+            actualModel1.GenericUnbounded.Should().BeNull();
 
             actualModel2.UnitOfTime.Should().BeNull();
             actualModel2.CalendarUnitOfTime.Should().BeNull();
@@ -203,14 +221,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualModel2.CalendarMonth.Should().BeNull();
             actualModel2.CalendarQuarter.Should().BeNull();
             actualModel2.CalendarYear.Should().BeNull();
+            actualModel2.CalendarUnbounded.Should().BeNull();
             actualModel2.FiscalUnitOfTime.Should().BeNull();
             actualModel2.FiscalMonth.Should().BeNull();
             actualModel2.FiscalQuarter.Should().BeNull();
             actualModel2.FiscalYear.Should().BeNull();
+            actualModel2.FiscalUnbounded.Should().BeNull();
             actualModel2.GenericUnitOfTime.Should().BeNull();
             actualModel2.GenericMonth.Should().BeNull();
             actualModel2.GenericQuarter.Should().BeNull();
             actualModel2.GenericYear.Should().BeNull();
+            actualModel2.GenericUnbounded.Should().BeNull();
         }
 
         [Fact]
@@ -227,14 +248,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
                 "\"" + nameof(model1.CalendarMonth) + "\" : \"" + model1.CalendarMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model1.CalendarQuarter) + "\" : \"" + model1.CalendarQuarter.SerializeToString() + "\", " +
                 "\"" + nameof(model1.CalendarYear) + "\" : \"" + model1.CalendarYear.SerializeToString() + "\", " +
+                "\"" + nameof(model1.CalendarUnbounded) + "\" : \"" + model1.CalendarUnbounded.SerializeToString() + "\", " +
                 "\"" + nameof(model1.FiscalUnitOfTime) + "\" : \"" + model1.FiscalUnitOfTime.SerializeToString() + "\", " +
                 "\"" + nameof(model1.FiscalMonth) + "\" : \"" + model1.FiscalMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model1.FiscalQuarter) + "\" : \"" + model1.FiscalQuarter.SerializeToString() + "\", " +
                 "\"" + nameof(model1.FiscalYear) + "\" : \"" + model1.FiscalYear.SerializeToString() + "\", " +
+                "\"" + nameof(model1.FiscalUnbounded) + "\" : \"" + model1.FiscalUnbounded.SerializeToString() + "\", " +
                 "\"" + nameof(model1.GenericUnitOfTime) + "\" : \"" + model1.GenericUnitOfTime.SerializeToString() + "\", " +
                 "\"" + nameof(model1.GenericMonth) + "\" : \"" + model1.GenericMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model1.GenericQuarter) + "\" : \"" + model1.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericYear) + "\" : \"" + model1.GenericYear.SerializeToString() + "\"";
+                "\"" + nameof(model1.GenericYear) + "\" : \"" + model1.GenericYear.SerializeToString() + "\", " +
+                "\"" + nameof(model1.GenericUnbounded) + "\" : \"" + model1.GenericUnbounded.SerializeToString() + "\"";
 
             var expectedJson2 =
                 "\"" + nameof(model2.UnitOfTime) + "\" : \"" + model2.UnitOfTime.SerializeToString() + "\", " +
@@ -243,14 +267,17 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
                 "\"" + nameof(model2.CalendarMonth) + "\" : \"" + model2.CalendarMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model2.CalendarQuarter) + "\" : \"" + model2.CalendarQuarter.SerializeToString() + "\", " +
                 "\"" + nameof(model2.CalendarYear) + "\" : \"" + model2.CalendarYear.SerializeToString() + "\", " +
+                "\"" + nameof(model2.CalendarUnbounded) + "\" : \"" + model2.CalendarUnbounded.SerializeToString() + "\", " +
                 "\"" + nameof(model2.FiscalUnitOfTime) + "\" : \"" + model2.FiscalUnitOfTime.SerializeToString() + "\", " +
                 "\"" + nameof(model2.FiscalMonth) + "\" : \"" + model2.FiscalMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model2.FiscalQuarter) + "\" : \"" + model2.FiscalQuarter.SerializeToString() + "\", " +
                 "\"" + nameof(model2.FiscalYear) + "\" : \"" + model2.FiscalYear.SerializeToString() + "\", " +
+                "\"" + nameof(model2.FiscalUnbounded) + "\" : \"" + model2.FiscalUnbounded.SerializeToString() + "\", " +
                 "\"" + nameof(model2.GenericUnitOfTime) + "\" : \"" + model2.GenericUnitOfTime.SerializeToString() + "\", " +
                 "\"" + nameof(model2.GenericMonth) + "\" : \"" + model2.GenericMonth.SerializeToString() + "\", " +
                 "\"" + nameof(model2.GenericQuarter) + "\" : \"" + model2.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericYear) + "\" : \"" + model2.GenericYear.SerializeToString() + "\"";
+                "\"" + nameof(model2.GenericYear) + "\" : \"" + model2.GenericYear.SerializeToString() + "\", " +
+                "\"" + nameof(model2.GenericUnbounded) + "\" : \"" + model2.GenericUnbounded.SerializeToString() + "\"";
 
             // Act
             var actualJson1 = model1.ToJson();
@@ -279,6 +306,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public CalendarYear CalendarYear { get; set; }
 
+            public CalendarUnbounded CalendarUnbounded { get; set; }
+
             public FiscalUnitOfTime FiscalUnitOfTime { get; set; }
 
             public FiscalMonth FiscalMonth { get; set; }
@@ -287,6 +316,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public FiscalYear FiscalYear { get; set; }
 
+            public FiscalUnbounded FiscalUnbounded { get; set; }
+
             public GenericUnitOfTime GenericUnitOfTime { get; set; }
 
             public GenericMonth GenericMonth { get; set; }
@@ -294,6 +325,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             public GenericQuarter GenericQuarter { get; set; }
 
             public GenericYear GenericYear { get; set; }
+
+            public GenericUnbounded GenericUnbounded { get; set; }
 
             // ReSharper restore MemberCanBePrivate.Local
             // ReSharper restore UnusedAutoPropertyAccessor.Local
@@ -317,6 +350,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public ReportingPeriod<CalendarYear> CalendarYear { get; set; }
 
+            public ReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
+
             public ReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
 
             public ReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
@@ -325,6 +360,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public ReportingPeriod<FiscalYear> FiscalYear { get; set; }
 
+            public ReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
+
             public ReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
 
             public ReportingPeriod<GenericMonth> GenericMonth { get; set; }
@@ -332,6 +369,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             public ReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
 
             public ReportingPeriod<GenericYear> GenericYear { get; set; }
+
+            public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
             // ReSharper restore MemberCanBePrivate.Local
             // ReSharper restore UnusedAutoPropertyAccessor.Local
@@ -357,6 +396,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public IReportingPeriod<CalendarYear> CalendarYear { get; set; }
 
+            public IReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
+
             public IReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
 
             public IReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
@@ -365,6 +406,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
 
             public IReportingPeriod<FiscalYear> FiscalYear { get; set; }
 
+            public IReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
+
             public IReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
 
             public IReportingPeriod<GenericMonth> GenericMonth { get; set; }
@@ -372,6 +415,8 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             public IReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
 
             public IReportingPeriod<GenericYear> GenericYear { get; set; }
+
+            public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
             // ReSharper restore MemberCanBePrivate.Local
             // ReSharper restore UnusedAutoPropertyAccessor.Local
