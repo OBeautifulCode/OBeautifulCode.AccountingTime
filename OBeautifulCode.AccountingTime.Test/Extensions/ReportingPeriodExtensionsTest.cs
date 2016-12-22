@@ -26,6 +26,465 @@ namespace OBeautifulCode.AccountingTime.Test
     {
         // ReSharper disable InconsistentNaming
         [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
+            var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(null, reportingPeriodComponent, unitsToAdd, granularityToAdd));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_reportingPeriodComponent_is_Invalid()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Invalid, unitsToAdd, granularityToAdd));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Invalid()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Invalid));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Unbounded()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Unbounded));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_adjusting_reportingPeriod_with_an_Unbounded_Start()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var granularityToAdd = reportingPeriod.End.UnitOfTimeGranularity;
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Start, unitsToAdd, granularityToAdd));
+            var ex2 = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Both, unitsToAdd, granularityToAdd));
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_adjusting_reportingPeriod_with_an_Unbounded_End()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+            var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.End, unitsToAdd, granularityToAdd));
+            var ex2 = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Both, unitsToAdd, granularityToAdd));
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "testing all the flavors of unit-of-time")]
+        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_granularityOfUnitsToAdd_is_more_granular_than_component_being_adjusted()
+        {
+            // Arrange
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var tests = new[]
+            {
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<CalendarDay>>(), GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<CalendarMonth>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<CalendarQuarter>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<CalendarYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<FiscalMonth>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<FiscalQuarter>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<FiscalYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericMonth>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericQuarter>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } }
+            };
+
+            // Act
+            var exceptions = new List<Exception>();
+            foreach (var test in tests)
+            {
+                foreach (var granularityOfUnitsToAdd in test.GranularityOfUnitsToAdd)
+                {
+                    exceptions.Add(Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Start, unitsToAdd, granularityOfUnitsToAdd)));
+                    exceptions.Add(Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.End, unitsToAdd, granularityOfUnitsToAdd)));
+                    exceptions.Add(Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Both, unitsToAdd, granularityOfUnitsToAdd)));
+                }
+            }
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<ArgumentException>());
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_adjust_Start_of_reportingPeriod___When_ReportingPeriodComponent_is_Start()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Eleven)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalMonth>>(ReportingPeriodComponent.Start, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_adjust_End_of_reportingPeriod___When_ReportingPeriodComponent_is_End()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Twelve))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalMonth>>(ReportingPeriodComponent.End, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_adjust_Start_and_End_of_reportingPeriod___When_ReportingPeriodComponent_is_Both()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalMonth>>(ReportingPeriodComponent.Both, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_adjust_Start_of_reportingPeriod___When_ReportingPeriodComponent_is_Start_and_reportingPeriod_End_is_unbounded()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded())
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalUnbounded())
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2014, MonthNumber.Four), new FiscalUnbounded()),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded())
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalUnitOfTime>>(ReportingPeriodComponent.Start, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_adjust_Start_of_reportingPeriod___When_ReportingPeriodComponent_is_End_and_reportingPeriod_Start_is_unbounded()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Twelve))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Five))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2019, MonthNumber.Eleven))
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalUnitOfTime>>(ReportingPeriodComponent.End, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_convert_return_type_to_TReportingPeriod___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actualReportingPeriod1 = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalUnitOfTime>>(ReportingPeriodComponent.Both, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                var actualReportingPeriod2 = test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Both, test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actualReportingPeriod1.Should().Be(test.ExpectedReportingPeriod);
+                actualReportingPeriod2.Should().Be(test.ExpectedReportingPeriod);
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_InvalidOperationException___When_adjusted_reporting_period_cannot_be_converted_to_return_type_TReportingPeriod___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 1,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = -2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitsToAdd = 2,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var ex1 = Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<CalendarUnitOfTime>>(ReportingPeriodComponent.Both, test.UnitsToAdd, test.GranularityOfUnitsToAdd));
+                var ex2 = Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<GenericMonth>>(ReportingPeriodComponent.Both, test.UnitsToAdd, test.GranularityOfUnitsToAdd));
+                ex1.Should().BeOfType<InvalidOperationException>();
+                ex2.Should().BeOfType<InvalidOperationException>();
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_InvalidOperationException___When_adjusting_Start_and_adjusting_reporting_period_causes_Start_to_be_Greater_than_End___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Eleven)),
+                    UnitsToAdd = 8,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Eleven)),
+                    UnitsToAdd = 3,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Three)),
+                    UnitsToAdd = 3,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var ex = Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalMonth>>(ReportingPeriodComponent.Start, test.UnitsToAdd, test.GranularityOfUnitsToAdd));
+                ex.Should().BeOfType<InvalidOperationException>();
+            }
+        }
+
+        [Fact]
+        public static void CloneWithAdjustment___Should_throw_InvalidOperationException___When_adjusting_End_and_adjusting_reporting_period_causes_Start_to_be_Greater_than_End___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Eleven)),
+                    UnitsToAdd = -8,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Eleven)),
+                    UnitsToAdd = -3,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Three)),
+                    UnitsToAdd = -3,
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year
+                }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var ex = Record.Exception(() => test.ReportingPeriod.CloneWithAdjustment<ReportingPeriod<FiscalMonth>>(ReportingPeriodComponent.End, test.UnitsToAdd, test.GranularityOfUnitsToAdd));
+                ex.Should().BeOfType<InvalidOperationException>();
+            }
+        }
+
+        [Fact]
         public static void Contains___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange

@@ -34,6 +34,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the reporting period component.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
+        /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod{T}.Start"/> to be greater than <see cref="ReportingPeriod{T}.End"/></exception>
+        /// <exception cref="InvalidOperationException">The adjusted reporting period cannot be converted into a <typeparamref name="TReportingPeriod"/></exception>
         public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(this IReportingPeriod<UnitOfTime> reportingPeriod, ReportingPeriodComponent component, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
@@ -59,8 +61,15 @@ namespace OBeautifulCode.AccountingTime
                 end = end.Plus(unitsToAdd, granularityOfUnitsToAdd);
             }
 
-            var result = new ReportingPeriod<UnitOfTime>(start, end).Clone<TReportingPeriod>();
-            return result;
+            try
+            {
+                var result = new ReportingPeriod<UnitOfTime>(start, end).Clone<TReportingPeriod>();
+                return result;
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                throw new InvalidOperationException("The adjustment has caused the Start of the reporting period to be greater than the End of the reporting period.", ex);
+            }
         }
 
         /// <summary>
