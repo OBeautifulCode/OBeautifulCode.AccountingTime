@@ -266,6 +266,281 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void LessThanOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_true___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_both_sides_of_the_operator_are_not_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest1 < systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_both_sides_of_operator_are_not_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest1 <= systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_true___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_both_sides_of_the_operator_are_not_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest1 > systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            FiscalUnbounded systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            FiscalUnbounded systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_both_sides_of_the_operator_are_not_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalUnbounded>();
+            var systemUnderTest2 = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest1 >= systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_1___When_calling_typed_overload_and_other_object_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest.CompareTo(null);
+
+            // Assert
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_typed_overload_and_other_object_is_not_null()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<FiscalUnbounded>();
+            var systemUnderTest1b = A.Dummy<FiscalUnbounded>();
+
+            // Act
+            var result = systemUnderTest1a.CompareTo(systemUnderTest1b);
+
+            // Assert
+            result.Should().Be(0);
+        }
+
+        [Fact]
         public static void CompareTo___Should_throw_ArgumentException___When_calling_non_typed_overload_and_other_object_is_not_of_same_type_as_test_object()
         {
             // Arrange
