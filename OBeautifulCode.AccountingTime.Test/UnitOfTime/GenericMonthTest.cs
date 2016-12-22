@@ -924,6 +924,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void CompareTo___Should_return_0___When_calling_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<GenericMonth>();
+            var systemUnderTest2 = new GenericMonth(systemUnderTest1.Year, systemUnderTest1.MonthNumber);
+
+            // Act
+            var result = systemUnderTest1.CompareTo(systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
+        }
+
+        [Fact]
         public static void CompareTo___Should_throw_ArgumentException___When_calling_non_typed_overload_and_other_object_is_not_of_same_type_as_test_object()
         {
             // Arrange
@@ -975,7 +989,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void CompareTo___Should_return_1___When_calling_none_typed_overload_and_test_object_is_greater_than_other_object()
+        public static void CompareTo___Should_return_1___When_calling_non_typed_overload_and_test_object_is_greater_than_other_object()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericMonth>();
@@ -991,6 +1005,20 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             result1.Should().Be(1);
             result2.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_1___When_calling_non_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<GenericMonth>();
+            var systemUnderTest2 = new GenericMonth(systemUnderTest1.Year, systemUnderTest1.MonthNumber);
+
+            // Act
+            var result = systemUnderTest1.CompareTo((object)systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
         }
 
         [Fact]
