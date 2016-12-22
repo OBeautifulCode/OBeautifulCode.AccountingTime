@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoFakeItEasy;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -821,6 +823,221 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             ex.Should().BeOfType<InvalidOperationException>();
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange
+            var unitsToAdd = A.Dummy<int>();
+            var granularityOfUnitsToAdd = A.Dummy<UnitOfTimeGranularity>().ThatIsNot(UnitOfTimeGranularity.Unbounded);
+
+            // Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.Plus(null, unitsToAdd, granularityOfUnitsToAdd));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_unitOfTime_is_unbounded()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>().ThatIs(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+            var unitsToAdd = A.Dummy<int>();
+            var granularityOfUnitsToAdd = A.Dummy<UnitOfTimeGranularity>().ThatIsNot(UnitOfTimeGranularity.Unbounded);
+
+            // Act
+            var ex = Record.Exception(() => unitOfTime.Plus(unitsToAdd, granularityOfUnitsToAdd));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Invalid()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>().ThatIs(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var unitsToAdd = A.Dummy<int>();
+
+            // Act
+            var ex = Record.Exception(() => unitOfTime.Plus(unitsToAdd, UnitOfTimeGranularity.Invalid));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Unbounded()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>().ThatIs(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
+            var unitsToAdd = A.Dummy<int>();
+
+            // Act
+            var ex = Record.Exception(() => unitOfTime.Plus(unitsToAdd, UnitOfTimeGranularity.Unbounded));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_more_granular_than_parameter_unitOfTime()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new { UnitOfTime = (UnitOfTime)A.Dummy<CalendarDay>(), GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<CalendarMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<CalendarQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<CalendarYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<FiscalMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<FiscalQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<FiscalYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<GenericMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<GenericQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { UnitOfTime = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } }
+            };
+
+            // Act
+            var exceptions = new List<Exception>();
+            foreach (var test in tests)
+            {
+                foreach (var granularityOfUnitsToAdd in test.GranularityOfUnitsToAdd)
+                {
+                    exceptions.Add(Record.Exception(() => test.UnitOfTime.Plus(A.Dummy<int>(), granularityOfUnitsToAdd)));
+                }
+            }
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<ArgumentException>());
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_return_same_result_as_Plus_method_without_parameter_granularityOfUnitsToAdd___When_parameter_granularityOfUnitsToAdd_is_as_granular_as_unitOfTime()
+        {
+            // Arrange
+            int unitsToAdd = A.Dummy<PositiveInteger>().ThatIs(_ => _ < 100);
+            int unitsToSubtract = A.Dummy<NegativeInteger>().ThatIs(_ => _ > -100);
+            var unitsOfTime = new List<UnitOfTime>
+            {
+                A.Dummy<CalendarDay>(),
+                A.Dummy<CalendarMonth>(),
+                A.Dummy<CalendarQuarter>(),
+                A.Dummy<CalendarYear>(),
+                A.Dummy<FiscalMonth>(),
+                A.Dummy<FiscalQuarter>(),
+                A.Dummy<FiscalYear>(),
+                A.Dummy<GenericMonth>(),
+                A.Dummy<GenericQuarter>(),
+                A.Dummy<GenericYear>(),
+            };
+
+            // Act
+            var plusMethodsReturnSameResultsWhenUnitsToAddIsPositive = unitsOfTime.Select(_ => _.Plus(unitsToAdd) == _.Plus(unitsToAdd, _.UnitOfTimeGranularity)).ToList();
+            var plusMethodsReturnSameResultsWhenUnitsToAddIsNegative = unitsOfTime.Select(_ => _.Plus(unitsToSubtract) == _.Plus(unitsToSubtract, _.UnitOfTimeGranularity)).ToList();
+
+            // Assert
+            plusMethodsReturnSameResultsWhenUnitsToAddIsPositive.ForEach(_ => _.Should().BeTrue());
+            plusMethodsReturnSameResultsWhenUnitsToAddIsNegative.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_return_same_unitOfTime___When_unitsToAdd_is_0()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new { Expected = (UnitOfTime)A.Dummy<CalendarMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<CalendarQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<CalendarYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<FiscalMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<FiscalQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<FiscalYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<GenericMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<GenericQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
+                new { Expected = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } }
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                foreach (var granularityOfUnitsToAdd in test.GranularityOfUnitsToAdd)
+                {
+                    var actual = test.Expected.Plus(0, granularityOfUnitsToAdd);
+                    actual.Should().Be(test.Expected);
+                }
+            }
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_adjust_unitOfTime___When_granularityOfUnitsToAdd_is_less_granular_than_granularity_of_unitOfTime()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.February), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 1, Expected = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.May) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.December), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 2, Expected = (UnitOfTime)new CalendarMonth(2017, MonthOfYear.June) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.January), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -1, Expected = (UnitOfTime)new CalendarMonth(2015, MonthOfYear.October) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.December), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -2, Expected = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.June) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.September), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new CalendarMonth(2017, MonthOfYear.September) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.September), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new CalendarMonth(2018, MonthOfYear.September) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.September), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new CalendarMonth(2015, MonthOfYear.September) },
+                new { UnitOfTime = (UnitOfTime)new CalendarMonth(2016, MonthOfYear.September), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new CalendarMonth(2014, MonthOfYear.September) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 1, Expected = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Eight) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 2, Expected = (UnitOfTime)new FiscalMonth(2017, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -1, Expected = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Two) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -2, Expected = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new FiscalMonth(2017, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new FiscalMonth(2018, MonthNumber.Eleven) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new FiscalMonth(2015, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new FiscalMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new FiscalMonth(2014, MonthNumber.Eleven) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 1, Expected = (UnitOfTime)new GenericMonth(2016, MonthNumber.Eight) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = 2, Expected = (UnitOfTime)new GenericMonth(2017, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -1, Expected = (UnitOfTime)new GenericMonth(2016, MonthNumber.Two) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter, UnitsToAdd = -2, Expected = (UnitOfTime)new GenericMonth(2016, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new GenericMonth(2017, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new GenericMonth(2018, MonthNumber.Eleven) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Five), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new GenericMonth(2015, MonthNumber.Five) },
+                new { UnitOfTime = (UnitOfTime)new GenericMonth(2016, MonthNumber.Eleven), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new GenericMonth(2014, MonthNumber.Eleven) },
+                new { UnitOfTime = (UnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2) },
+                new { UnitOfTime = (UnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new CalendarQuarter(2014, QuarterNumber.Q1) },
+                new { UnitOfTime = (UnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2) },
+                new { UnitOfTime = (UnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new FiscalQuarter(2014, QuarterNumber.Q1) },
+                new { UnitOfTime = (UnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 1, Expected = (UnitOfTime)new GenericQuarter(2017, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = 2, Expected = (UnitOfTime)new GenericQuarter(2018, QuarterNumber.Q3) },
+                new { UnitOfTime = (UnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -1, Expected = (UnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2) },
+                new { UnitOfTime = (UnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1), GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year, UnitsToAdd = -2, Expected = (UnitOfTime)new GenericQuarter(2014, QuarterNumber.Q1) },
+            };
+
+            // Act, Assert
+            foreach (var test in tests)
+            {
+                var actual = test.UnitOfTime.Plus(test.UnitsToAdd, test.GranularityOfUnitsToAdd);
+                actual.Should().Be(test.Expected);
+            }
+        }
+
+        [Fact]
+        public static void Plus_with_granularityOfUnitsToAdd___Should_throw_NotSupportedException___When_granularity_of_unitOfTime_is_Day_and_unitOfTimeGranularity_is_less_granular_than_Day()
+        {
+            // Arrange
+            var granularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year };
+
+            // Act
+            var exceptions = new List<Exception>();
+            foreach (var granularityToAdd in granularityOfUnitsToAdd)
+            {
+                exceptions.Add(Record.Exception(() => A.Dummy<CalendarDay>().Plus(A.Dummy<int>(), granularityToAdd)));
+            }
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]

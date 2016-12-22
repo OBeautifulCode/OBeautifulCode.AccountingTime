@@ -262,7 +262,7 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
                 {
-                    throw new NotSupportedException("Adding to a day is not supported");
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
                 }
 
                 throw new InvalidOperationException("should not get here");
@@ -278,7 +278,7 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
                 {
-                    throw new InvalidOperationException("should not get here");
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
                 }
 
                 throw new InvalidOperationException("should not get here");
@@ -288,7 +288,7 @@ namespace OBeautifulCode.AccountingTime
             {
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
                 {
-                    throw new InvalidOperationException("should not get here");
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
                 }
 
                 throw new InvalidOperationException("should not get here");
