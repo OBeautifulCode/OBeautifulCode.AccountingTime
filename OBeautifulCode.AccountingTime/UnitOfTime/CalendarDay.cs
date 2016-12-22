@@ -237,10 +237,7 @@ namespace OBeautifulCode.AccountingTime
             return this.CompareTo(other);
         }
 
-        /// <summary>
-        /// Returns the hash code for this trigger.
-        /// </summary>
-        /// <returns>The hash code for this trigger.</returns>
+        /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
                 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -248,7 +245,7 @@ namespace OBeautifulCode.AccountingTime
                 .Hash(this.MonthOfYear)
                 .Hash(this.DayOfMonth)
                 .Value;
-        // ReSharper restore NonReadonlyMemberInGetHashCode
+                // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <summary>
         /// Converts this calendar day to an object of type <see cref="DateTime"/>.

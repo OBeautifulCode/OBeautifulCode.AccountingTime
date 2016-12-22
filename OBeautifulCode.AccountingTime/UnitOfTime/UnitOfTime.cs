@@ -29,6 +29,15 @@ namespace OBeautifulCode.AccountingTime
         public abstract UnitOfTimeGranularity UnitOfTimeGranularity { get; }
 
         /// <summary>
+        /// <summary>
+        /// Returns the hash code for this unit-of-time.
+        /// </summary>
+        /// <returns>
+        /// The hash code for this unit-of-time.
+        /// </returns>
+        public abstract override int GetHashCode();
+
+        /// <summary>
         /// Compares the current instance with another object and returns an integer
         /// that indicates whether the current instance precedes,
         /// follows, or occurs in the same position in the sort order as the other object

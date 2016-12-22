@@ -92,10 +92,7 @@ namespace OBeautifulCode.AccountingTime
             return 0;
         }
 
-        /// <summary>
-        /// Returns the hash code for this trigger.
-        /// </summary>
-        /// <returns>The hash code for this trigger.</returns>
+        /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
                 .Value;
