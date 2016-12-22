@@ -539,10 +539,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -558,10 +558,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -639,10 +639,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -658,10 +658,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -739,10 +739,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -758,10 +758,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -839,10 +839,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -858,10 +858,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -890,10 +890,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -909,10 +909,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -974,10 +974,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -993,10 +993,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<FiscalMonth>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, FiscalMonthComponent.Month);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Month);
 
             var systemUnderTest2a = A.Dummy<FiscalMonth>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, FiscalMonthComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfFiscalMonthByAmount(-1, FiscalMonthComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -1145,7 +1145,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this fiscal month component is not supported: " + componentToTweak);
         }
 
-        private static FiscalMonth Plus(this FiscalMonth fiscalMonth, int amount, FiscalMonthComponent componentToTweak)
+        private static FiscalMonth TweakComponentOfFiscalMonthByAmount(this FiscalMonth fiscalMonth, int amount, FiscalMonthComponent componentToTweak)
         {
             if (componentToTweak == FiscalMonthComponent.Month)
             {

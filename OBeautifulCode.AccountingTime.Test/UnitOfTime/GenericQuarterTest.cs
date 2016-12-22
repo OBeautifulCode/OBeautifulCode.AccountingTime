@@ -512,10 +512,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -531,10 +531,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -612,10 +612,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -631,10 +631,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -712,10 +712,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -731,10 +731,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -812,10 +812,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -831,10 +831,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -863,10 +863,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -882,10 +882,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -947,10 +947,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -966,10 +966,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, GenericQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<GenericQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, GenericQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfGenericQuarterByAmount(-1, GenericQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -1088,7 +1088,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this generic quarter component is not supported: " + componentToTweak);
         }
 
-        private static GenericQuarter Plus(this GenericQuarter genericQuarter, int amount, GenericQuarterComponent componentToTweak)
+        private static GenericQuarter TweakComponentOfGenericQuarterByAmount(this GenericQuarter genericQuarter, int amount, GenericQuarterComponent componentToTweak)
         {
             if (componentToTweak == GenericQuarterComponent.Quarter)
             {

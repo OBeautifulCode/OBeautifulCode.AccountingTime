@@ -652,13 +652,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -676,13 +676,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -762,13 +762,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -786,13 +786,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -872,13 +872,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -896,13 +896,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -982,13 +982,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -1006,13 +1006,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -1043,13 +1043,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -1067,13 +1067,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -1137,13 +1137,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -1161,13 +1161,13 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarDay>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarDayComponent.Day);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Day);
 
             var systemUnderTest2a = A.Dummy<CalendarDay>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarDayComponent.Month);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Month);
 
             var systemUnderTest3a = A.Dummy<CalendarDay>();
-            var systemUnderTest3b = systemUnderTest3a.Plus(-1, CalendarDayComponent.Year);
+            var systemUnderTest3b = systemUnderTest3a.TweakComponentOfCalendarDayByAmount(-1, CalendarDayComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -1351,7 +1351,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         // ReSharper restore ObjectCreationAsStatement
 
-        private static CalendarDay Plus(this CalendarDay calendarDay, int amount, CalendarDayComponent componentToTweak)
+        private static CalendarDay TweakComponentOfCalendarDayByAmount(this CalendarDay calendarDay, int amount, CalendarDayComponent componentToTweak)
         {
             if (componentToTweak == CalendarDayComponent.Day)
             {
