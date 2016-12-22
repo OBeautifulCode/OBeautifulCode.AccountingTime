@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
-    public abstract class UnitOfTime : IComparable
+    public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>
     {
         /// <summary>
         /// Gets the kind of the unit-of-time.
@@ -29,6 +29,44 @@ namespace OBeautifulCode.AccountingTime
         public abstract UnitOfTimeGranularity UnitOfTimeGranularity { get; }
 
         /// <summary>
+        /// Determines whether two objects of type <see cref="UnitOfTime" /> are equal.
+        /// </summary>
+        /// <param name="left">The first unit-of-time to compare.</param>
+        /// <param name="right">The second unit-of-time to compare.</param>
+        /// <returns>true if the two units-of-time are equal; false otherwise.</returns>
+        public static bool operator ==(UnitOfTime left, UnitOfTime right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            var result = left.Equals((object)right);
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="UnitOfTime" /> are not equal.
+        /// </summary>
+        /// <param name="left">The first unit-of-time to compare.</param>
+        /// <param name="right">The second unit-of-time to compare.</param>
+        /// <returns>true if the two units-of-time are not equal; false otherwise.</returns>
+        public static bool operator !=(UnitOfTime left, UnitOfTime right) => !(left == right);
+
+        /// <summary>
+        /// Determines whether the specified <see cref="UnitOfTime"/> is equal to this one.
+        /// </summary>
+        /// <param name="other">The unit-of-time to compare with this one.</param>
+        /// <returns>
+        /// true if this unit-of-time is of the same concrete type and equal to the specified unit-of-time; false otherwise.
+        /// </returns>
+        public bool Equals(UnitOfTime other) => this == other;
+
         /// <summary>
         /// Determines whether the specified object is equal to this one, as per <see cref="Equals(UnitOfTime)"/>.
         /// </summary>

@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoFakeItEasy;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -20,6 +22,248 @@ namespace OBeautifulCode.AccountingTime.Test
     public static class UnitOfTimeTest
     {
         // ReSharper disable InconsistentNaming
+        [Fact]
+        public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result = systemUnderTest1 == systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 == systemUnderTest2;
+            var result2 = systemUnderTest2 == systemUnderTest1;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_true___When_same_object_is_on_both_sides_of_operator()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable EqualExpressionComparison
+#pragma warning disable CS1718 // Comparison made to same variable
+            var result = systemUnderTest == systemUnderTest;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            // Assert
+            result.Should().BeTrue();
+            // ReSharper restore EqualExpressionComparison
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a == systemUnderTest1b;
+            var result2 = systemUnderTest2a == systemUnderTest2b;
+            var result3 = systemUnderTest3a == systemUnderTest3b;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1 == systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result = systemUnderTest1 != systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 != systemUnderTest2;
+            var result2 = systemUnderTest2 != systemUnderTest1;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_false___When_same_object_is_on_both_sides_of_operator()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable EqualExpressionComparison
+#pragma warning disable CS1718 // Comparison made to same variable
+            var result = systemUnderTest != systemUnderTest;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            // Assert
+            result.Should().BeFalse();
+            // ReSharper restore EqualExpressionComparison
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a != systemUnderTest1b;
+            var result2 = systemUnderTest2a != systemUnderTest2b;
+            var result3 = systemUnderTest3a != systemUnderTest3b;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            result3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1 != systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_false___When_calling_typed_overload_and_parameter_other_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            var result = systemUnderTest.Equals(null);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_true___When_calling_typed_overload_and_parameter_other_is_same_object()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            var result = systemUnderTest.Equals(systemUnderTest);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a.Equals(systemUnderTest1b);
+            var result2 = systemUnderTest2a.Equals(systemUnderTest2b);
+            var result3 = systemUnderTest3a.Equals(systemUnderTest3b);
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1.Equals(systemUnderTest2);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
