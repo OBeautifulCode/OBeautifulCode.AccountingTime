@@ -90,6 +90,14 @@ namespace OBeautifulCode.AccountingTime
         /// A deep clone of this unit-of-time.
         /// </returns>
         public abstract UnitOfTime Clone();
+
+        /// <summary>
+        /// Gets a friendly representation of this unit-of-time.
+        /// </summary>
+        /// <returns>
+        /// A friendly representation of this unit-of-time.
+        /// </returns>
+        public abstract override string ToString();
     }
 }
 

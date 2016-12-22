@@ -201,22 +201,17 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode
 
-        /// <summary>
-        /// Gets a friendly representation of this quarter.
-        /// </summary>
-        /// <returns>
-        /// quarter in xQy format, where x is the quarter number and y is the year (e.g. 3Q2017)
-        /// </returns>
-        public override string ToString()
-        {
-            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
-        }
-
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
             var clone = new FiscalQuarter(this.Year, this.QuarterNumber);
             return clone;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
         }
     }
 }

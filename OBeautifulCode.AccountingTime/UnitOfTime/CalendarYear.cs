@@ -187,22 +187,17 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode
 
-        /// <summary>
-        /// Gets a friendly representation of this year.
-        /// </summary>
-        /// <returns>
-        /// A friendly representation of this year (e.g. CY2017)
-        /// </returns>
-        public override string ToString()
-        {
-            return Invariant($"CY{this.Year:D4}");
-        }
-
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
             var clone = new CalendarYear(this.Year);
             return clone;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Invariant($"CY{this.Year:D4}");
         }
     }
 }

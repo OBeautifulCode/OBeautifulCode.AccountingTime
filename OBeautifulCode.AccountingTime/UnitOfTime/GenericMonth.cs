@@ -201,12 +201,14 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode
 
-        /// <summary>
-        /// Gets a friendly representation of this month.
-        /// </summary>
-        /// <returns>
-        /// A friendly representation of this month (e.g. 2nd month of 2017)
-        /// </returns>
+        /// <inheritdoc />
+        public override UnitOfTime Clone()
+        {
+            var clone = new GenericMonth(this.Year, this.MonthNumber);
+            return clone;
+        }
+
+        /// <inheritdoc />
         public override string ToString()
         {
             string monthNumberSuffix;
@@ -227,13 +229,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
-        }
-
-        /// <inheritdoc />
-        public override UnitOfTime Clone()
-        {
-            var clone = new GenericMonth(this.Year, this.MonthNumber);
-            return clone;
         }
     }
 }

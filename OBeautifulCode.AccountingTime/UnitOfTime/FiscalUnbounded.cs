@@ -80,23 +80,17 @@ namespace OBeautifulCode.AccountingTime
             HashCodeHelper.Initialize()
                 .Value;
 
-        /// <summary>
-        /// Gets a friendly representation of this unbounded time.
-        /// </summary>
-        /// <returns>
-        /// A friendly representation of this unbounded time (e.g. CY2017)
-        /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "This exception will never get thrown, it's there purely for safety.")]
-        public override string ToString()
-        {
-            return Invariant($"fiscal unbounded");
-        }
-
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
             var clone = new FiscalUnbounded();
             return clone;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Invariant($"fiscal unbounded");
         }
     }
 }

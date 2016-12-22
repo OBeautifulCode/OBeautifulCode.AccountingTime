@@ -206,22 +206,17 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode
 
-        /// <summary>
-        /// Gets a friendly representation of this month.
-        /// </summary>
-        /// <returns>
-        /// month in yyyy-MM format, where yyyy is the year and MM is the month number (e.g. 2017-01)
-        /// </returns>
-        public override string ToString()
-        {
-            return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
-        }
-
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
             var clone = new CalendarMonth(this.Year, this.MonthOfYear);
             return clone;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
         }
     }
 }

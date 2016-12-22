@@ -243,29 +243,24 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider = null)
+        public override UnitOfTime Clone()
         {
-            var dateTime = this.ToDateTime();
-            var result = dateTime.ToString(format, formatProvider);
-            return result;
+            var clone = new CalendarDay(this.Year, this.MonthOfYear, this.DayOfMonth);
+            return clone;
         }
 
-        /// <summary>
-        /// Gets a friendly representation of this day.
-        /// </summary>
-        /// <returns>
-        /// day in yyyy-MM-dd format, where yyyy is the year and MM is the month number, and dd is the day of the month (e.g. 2017-10-15)
-        /// </returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return Invariant($"{this.Year:D4}-{(int)this.MonthNumber:D2}-{(int)this.DayOfMonth:D2}");
         }
 
         /// <inheritdoc />
-        public override UnitOfTime Clone()
+        public string ToString(string format, IFormatProvider formatProvider = null)
         {
-            var clone = new CalendarDay(this.Year, this.MonthOfYear, this.DayOfMonth);
-            return clone;
+            var dateTime = this.ToDateTime();
+            var result = dateTime.ToString(format, formatProvider);
+            return result;
         }
     }
 }
