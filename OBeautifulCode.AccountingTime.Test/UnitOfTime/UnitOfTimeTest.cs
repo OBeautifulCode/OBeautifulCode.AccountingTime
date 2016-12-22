@@ -306,7 +306,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var result = systemUnderTest1.Equals(systemUnderTest2);
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().BeFalse();
         }
 
         [Fact]
