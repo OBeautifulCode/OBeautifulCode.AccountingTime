@@ -173,7 +173,7 @@ namespace OBeautifulCode.AccountingTime
             var other = obj as CalendarYear;
             if (other == null)
             {
-                throw new ArgumentException("object is not a year");
+                throw new ArgumentException("object is not a calendar year");
             }
 
             return this.CompareTo(other);

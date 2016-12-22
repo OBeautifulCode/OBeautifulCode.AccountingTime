@@ -938,16 +938,16 @@ namespace OBeautifulCode.AccountingTime.Test
             granularity.Should().Be(UnitOfTimeGranularity.Year);
         }
 
+        internal static FiscalYear TweakYearByAmount(this FiscalYear fiscalYear, int amount)
+        {
+            var result = new FiscalYear(fiscalYear.Year + amount);
+            return result;
+        }
+
         private static FiscalYear TweakYear(this FiscalYear fiscalYear)
         {
             var tweakedYear = A.Dummy<PositiveInteger>().ThatIs(y => y != fiscalYear.Year && y <= 9999);
             var result = new FiscalYear(tweakedYear);
-            return result;
-        }
-
-        private static FiscalYear TweakYearByAmount(this FiscalYear fiscalYear, int amount)
-        {
-            var result = new FiscalYear(fiscalYear.Year + amount);
             return result;
         }
 
