@@ -143,13 +143,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public bool Equals(FiscalYear other) => this == other;
 
-        /// <summary>
-        /// Determines whether the specified object is equal to this one, as per <see cref="Equals(FiscalYear)"/>.
-        /// </summary>
-        /// <param name="obj">The value to compare this one with.</param>
-        /// <returns>
-        /// true if the other object is a year equal to this one; false otherwise, consistent with <see cref="Equals(FiscalYear)"/>
-        /// </returns>
+        /// <inheritdoc />
         public override bool Equals(object obj) => this == (obj as FiscalYear);
 
         /// <summary>

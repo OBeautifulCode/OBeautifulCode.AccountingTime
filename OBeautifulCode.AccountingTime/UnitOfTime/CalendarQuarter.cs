@@ -154,13 +154,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public bool Equals(CalendarQuarter other) => this == other;
 
-        /// <summary>
-        /// Determines whether the specified object is equal to this one, as per <see cref="Equals(CalendarQuarter)"/>.
-        /// </summary>
-        /// <param name="obj">The value to compare this one with.</param>
-        /// <returns>
-        /// true if the other object is a quarter equal to this one; false otherwise, consistent with <see cref="Equals(CalendarQuarter)"/>
-        /// </returns>
+        /// <inheritdoc />
         public override bool Equals(object obj) => this == (obj as CalendarQuarter);
 
         /// <summary>

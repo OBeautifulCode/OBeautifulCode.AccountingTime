@@ -154,13 +154,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public bool Equals(GenericMonth other) => this == other;
 
-        /// <summary>
-        /// Determines whether the specified object is equal to this one, as per <see cref="Equals(GenericMonth)"/>.
-        /// </summary>
-        /// <param name="obj">The value to compare this one with.</param>
-        /// <returns>
-        /// true if the other object is a month equal to this one; false otherwise, consistent with <see cref="Equals(GenericMonth)"/>
-        /// </returns>
+        /// <inheritdoc />
         public override bool Equals(object obj) => this == (obj as GenericMonth);
 
         /// <summary>

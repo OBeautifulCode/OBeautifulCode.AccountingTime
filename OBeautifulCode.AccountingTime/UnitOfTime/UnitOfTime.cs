@@ -30,6 +30,15 @@ namespace OBeautifulCode.AccountingTime
 
         /// <summary>
         /// <summary>
+        /// Determines whether the specified object is equal to this one, as per <see cref="Equals(UnitOfTime)"/>.
+        /// </summary>
+        /// <param name="obj">The value to compare this one with.</param>
+        /// <returns>
+        /// true if the other object is a unit-of-time of the same concrete type and equal to this one; false otherwise, consistent with <see cref="Equals(UnitOfTime)"/>
+        /// </returns>
+        public abstract override bool Equals(object obj);
+
+        /// <summary>
         /// Returns the hash code for this unit-of-time.
         /// </summary>
         /// <returns>
