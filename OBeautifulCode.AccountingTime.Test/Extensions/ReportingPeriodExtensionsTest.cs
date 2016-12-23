@@ -485,7 +485,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        public static void Contains_with_unitOfTime___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>();
+
+            // Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.Contains(null, unitOfTime));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
@@ -501,20 +514,21 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        public static void Contains_with_unitOfTime___Should_throw_ArgumentException___When_parameter_unitOfTime_has_a_different_UnitOfTimeKind_than_reportingPeriod()
         {
             // Arrange
-            var unitOfTime = A.Dummy<UnitOfTime>();
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            var unitOfTime = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeKind != reportingPeriod.GetUnitOfTimeKind());
 
             // Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.Contains(null, unitOfTime));
+            var ex = Record.Exception(() => reportingPeriod.Contains(unitOfTime));
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
+            ex.Should().BeOfType<ArgumentException>();
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
@@ -557,7 +571,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarDay()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_CalendarDay()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
@@ -588,7 +602,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
@@ -624,7 +638,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarMonth()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_CalendarMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.February));
@@ -652,7 +666,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
@@ -689,7 +703,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalMonth()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_FiscalMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Two));
@@ -717,7 +731,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
@@ -753,7 +767,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericMonth()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_GenericMonth()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Two));
@@ -781,7 +795,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
@@ -818,7 +832,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarQuarter()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_CalendarQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
@@ -855,7 +869,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
@@ -892,7 +906,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalQuarter()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_FiscalQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
@@ -929,7 +943,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
@@ -966,7 +980,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericQuarter()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_GenericQuarter()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
@@ -1003,7 +1017,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
@@ -1031,7 +1045,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_CalendarYear()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_CalendarYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
@@ -1059,7 +1073,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
@@ -1086,7 +1100,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_FiscalYear()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_FiscalYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
@@ -1114,7 +1128,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_false___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
@@ -1142,7 +1156,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Contains___Should_return_true___When_parameter_unitOfTime_is_in_reportingPeriod_and_both_represent_GenericYear()
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_reportingPeriod_and_both_represent_GenericYear()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
@@ -1167,6 +1181,1378 @@ namespace OBeautifulCode.AccountingTime.Test
             contains1c.Should().BeTrue();
 
             contains2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_CalendarUnbounded()
+        {
+            // Arrange
+            var reportingPeriod = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
+            var unitOfTime = new CalendarUnbounded();
+
+            // Act
+            var result = reportingPeriod.Contains(unitOfTime);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_FiscalUnbounded()
+        {
+            // Arrange
+            var reportingPeriod = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
+            var unitOfTime = new FiscalUnbounded();
+
+            // Act
+            var result = reportingPeriod.Contains(unitOfTime);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_not_contained_within_reportingPeriod_and_both_represent_GenericUnbounded()
+        {
+            // Arrange
+            var reportingPeriod = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
+            var unitOfTime = new GenericUnbounded();
+
+            // Act
+            var result = reportingPeriod.Contains(unitOfTime);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_CalendarDay_reportingPeriod_and_unitOfTime_is_not_a_CalendarDay()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.Two),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_CalendarDay_reportingPeriod_and_unitOfTime_is_not_a_CalendarDay()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.Two),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_CalendarMonth_reportingPeriod_and_unitOfTime_is_not_a_CalendarMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.February, DayOfMonth.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.March, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.March, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.May)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.April),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.April),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.November)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.December),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_CalendarMonth_reportingPeriod_and_unitOfTime_is_not_a_CalendarMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.March)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.June)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2016, MonthOfYear.May)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2016, MonthOfYear.August)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.August)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.August)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2016, MonthOfYear.August)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.May),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.May),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.May),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.November)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.February),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2017, MonthOfYear.November)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.January),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarMonth(2016, MonthOfYear.March),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_CalendarQuarter_reportingPeriod_and_unitOfTime_is_not_a_CalendarQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.July, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q3),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q3),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.August, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.July)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.June)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2019)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_CalendarQuarter_reportingPeriod_and_unitOfTime_is_not_a_CalendarQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q3),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q3),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.August)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q1),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2018, QuarterNumber.Q4)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarQuarter(2016, QuarterNumber.Q1),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
         }
 
         [Fact]
