@@ -11,6 +11,8 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoFakeItEasy;
+
     using FakeItEasy;
 
     using FluentAssertions;
@@ -20,6 +22,778 @@ namespace OBeautifulCode.AccountingTime.Test
     public static class UnitOfTimeTest
     {
         // ReSharper disable InconsistentNaming
+        [Fact]
+        public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result = systemUnderTest1 == systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 == systemUnderTest2;
+            var result2 = systemUnderTest2 == systemUnderTest1;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_true___When_same_object_is_on_both_sides_of_operator()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable EqualExpressionComparison
+#pragma warning disable CS1718 // Comparison made to same variable
+            var result = systemUnderTest == systemUnderTest;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            // Assert
+            result.Should().BeTrue();
+            // ReSharper restore EqualExpressionComparison
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a == systemUnderTest1b;
+            var result2 = systemUnderTest2a == systemUnderTest2b;
+            var result3 = systemUnderTest3a == systemUnderTest3b;
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1 == systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void EqualsOperator___Should_return_false___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var result = systemUnderTest1 == systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ConditionIsAlwaysTrueOrFalse
+            var result = systemUnderTest1 != systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+            // ReSharper restore ConditionIsAlwaysTrueOrFalse
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result1 = systemUnderTest1 != systemUnderTest2;
+            var result2 = systemUnderTest2 != systemUnderTest1;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            // ReSharper restore ExpressionIsAlwaysNull
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_false___When_same_object_is_on_both_sides_of_operator()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable EqualExpressionComparison
+#pragma warning disable CS1718 // Comparison made to same variable
+            var result = systemUnderTest != systemUnderTest;
+#pragma warning restore CS1718 // Comparison made to same variable
+
+            // Assert
+            result.Should().BeFalse();
+            // ReSharper restore EqualExpressionComparison
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a != systemUnderTest1b;
+            var result2 = systemUnderTest2a != systemUnderTest2b;
+            var result3 = systemUnderTest3a != systemUnderTest3b;
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            result3.Should().BeTrue();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1 != systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void NotEqualsOperator___Should_return_true___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var result = systemUnderTest1 != systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_false___When_calling_typed_overload_and_parameter_other_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            var result = systemUnderTest.Equals(null);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_true___When_calling_typed_overload_and_parameter_other_is_same_object()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            var result = systemUnderTest.Equals(systemUnderTest);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+
+            var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
+
+            var systemUnderTest3a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest3b = A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest3a).Year);
+
+            // Act
+            var result1 = systemUnderTest1a.Equals(systemUnderTest1b);
+            var result2 = systemUnderTest2a.Equals(systemUnderTest2b);
+            var result3 = systemUnderTest3a.Equals(systemUnderTest3b);
+
+            // Assert
+            result1.Should().BeFalse();
+            result2.Should().BeFalse();
+            result3.Should().BeFalse();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        public static void Equals___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalMonth>();
+            var systemUnderTest2 = new FiscalMonth(((FiscalMonth)systemUnderTest1).Year, ((FiscalMonth)systemUnderTest1).MonthNumber);
+
+            // Act
+            var result = systemUnderTest1.Equals(systemUnderTest2);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void Equals___Should_return_false___When_calling_typed_overload_and_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var result = systemUnderTest1.Equals(systemUnderTest2);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_throw_ArgumentException___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var ex = Record.Exception(() => systemUnderTest1 < systemUnderTest2);
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_true___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 < systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_left_side_of_operator_is_equal_to_right_side()
+        {
+            // Arrange
+            var systemUnderTest1 = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2 = (UnitOfTime)new FiscalYear(((FiscalYear)systemUnderTest1).Year);
+
+            // Act
+            var result = systemUnderTest1 < systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_true___When_left_side_of_operator_is_less_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)((FiscalYear)systemUnderTest1a).TweakYearByAmount(1);
+
+            // Act
+            var result = systemUnderTest1a < systemUnderTest1b;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOperator___Should_return_false___When_left_side_of_operator_is_greater_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)systemUnderTest1a.TweakYearByAmount(-1);
+
+            // Act
+            var result = systemUnderTest1a < systemUnderTest1b;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_throw_ArgumentException___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var ex = Record.Exception(() => systemUnderTest1 <= systemUnderTest2);
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 <= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_equal_to_right_side()
+        {
+            // Arrange
+            var systemUnderTest1 = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest2 = new FiscalYear(((FiscalYear)systemUnderTest1).Year);
+
+            // Act
+            var result = systemUnderTest1 <= systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_less_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)systemUnderTest1a.TweakYearByAmount(1);
+
+            // Act
+            var result = systemUnderTest1a <= systemUnderTest1b;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void LessThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_greater_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (UnitOfTime)((FiscalYear)systemUnderTest1a).TweakYearByAmount(-1);
+
+            // Act
+            var result = systemUnderTest1a <= systemUnderTest1b;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_throw_ArgumentException___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var ex = Record.Exception(() => systemUnderTest1 > systemUnderTest2);
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_true___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 > systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_left_side_of_operator_is_equal_to_right_side()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalYear>();
+            var systemUnderTest2 = (UnitOfTime)new FiscalYear(systemUnderTest1.Year);
+
+            // Act
+            var result = systemUnderTest1 > systemUnderTest2;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_false___When_left_side_of_operator_is_less_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)((FiscalYear)systemUnderTest1a).TweakYearByAmount(1);
+
+            // Act
+            var result = systemUnderTest1a > systemUnderTest1b;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOperator___Should_return_true___When_left_side_of_operator_is_greater_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = ((FiscalYear)systemUnderTest1a).TweakYearByAmount(-1);
+
+            // Act
+            var result = systemUnderTest1a > systemUnderTest1b;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_throw_ArgumentException___When_both_sides_of_operator_are_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var ex = Record.Exception(() => systemUnderTest1 >= systemUnderTest2);
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_both_sides_of_operator_are_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_null_and_right_side_is_not_null()
+        {
+            // Arrange
+            UnitOfTime systemUnderTest1 = null;
+            var systemUnderTest2 = A.Dummy<UnitOfTime>();
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_not_null_and_right_side_is_null()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            UnitOfTime systemUnderTest2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var result = systemUnderTest1 >= systemUnderTest2;
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_equal_to_right_side()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalYear>();
+            var systemUnderTest2 = (UnitOfTime)new FiscalYear(systemUnderTest1.Year);
+
+            // Act
+            var result = systemUnderTest1 >= systemUnderTest2;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_false___When_left_side_of_operator_is_less_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = (FiscalUnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = ((FiscalYear)systemUnderTest1a).TweakYearByAmount(1);
+
+            // Act
+            var result = systemUnderTest1a >= systemUnderTest1b;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void GreaterThanOrEqualToOperator___Should_return_true___When_left_side_of_operator_is_greater_than_right_side()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)systemUnderTest1a.TweakYearByAmount(-1);
+
+            // Act
+            var result = systemUnderTest1a >= systemUnderTest1b;
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void CompareTo___Should_throw_ArgumentException___When_parameter_other_is_a_different_concrete_subclasses_of_UnitOfTime()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<UnitOfTime>();
+            var systemUnderTest2 = A.Dummy<UnitOfTime>().Whose(_ => _.GetType() != systemUnderTest1.GetType());
+
+            // Act
+            var ex = Record.Exception(() => systemUnderTest1.CompareTo(systemUnderTest2));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_1___When_calling_typed_overload_and_other_object_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<UnitOfTime>();
+
+            // Act
+            var result = systemUnderTest.CompareTo(null);
+
+            // Assert
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_negative_1___When_calling_typed_overload_and_test_object_is_less_than_other_object()
+        {
+            // Arrange
+            var systemUnderTest1a = A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (UnitOfTime)systemUnderTest1a.TweakYearByAmount(1);
+
+            // Act
+            var result = systemUnderTest1a.CompareTo(systemUnderTest1b);
+
+            // Assert
+            result.Should().Be(-1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_1___When_calling_typed_overload_and_test_object_is_greater_than_other_object()
+        {
+            // Arrange
+            var systemUnderTest1a = (UnitOfTime)A.Dummy<FiscalYear>();
+            var systemUnderTest1b = (FiscalUnitOfTime)((FiscalYear)systemUnderTest1a).TweakYearByAmount(-1);
+
+            // Act
+            var result = systemUnderTest1a.CompareTo(systemUnderTest1b);
+
+            // Assert
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<FiscalYear>();
+            var systemUnderTest2 = (UnitOfTime)new FiscalYear(systemUnderTest1.Year);
+
+            // Act
+            var result = systemUnderTest1.CompareTo(systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
+        }
+
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
@@ -32,12 +806,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<CalendarMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<CalendarQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<CalendarYear>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
+                { A.Dummy<CalendarUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarUnbounded)) && (_ != typeof(CalendarUnitOfTime))) },
                 { A.Dummy<FiscalMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<FiscalQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<FiscalYear>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
+                { A.Dummy<FiscalUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalUnbounded)) && (_ != typeof(FiscalUnitOfTime))) },
                 { A.Dummy<GenericQuarter>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
                 { A.Dummy<GenericMonth>(), Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericMonth)) && (_ != typeof(GenericUnitOfTime))) },
-                { A.Dummy<GenericYear>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) }
+                { A.Dummy<GenericYear>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) },
+                { A.Dummy<GenericUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) },
             };
 
             var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
@@ -70,12 +847,15 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<CalendarMonth>(), new[] { typeof(CalendarMonth), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<CalendarQuarter>(), new[] { typeof(CalendarQuarter), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<CalendarYear>(), new[] { typeof(CalendarYear), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<CalendarUnbounded>(), new[] { typeof(CalendarUnbounded), typeof(CalendarUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalMonth>(), new[] { typeof(FiscalMonth), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalQuarter>(), new[] { typeof(FiscalQuarter), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<FiscalYear>(), new[] { typeof(FiscalYear), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<FiscalUnbounded>(), new[] { typeof(FiscalUnbounded), typeof(FiscalUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericQuarter>(), new[] { typeof(GenericQuarter), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericMonth>(), new[] { typeof(GenericMonth), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericYear>(), new[] { typeof(GenericYear), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
+                { A.Dummy<GenericUnbounded>(), new[] { typeof(GenericUnbounded), typeof(GenericUnitOfTime), typeof(UnitOfTime) } }
             };
 
             var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
@@ -86,7 +866,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var type in unitsOfTime[unitOfTime])
                 {
                     var genericMethod = cloneMethod.MakeGenericMethod(type);
-                    var result = genericMethod.Invoke(unitOfTime, null);
+                    var result = (UnitOfTime)genericMethod.Invoke(unitOfTime, null);
                     unitOfTime.Should().Be(result);
                     unitOfTime.Should().NotBeSameAs(result);
                 }

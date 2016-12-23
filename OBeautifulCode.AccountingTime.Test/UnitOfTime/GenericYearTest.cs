@@ -444,7 +444,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a < systemUnderTest1b;
@@ -458,7 +458,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a < systemUnderTest1b;
@@ -534,7 +534,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a <= systemUnderTest1b;
@@ -548,7 +548,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a <= systemUnderTest1b;
@@ -624,7 +624,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a > systemUnderTest1b;
@@ -638,7 +638,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a > systemUnderTest1b;
@@ -714,7 +714,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a >= systemUnderTest1b;
@@ -728,7 +728,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a >= systemUnderTest1b;
@@ -755,7 +755,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -769,13 +769,27 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a.CompareTo(systemUnderTest1b);
 
             // Assert
             result.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<GenericYear>();
+            var systemUnderTest2 = new GenericYear(systemUnderTest1.Year);
+
+            // Act
+            var result = systemUnderTest1.CompareTo(systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
         }
 
         [Fact]
@@ -815,7 +829,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(1);
 
             // Act
             var result = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -825,17 +839,31 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void CompareTo___Should_return_1___When_calling_none_typed_overload_and_test_object_is_greater_than_other_object()
+        public static void CompareTo___Should_return_1___When_calling_non_typed_overload_and_test_object_is_greater_than_other_object()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<GenericYear>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1);
+            var systemUnderTest1b = systemUnderTest1a.TweakYearByAmount(-1);
 
             // Act
             var result = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
 
             // Assert
             result.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_non_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<GenericYear>();
+            var systemUnderTest2 = new GenericYear(systemUnderTest1.Year);
+
+            // Act
+            var result = systemUnderTest1.CompareTo((object)systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
         }
 
         [Fact]
@@ -917,7 +945,7 @@ namespace OBeautifulCode.AccountingTime.Test
             return result;
         }
 
-        private static GenericYear Plus(this GenericYear genericYear, int amount)
+        private static GenericYear TweakYearByAmount(this GenericYear genericYear, int amount)
         {
             var result = new GenericYear(genericYear.Year + amount);
             return result;

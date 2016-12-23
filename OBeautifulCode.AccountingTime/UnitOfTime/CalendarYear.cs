@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar year.
     /// </summary>
     [Serializable]
-    public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
+    public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarYear"/> class.
@@ -143,13 +143,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public bool Equals(CalendarYear other) => this == other;
 
-        /// <summary>
-        /// Determines whether the specified object is equal to this one, as per <see cref="Equals(CalendarYear)"/>.
-        /// </summary>
-        /// <param name="obj">The value to compare this one with.</param>
-        /// <returns>
-        /// true if the other object is a year equal to this one; false otherwise, consistent with <see cref="Equals(CalendarYear)"/>
-        /// </returns>
+        /// <inheritdoc />
         public override bool Equals(object obj) => this == (obj as CalendarYear);
 
         /// <summary>
@@ -173,33 +167,19 @@ namespace OBeautifulCode.AccountingTime
             return this.Year.CompareTo(other.Year);
         }
 
-        /// <summary>
-        /// Compares the current instance with another object and returns an integer
-        /// that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="obj">An object to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
-        /// <exception cref="ArgumentException"><paramref name="obj"/> is not of type <see cref="CalendarYear"/>.</exception>
+        /// <inheritdoc />
         public override int CompareTo(object obj)
         {
             var other = obj as CalendarYear;
             if (other == null)
             {
-                throw new ArgumentException("object is not a year");
+                throw new ArgumentException("object is not a calendar year");
             }
 
             return this.CompareTo(other);
         }
 
-        /// <summary>
-        /// Returns the hash code for this trigger.
-        /// </summary>
-        /// <returns>The hash code for this trigger.</returns>
+        /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
                 // ReSharper disable NonReadonlyMemberInGetHashCode
@@ -207,22 +187,17 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode
 
-        /// <summary>
-        /// Gets a friendly representation of this year.
-        /// </summary>
-        /// <returns>
-        /// A friendly representation of this year (e.g. CY2017)
-        /// </returns>
-        public override string ToString()
-        {
-            return Invariant($"CY{this.Year:D4}");
-        }
-
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
             var clone = new CalendarYear(this.Year);
             return clone;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Invariant($"CY{this.Year:D4}");
         }
     }
 }

@@ -57,7 +57,7 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
-        public override ReportingPeriodInclusive<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
+        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
         {
             if (fiscalYear == null)
             {
@@ -66,7 +66,7 @@ namespace OBeautifulCode.AccountingTime
 
             var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
             var lastDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year).ToCalendarDay();
-            var result = new ReportingPeriodInclusive<CalendarDay>(firstDayInYear, lastDayInYear);
+            var result = new ReportingPeriod<CalendarDay>(firstDayInYear, lastDayInYear);
             return result;
         }
 

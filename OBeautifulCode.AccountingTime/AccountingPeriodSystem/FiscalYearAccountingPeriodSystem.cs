@@ -47,7 +47,7 @@ namespace OBeautifulCode.AccountingTime
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public override ReportingPeriodInclusive<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
+        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
         {
             if (fiscalYear == null)
             {
@@ -57,7 +57,7 @@ namespace OBeautifulCode.AccountingTime
             var lastDayInEndingMonth = DateTime.DaysInMonth(fiscalYear.Year, (int)this.LastMonthInFiscalYear);
             var lastDayInFiscalYear = new DateTime(fiscalYear.Year, (int)this.LastMonthInFiscalYear, lastDayInEndingMonth);
             var firstDayInFiscalYear = lastDayInFiscalYear.AddDays(1).AddYears(-1);
-            var result = new ReportingPeriodInclusive<CalendarDay>(firstDayInFiscalYear.ToCalendarDay(), lastDayInFiscalYear.ToCalendarDay());
+            var result = new ReportingPeriod<CalendarDay>(firstDayInFiscalYear.ToCalendarDay(), lastDayInFiscalYear.ToCalendarDay());
             return result;
         }
     }

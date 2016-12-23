@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeGranularity.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodComponent.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,12 +8,12 @@
 namespace OBeautifulCode.AccountingTime
 {
     /// <summary>
-    /// The granuarlity of a unit-of-time.
+    /// Represents the start, end, or both, of a reporting period.
     /// </summary>
-    public enum UnitOfTimeGranularity
+    public enum ReportingPeriodComponent
     {
         /// <summary>
-        /// Invalid granularity.
+        /// Invalid reporting period component.
         /// </summary>
         /// <remarks>
         /// This is required so that there is a default value for the enum.
@@ -21,29 +21,19 @@ namespace OBeautifulCode.AccountingTime
         Invalid,
 
         /// <summary>
-        /// Day-level granularity.
+        /// The start of a reporting period.
         /// </summary>
-        Day,
+        Start,
 
         /// <summary>
-        /// Month-level granularity.
+        /// The end of a reporting period.
         /// </summary>
-        Month,
+        End,
 
         /// <summary>
-        /// Quarter-level granularity.
+        /// Both the start and the end of a reporting period.
         /// </summary>
-        Quarter,
-
-        /// <summary>
-        /// Year-level granularity.
-        /// </summary>
-        Year,
-
-        /// <summary>
-        /// Unbounded granularity.
-        /// </summary>
-        Unbounded
+        Both
     }
 }
 

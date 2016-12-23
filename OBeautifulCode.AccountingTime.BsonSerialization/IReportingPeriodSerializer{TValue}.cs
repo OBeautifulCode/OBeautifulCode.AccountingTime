@@ -34,8 +34,10 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
             var type = context.Reader.GetCurrentBsonType();
             switch (type)
             {
-                case BsonType.String:
-                    return context.Reader.ReadString().DeserializeFromString<TValue>();
+                case BsonType.Document:
+                    var persistenceModel = ReportingPeriodPersistenceModel.Serializer.Deserialize(context);
+                    var reportingPeriod = (persistenceModel.Start + "," + persistenceModel.End).DeserializeFromString<TValue>();
+                    return reportingPeriod;
                 case BsonType.Null:
                     context.Reader.ReadNull();
                     return default(TValue);
@@ -53,7 +55,13 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
             }
             else
             {
-                context.Writer.WriteString(value.SerializeToString());
+                var persistenceModel = new ReportingPeriodPersistenceModel
+                {
+                    Start = value.Start.SerializeToSortableString(),
+                    End = value.End.SerializeToSortableString()
+                };
+
+                ReportingPeriodPersistenceModel.Serializer.Serialize(context, persistenceModel);
             }
         }
     }

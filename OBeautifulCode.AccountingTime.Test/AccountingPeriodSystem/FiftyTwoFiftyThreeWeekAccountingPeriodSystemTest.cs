@@ -90,19 +90,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth);
 
-            var expectedReportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(27.August(2006).ToCalendarDay(), 25.August(2007).ToCalendarDay());
-            var expectedReportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(26.August(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
-            var expectedReportingPeriod3 = new ReportingPeriodInclusive<CalendarDay>(31.August(2008).ToCalendarDay(), 29.August(2009).ToCalendarDay());
-            var expectedReportingPeriod4 = new ReportingPeriodInclusive<CalendarDay>(30.August(2009).ToCalendarDay(), 28.August(2010).ToCalendarDay());
-            var expectedReportingPeriod5 = new ReportingPeriodInclusive<CalendarDay>(29.August(2010).ToCalendarDay(), 27.August(2011).ToCalendarDay());
-            var expectedReportingPeriod6 = new ReportingPeriodInclusive<CalendarDay>(28.August(2011).ToCalendarDay(), 25.August(2012).ToCalendarDay());
-            var expectedReportingPeriod7 = new ReportingPeriodInclusive<CalendarDay>(26.August(2012).ToCalendarDay(), 31.August(2013).ToCalendarDay());
-            var expectedReportingPeriod8 = new ReportingPeriodInclusive<CalendarDay>(1.September(2013).ToCalendarDay(), 30.August(2014).ToCalendarDay());
-            var expectedReportingPeriod9 = new ReportingPeriodInclusive<CalendarDay>(31.August(2014).ToCalendarDay(), 29.August(2015).ToCalendarDay());
-            var expectedReportingPeriod10 = new ReportingPeriodInclusive<CalendarDay>(30.August(2015).ToCalendarDay(), 27.August(2016).ToCalendarDay());
-            var expectedReportingPeriod11 = new ReportingPeriodInclusive<CalendarDay>(28.August(2016).ToCalendarDay(), 26.August(2017).ToCalendarDay());
-            var expectedReportingPeriod12 = new ReportingPeriodInclusive<CalendarDay>(27.August(2017).ToCalendarDay(), 25.August(2018).ToCalendarDay());
-            var expectedReportingPeriod13 = new ReportingPeriodInclusive<CalendarDay>(26.August(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
+            var expectedReportingPeriod1 = new ReportingPeriod<CalendarDay>(27.August(2006).ToCalendarDay(), 25.August(2007).ToCalendarDay());
+            var expectedReportingPeriod2 = new ReportingPeriod<CalendarDay>(26.August(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
+            var expectedReportingPeriod3 = new ReportingPeriod<CalendarDay>(31.August(2008).ToCalendarDay(), 29.August(2009).ToCalendarDay());
+            var expectedReportingPeriod4 = new ReportingPeriod<CalendarDay>(30.August(2009).ToCalendarDay(), 28.August(2010).ToCalendarDay());
+            var expectedReportingPeriod5 = new ReportingPeriod<CalendarDay>(29.August(2010).ToCalendarDay(), 27.August(2011).ToCalendarDay());
+            var expectedReportingPeriod6 = new ReportingPeriod<CalendarDay>(28.August(2011).ToCalendarDay(), 25.August(2012).ToCalendarDay());
+            var expectedReportingPeriod7 = new ReportingPeriod<CalendarDay>(26.August(2012).ToCalendarDay(), 31.August(2013).ToCalendarDay());
+            var expectedReportingPeriod8 = new ReportingPeriod<CalendarDay>(1.September(2013).ToCalendarDay(), 30.August(2014).ToCalendarDay());
+            var expectedReportingPeriod9 = new ReportingPeriod<CalendarDay>(31.August(2014).ToCalendarDay(), 29.August(2015).ToCalendarDay());
+            var expectedReportingPeriod10 = new ReportingPeriod<CalendarDay>(30.August(2015).ToCalendarDay(), 27.August(2016).ToCalendarDay());
+            var expectedReportingPeriod11 = new ReportingPeriod<CalendarDay>(28.August(2016).ToCalendarDay(), 26.August(2017).ToCalendarDay());
+            var expectedReportingPeriod12 = new ReportingPeriod<CalendarDay>(27.August(2017).ToCalendarDay(), 25.August(2018).ToCalendarDay());
+            var expectedReportingPeriod13 = new ReportingPeriod<CalendarDay>(26.August(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
 
             // Act
             var actualReportingPeriod1 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2007));
@@ -141,19 +141,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth);
 
-            var expectedReportingPeriod1 = new ReportingPeriodInclusive<CalendarDay>(3.September(2006).ToCalendarDay(), 1.September(2007).ToCalendarDay());
-            var expectedReportingPeriod2 = new ReportingPeriodInclusive<CalendarDay>(2.September(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
-            var expectedReportingPeriod3 = new ReportingPeriodInclusive<CalendarDay>(31.August(2008).ToCalendarDay(), 29.August(2009).ToCalendarDay());
-            var expectedReportingPeriod4 = new ReportingPeriodInclusive<CalendarDay>(30.August(2009).ToCalendarDay(), 28.August(2010).ToCalendarDay());
-            var expectedReportingPeriod5 = new ReportingPeriodInclusive<CalendarDay>(29.August(2010).ToCalendarDay(), 3.September(2011).ToCalendarDay());
-            var expectedReportingPeriod6 = new ReportingPeriodInclusive<CalendarDay>(4.September(2011).ToCalendarDay(), 1.September(2012).ToCalendarDay());
-            var expectedReportingPeriod7 = new ReportingPeriodInclusive<CalendarDay>(2.September(2012).ToCalendarDay(), 31.August(2013).ToCalendarDay());
-            var expectedReportingPeriod8 = new ReportingPeriodInclusive<CalendarDay>(1.September(2013).ToCalendarDay(), 30.August(2014).ToCalendarDay());
-            var expectedReportingPeriod9 = new ReportingPeriodInclusive<CalendarDay>(31.August(2014).ToCalendarDay(), 29.August(2015).ToCalendarDay());
-            var expectedReportingPeriod10 = new ReportingPeriodInclusive<CalendarDay>(30.August(2015).ToCalendarDay(), 3.September(2016).ToCalendarDay());
-            var expectedReportingPeriod11 = new ReportingPeriodInclusive<CalendarDay>(4.September(2016).ToCalendarDay(), 2.September(2017).ToCalendarDay());
-            var expectedReportingPeriod12 = new ReportingPeriodInclusive<CalendarDay>(3.September(2017).ToCalendarDay(), 1.September(2018).ToCalendarDay());
-            var expectedReportingPeriod13 = new ReportingPeriodInclusive<CalendarDay>(2.September(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
+            var expectedReportingPeriod1 = new ReportingPeriod<CalendarDay>(3.September(2006).ToCalendarDay(), 1.September(2007).ToCalendarDay());
+            var expectedReportingPeriod2 = new ReportingPeriod<CalendarDay>(2.September(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
+            var expectedReportingPeriod3 = new ReportingPeriod<CalendarDay>(31.August(2008).ToCalendarDay(), 29.August(2009).ToCalendarDay());
+            var expectedReportingPeriod4 = new ReportingPeriod<CalendarDay>(30.August(2009).ToCalendarDay(), 28.August(2010).ToCalendarDay());
+            var expectedReportingPeriod5 = new ReportingPeriod<CalendarDay>(29.August(2010).ToCalendarDay(), 3.September(2011).ToCalendarDay());
+            var expectedReportingPeriod6 = new ReportingPeriod<CalendarDay>(4.September(2011).ToCalendarDay(), 1.September(2012).ToCalendarDay());
+            var expectedReportingPeriod7 = new ReportingPeriod<CalendarDay>(2.September(2012).ToCalendarDay(), 31.August(2013).ToCalendarDay());
+            var expectedReportingPeriod8 = new ReportingPeriod<CalendarDay>(1.September(2013).ToCalendarDay(), 30.August(2014).ToCalendarDay());
+            var expectedReportingPeriod9 = new ReportingPeriod<CalendarDay>(31.August(2014).ToCalendarDay(), 29.August(2015).ToCalendarDay());
+            var expectedReportingPeriod10 = new ReportingPeriod<CalendarDay>(30.August(2015).ToCalendarDay(), 3.September(2016).ToCalendarDay());
+            var expectedReportingPeriod11 = new ReportingPeriod<CalendarDay>(4.September(2016).ToCalendarDay(), 2.September(2017).ToCalendarDay());
+            var expectedReportingPeriod12 = new ReportingPeriod<CalendarDay>(3.September(2017).ToCalendarDay(), 1.September(2018).ToCalendarDay());
+            var expectedReportingPeriod13 = new ReportingPeriod<CalendarDay>(2.September(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
 
             // Act
             var actualReportingPeriod1 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2007));

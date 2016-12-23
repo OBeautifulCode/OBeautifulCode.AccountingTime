@@ -10,6 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using static System.FormattableString;
 
@@ -18,21 +19,24 @@ namespace OBeautifulCode.AccountingTime
     /// </summary>
     public static class UnitOfTimeExtensions
     {
-        private static readonly IDictionary<Type, SerializationFormat> UnitOfTimeSerializedStringPrefixByType = new Dictionary<Type, SerializationFormat>
+        private static readonly SerializationFormat[] SerializationFormatByType =
         {
             #pragma warning disable SA1025 // Code must not contain multiple whitespace in a row
             #pragma warning disable SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning disable SA1001 // Commas must be spaced correctly
-            { typeof(CalendarDay)    , new SerializationFormat { Prefix = "cd", TokensExpected = 3, CharactersPerToken = new[] { 4, 2, 2 } } },
-            { typeof(CalendarMonth)  , new SerializationFormat { Prefix = "cm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(CalendarQuarter), new SerializationFormat { Prefix = "cq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(CalendarYear)   , new SerializationFormat { Prefix = "cy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(FiscalMonth)    , new SerializationFormat { Prefix = "fm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(FiscalQuarter)  , new SerializationFormat { Prefix = "fq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(FiscalYear)     , new SerializationFormat { Prefix = "fy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(GenericMonth)   , new SerializationFormat { Prefix = "gm", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(GenericQuarter) , new SerializationFormat { Prefix = "gq", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(GenericYear)    , new SerializationFormat { Prefix = "gy", TokensExpected = 1, CharactersPerToken = new[] { 4 } } }
+            new SerializationFormat { Type = typeof(CalendarDay)      , Regex = new Regex("^c-(\\d{4})-(\\d{2})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(CalendarMonth)    , Regex = new Regex("^c-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(CalendarQuarter)  , Regex = new Regex("^c-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(CalendarYear)     , Regex = new Regex("^c-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(CalendarUnbounded), Regex = new Regex("^c-unbounded$") },
+            new SerializationFormat { Type = typeof(FiscalMonth)      , Regex = new Regex("^f-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(FiscalQuarter)    , Regex = new Regex("^f-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(FiscalYear)       , Regex = new Regex("^f-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(FiscalUnbounded)  , Regex = new Regex("^f-unbounded$") },
+            new SerializationFormat { Type = typeof(GenericMonth)     , Regex = new Regex("^g-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(GenericQuarter)   , Regex = new Regex("^g-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(GenericYear)      , Regex = new Regex("^g-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(GenericUnbounded) , Regex = new Regex("^g-unbounded$") }
             #pragma warning restore SA1001 // Commas must be spaced correctly
             #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning restore SA1025 // Code must not contain multiple whitespace in a row
@@ -104,6 +108,7 @@ namespace OBeautifulCode.AccountingTime
         /// The result of adding the specified number of units to the specified units-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd)
         {
             if (unitOfTime == null)
@@ -135,6 +140,12 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsCalendarYear.Plus(unitsToAdd);
             }
 
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
+            }
+
             var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
             if (unitOfTimeAsFiscalMonth != null)
             {
@@ -151,6 +162,12 @@ namespace OBeautifulCode.AccountingTime
             if (unitOfTimeAsFiscalYear != null)
             {
                 return unitOfTimeAsFiscalYear.Plus(unitsToAdd);
+            }
+
+            var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
+            if (unitOfTimeAsFiscalUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
             }
 
             var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
@@ -171,7 +188,114 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsGenericYear.Plus(unitsToAdd);
             }
 
+            var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
+            if (unitOfTimeAsGenericUnbounded != null)
+            {
+                throw new InvalidOperationException("Cannot add to unbounded time.");
+            }
+
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
+        }
+
+        /// <summary>
+        /// Adds the specified number of units of a specified granularity to a unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time to add to.</param>
+        /// <param name="unitsToAdd">The number of units to add (use negative numbers to subtract units).</param>
+        /// <param name="granularityOfUnitsToAdd">The granularity of the units to add.  Must be as or less granular than the <paramref name="unitOfTime"/> (e.g. can add CalendarYear to a CalendarQuarter, but not vice-versa)</param>
+        /// <returns>
+        /// The result of adding the specified number of units of the specified granularity to a unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="ArgumentException">Cannot add or subtract from a unit-of-time whose granularity is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the <paramref name="unitOfTime"/>.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "3*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "12*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "4*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granuarlity is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Unbounded)}.  Cannot add units of that granularity."));
+            }
+
+            if (granularityOfUnitsToAdd.IsMoreGranularThan(unitOfTime.UnitOfTimeGranularity))
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is more granular than {nameof(unitOfTime)}.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time."));
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity == granularityOfUnitsToAdd)
+            {
+                var result = unitOfTime.Plus(unitsToAdd);
+                return result;
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Year)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
+                {
+                    var result = unitOfTime.Plus(4 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+                {
+                    var result = unitOfTime.Plus(12 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Quarter)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+                {
+                    var result = unitOfTime.Plus(3 * unitsToAdd);
+                    return result;
+                }
+
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Month)
+            {
+                if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
+                {
+                    throw new NotSupportedException("adjusting a unit-of-time with Day granularity is not supported");
+                }
+
+                throw new InvalidOperationException("should not get here");
+            }
+
+            throw new InvalidOperationException("should not get here");
         }
 
         /// <summary>
@@ -280,6 +404,7 @@ namespace OBeautifulCode.AccountingTime
         /// The first calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetFirstCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
@@ -311,6 +436,12 @@ namespace OBeautifulCode.AccountingTime
                 return unitOfTimeAsCalendarYear.GetFirstCalendarDay();
             }
 
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("There is no first day in unbounded time.");
+            }
+
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
         }
 
@@ -322,6 +453,7 @@ namespace OBeautifulCode.AccountingTime
         /// The last calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetLastCalendarDay(this CalendarUnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
@@ -351,6 +483,12 @@ namespace OBeautifulCode.AccountingTime
             if (unitOfTimeAsCalendarYear != null)
             {
                 return unitOfTimeAsCalendarYear.GetLastCalendarDay();
+            }
+
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                throw new InvalidOperationException("There is no last day in unbounded time.");
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
@@ -405,75 +543,92 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var unitOfTimeType = unitOfTime.GetType();
-
             var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
             if (unitOfTimeAsCalendarDay != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
             if (unitOfTimeAsCalendarMonth != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
             if (unitOfTimeAsCalendarQuarter != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsCalendarQuarter.Year:D4}-{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
             if (unitOfTimeAsCalendarYear != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsCalendarYear.Year:D4}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
                 return result;
+            }
+
+            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
+            if (unitOfTimeAsCalendarUnbounded != null)
+            {
+                return "c-unbounded";
             }
 
             var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
             if (unitOfTimeAsFiscalMonth != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
             if (unitOfTimeAsFiscalQuarter != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsFiscalQuarter.Year:D4}-{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
             if (unitOfTimeAsFiscalYear != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsFiscalYear.Year:D4}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
                 return result;
+            }
+
+            var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
+            if (unitOfTimeAsFiscalUnbounded != null)
+            {
+                return "f-unbounded";
             }
 
             var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
             if (unitOfTimeAsGenericMonth != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+                string result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
             if (unitOfTimeAsGenericQuarter != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsGenericQuarter.Year:D4}-{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+                string result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
             if (unitOfTimeAsGenericYear != null)
             {
-                var result = Invariant($"{UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix}-{unitOfTimeAsGenericYear.Year:D4}");
+                string result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
                 return result;
+            }
+
+            var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
+            if (unitOfTimeAsGenericUnbounded != null)
+            {
+                return "g-unbounded";
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
@@ -505,14 +660,13 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("unit-of-time string is whitespace", nameof(unitOfTime));
             }
 
-            var serializationFormats = UnitOfTimeSerializedStringPrefixByType.Where(_ => unitOfTime.StartsWith(_.Value.Prefix + "-", StringComparison.Ordinal)).ToList();
-            if (!serializationFormats.Any())
+            var serializationFormatMatch = SerializationFormatByType.Select(_ => new { Match = _.Regex.Match(unitOfTime), SerializationFormat = _ }).SingleOrDefault(_ => _.Match.Success);
+            if (serializationFormatMatch == null)
             {
                 throw new InvalidOperationException("Cannot deserialize string; it is not valid unit-of-time.");
             }
 
-            var serializationFormat = serializationFormats.Single();
-            var serializedType = serializationFormat.Key;
+            var serializedType = serializationFormatMatch.SerializationFormat.Type;
             var returnType = typeof(T);
             if (!returnType.IsAssignableFrom(serializedType))
             {
@@ -520,19 +674,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {serializedType.Name} but it is malformed.");
-            var tokens = unitOfTime.Split('-').Skip(1).ToArray();
-            if (tokens.Length != serializationFormat.Value.TokensExpected)
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            for (int i = 0; i < serializationFormat.Value.CharactersPerToken.Length; i++)
-            {
-                if (tokens[i].Length != serializationFormat.Value.CharactersPerToken[i])
-                {
-                    throw new InvalidOperationException(errorMessage);
-                }
-            }
+            var tokens = serializationFormatMatch.SerializationFormat.Regex.GetGroupNames().Skip(1).Select(_ => serializationFormatMatch.Match.Groups[_].Value).ToArray();
 
             if (serializedType == typeof(CalendarDay))
             {
@@ -598,6 +740,12 @@ namespace OBeautifulCode.AccountingTime
                 }
             }
 
+            if (serializedType == typeof(CalendarUnbounded))
+            {
+                var deserialized = new CalendarUnbounded();
+                return deserialized as T;
+            }
+
             if (serializedType == typeof(FiscalMonth))
             {
                 var year = ParseIntOrThrow(tokens[0], errorMessage);
@@ -645,6 +793,12 @@ namespace OBeautifulCode.AccountingTime
                 }
             }
 
+            if (serializedType == typeof(FiscalUnbounded))
+            {
+                var deserialized = new FiscalUnbounded();
+                return deserialized as T;
+            }
+
             if (serializedType == typeof(GenericMonth))
             {
                 var year = ParseIntOrThrow(tokens[0], errorMessage);
@@ -690,6 +844,12 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new InvalidOperationException(errorMessage);
                 }
+            }
+
+            if (serializedType == typeof(GenericUnbounded))
+            {
+                var deserialized = new GenericUnbounded();
+                return deserialized as T;
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + serializedType);
@@ -857,11 +1017,9 @@ namespace OBeautifulCode.AccountingTime
 
         private class SerializationFormat
         {
-            public string Prefix { get; set; }
+            public Type Type { get; set; }
 
-            public int TokensExpected { get; set; }
-
-            public int[] CharactersPerToken { get; set; }
+            public Regex Regex { get; set; }
         }
     }
 }

@@ -7,13 +7,10 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
-    using System.Linq;
 
     using AutoFakeItEasy;
 
     using FakeItEasy;
-
-    using Math;
 
     public class DummyFactory : IDummyFactory
     {
@@ -28,6 +25,9 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(QuarterNumber.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeKind.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeGranularity.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodComponent.Invalid);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<CalendarUnitOfTime>();
@@ -37,6 +37,8 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAMonth>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAQuarter>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IHaveAYear>();
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IAmBoundedTime>();
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IAmUnboundedTime>();
 
             // note: this customization is required because AutoFixture doesn't use A.Dummy<>
             // and thus will, from time-to-time, try to create this type with MonthOfYear.Invalid
@@ -136,35 +138,23 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
-            AddDummyCreatorForReportingPeriod<UnitOfTime>();
-            AddDummyCreatorForReportingPeriod<CalendarUnitOfTime>();
-            AddDummyCreatorForReportingPeriod<FiscalUnitOfTime>();
-            AddDummyCreatorForReportingPeriod<GenericUnitOfTime>();
-            AddDummyCreatorForReportingPeriod<CalendarDay>();
-            AddDummyCreatorForReportingPeriod<CalendarQuarter>();
-            AddDummyCreatorForReportingPeriod<CalendarMonth>();
-            AddDummyCreatorForReportingPeriod<CalendarYear>();
-            AddDummyCreatorForReportingPeriod<FiscalMonth>();
-            AddDummyCreatorForReportingPeriod<FiscalQuarter>();
-            AddDummyCreatorForReportingPeriod<FiscalYear>();
-            AddDummyCreatorForReportingPeriod<GenericMonth>();
-            AddDummyCreatorForReportingPeriod<GenericQuarter>();
-            AddDummyCreatorForReportingPeriod<GenericYear>();
-
-            AddDummyCreatorForReportingPeriodInclusive<UnitOfTime>();
-            AddDummyCreatorForReportingPeriodInclusive<CalendarUnitOfTime>();
-            AddDummyCreatorForReportingPeriodInclusive<FiscalUnitOfTime>();
-            AddDummyCreatorForReportingPeriodInclusive<GenericUnitOfTime>();
-            AddDummyCreatorForReportingPeriodInclusive<CalendarDay>();
-            AddDummyCreatorForReportingPeriodInclusive<CalendarQuarter>();
-            AddDummyCreatorForReportingPeriodInclusive<CalendarMonth>();
-            AddDummyCreatorForReportingPeriodInclusive<CalendarYear>();
-            AddDummyCreatorForReportingPeriodInclusive<FiscalMonth>();
-            AddDummyCreatorForReportingPeriodInclusive<FiscalQuarter>();
-            AddDummyCreatorForReportingPeriodInclusive<FiscalYear>();
-            AddDummyCreatorForReportingPeriodInclusive<GenericMonth>();
-            AddDummyCreatorForReportingPeriodInclusive<GenericQuarter>();
-            AddDummyCreatorForReportingPeriodInclusive<GenericYear>();
+            AddDummyCreatorForAbstractReportingPeriod<UnitOfTime>();
+            AddDummyCreatorForAbstractReportingPeriod<CalendarUnitOfTime>();
+            AddDummyCreatorForAbstractReportingPeriod<FiscalUnitOfTime>();
+            AddDummyCreatorForAbstractReportingPeriod<GenericUnitOfTime>();
+            AddDummyCreatorForConcreteReportingPeriod<CalendarDay>();
+            AddDummyCreatorForConcreteReportingPeriod<CalendarQuarter>();
+            AddDummyCreatorForConcreteReportingPeriod<CalendarMonth>();
+            AddDummyCreatorForConcreteReportingPeriod<CalendarYear>();
+            AddDummyCreatorForConcreteReportingPeriod<CalendarUnbounded>();
+            AddDummyCreatorForConcreteReportingPeriod<FiscalMonth>();
+            AddDummyCreatorForConcreteReportingPeriod<FiscalQuarter>();
+            AddDummyCreatorForConcreteReportingPeriod<FiscalYear>();
+            AddDummyCreatorForConcreteReportingPeriod<FiscalUnbounded>();
+            AddDummyCreatorForConcreteReportingPeriod<GenericMonth>();
+            AddDummyCreatorForConcreteReportingPeriod<GenericQuarter>();
+            AddDummyCreatorForConcreteReportingPeriod<GenericYear>();
+            AddDummyCreatorForConcreteReportingPeriod<GenericUnbounded>();
         }
 
         /// <inheritdoc />
@@ -182,23 +172,20 @@ namespace OBeautifulCode.AccountingTime.Test
             return null;
         }
 
-        private static void AddDummyCreatorForReportingPeriod<T>()
-           where T : UnitOfTime
+        private static void AddDummyCreatorForConcreteReportingPeriod<T>()
+            where T : UnitOfTime
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var reportingPeriodType = typeof(ReportingPeriod<T>);
-                    var reportingPeriodConcreteTypes =
-                        reportingPeriodType.Assembly.GetTypes()
-                            .Where(type => type.IsGenericType)
-                            .Select(type => type.MakeGenericType(typeof(T)))
-                            .Where(type => type.IsSubclassOf(reportingPeriodType))
-                            .ToList();
+                    var start = A.Dummy<T>();
+                    var end = A.Dummy<T>().ThatIs(u => u.GetType() == start.GetType());
+                    if ((start is IAmBoundedTime) && ((dynamic)start <= (dynamic)end))
+                    {
+                        return new ReportingPeriod<T>(start, end);
+                    }
 
-                    var typeToCreate = reportingPeriodConcreteTypes[ThreadSafeRandom.Next(0, reportingPeriodConcreteTypes.Count)];
-                    var result = AD.ummy(typeToCreate);
-                    return result as ReportingPeriod<T>;
+                    return new ReportingPeriod<T>(end, start);
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriod<T>>(
@@ -209,26 +196,49 @@ namespace OBeautifulCode.AccountingTime.Test
                 });
         }
 
-        private static void AddDummyCreatorForReportingPeriodInclusive<T>()
+        private static void AddDummyCreatorForAbstractReportingPeriod<T>()
             where T : UnitOfTime
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var start = A.Dummy<T>();
-                    var end = A.Dummy<T>().ThatIs(u => u.GetType() == start.GetType());
-                    if ((dynamic)start <= (dynamic)end)
-                    {
-                        return new ReportingPeriodInclusive<T>(start, end);
-                    }
+                    var end = A.Dummy<T>();
 
-                    return new ReportingPeriodInclusive<T>(end, start);
+                    if ((start is IAmUnboundedTime) || (end is IAmUnboundedTime))
+                    {
+                        if ((start is IAmUnboundedTime) && (end is IAmUnboundedTime))
+                        {
+                            return new ReportingPeriod<T>(start, start);
+                        }
+
+                        if (start is IAmUnboundedTime)
+                        {
+                            end = A.Dummy<T>().Whose(_ => _.UnitOfTimeKind == start.UnitOfTimeKind);
+                        }
+                        else
+                        {
+                            start = A.Dummy<T>().Whose(_ => _.UnitOfTimeKind == end.UnitOfTimeKind);
+                        }
+
+                        return new ReportingPeriod<T>(end, start);
+                    }
+                    else
+                    {
+                        end = A.Dummy<T>().ThatIs(u => u.GetType() == start.GetType());
+                        if ((dynamic)start <= (dynamic)end)
+                        {
+                            return new ReportingPeriod<T>(start, end);
+                        }
+
+                        return new ReportingPeriod<T>(end, start);
+                    }
                 });
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriodInclusive<T>>(
+            AutoFixtureBackedDummyFactory.AddDummyCreator<IReportingPeriod<T>>(
                 () =>
                 {
-                    var result = A.Dummy<ReportingPeriodInclusive<T>>();
+                    var result = A.Dummy<ReportingPeriod<T>>();
                     return result;
                 });
         }

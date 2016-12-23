@@ -86,7 +86,6 @@
   <ItemGroup>
     <Compile Include=".Naos.Recipes\TupleInitializers\Initializers.cs" />
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
-    <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
     <Compile Include=".Spritely.Recipes\CamelStrictConstructorContractResolver\CamelStrictConstructorContractResolver.cs" />
     <Compile Include=".Spritely.Recipes\InheritedTypeJsonConverter\InheritedTypeJsonConverter.cs" />
     <Compile Include=".Spritely.Recipes\JsonConfiguration\CompactJsonSerializer.cs" />
@@ -103,8 +102,8 @@
     <Compile Include="DummyFactory.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.cs" />
+    <Compile Include="Extensions\UnitOfTimeGranularityExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriodInclusiveTest.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
     <Compile Include="UnitOfTime\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
@@ -112,11 +111,14 @@
     <Compile Include="UnitOfTime\CalendarYearTest.cs" />
     <Compile Include="UnitOfTime\FiscalMonthTest.cs" />
     <Compile Include="UnitOfTime\FiscalQuarterTest.cs" />
+    <Compile Include="UnitOfTime\FiscalUnboundedTest.cs" />
     <Compile Include="UnitOfTime\FiscalYearTest.cs" />
     <Compile Include="UnitOfTime\GenericMonthTest.cs" />
     <Compile Include="UnitOfTime\GenericQuarterTest.cs" />
+    <Compile Include="UnitOfTime\GenericUnboundedTest.cs" />
     <Compile Include="UnitOfTime\GenericYearTest.cs" />
     <Compile Include="UnitOfTime\UnitOfTimeTest.cs" />
+    <Compile Include="UnitOfTime\CalendarUnboundedTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />

@@ -512,10 +512,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -531,10 +531,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a < systemUnderTest1b;
@@ -612,10 +612,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -631,10 +631,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a <= systemUnderTest1b;
@@ -712,10 +712,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -731,10 +731,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a > systemUnderTest1b;
@@ -812,10 +812,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -831,10 +831,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a >= systemUnderTest1b;
@@ -863,10 +863,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -882,10 +882,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo(systemUnderTest1b);
@@ -894,6 +894,20 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             result1.Should().Be(1);
             result2.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<CalendarQuarter>();
+            var systemUnderTest2 = new CalendarQuarter(systemUnderTest1.Year, systemUnderTest1.QuarterNumber);
+
+            // Act
+            var result = systemUnderTest1.CompareTo(systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
         }
 
         [Fact]
@@ -933,10 +947,10 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -948,14 +962,14 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void CompareTo___Should_return_1___When_calling_none_typed_overload_and_test_object_is_greater_than_other_object()
+        public static void CompareTo___Should_return_1___When_calling_non_typed_overload_and_test_object_is_greater_than_other_object()
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest1b = systemUnderTest1a.Plus(-1, CalendarQuarterComponent.Quarter);
+            var systemUnderTest1b = systemUnderTest1a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Quarter);
 
             var systemUnderTest2a = A.Dummy<CalendarQuarter>();
-            var systemUnderTest2b = systemUnderTest2a.Plus(-1, CalendarQuarterComponent.Year);
+            var systemUnderTest2b = systemUnderTest2a.TweakComponentOfCalendarQuarterByAmount(-1, CalendarQuarterComponent.Year);
 
             // Act
             var result1 = systemUnderTest1a.CompareTo((object)systemUnderTest1b);
@@ -964,6 +978,20 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             result1.Should().Be(1);
             result2.Should().Be(1);
+        }
+
+        [Fact]
+        public static void CompareTo___Should_return_0___When_calling_non_typed_overload_and_test_object_is_equal_to_other_object()
+        {
+            // Arrange
+            var systemUnderTest1 = A.Dummy<CalendarQuarter>();
+            var systemUnderTest2 = new CalendarQuarter(systemUnderTest1.Year, systemUnderTest1.QuarterNumber);
+
+            // Act
+            var result = systemUnderTest1.CompareTo((object)systemUnderTest2);
+
+            // Assert
+            result.Should().Be(0);
         }
 
         [Fact]
@@ -1060,7 +1088,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this calendar quarter component is not supported: " + componentToTweak);
         }
 
-        private static CalendarQuarter Plus(this CalendarQuarter calendarQuarter, int amount, CalendarQuarterComponent componentToTweak)
+        private static CalendarQuarter TweakComponentOfCalendarQuarterByAmount(this CalendarQuarter calendarQuarter, int amount, CalendarQuarterComponent componentToTweak)
         {
             if (componentToTweak == CalendarQuarterComponent.Quarter)
             {

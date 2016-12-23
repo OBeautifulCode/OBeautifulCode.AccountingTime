@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IReportingPeriodInclusive{T}.cs" company="OBeautifulCode">
+// <copyright file="IAmUnboundedTime.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,11 +8,9 @@
 namespace OBeautifulCode.AccountingTime
 {
     /// <summary>
-    /// Represents a reporting period, inclusive of the endpoints.
+    /// Identifies a <see cref="UnitOfTime"/> that's unbounded.
     /// </summary>
-    /// <typeparam name="T">The unit-of-time used to define the start and end of the reporting period.</typeparam>
-    public interface IReportingPeriodInclusive<out T> : IReportingPeriod<T>
-        where T : UnitOfTime
+    public interface IAmUnboundedTime
     {
     }
 }
