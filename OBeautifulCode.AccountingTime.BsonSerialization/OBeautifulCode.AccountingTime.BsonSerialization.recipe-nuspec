@@ -7,7 +7,7 @@
     <developmentDependency>true</developmentDependency>
     <dependencies>
         <dependency id="OBeautifulCode.AccountingTime" version="1.0.33" />
-        <dependency id="MongoDB.Bson" />
+        <dependency id="MongoDB.Bson" version ="2.4.0" />
     </dependencies>
   </metadata>
   <files>
