@@ -10,6 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using static System.FormattableString;
 
@@ -18,24 +19,24 @@ namespace OBeautifulCode.AccountingTime
     /// </summary>
     public static class UnitOfTimeExtensions
     {
-        private static readonly IDictionary<Type, SerializationFormat> UnitOfTimeSerializedStringPrefixByType = new Dictionary<Type, SerializationFormat>
+        private static readonly SerializationFormat[] SerializationFormatByType =
         {
             #pragma warning disable SA1025 // Code must not contain multiple whitespace in a row
             #pragma warning disable SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning disable SA1001 // Commas must be spaced correctly
-            { typeof(CalendarDay)       , new SerializationFormat { Prefix = "cd-", TokensExpected = 3, CharactersPerToken = new[] { 4, 2, 2 } } },
-            { typeof(CalendarMonth)     , new SerializationFormat { Prefix = "cm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(CalendarQuarter)   , new SerializationFormat { Prefix = "cq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(CalendarYear)      , new SerializationFormat { Prefix = "cy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(CalendarUnbounded) , new SerializationFormat { Prefix = "cu" , TokensExpected = 0, CharactersPerToken = null } },
-            { typeof(FiscalMonth)       , new SerializationFormat { Prefix = "fm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(FiscalQuarter)     , new SerializationFormat { Prefix = "fq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(FiscalYear)        , new SerializationFormat { Prefix = "fy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(FiscalUnbounded)   , new SerializationFormat { Prefix = "fu" , TokensExpected = 0, CharactersPerToken = null } },
-            { typeof(GenericMonth)      , new SerializationFormat { Prefix = "gm-", TokensExpected = 2, CharactersPerToken = new[] { 4, 2 } } },
-            { typeof(GenericQuarter)    , new SerializationFormat { Prefix = "gq-", TokensExpected = 2, CharactersPerToken = new[] { 4, 1 } } },
-            { typeof(GenericYear)       , new SerializationFormat { Prefix = "gy-", TokensExpected = 1, CharactersPerToken = new[] { 4 } } },
-            { typeof(GenericUnbounded)  , new SerializationFormat { Prefix = "gu" , TokensExpected = 0, CharactersPerToken = null } }
+            new SerializationFormat { Type = typeof(CalendarDay)      , Regex = new Regex("^c-(\\d{4})-(\\d{2})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(CalendarMonth)    , Regex = new Regex("^c-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(CalendarQuarter)  , Regex = new Regex("^c-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(CalendarYear)     , Regex = new Regex("^c-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(CalendarUnbounded), Regex = new Regex("^c-unbounded$") },
+            new SerializationFormat { Type = typeof(FiscalMonth)      , Regex = new Regex("^f-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(FiscalQuarter)    , Regex = new Regex("^f-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(FiscalYear)       , Regex = new Regex("^f-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(FiscalUnbounded)  , Regex = new Regex("^f-unbounded$") },
+            new SerializationFormat { Type = typeof(GenericMonth)     , Regex = new Regex("^g-(\\d{4})-(\\d{2})$") },
+            new SerializationFormat { Type = typeof(GenericQuarter)   , Regex = new Regex("^g-(\\d{4})-Q(\\d)$") },
+            new SerializationFormat { Type = typeof(GenericYear)      , Regex = new Regex("^g-(\\d{4})$") },
+            new SerializationFormat { Type = typeof(GenericUnbounded) , Regex = new Regex("^g-unbounded$") }
             #pragma warning restore SA1001 // Commas must be spaced correctly
             #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning restore SA1025 // Code must not contain multiple whitespace in a row
@@ -542,94 +543,92 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var unitOfTimeType = unitOfTime.GetType();
-            var result = UnitOfTimeSerializedStringPrefixByType[unitOfTimeType].Prefix;
-
             var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
             if (unitOfTimeAsCalendarDay != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
             if (unitOfTimeAsCalendarMonth != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
             if (unitOfTimeAsCalendarQuarter != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsCalendarQuarter.Year:D4}-{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
             if (unitOfTimeAsCalendarYear != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsCalendarYear.Year:D4}");
+                string result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
                 return result;
             }
 
             var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
             if (unitOfTimeAsCalendarUnbounded != null)
             {
-                return result;
+                return "c-unbounded";
             }
 
             var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
             if (unitOfTimeAsFiscalMonth != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
             if (unitOfTimeAsFiscalQuarter != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsFiscalQuarter.Year:D4}-{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
             if (unitOfTimeAsFiscalYear != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsFiscalYear.Year:D4}");
+                string result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
                 return result;
             }
 
             var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
             if (unitOfTimeAsFiscalUnbounded != null)
             {
-                return result;
+                return "f-unbounded";
             }
 
             var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
             if (unitOfTimeAsGenericMonth != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+                string result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
                 return result;
             }
 
             var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
             if (unitOfTimeAsGenericQuarter != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsGenericQuarter.Year:D4}-{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+                string result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
                 return result;
             }
 
             var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
             if (unitOfTimeAsGenericYear != null)
             {
-                result = Invariant($"{result}{unitOfTimeAsGenericYear.Year:D4}");
+                string result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
                 return result;
             }
 
             var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
             if (unitOfTimeAsGenericUnbounded != null)
             {
-                return result;
+                return "g-unbounded";
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
@@ -661,14 +660,13 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("unit-of-time string is whitespace", nameof(unitOfTime));
             }
 
-            var serializationFormats = UnitOfTimeSerializedStringPrefixByType.Where(_ => unitOfTime.StartsWith(_.Value.Prefix, StringComparison.Ordinal)).ToList();
-            if (!serializationFormats.Any())
+            var serializationFormatMatch = SerializationFormatByType.Select(_ => new { Match = _.Regex.Match(unitOfTime), SerializationFormat = _ }).SingleOrDefault(_ => _.Match.Success);
+            if (serializationFormatMatch == null)
             {
                 throw new InvalidOperationException("Cannot deserialize string; it is not valid unit-of-time.");
             }
 
-            var serializationFormat = serializationFormats.Single();
-            var serializedType = serializationFormat.Key;
+            var serializedType = serializationFormatMatch.SerializationFormat.Type;
             var returnType = typeof(T);
             if (!returnType.IsAssignableFrom(serializedType))
             {
@@ -676,24 +674,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {serializedType.Name} but it is malformed.");
-            unitOfTime = unitOfTime.Remove(0, serializationFormat.Value.Prefix.Length);
-            var tokens = unitOfTime.Length == 0 ? new string[] { } : unitOfTime.Split('-').ToArray();
-            if (tokens.Length != serializationFormat.Value.TokensExpected)
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            int chracterPerTokenCount = serializationFormat.Value.CharactersPerToken?.Length ?? 0;
-            for (int i = 0; i < chracterPerTokenCount; i++)
-            {
-                // ReSharper disable PossibleNullReferenceException
-                if (tokens[i].Length != serializationFormat.Value.CharactersPerToken[i])
-                {
-                    throw new InvalidOperationException(errorMessage);
-                }
-
-                // ReSharper restore PossibleNullReferenceException
-            }
+            var tokens = serializationFormatMatch.SerializationFormat.Regex.GetGroupNames().Skip(1).Select(_ => serializationFormatMatch.Match.Groups[_].Value).ToArray();
 
             if (serializedType == typeof(CalendarDay))
             {
@@ -1036,11 +1017,9 @@ namespace OBeautifulCode.AccountingTime
 
         private class SerializationFormat
         {
-            public string Prefix { get; set; }
+            public Type Type { get; set; }
 
-            public int TokensExpected { get; set; }
-
-            public int[] CharactersPerToken { get; set; }
+            public Regex Regex { get; set; }
         }
     }
 }

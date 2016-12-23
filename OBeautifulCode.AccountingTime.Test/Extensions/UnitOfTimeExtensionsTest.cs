@@ -1643,11 +1643,11 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cd-2017-01-03", new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
-                { "cd-2017-11-09", new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Nine) },
-                { "cd-2017-07-21", new CalendarDay(2017, MonthOfYear.July, DayOfMonth.TwentyOne) },
-                { "cd-2017-10-08", new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Eight) },
-                { "cd-2017-11-30",  new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) }
+                { "c-2017-01-03", new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
+                { "c-2017-11-09", new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Nine) },
+                { "c-2017-07-21", new CalendarDay(2017, MonthOfYear.July, DayOfMonth.TwentyOne) },
+                { "c-2017-10-08", new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Eight) },
+                { "c-2017-11-30",  new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) }
             };
 
             // Act
@@ -1663,9 +1663,9 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cm-2017-01", new CalendarMonth(2017, MonthOfYear.January) },
-                { "cm-2017-07", new CalendarMonth(2017, MonthOfYear.July) },
-                { "cm-2017-11", new CalendarMonth(2017, MonthOfYear.November) }
+                { "c-2017-01", new CalendarMonth(2017, MonthOfYear.January) },
+                { "c-2017-07", new CalendarMonth(2017, MonthOfYear.July) },
+                { "c-2017-11", new CalendarMonth(2017, MonthOfYear.November) }
             };
 
             // Act
@@ -1681,9 +1681,9 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "fm-2017-01", new FiscalMonth(2017, MonthNumber.One) },
-                { "fm-2017-07", new FiscalMonth(2017, MonthNumber.Seven) },
-                { "fm-2017-11", new FiscalMonth(2017, MonthNumber.Eleven) }
+                { "f-2017-01", new FiscalMonth(2017, MonthNumber.One) },
+                { "f-2017-07", new FiscalMonth(2017, MonthNumber.Seven) },
+                { "f-2017-11", new FiscalMonth(2017, MonthNumber.Eleven) }
             };
 
             // Act
@@ -1699,9 +1699,9 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "gm-2017-01", new GenericMonth(2017, MonthNumber.One) },
-                { "gm-2017-07", new GenericMonth(2017, MonthNumber.Seven) },
-                { "gm-2017-11", new GenericMonth(2017, MonthNumber.Eleven) }
+                { "g-2017-01", new GenericMonth(2017, MonthNumber.One) },
+                { "g-2017-07", new GenericMonth(2017, MonthNumber.Seven) },
+                { "g-2017-11", new GenericMonth(2017, MonthNumber.Eleven) }
             };
 
             // Act
@@ -1717,10 +1717,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cq-2017-1", new CalendarQuarter(2017, QuarterNumber.Q1) },
-                { "cq-2017-2", new CalendarQuarter(2017, QuarterNumber.Q2) },
-                { "cq-2017-3", new CalendarQuarter(2017, QuarterNumber.Q3) },
-                { "cq-2017-4", new CalendarQuarter(2017, QuarterNumber.Q4) }
+                { "c-2017-Q1", new CalendarQuarter(2017, QuarterNumber.Q1) },
+                { "c-2017-Q2", new CalendarQuarter(2017, QuarterNumber.Q2) },
+                { "c-2017-Q3", new CalendarQuarter(2017, QuarterNumber.Q3) },
+                { "c-2017-Q4", new CalendarQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -1736,10 +1736,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "fq-2017-1", new FiscalQuarter(2017, QuarterNumber.Q1) },
-                { "fq-2017-2", new FiscalQuarter(2017, QuarterNumber.Q2) },
-                { "fq-2017-3", new FiscalQuarter(2017, QuarterNumber.Q3) },
-                { "fq-2017-4", new FiscalQuarter(2017, QuarterNumber.Q4) }
+                { "f-2017-Q1", new FiscalQuarter(2017, QuarterNumber.Q1) },
+                { "f-2017-Q2", new FiscalQuarter(2017, QuarterNumber.Q2) },
+                { "f-2017-Q3", new FiscalQuarter(2017, QuarterNumber.Q3) },
+                { "f-2017-Q4", new FiscalQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -1755,10 +1755,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "gq-2017-1", new GenericQuarter(2017, QuarterNumber.Q1) },
-                { "gq-2017-2", new GenericQuarter(2017, QuarterNumber.Q2) },
-                { "gq-2017-3", new GenericQuarter(2017, QuarterNumber.Q3) },
-                { "gq-2017-4", new GenericQuarter(2017, QuarterNumber.Q4) }
+                { "g-2017-Q1", new GenericQuarter(2017, QuarterNumber.Q1) },
+                { "g-2017-Q2", new GenericQuarter(2017, QuarterNumber.Q2) },
+                { "g-2017-Q3", new GenericQuarter(2017, QuarterNumber.Q3) },
+                { "g-2017-Q4", new GenericQuarter(2017, QuarterNumber.Q4) }
             };
 
             // Act
@@ -1774,8 +1774,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cy-2017", new CalendarYear(2017) },
-                { "cy-2009", new CalendarYear(2009) }
+                { "c-2017", new CalendarYear(2017) },
+                { "c-2009", new CalendarYear(2009) }
             };
 
             // Act
@@ -1791,8 +1791,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "fy-2017", new FiscalYear(2017) },
-                { "fy-2009", new FiscalYear(2009) }
+                { "f-2017", new FiscalYear(2017) },
+                { "f-2009", new FiscalYear(2009) }
             };
 
             // Act
@@ -1808,8 +1808,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarDaysBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "gy-2017", new GenericYear(2017) },
-                { "gy-2009", new GenericYear(2009) }
+                { "g-2017", new GenericYear(2017) },
+                { "g-2009", new GenericYear(2009) }
             };
 
             // Act
@@ -1825,7 +1825,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "cu", new CalendarUnbounded() },
+                { "c-unbounded", new CalendarUnbounded() },
             };
 
             // Act
@@ -1841,7 +1841,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "fu", new FiscalUnbounded() },
+                { "f-unbounded", new FiscalUnbounded() },
             };
 
             // Act
@@ -1857,7 +1857,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var calendarUnboundedBySerializedString = new Dictionary<string, UnitOfTime>
             {
-                { "gu", new GenericUnbounded() },
+                { "g-unbounded", new GenericUnbounded() },
             };
 
             // Act
@@ -1891,26 +1891,6 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_parameter_unitOfTime_does_not_start_with_a_known_identifier_for_any_kind_of_unit_of_time()
-        {
-            // Arrange
-            var unitsOfTime = new[]
-            {
-                "cd", "cm", "cq", "cy", "cu-", "fm", "fq", "fy", "fu-", "gm", "gq", "gy", "gu-",
-                "2015-11-11", "2017-03", "2017-1", "2017",
-                "cd2015-11-11", "cm2017-03", "cq2017-1", "cy2017",
-                "fm2017-03", "fq2017-1", "fy2017",
-                "gm2017-03", "gq2017-1", "gy2017",
-            };
-
-            // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
-
-            // Assert
-            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
-        }
-
-        [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
         public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_time_encoded_cannot_be_casted_to_specified_generic_type_parameter()
@@ -1918,19 +1898,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, IEnumerable<Type>>
             {
-                { "cd-2015-11-11", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarDay)) && (_ != typeof(CalendarUnitOfTime))) },
-                { "cm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
-                { "cq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
-                { "cy-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
-                { "cu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarUnbounded)) && (_ != typeof(CalendarUnitOfTime))) },
-                { "fm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
-                { "fq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
-                { "fy-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
-                { "fu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalUnbounded)) && (_ != typeof(FiscalUnitOfTime))) },
-                { "gm-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
-                { "gq-2017-1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
-                { "gy-2017",  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) },
-                { "gu", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) }
+                { "c-2015-11-11", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarDay)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "c-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarMonth)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "c-2017-Q1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarQuarter)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "c-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarYear)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "c-unbounded", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(CalendarUnbounded)) && (_ != typeof(CalendarUnitOfTime))) },
+                { "f-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalMonth)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "f-2017-Q1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalQuarter)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "f-2017", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalYear)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "f-unbounded", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(FiscalUnbounded)) && (_ != typeof(FiscalUnitOfTime))) },
+                { "g-2017-03", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
+                { "g-2017-Q1", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericQuarter)) && (_ != typeof(GenericUnitOfTime))) },
+                { "g-2017",  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericYear)) && (_ != typeof(GenericUnitOfTime))) },
+                { "g-unbounded", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) }
             };
 
             var deserializeFromSortableString = typeof(UnitOfTimeExtensions).GetMethod(nameof(UnitOfTimeExtensions.DeserializeFromSortableString));
@@ -1953,62 +1933,34 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_has_the_wrong_number_of_tokens()
-        {
-            // Arrange
-            var unitsOfTime = new[]
-            {
-                "cd-2015-11-11-11", "cd-2015-11-11-", "cd-2015-11-", "cd-2015-11", "cd-2015-", "cd-2015", "cd-",
-                "cm-2017-03-03", "cm-2017-03-", "cm-2017-", "cm-2017", "cm-",
-                "cq-2017-1-3", "cq-2017-1-", "cq-2017-", "cq-2017", "cq-",
-                "cy-2017-2018", "cy-2017-", "cy-",
-                "cu-", "cu--",
-                "fm-2017-03-03", "fm-2017-03-", "fm-2017-", "fm-2017", "fm-",
-                "fq-2017-1-3", "fq-2017-1-", "fq-2017-", "fq-2017", "fq-",
-                "fy-2017-2018", "fy-2017-", "fy-",
-                "fu-", "fu--",
-                "gm-2017-03-03", "gm-2017-03-", "gm-2017-", "gm-2017", "gm-",
-                "gq-2017-1-3", "gq-2017-1-", "gq-2017-", "gq-2017", "gq-",
-                "gy-2017-2018", "gy-2017-", "gy-",
-                "gu-", "gu--"
-            };
-
-            // Act
-            var exceptions = unitsOfTime.Select(_ => Record.Exception(() => _.DeserializeFromSortableString<UnitOfTime>())).ToList();
-
-            // Assert
-            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
-        }
-
-        [Fact]
         public static void DeserializeFromSortableString___Should_throw_InvalidOperationException___When_unitOfTime_is_a_malformed_CalendarDay()
         {
             // Arrange
             var unitsOfTime = new[]
             {
-                "cd-201a-11-11",
-                "cd-xxxx-11-11",
-                "cd-10000-11-11",
-                "cd-T001-11-11",
-                "cd-0-11-11",
-                "cd-200-11-11",
-                "cd-0000-11-11",
-                "cd-999-11-11",
-                "cd-2007-1-11",
-                "cd-2007-9-11",
-                "cd-2007-13-11",
-                "cd-2007-99-11",
-                "cd-2007-00-11",
-                "cd-2007-001-11",
-                "cd-2007-012-11",
-                "cd-2007-11-1",
-                "cd-2007-11-9",
-                "cd-2007-11-32",
-                "cd-2007-11-31",
-                "cd-2015-02-29",
-                "cd-2015-03-00",
-                "cd-2015-03-001",
-                "cd-2015-03-030"
+                "c-201a-11-11",
+                "c-xxxx-11-11",
+                "c-10000-11-11",
+                "c-T001-11-11",
+                "c-0-11-11",
+                "c-200-11-11",
+                "c-0000-11-11",
+                "c-999-11-11",
+                "c-2007-1-11",
+                "c-2007-9-11",
+                "c-2007-13-11",
+                "c-2007-99-11",
+                "c-2007-00-11",
+                "c-2007-001-11",
+                "c-2007-012-11",
+                "c-2007-11-1",
+                "c-2007-11-9",
+                "c-2007-11-32",
+                "c-2007-11-31",
+                "c-2015-02-29",
+                "c-2015-03-00",
+                "c-2015-03-001",
+                "c-2015-03-030"
             };
 
             // Act
@@ -2024,21 +1976,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cm-201a-11",
-                "cm-xxxx-11",
-                "cm-10000-11",
-                "cm-T001-11",
-                "cm-0-11",
-                "cm-200-11",
-                "cm-0000-11",
-                "cm-999-11",
-                "cm-2007-1",
-                "cm-2007-9",
-                "cm-2007-13",
-                "cm-2007-99",
-                "cm-2007-00",
-                "cm-2007-001",
-                "cm-2007-012"
+                "c-201a-11",
+                "c-xxxx-11",
+                "c-10000-11",
+                "c-T001-11",
+                "c-0-11",
+                "c-200-11",
+                "c-0000-11",
+                "c-999-11",
+                "c-2007-1",
+                "c-2007-9",
+                "c-2007-13",
+                "c-2007-99",
+                "c-2007-00",
+                "c-2007-001",
+                "c-2007-012"
             };
 
             // Act
@@ -2054,21 +2006,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "fm-201a-11",
-                "fm-xxxx-11",
-                "fm-10000-11",
-                "fm-T001-11",
-                "fm-0-11",
-                "fm-200-11",
-                "fm-0000-11",
-                "fm-999-11",
-                "fm-2007-1",
-                "fm-2007-9",
-                "fm-2007-13",
-                "fm-2007-99",
-                "fm-2007-00",
-                "fm-2007-001",
-                "fm-2007-012"
+                "f-201a-11",
+                "f-xxxx-11",
+                "f-10000-11",
+                "f-T001-11",
+                "f-0-11",
+                "f-200-11",
+                "f-0000-11",
+                "f-999-11",
+                "f-2007-1",
+                "f-2007-9",
+                "f-2007-13",
+                "f-2007-99",
+                "f-2007-00",
+                "f-2007-001",
+                "f-2007-012"
             };
 
             // Act
@@ -2084,21 +2036,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "gm-201a-11",
-                "gm-xxxx-11",
-                "gm-10000-11",
-                "gm-T001-11",
-                "gm-0-11",
-                "gm-200-11",
-                "gm-0000-11",
-                "gm-999-11",
-                "gm-2007-1",
-                "gm-2007-9",
-                "gm-2007-13",
-                "gm-2007-99",
-                "gm-2007-00",
-                "gm-2007-001",
-                "gm-2007-012"
+                "g-201a-11",
+                "g-xxxx-11",
+                "g-10000-11",
+                "g-T001-11",
+                "g-0-11",
+                "g-200-11",
+                "g-0000-11",
+                "g-999-11",
+                "g-2007-1",
+                "g-2007-9",
+                "g-2007-13",
+                "g-2007-99",
+                "g-2007-00",
+                "g-2007-001",
+                "g-2007-012"
             };
 
             // Act
@@ -2114,19 +2066,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cq-201a-3",
-                "cq-xxxx-3",
-                "cq-10000-3",
-                "cq-T001-3",
-                "cq-0-3",
-                "cq-200-3",
-                "cq-0000-3",
-                "cq-999-3",
-                "cq-2007-01",
-                "cq-2007-00",
-                "cq-2007-004",
-                "cq-2007-5",
-                "cq-2007-31"
+                "c-201a-Q3",
+                "c-xxxx-Q3",
+                "c-10000-Q3",
+                "c-T001-Q3",
+                "c-0-Q3",
+                "c-200-Q3",
+                "c-0000-Q3",
+                "c-999-Q3",
+                "c-2007-Q01",
+                "c-2007-Q00",
+                "c-2007-Q004",
+                "c-2007-Q5",
+                "c-2007-Q31",
+                "c-2007-1",
+                "c-2007Q-1"
             };
 
             // Act
@@ -2142,19 +2096,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "fq-201a-3",
-                "fq-xxxx-3",
-                "fq-10000-3",
-                "fq-T001-3",
-                "fq-0-3",
-                "fq-200-3",
-                "fq-0000-3",
-                "fq-999-3",
-                "fq-2007-01",
-                "fq-2007-00",
-                "fq-2007-004",
-                "fq-2007-5",
-                "fq-2007-31"
+                "f-201a-Q3",
+                "f-xxxx-Q3",
+                "f-10000-Q3",
+                "f-T001-Q3",
+                "f-0-Q3",
+                "f-200-Q3",
+                "f-0000-Q3",
+                "f-999-Q3",
+                "f-2007-Q01",
+                "f-2007-Q00",
+                "f-2007-Q004",
+                "f-2007-Q5",
+                "f-2007-Q31",
+                "f-2007-1",
+                "f-2007Q-1"
             };
 
             // Act
@@ -2170,19 +2126,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "gq-201a-3",
-                "gq-xxxx-3",
-                "gq-10000-3",
-                "gq-T001-3",
-                "gq-0-3",
-                "gq-200-3",
-                "gq-0000-3",
-                "gq-999-3",
-                "gq-2007-01",
-                "gq-2007-00",
-                "gq-2007-004",
-                "gq-2007-5",
-                "gq-2007-31"
+                "g-201a-Q3",
+                "g-xxxx-Q3",
+                "g-10000-Q3",
+                "g-T001-Q3",
+                "g-0-Q3",
+                "g-200-Q3",
+                "g-0000-Q3",
+                "g-999-Q3",
+                "g-2007-Q01",
+                "g-2007-Q00",
+                "g-2007-Q004",
+                "g-2007-Q5",
+                "g-2007-Q31",
+                "g-2007-1",
+                "g-2007Q-1"
             };
 
             // Act
@@ -2198,14 +2156,14 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cy-201a",
-                "cy-xxxx",
-                "cy-10000",
-                "cy-T001",
-                "cy-0",
-                "cy-200",
-                "cy-0000",
-                "cy-999"
+                "c-201a",
+                "c-xxxx",
+                "c-10000",
+                "c-T001",
+                "c-0",
+                "c-200",
+                "c-0000",
+                "c-999"
             };
 
             // Act
@@ -2221,14 +2179,14 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "fy-201a",
-                "fy-xxxx",
-                "fy-10000",
-                "fy-T001",
-                "fy-0",
-                "fy-200",
-                "fy-0000",
-                "fy-999"
+                "f-201a",
+                "f-xxxx",
+                "f-10000",
+                "f-T001",
+                "f-0",
+                "f-200",
+                "f-0000",
+                "f-999"
             };
 
             // Act
@@ -2244,14 +2202,14 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "gy-201a",
-                "gy-xxxx",
-                "gy-10000",
-                "gy-T001",
-                "gy-0",
-                "gy-200",
-                "gy-0000",
-                "gy-999"
+                "g-201a",
+                "g-xxxx",
+                "g-10000",
+                "g-T001",
+                "g-0",
+                "g-200",
+                "g-0000",
+                "g-999"
             };
 
             // Act
@@ -2267,8 +2225,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cu-",
-                "cu--",
+                "c-unbounded-",
+                "c-unbounded--",
                 "cunbounded",
                 "cu-unbounded"
             };
@@ -2286,8 +2244,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "fu-",
-                "fu--",
+                "f-unbounded-",
+                "f-unbounded--",
                 "funbounded",
                 "fu-unbounded"
             };
@@ -2305,8 +2263,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "gu-",
-                "gu--",
+                "g-unbounded-",
+                "g-unbounded--",
                 "gunbounded",
                 "gu-unbounded"
             };
@@ -2324,10 +2282,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarDay>
             {
-                { "cd-2001-01-09", new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Nine) },
-                { "cd-2016-02-29", new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine) },
-                { "cd-2001-11-04", new CalendarDay(2001, MonthOfYear.November, DayOfMonth.Four) },
-                { "cd-2001-12-30", new CalendarDay(2001, MonthOfYear.December, DayOfMonth.Thirty) }
+                { "c-2001-01-09", new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Nine) },
+                { "c-2016-02-29", new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine) },
+                { "c-2001-11-04", new CalendarDay(2001, MonthOfYear.November, DayOfMonth.Four) },
+                { "c-2001-12-30", new CalendarDay(2001, MonthOfYear.December, DayOfMonth.Thirty) }
             };
 
             // Act
@@ -2347,10 +2305,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarMonth>
             {
-                { "cm-2001-01", new CalendarMonth(2001, MonthOfYear.January) },
-                { "cm-2002-07", new CalendarMonth(2002, MonthOfYear.July) },
-                { "cm-2010-11", new CalendarMonth(2010, MonthOfYear.November) },
-                { "cm-2016-12", new CalendarMonth(2016, MonthOfYear.December) }
+                { "c-2001-01", new CalendarMonth(2001, MonthOfYear.January) },
+                { "c-2002-07", new CalendarMonth(2002, MonthOfYear.July) },
+                { "c-2010-11", new CalendarMonth(2010, MonthOfYear.November) },
+                { "c-2016-12", new CalendarMonth(2016, MonthOfYear.December) }
             };
 
             // Act
@@ -2370,10 +2328,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, FiscalMonth>
             {
-                { "fm-2001-01", new FiscalMonth(2001, MonthNumber.One) },
-                { "fm-2002-07", new FiscalMonth(2002, MonthNumber.Seven) },
-                { "fm-2010-11", new FiscalMonth(2010, MonthNumber.Eleven) },
-                { "fm-2016-12", new FiscalMonth(2016, MonthNumber.Twelve) }
+                { "f-2001-01", new FiscalMonth(2001, MonthNumber.One) },
+                { "f-2002-07", new FiscalMonth(2002, MonthNumber.Seven) },
+                { "f-2010-11", new FiscalMonth(2010, MonthNumber.Eleven) },
+                { "f-2016-12", new FiscalMonth(2016, MonthNumber.Twelve) }
             };
 
             // Act
@@ -2393,10 +2351,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, GenericMonth>
             {
-                { "gm-2001-01", new GenericMonth(2001, MonthNumber.One) },
-                { "gm-2002-07", new GenericMonth(2002, MonthNumber.Seven) },
-                { "gm-2010-11", new GenericMonth(2010, MonthNumber.Eleven) },
-                { "gm-2016-12", new GenericMonth(2016, MonthNumber.Twelve) }
+                { "g-2001-01", new GenericMonth(2001, MonthNumber.One) },
+                { "g-2002-07", new GenericMonth(2002, MonthNumber.Seven) },
+                { "g-2010-11", new GenericMonth(2010, MonthNumber.Eleven) },
+                { "g-2016-12", new GenericMonth(2016, MonthNumber.Twelve) }
             };
 
             // Act
@@ -2416,10 +2374,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarQuarter>
             {
-                { "cq-2001-1", new CalendarQuarter(2001, QuarterNumber.Q1) },
-                { "cq-2002-2", new CalendarQuarter(2002, QuarterNumber.Q2) },
-                { "cq-2010-3", new CalendarQuarter(2010, QuarterNumber.Q3) },
-                { "cq-2016-4", new CalendarQuarter(2016, QuarterNumber.Q4) }
+                { "c-2001-Q1", new CalendarQuarter(2001, QuarterNumber.Q1) },
+                { "c-2002-Q2", new CalendarQuarter(2002, QuarterNumber.Q2) },
+                { "c-2010-Q3", new CalendarQuarter(2010, QuarterNumber.Q3) },
+                { "c-2016-Q4", new CalendarQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2439,10 +2397,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, FiscalQuarter>
             {
-                { "fq-2001-1", new FiscalQuarter(2001, QuarterNumber.Q1) },
-                { "fq-2002-2", new FiscalQuarter(2002, QuarterNumber.Q2) },
-                { "fq-2010-3", new FiscalQuarter(2010, QuarterNumber.Q3) },
-                { "fq-2016-4", new FiscalQuarter(2016, QuarterNumber.Q4) }
+                { "f-2001-Q1", new FiscalQuarter(2001, QuarterNumber.Q1) },
+                { "f-2002-Q2", new FiscalQuarter(2002, QuarterNumber.Q2) },
+                { "f-2010-Q3", new FiscalQuarter(2010, QuarterNumber.Q3) },
+                { "f-2016-Q4", new FiscalQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2462,10 +2420,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, GenericQuarter>
             {
-                { "gq-2001-1", new GenericQuarter(2001, QuarterNumber.Q1) },
-                { "gq-2002-2", new GenericQuarter(2002, QuarterNumber.Q2) },
-                { "gq-2010-3", new GenericQuarter(2010, QuarterNumber.Q3) },
-                { "gq-2016-4", new GenericQuarter(2016, QuarterNumber.Q4) }
+                { "g-2001-Q1", new GenericQuarter(2001, QuarterNumber.Q1) },
+                { "g-2002-Q2", new GenericQuarter(2002, QuarterNumber.Q2) },
+                { "g-2010-Q3", new GenericQuarter(2010, QuarterNumber.Q3) },
+                { "g-2016-Q4", new GenericQuarter(2016, QuarterNumber.Q4) }
             };
 
             // Act
@@ -2485,8 +2443,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarYear>
             {
-                { "cy-2001", new CalendarYear(2001) },
-                { "cy-2016", new CalendarYear(2016) }
+                { "c-2001", new CalendarYear(2001) },
+                { "c-2016", new CalendarYear(2016) }
             };
 
             // Act
@@ -2506,8 +2464,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, FiscalYear>
             {
-                { "fy-2001", new FiscalYear(2001) },
-                { "fy-2016", new FiscalYear(2016) }
+                { "f-2001", new FiscalYear(2001) },
+                { "f-2016", new FiscalYear(2016) }
             };
 
             // Act
@@ -2527,8 +2485,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, GenericYear>
             {
-                { "gy-2001", new GenericYear(2001) },
-                { "gy-2016", new GenericYear(2016) }
+                { "g-2001", new GenericYear(2001) },
+                { "g-2016", new GenericYear(2016) }
             };
 
             // Act
@@ -2548,7 +2506,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, CalendarUnbounded>
             {
-                { "cu", new CalendarUnbounded() }
+                { "c-unbounded", new CalendarUnbounded() }
             };
 
             // Act
@@ -2568,7 +2526,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, FiscalUnbounded>
             {
-                { "fu", new FiscalUnbounded() }
+                { "f-unbounded", new FiscalUnbounded() }
             };
 
             // Act
@@ -2588,7 +2546,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new Dictionary<string, GenericUnbounded>
             {
-                { "gu", new GenericUnbounded() }
+                { "g-unbounded", new GenericUnbounded() }
             };
 
             // Act

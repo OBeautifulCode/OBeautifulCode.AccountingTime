@@ -7260,19 +7260,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new Dictionary<string, IReportingPeriod<UnitOfTime>>
             {
-                { "cd-2017-05-17,cd-2018-12-09", new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
-                { "cm-2017-05,cm-2018-12", new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
-                { "fm-2017-05,fm-2018-12", new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
-                { "gm-2017-05,gm-2018-12", new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
-                { "cq-2017-2,cq-2018-4", new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
-                { "fq-2017-2,fq-2018-4", new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
-                { "gq-2017-2,gq-2018-4", new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
-                { "cy-2017,cy-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
-                { "fy-2017,fy-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
-                { "gy-2017,gy-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
-                { "cu,cm-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
-                { "gm-2012-02,gu", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
-                { "fu,fu", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
+                { "c-2017-05-17,c-2018-12-09", new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
+                { "c-2017-05,c-2018-12", new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
+                { "f-2017-05,f-2018-12", new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
+                { "g-2017-05,g-2018-12", new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
+                { "c-2017-Q2,c-2018-Q4", new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
+                { "f-2017-Q2,f-2018-Q4", new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
+                { "g-2017-Q2,g-2018-Q4", new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
+                { "c-2017,c-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
+                { "f-2017,f-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
+                { "g-2017,g-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
+                { "c-unbounded,c-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
+                { "g-2012-02,g-unbounded", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
+                { "f-unbounded,f-unbounded", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
             };
 
             // Act
@@ -7350,25 +7350,25 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var reportingPeriods = new[]
             {
-                "cd-2015-11-11,cd-2016-11-11",
-                "cm-2017-03,cm-2017-04",
-                "fm-2017-03,fm-2017-04",
-                "gm-2017-03,gm-2017-04",
-                "cq-2017-3,cq-2017-4",
-                "fq-2017-3,fq-2017-4",
-                "gq-2017-3,gq-2017-4",
-                "cy-2017,cy-2018",
-                "fy-2017,fy-2018",
-                "gy-2017,gy-2018",
-                "cu,cu",
-                "cu,cy-2018",
-                "cq-2017-3,cu",
-                "fu,fu",
-                "fu,fy-2018",
-                "fq-2017-3,fu",
-                "gu,gu",
-                "gu,gy-2018",
-                "gq-2017-3,gu"
+                "c-2015-11-11,c-2016-11-11",
+                "c-2017-03,c-2017-04",
+                "f-2017-03,f-2017-04",
+                "g-2017-03,g-2017-04",
+                "c-2017-Q3,c-2017-Q4",
+                "f-2017-Q3,f-2017-Q4",
+                "g-2017-Q3,g-2017-Q4",
+                "c-2017,c-2018",
+                "f-2017,f-2018",
+                "g-2017,g-2018",
+                "c-unbounded,c-unbounded",
+                "c-unbounded,c-2018",
+                "c-2017-Q3,c-unbounded",
+                "f-unbounded,f-unbounded",
+                "f-unbounded,f-2018",
+                "f-2017-Q3,f-unbounded",
+                "g-unbounded,g-unbounded",
+                "g-unbounded,g-2018",
+                "g-2017-Q3,g-unbounded"
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -7397,35 +7397,35 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new[]
             {
-                new { ReportingPeriod = "cd-2015-11-11,cd-2016-11-11", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "cm-2017-03,cm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "fm-2017-03,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
-                new { ReportingPeriod = "gm-2017-03,gm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
-                new { ReportingPeriod = "cq-2017-3,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
-                new { ReportingPeriod = "fq-2017-3,fq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "gq-2017-3,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
-                new { ReportingPeriod = "cy-2017,cy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
-                new { ReportingPeriod = "fy-2017,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "gy-2017,gy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "cd-2015-11-11,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "fm-2017-04,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "cq-2017-3,fm-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
-                new { ReportingPeriod = "gm-2017-03,gy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
-                new { ReportingPeriod = "fq-2017-3,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
-                new { ReportingPeriod = "fq-2017-3,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "cd-2015-11-11,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
-                new { ReportingPeriod = "gy-2018,cy-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
-                new { ReportingPeriod = "fm-2017-04,fy-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
-                new { ReportingPeriod = "gy-2017,gq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "cu,cq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
-                new { ReportingPeriod = "cq-2017-4,cu", ReportingPeriodType = typeof(ReportingPeriod<CalendarQuarter>) },
-                new { ReportingPeriod = "cu,cu", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
-                new { ReportingPeriod = "fu,fq-2017-4", ReportingPeriodType = typeof(ReportingPeriod<FiscalQuarter>) },
-                new { ReportingPeriod = "fq-2017-4,fu", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
-                new { ReportingPeriod = "fu,fu", ReportingPeriodType = typeof(ReportingPeriod<FiscalYear>) },
-                new { ReportingPeriod = "gu,gm-2017-10", ReportingPeriodType = typeof(ReportingPeriod<GenericMonth>) },
-                new { ReportingPeriod = "gm-2017-10,gu", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "gu,gu", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) }
+                new { ReportingPeriod = "c-2015-11-11,c-2016-11-11", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "c-2017-03,c-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "f-2017-03,f-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "g-2017-03,g-2017-04", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
+                new { ReportingPeriod = "c-2017-Q3,c-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "f-2017-Q3,f-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "g-2017-Q3,g-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "c-2017,c-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "f-2017,f-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "g-2017,g-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "c-2015-11-11,f-2017-04", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "f-2017-04,f-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "c-2017-Q3,f-2017-04", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "g-2017-03,g-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericYear>) },
+                new { ReportingPeriod = "f-2017-Q3,c-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<FiscalUnitOfTime>) },
+                new { ReportingPeriod = "f-2017-Q3,g-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "c-2015-11-11,g-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "g-2018,c-2018", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "f-2017-04,f-2018", ReportingPeriodType = typeof(ReportingPeriod<FiscalMonth>) },
+                new { ReportingPeriod = "g-2017,g-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "c-unbounded,c-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<GenericUnitOfTime>) },
+                new { ReportingPeriod = "c-2017-Q4,c-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarQuarter>) },
+                new { ReportingPeriod = "c-unbounded,c-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarDay>) },
+                new { ReportingPeriod = "f-unbounded,f-2017-Q4", ReportingPeriodType = typeof(ReportingPeriod<FiscalQuarter>) },
+                new { ReportingPeriod = "f-2017-Q4,f-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
+                new { ReportingPeriod = "f-unbounded,f-unbounded", ReportingPeriodType = typeof(ReportingPeriod<FiscalYear>) },
+                new { ReportingPeriod = "g-unbounded,g-2017-10", ReportingPeriodType = typeof(ReportingPeriod<GenericMonth>) },
+                new { ReportingPeriod = "g-2017-10,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
+                new { ReportingPeriod = "g-unbounded,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) }
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethod(nameof(ReportingPeriodExtensions.DeserializeFromString));
@@ -7451,13 +7451,13 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitsOfTime = new[]
             {
                 ",",
-                "cm-2017-04",
-                ",cm-2017-04",
-                "cm-2017-04,",
-                "cm-2017-03,,",
-                ",cm-2017-03,",
-                "cm-2017-03,cm-2017-04,",
-                "cm-2017-03,cm-2017-04,cm-2017-04"
+                "c-2017-04",
+                ",c-2017-04",
+                "c-2017-04,",
+                "c-2017-03,,",
+                ",c-2017-03,",
+                "c-2017-03,c-2017-04,",
+                "c-2017-03,c-2017-04,c-2017-04"
             };
 
             // Act
@@ -7473,21 +7473,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cm-201a-11,cm-2017-10",
-                "cm-xxxx-11,cm-2017-10",
-                "cm-10000-11,cm-2017-10",
-                "cm-T001-11,cm-2017-10",
-                "cm-0-11,cm-2017-10",
-                "cm-200-11,cm-2017-10",
-                "cm-0000-11,cm-2017-10",
-                "cm-999-11,cm-2017-10",
-                "cm-2007-1,cm-2017-10",
-                "cm-2007-9,cm-2017-10",
-                "cm-2007-13,cm-2017-10",
-                "cm-2007-99,cm-2017-10",
-                "cm-2007-00,cm-2017-10",
-                "cm-2007-001,cm-2017-10",
-                "cm-2007-012,cm-2017-10"
+                "c-201a-11,c-2017-10",
+                "c-xxxx-11,c-2017-10",
+                "c-10000-11,c-2017-10",
+                "c-T001-11,c-2017-10",
+                "c-0-11,c-2017-10",
+                "c-200-11,c-2017-10",
+                "c-0000-11,c-2017-10",
+                "c-999-11,c-2017-10",
+                "c-2007-1,c-2017-10",
+                "c-2007-9,c-2017-10",
+                "c-2007-13,c-2017-10",
+                "c-2007-99,c-2017-10",
+                "c-2007-00,c-2017-10",
+                "c-2007-001,c-2017-10",
+                "c-2007-012,c-2017-10"
             };
 
             // Act
@@ -7503,21 +7503,21 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cm-2017-04,cm-201a-11",
-                "cm-2017-04,cm-xxxx-11",
-                "cm-2017-04,cm-10000-11",
-                "cm-2017-04,cm-T001-11",
-                "cm-2017-04,cm-0-11",
-                "cm-2017-04,cm-200-11",
-                "cm-2017-04,cm-0000-11",
-                "cm-2017-04,cm-999-11",
-                "cm-2017-04,cm-2007-1",
-                "cm-2017-04,cm-2007-9",
-                "cm-2017-04,cm-2007-13",
-                "cm-2017-04,cm-2007-99",
-                "cm-2017-04,cm-2007-00",
-                "cm-2017-04,cm-2007-001",
-                "cm-2017-04,cm-2007-012"
+                "c-2017-04,c-201a-11",
+                "c-2017-04,c-xxxx-11",
+                "c-2017-04,c-10000-11",
+                "c-2017-04,c-T001-11",
+                "c-2017-04,c-0-11",
+                "c-2017-04,c-200-11",
+                "c-2017-04,c-0000-11",
+                "c-2017-04,c-999-11",
+                "c-2017-04,c-2007-1",
+                "c-2017-04,c-2007-9",
+                "c-2017-04,c-2007-13",
+                "c-2017-04,c-2007-99",
+                "c-2017-04,c-2007-00",
+                "c-2017-04,c-2007-001",
+                "c-2017-04,c-2007-012"
             };
 
             // Act
@@ -7533,15 +7533,15 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime1 = new[]
             {
-                "cm-2017-04,cd-2017-04-11",
-                "fq-2017-4,gq-2018-1",
-                "cy-2017,fm-2018-05"
+                "c-2017-04,c-2017-04-11",
+                "f-2017-Q4,g-2018-Q1",
+                "c-2017,f-2018-05"
             };
 
             var unitsOfTime2 = new[]
             {
-                "cm-2017-04,cd-2017-04-11",
-                "cy-2017,cm-2018-05"
+                "c-2017-04,c-2017-04-11",
+                "c-2017,c-2018-05"
             };
 
             // Act
@@ -7559,10 +7559,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "cm-2017-04,cm-2016-04",
-                "cq-2017-3,cq-2017-2",
-                "cd-2017-03-04,cd-2017-03-01",
-                "fy-2017,fy-2016"
+                "c-2017-04,c-2016-04",
+                "c-2017-Q3,c-2017-Q2",
+                "c-2017-03-04,c-2017-03-01",
+                "f-2017,f-2016"
             };
 
             // Act
@@ -7578,10 +7578,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                "gu,cm-2016-04",
-                "cq-2017-3,gu",
-                "cu,gu",
-                "fu,cu"
+                "g-unbounded,c-2016-04",
+                "c-2017-Q3,g-unbounded",
+                "c-unbounded,g-unbounded",
+                "f-unbounded,c-unbounded"
             };
 
             // Act
@@ -7598,7 +7598,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarDay_string()
         {
             // Arrange
-            var reportingPeriod = "cd-2001-01-10,cd-2016-02-29";
+            var reportingPeriod = "c-2001-01-10,c-2016-02-29";
             var expected = new ReportingPeriod<CalendarDay>(new CalendarDay(2001, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine));
 
             // Act
@@ -7625,7 +7625,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarMonth_string()
         {
             // Arrange
-            var reportingPeriod = "cm-2001-01,cm-2001-02";
+            var reportingPeriod = "c-2001-01,c-2001-02";
             var expected = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2001, MonthOfYear.January), new CalendarMonth(2001, MonthOfYear.February));
 
             // Act
@@ -7652,7 +7652,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalMonth_string()
         {
             // Arrange
-            var reportingPeriod = "fm-2001-01,fm-2001-02";
+            var reportingPeriod = "f-2001-01,f-2001-02";
             var expected = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2001, MonthNumber.One), new FiscalMonth(2001, MonthNumber.Two));
 
             // Act
@@ -7679,7 +7679,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericMonth_string()
         {
             // Arrange
-            var reportingPeriod = "gm-2001-01,gm-2001-02";
+            var reportingPeriod = "g-2001-01,g-2001-02";
             var expected = new ReportingPeriod<GenericMonth>(new GenericMonth(2001, MonthNumber.One), new GenericMonth(2001, MonthNumber.Two));
 
             // Act
@@ -7706,7 +7706,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "cq-2001-1,cq-2001-2";
+            var reportingPeriod = "c-2001-Q1,c-2001-Q2";
             var expected = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2001, QuarterNumber.Q1), new CalendarQuarter(2001, QuarterNumber.Q2));
 
             // Act
@@ -7733,7 +7733,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "fq-2001-1,fq-2001-2";
+            var reportingPeriod = "f-2001-Q1,f-2001-Q2";
             var expected = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2001, QuarterNumber.Q1), new FiscalQuarter(2001, QuarterNumber.Q2));
 
             // Act
@@ -7760,7 +7760,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericQuarter_string()
         {
             // Arrange
-            var reportingPeriod = "gq-2001-1,gq-2001-2";
+            var reportingPeriod = "g-2001-Q1,g-2001-Q2";
             var expected = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2001, QuarterNumber.Q1), new GenericQuarter(2001, QuarterNumber.Q2));
 
             // Act
@@ -7787,7 +7787,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarYear_string()
         {
             // Arrange
-            var reportingPeriod = "cy-2001,cy-2002";
+            var reportingPeriod = "c-2001,c-2002";
             var expected = new ReportingPeriod<CalendarYear>(new CalendarYear(2001), new CalendarYear(2002));
 
             // Act
@@ -7814,7 +7814,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalYear_string()
         {
             // Arrange
-            var reportingPeriod = "fy-2001,fy-2002";
+            var reportingPeriod = "f-2001,f-2002";
             var expected = new ReportingPeriod<FiscalYear>(new FiscalYear(2001), new FiscalYear(2002));
 
             // Act
@@ -7841,7 +7841,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericYear_string()
         {
             // Arrange
-            var reportingPeriod = "gy-2001,gy-2002";
+            var reportingPeriod = "g-2001,g-2002";
             var expected = new ReportingPeriod<GenericYear>(new GenericYear(2001), new GenericYear(2002));
 
             // Act
@@ -7868,9 +7868,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_CalendarUnbounded_string()
         {
             // Arrange
-            var reportingPeriod1 = "cu,cy-2002";
-            var reportingPeriod2 = "cy-2002,cu";
-            var reportingPeriod3 = "cu,cu";
+            var reportingPeriod1 = "c-unbounded,c-2002";
+            var reportingPeriod2 = "c-2002,c-unbounded";
+            var reportingPeriod3 = "c-unbounded,c-unbounded";
 
             var expected1 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarYear(2002));
             var expected2 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarYear(2002), new CalendarUnbounded());
@@ -7918,9 +7918,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_FiscalUnbounded_string()
         {
             // Arrange
-            var reportingPeriod1 = "fu,fy-2002";
-            var reportingPeriod2 = "fy-2002,fu";
-            var reportingPeriod3 = "fu,fu";
+            var reportingPeriod1 = "f-unbounded,f-2002";
+            var reportingPeriod2 = "f-2002,f-unbounded";
+            var reportingPeriod3 = "f-unbounded,f-unbounded";
 
             var expected1 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalYear(2002));
             var expected2 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalYear(2002), new FiscalUnbounded());
@@ -7968,9 +7968,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void DeserializeFromString___Should_deserialize_into_various_flavors_of_IReportingPeriod___When_reportingPeriod_is_a_well_formed_ReportingPeriod_of_GenericUnbounded_string()
         {
             // Arrange
-            var reportingPeriod1 = "gu,gy-2002";
-            var reportingPeriod2 = "gy-2002,gu";
-            var reportingPeriod3 = "gu,gu";
+            var reportingPeriod1 = "g-unbounded,g-2002";
+            var reportingPeriod2 = "g-2002,g-unbounded";
+            var reportingPeriod3 = "g-unbounded,g-unbounded";
 
             var expected1 = new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericYear(2002));
             var expected2 = new ReportingPeriod<GenericUnitOfTime>(new GenericYear(2002), new GenericUnbounded());
