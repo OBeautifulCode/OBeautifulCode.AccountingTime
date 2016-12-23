@@ -4767,6 +4767,542 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void Contains_with_reportingPeriods___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
+        {
+            // Arrange
+            var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>();
+
+            // Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.Contains(null, reportingPeriod2));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_throw_ArgumentNullException___When_parameter_reportingPeriod2_is_null()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            IReportingPeriod<UnitOfTime> reportingPeriod2 = null;
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var ex = Record.Exception(() => reportingPeriod1.Contains(reportingPeriod2));
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_throw_ArgumentException___When_reporting_periods_have_different_UnitOfTimeKind()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var ex = Record.Exception(() => reportingPeriod1.Contains(reportingPeriod2));
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentySeven)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_CalendarDay()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.May));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2014, MonthOfYear.January), new CalendarMonth(2015, MonthOfYear.January)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.January), new CalendarMonth(2015, MonthOfYear.February)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.January), new CalendarMonth(2016, MonthOfYear.January)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.June)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.June)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.June)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.September))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_CalendarMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.May));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.May)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.May)),
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.April), new CalendarMonth(2016, MonthOfYear.April)),
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2014, QuarterNumber.Q3), new CalendarQuarter(2015, QuarterNumber.Q1)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q1), new CalendarQuarter(2015, QuarterNumber.Q2)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q1), new CalendarQuarter(2016, QuarterNumber.Q1)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q1), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_CalendarQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q2))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2014)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2015)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2016)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2012), new CalendarYear(2017)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2018)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_CalendarYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2017)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2016)),
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_CalendarUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded())
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Five));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.One), new FiscalMonth(2015, MonthNumber.One)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2015, MonthNumber.Two)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2016, MonthNumber.One)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Nine))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_FiscalMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Five));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Five)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Four)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Five)),
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Four)),
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2014, QuarterNumber.Q3), new FiscalQuarter(2015, QuarterNumber.Q1)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q1), new FiscalQuarter(2015, QuarterNumber.Q2)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q1), new FiscalQuarter(2016, QuarterNumber.Q1)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q1), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_FiscalQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q2))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2014)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2015)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2016)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2012), new FiscalYear(2017)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2018)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_FiscalYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2017)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2016)),
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_FiscalUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded())
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Five));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2014, MonthNumber.One), new GenericMonth(2015, MonthNumber.One)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.One), new GenericMonth(2015, MonthNumber.Two)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.One), new GenericMonth(2016, MonthNumber.One)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Nine))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_GenericMonth()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Five));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Five)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Four)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Five)),
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Four), new GenericMonth(2016, MonthNumber.Four)),
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2014, QuarterNumber.Q3), new GenericQuarter(2015, QuarterNumber.Q1)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q1), new GenericQuarter(2015, QuarterNumber.Q2)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q1), new GenericQuarter(2016, QuarterNumber.Q1)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q1), new GenericQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_GenericQuarter()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q2))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2014)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2015)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2016)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2012), new GenericYear(2017)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2018)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2019))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_contain_reportingPeriod2_an_both_are_of_type_GenericYear()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2017));
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2017)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2016)),
+                    new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016))
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_does_not_contain_reportingPeriod2_an_both_are_of_type_GenericUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
+            var reportingPeriod2 = new[]
+                {
+                    new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded())
+                };
+
+            // Act
+            var results = reportingPeriod2.Select(_ => reportingPeriod1.Contains(_)).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
         public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
         {
             // Arrange
