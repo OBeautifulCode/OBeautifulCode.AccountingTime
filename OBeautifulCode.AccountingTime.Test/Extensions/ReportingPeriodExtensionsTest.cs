@@ -2556,6 +2556,2217 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_CalendarYear_reportingPeriod_and_unitOfTime_is_not_a_CalendarYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_CalendarYear_reportingPeriod_and_unitOfTime_is_not_a_CalendarYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.January, DayOfMonth.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.June, DayOfMonth.Fifteen)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.June)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2016),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2018)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarYear(2018),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q2)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_reportingPeriod_has_CalendarUnbounded_Start_and_End()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarDay>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarMonth>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarQuarter>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarYear>()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_FiscalMonth_reportingPeriod_and_unitOfTime_is_not_a_FiscalMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Two),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Five)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Four),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Four),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Two),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.Twelve),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_FiscalMonth_reportingPeriod_and_unitOfTime_is_not_a_FiscalMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Two),
+                        new FiscalMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2016, MonthNumber.Five)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Two),
+                        new FiscalMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Five),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Five),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Five),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Two),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.One),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalMonth(2016, MonthNumber.Three),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_FiscalQuarter_reportingPeriod_and_unitOfTime_is_not_a_FiscalQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2019)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_FiscalQuarter_reportingPeriod_and_unitOfTime_is_not_a_FiscalQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Eight)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q1),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2018, QuarterNumber.Q4)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalQuarter(2016, QuarterNumber.Q1),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_FiscalYear_reportingPeriod_and_unitOfTime_is_not_a_FiscalYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_FiscalYear_reportingPeriod_and_unitOfTime_is_not_a_FiscalYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2016),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2018)),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalYear(2018),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q2)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_reportingPeriod_has_FiscalUnbounded_Start_and_End()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalMonth>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalQuarter>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<FiscalUnitOfTime>(
+                        new FiscalUnbounded(),
+                        new FiscalUnbounded()),
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalYear>()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_GenericMonth_reportingPeriod_and_unitOfTime_is_not_a_GenericMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Two),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Five)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Four),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Four),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Two),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.Twelve),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_GenericMonth_reportingPeriod_and_unitOfTime_is_not_a_GenericMonth()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Two),
+                        new GenericMonth(2016, MonthNumber.Six)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2016, MonthNumber.Five)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Two),
+                        new GenericMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2016, MonthNumber.Eight)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Five),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Five),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Five),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Two),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Eleven)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.One),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericMonth(2016, MonthNumber.Three),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_GenericQuarter_reportingPeriod_and_unitOfTime_is_not_a_GenericQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2019)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_GenericQuarter_reportingPeriod_and_unitOfTime_is_not_a_GenericQuarter()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2017, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Eight)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q1),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2018, QuarterNumber.Q3)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2018, QuarterNumber.Q4)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericQuarter(2016, QuarterNumber.Q1),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_false___When_parameter_unitOfTime_is_not_contained_within_a_GenericYear_reportingPeriod_and_unitOfTime_is_not_a_GenericYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_unitOfTime_is_contained_within_a_GenericYear_reportingPeriod_and_unitOfTime_is_not_a_GenericYear()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.Six)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2016),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericYear(2018)),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericYear(2018),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q2)
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void Contains_with_unitOfTime___Should_return_true___When_parameter_reportingPeriod_has_GenericUnbounded_Start_and_End()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericMonth>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericQuarter>()
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<GenericUnitOfTime>(
+                        new GenericUnbounded(),
+                        new GenericUnbounded()),
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericYear>()
+                }
+            };
+
+            // Act
+            var results = new List<bool>();
+            foreach (var test in tests)
+            {
+                results.Add(test.ReportingPeriod.Contains(test.UnitOfTime));
+            }
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
         public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
         {
             // Arrange
