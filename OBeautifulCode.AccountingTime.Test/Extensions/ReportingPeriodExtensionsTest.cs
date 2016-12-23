@@ -5302,6 +5302,121 @@ namespace OBeautifulCode.AccountingTime.Test
             results.ForEach(_ => _.Should().BeTrue());
         }
 
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_CalendarDay_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarDay()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_CalendarDay_and_contains_reportingPeriod2_which_does_not_use_CalendarDay()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_CalendarMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_CalendarMonth_and_contains_reportingPeriod2_which_does_not_use_CalendarMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_CalendarQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_CalendarQuarter_and_contains_reportingPeriod2_which_does_not_use_CalendarQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_CalendarYear_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_CalendarYear_and_contains_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_CalendarUnbounded_and_contains_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_FiscalMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_FiscalMonth_and_contains_reportingPeriod2_which_does_not_use_FiscalMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_FiscalQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_FiscalQuarter_and_contains_reportingPeriod2_which_does_not_use_FiscalQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_FiscalYear_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_FiscalYear_and_contains_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_FiscalUnbounded_and_contains_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_GenericMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_GenericMonth_and_contains_reportingPeriod2_which_does_not_use_GenericMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_GenericQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_GenericQuarter_and_contains_reportingPeriod2_which_does_not_use_GenericQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_false___When_reportingPeriod1_uses_GenericYear_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_GenericYear_and_contains_reportingPeriod2_which_does_not_use_GenericYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void Contains_with_reportingPeriods___Should_return_true___When_reportingPeriod1_uses_GenericUnbounded_and_contains_reportingPeriod2_which_does_not_use_GenericYear()
+        {
+        }
+
         [Fact]
         public static void HasOverlapWith___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
         {
@@ -5326,6 +5441,22 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_throw_ArgumentException___When_reporting_periods_have_different_UnitOfTimeKind()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var ex = Record.Exception(() => reportingPeriod1.HasOverlapWith(reportingPeriod2));
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
         }
 
         [Fact]
@@ -6086,6 +6217,163 @@ namespace OBeautifulCode.AccountingTime.Test
             hasOverlap6b.Should().BeTrue();
             hasOverlap7a.Should().BeTrue();
             hasOverlap7b.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_CalendarUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
+            var reportingPeriod2 = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
+
+            // Act
+            var hasOverlap = reportingPeriod1.HasOverlapWith(reportingPeriod2);
+
+            // Assert
+            hasOverlap.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_FiscalUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
+            var reportingPeriod2 = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
+
+            // Act
+            var hasOverlap = reportingPeriod1.HasOverlapWith(reportingPeriod2);
+
+            // Assert
+            hasOverlap.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_parameters_reportingPeriod1_and_reportingPeriod2_overlap_and_are_of_type_GenericUnbounded()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
+            var reportingPeriod2 = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
+
+            // Act
+            var hasOverlap = reportingPeriod1.HasOverlapWith(reportingPeriod2);
+
+            // Assert
+            hasOverlap.Should().BeTrue();
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_CalendarDay_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarDay()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_CalendarDay_and_contains_reportingPeriod2_which_does_not_use_CalendarDay()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_CalendarMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_CalendarMonth_and_contains_reportingPeriod2_which_does_not_use_CalendarMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_CalendarQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_CalendarQuarter_and_contains_reportingPeriod2_which_does_not_use_CalendarQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_CalendarYear_and_does_not_contain_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_CalendarYear_and_contains_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_CalendarUnbounded_and_contains_reportingPeriod2_which_does_not_use_CalendarYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_FiscalMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_FiscalMonth_and_contains_reportingPeriod2_which_does_not_use_FiscalMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_FiscalQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_FiscalQuarter_and_contains_reportingPeriod2_which_does_not_use_FiscalQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_FiscalYear_and_does_not_contain_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_FiscalYear_and_contains_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_FiscalUnbounded_and_contains_reportingPeriod2_which_does_not_use_FiscalYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_GenericMonth_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_GenericMonth_and_contains_reportingPeriod2_which_does_not_use_GenericMonth()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_GenericQuarter_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_GenericQuarter_and_contains_reportingPeriod2_which_does_not_use_GenericQuarter()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_uses_GenericYear_and_does_not_contain_reportingPeriod2_which_does_not_use_GenericYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_GenericYear_and_contains_reportingPeriod2_which_does_not_use_GenericYear()
+        {
+        }
+
+        [Fact(Skip = "too cumbersome to test for now")]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_uses_GenericUnbounded_and_contains_reportingPeriod2_which_does_not_use_GenericYear()
+        {
         }
 
         [Fact]

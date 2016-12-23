@@ -212,6 +212,11 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod2));
             }
 
+            if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}"));
+            }
+
             bool result =
                 reportingPeriod1.Contains(reportingPeriod2.Start) ||
                 reportingPeriod1.Contains(reportingPeriod2.End) ||
