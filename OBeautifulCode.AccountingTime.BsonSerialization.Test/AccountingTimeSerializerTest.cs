@@ -235,49 +235,49 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModel_without_nulls___Should_serialize_to_string_representation_of_ReportingPeriod___When_using_custom_UnitOfTime_serializers()
+        public static void ReportingPeriodModel_without_nulls___Should_serialize_to_ReportingPeriodPersistenceModel_representation_of_ReportingPeriod___When_using_custom_serializers()
         {
             // Arrange
             var model1 = A.Dummy<ReportingPeriodModel>();
             var model2 = A.Dummy<IReportingPeriodModel>();
 
             var expectedJson1 =
-                "\"" + nameof(model1.UnitOfTime) + "\" : \"" + model1.UnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarUnitOfTime) + "\" : \"" + model1.CalendarUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarDay) + "\" : \"" + model1.CalendarDay.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarMonth) + "\" : \"" + model1.CalendarMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarQuarter) + "\" : \"" + model1.CalendarQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarYear) + "\" : \"" + model1.CalendarYear.SerializeToString() + "\", " +
-                "\"" + nameof(model1.CalendarUnbounded) + "\" : \"" + model1.CalendarUnbounded.SerializeToString() + "\", " +
-                "\"" + nameof(model1.FiscalUnitOfTime) + "\" : \"" + model1.FiscalUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model1.FiscalMonth) + "\" : \"" + model1.FiscalMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model1.FiscalQuarter) + "\" : \"" + model1.FiscalQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model1.FiscalYear) + "\" : \"" + model1.FiscalYear.SerializeToString() + "\", " +
-                "\"" + nameof(model1.FiscalUnbounded) + "\" : \"" + model1.FiscalUnbounded.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericUnitOfTime) + "\" : \"" + model1.GenericUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericMonth) + "\" : \"" + model1.GenericMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericQuarter) + "\" : \"" + model1.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericYear) + "\" : \"" + model1.GenericYear.SerializeToString() + "\", " +
-                "\"" + nameof(model1.GenericUnbounded) + "\" : \"" + model1.GenericUnbounded.SerializeToString() + "\"";
+                "\"" + nameof(model1.UnitOfTime) + "\" : { \"Start\" : \"" + model1.UnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.UnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarUnitOfTime) + "\" : { \"Start\" : \"" + model1.CalendarUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarDay) + "\" : { \"Start\" : \"" + model1.CalendarDay.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarDay.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarMonth) + "\" : { \"Start\" : \"" + model1.CalendarMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarQuarter) + "\" : { \"Start\" : \"" + model1.CalendarQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarYear) + "\" : { \"Start\" : \"" + model1.CalendarYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.CalendarUnbounded) + "\" : { \"Start\" : \"" + model1.CalendarUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.CalendarUnbounded.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.FiscalUnitOfTime) + "\" : { \"Start\" : \"" + model1.FiscalUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.FiscalUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.FiscalMonth) + "\" : { \"Start\" : \"" + model1.FiscalMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.FiscalMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.FiscalQuarter) + "\" : { \"Start\" : \"" + model1.FiscalQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.FiscalQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.FiscalYear) + "\" : { \"Start\" : \"" + model1.FiscalYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.FiscalYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.FiscalUnbounded) + "\" : { \"Start\" : \"" + model1.FiscalUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.FiscalUnbounded.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.GenericUnitOfTime) + "\" : { \"Start\" : \"" + model1.GenericUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.GenericUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.GenericMonth) + "\" : { \"Start\" : \"" + model1.GenericMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.GenericMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.GenericQuarter) + "\" : { \"Start\" : \"" + model1.GenericQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.GenericQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.GenericYear) + "\" : { \"Start\" : \"" + model1.GenericYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.GenericYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model1.GenericUnbounded) + "\" : { \"Start\" : \"" + model1.GenericUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model1.GenericUnbounded.End.SerializeToSortableString() + "\" }";
 
             var expectedJson2 =
-                "\"" + nameof(model2.UnitOfTime) + "\" : \"" + model2.UnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarUnitOfTime) + "\" : \"" + model2.CalendarUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarDay) + "\" : \"" + model2.CalendarDay.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarMonth) + "\" : \"" + model2.CalendarMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarQuarter) + "\" : \"" + model2.CalendarQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarYear) + "\" : \"" + model2.CalendarYear.SerializeToString() + "\", " +
-                "\"" + nameof(model2.CalendarUnbounded) + "\" : \"" + model2.CalendarUnbounded.SerializeToString() + "\", " +
-                "\"" + nameof(model2.FiscalUnitOfTime) + "\" : \"" + model2.FiscalUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model2.FiscalMonth) + "\" : \"" + model2.FiscalMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model2.FiscalQuarter) + "\" : \"" + model2.FiscalQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model2.FiscalYear) + "\" : \"" + model2.FiscalYear.SerializeToString() + "\", " +
-                "\"" + nameof(model2.FiscalUnbounded) + "\" : \"" + model2.FiscalUnbounded.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericUnitOfTime) + "\" : \"" + model2.GenericUnitOfTime.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericMonth) + "\" : \"" + model2.GenericMonth.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericQuarter) + "\" : \"" + model2.GenericQuarter.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericYear) + "\" : \"" + model2.GenericYear.SerializeToString() + "\", " +
-                "\"" + nameof(model2.GenericUnbounded) + "\" : \"" + model2.GenericUnbounded.SerializeToString() + "\"";
+                "\"" + nameof(model2.UnitOfTime) + "\" : { \"Start\" : \"" + model2.UnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.UnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarUnitOfTime) + "\" : { \"Start\" : \"" + model2.CalendarUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarDay) + "\" : { \"Start\" : \"" + model2.CalendarDay.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarDay.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarMonth) + "\" : { \"Start\" : \"" + model2.CalendarMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarQuarter) + "\" : { \"Start\" : \"" + model2.CalendarQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarYear) + "\" : { \"Start\" : \"" + model2.CalendarYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.CalendarUnbounded) + "\" : { \"Start\" : \"" + model2.CalendarUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.CalendarUnbounded.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.FiscalUnitOfTime) + "\" : { \"Start\" : \"" + model2.FiscalUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.FiscalUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.FiscalMonth) + "\" : { \"Start\" : \"" + model2.FiscalMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.FiscalMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.FiscalQuarter) + "\" : { \"Start\" : \"" + model2.FiscalQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.FiscalQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.FiscalYear) + "\" : { \"Start\" : \"" + model2.FiscalYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.FiscalYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.FiscalUnbounded) + "\" : { \"Start\" : \"" + model2.FiscalUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.FiscalUnbounded.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.GenericUnitOfTime) + "\" : { \"Start\" : \"" + model2.GenericUnitOfTime.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.GenericUnitOfTime.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.GenericMonth) + "\" : { \"Start\" : \"" + model2.GenericMonth.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.GenericMonth.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.GenericQuarter) + "\" : { \"Start\" : \"" + model2.GenericQuarter.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.GenericQuarter.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.GenericYear) + "\" : { \"Start\" : \"" + model2.GenericYear.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.GenericYear.End.SerializeToSortableString() + "\" }, " +
+                "\"" + nameof(model2.GenericUnbounded) + "\" : { \"Start\" : \"" + model2.GenericUnbounded.Start.SerializeToSortableString() + "\", \"End\" : \"" + model2.GenericUnbounded.End.SerializeToSortableString() + "\" }";
 
             // Act
             var actualJson1 = model1.ToJson();
