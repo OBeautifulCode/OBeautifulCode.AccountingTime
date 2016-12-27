@@ -120,8 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
-    <None Include="OBeautifulCode.AccountingTime.DummyFactory.recipe-nuspec" />
-    <None Include="OBeautifulCode.AccountingTime.DummyFactory.template-nuspec" />
+    <None Include="OBeautifulCode.AccountingTime.Test.DummyFactory.recipe-nuspec" />
+    <None Include="OBeautifulCode.AccountingTime.Test.template-nuspec" />
     <None Include="packages.config" />
     <AdditionalFiles Include="..\common\stylecop.json">
       <Link>stylecop.json</Link>
