@@ -18,8 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>CODE_ANALYSIS;OBeautifulCodeAccountingTimeTestRecipesProject</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -31,8 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>CODE_ANALYSIS;OBeautifulCodeAccountingTimeTestRecipesProject</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -122,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
+    <None Include="OBeautifulCode.AccountingTime.DummyFactory.recipe-nuspec" />
+    <None Include="OBeautifulCode.AccountingTime.DummyFactory.template-nuspec" />
     <None Include="packages.config" />
     <AdditionalFiles Include="..\common\stylecop.json">
       <Link>stylecop.json</Link>
