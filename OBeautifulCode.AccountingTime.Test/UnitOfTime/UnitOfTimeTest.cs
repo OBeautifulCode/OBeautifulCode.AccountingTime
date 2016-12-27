@@ -77,7 +77,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
             var systemUnderTest1b = A.Dummy<UnitOfTime>();
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
@@ -181,7 +181,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
             var systemUnderTest1b = A.Dummy<UnitOfTime>();
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
@@ -260,7 +260,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Equals___Should_return_false___When_calling_typed_overload_and_objects_being_compared_have_different_property_values()
         {
             // Arrange
-            var systemUnderTest1a = A.Dummy<UnitOfTime>();
+            var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
             var systemUnderTest1b = A.Dummy<UnitOfTime>();
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
