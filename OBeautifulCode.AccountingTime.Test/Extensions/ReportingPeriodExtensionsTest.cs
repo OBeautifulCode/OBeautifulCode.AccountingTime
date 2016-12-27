@@ -8055,6 +8055,48 @@ namespace OBeautifulCode.AccountingTime.Test
             unitOfTimeKinds.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
+        [Fact]
+        public static void HasComponentWithUnboundedGranularity___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.HasComponentWithUnboundedGranularity(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void HasComponentWithUnboundedGranularity___Should_return_false___When_neither_the_Start_nor_End_component_has_an_Unbounded_UnitOfTimeGranularity()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
+
+            // Act
+            var result = reportingPeriod.HasComponentWithUnboundedGranularity();
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasComponentWithUnboundedGranularity___Should_return_true___When_either_the_Start_or_End_or_both_components_has_an_Unbounded_UnitOfTimeGranularity()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod2 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod3 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
+
+            // Act
+            var result1 = reportingPeriod1.HasComponentWithUnboundedGranularity();
+            var result2 = reportingPeriod2.HasComponentWithUnboundedGranularity();
+            var result3 = reportingPeriod3.HasComponentWithUnboundedGranularity();
+
+            // Assert
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+            result3.Should().BeTrue();
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

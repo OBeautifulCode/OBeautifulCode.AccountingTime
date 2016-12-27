@@ -457,6 +457,25 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <summary>
+        /// Determines if the reporting period has a component with unbounded granularity.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// true if one or both components of the reporting period has unbounded granularity; otherwise false.
+        /// </returns>
+        public static bool HasComponentWithUnboundedGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = (reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) ||
+                         (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+            return result;
+        }
+
         private static IReportingPeriod<UnitOfTime> ConvertToMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             var mostGranularStart = reportingPeriod.Start.ConvertToMostGranular();
