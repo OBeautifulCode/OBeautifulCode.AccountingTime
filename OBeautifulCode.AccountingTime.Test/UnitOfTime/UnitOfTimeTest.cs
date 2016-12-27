@@ -78,7 +78,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
-            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Year);
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
             var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
@@ -182,7 +182,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
-            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Year);
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
             var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);
@@ -261,7 +261,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1a = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity != UnitOfTimeGranularity.Year);
-            var systemUnderTest1b = A.Dummy<UnitOfTime>();
+            var systemUnderTest1b = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Year);
 
             var systemUnderTest2a = (UnitOfTime)A.Dummy<FiscalYear>();
             var systemUnderTest2b = (FiscalUnitOfTime)A.Dummy<FiscalYear>().ThatIs(_ => _.Year != ((FiscalYear)systemUnderTest2a).Year);

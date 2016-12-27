@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OBeautifulCode.AccountingTime.Test.DummyFactory</id>
+    <description>A dummy factory for AccountingTime types.</description>
+    <tags>accounting time fakeiteasy autofixture dummy factory</tags>
+    <developmentDependency>true</developmentDependency>
+    <dependencies>
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.44" />
+        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.76" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="DummyFactory.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Test\DummyFactory.cs" />
+  </files>
+</package>
