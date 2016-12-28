@@ -288,6 +288,18 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
             actualJson2.Should().Contain(expectedJson2);
         }
 
+        [Fact]
+        public static void Register___Should_not_throw___When_called_multiple_times()
+        {
+            // Arrange, Act
+            var ex1 = Record.Exception(() => AccountingTimeSerializer.Register());
+            var ex2 = Record.Exception(() => AccountingTimeSerializer.Register());
+
+            // Assert
+            ex1.Should().BeNull();
+            ex2.Should().BeNull();
+        }
+
         private class UnitOfTimeModel
         {
             // ReSharper disable UnusedAutoPropertyAccessor.Local

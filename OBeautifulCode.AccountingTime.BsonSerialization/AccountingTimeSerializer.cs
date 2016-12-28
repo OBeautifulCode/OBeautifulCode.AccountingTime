@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
     using System;
     using System.Linq;
 
+    using MongoDB.Bson;
     using MongoDB.Bson.Serialization;
 
     /// <summary>
@@ -37,9 +38,19 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
                     .ToList();
             unitOfTimeTypesToRegister.ForEach(
                 t =>
-                    BsonSerializer.RegisterSerializer(
-                        t,
-                        Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as IBsonSerializer));
+                {
+                    try
+                    {
+                        BsonSerializer.RegisterSerializer(
+                            t, 
+                            Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as IBsonSerializer);
+                    }
+                    catch (BsonSerializationException)
+                    {
+                        // get rid of this nonsense when this method is available:
+                        // https://github.com/mongodb/mongo-csharp-driver/pull/264
+                    }
+                });
 
             // register various flavors of IReportingPeriod
             var reportingPeriodType = typeof(IReportingPeriod<>);
@@ -57,9 +68,19 @@ namespace OBeautifulCode.AccountingTime.BsonSerialization
             {
                 unitOfTimeTypesToRegister.ForEach(
                     t =>
-                        BsonSerializer.RegisterSerializer(
-                            reportingPeriodTypeToRegister.MakeGenericType(t),
-                            Activator.CreateInstance(typeof(IReportingPeriodSerializer<>).MakeGenericType(reportingPeriodTypeToRegister.MakeGenericType(t))) as IBsonSerializer));
+                    {
+                        try
+                        {
+                            BsonSerializer.RegisterSerializer(
+                                reportingPeriodTypeToRegister.MakeGenericType(t),
+                                Activator.CreateInstance(typeof(IReportingPeriodSerializer<>).MakeGenericType(reportingPeriodTypeToRegister.MakeGenericType(t))) as IBsonSerializer);
+                        }
+                        catch (BsonSerializationException)
+                        {
+                            // get rid of this nonsense when this method is available:
+                            // https://github.com/mongodb/mongo-csharp-driver/pull/264
+                        }
+                    });
             }
         }
     }
