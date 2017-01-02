@@ -446,6 +446,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// The kind of the unit-of-time used in the specified reporting period.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static UnitOfTimeKind GetUnitOfTimeKind(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
@@ -454,6 +455,31 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = reportingPeriod.Start.UnitOfTimeKind;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the granularity of the unit-of-time used in a reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The granularity of the unit-of-time used in the specified reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod{T}.Start"/> and <see cref="ReportingPeriod{T}.End"/> has different granularity.</exception>
+        public static UnitOfTimeGranularity GetUnitOfTimeGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} Start and End has different granularity."));
+            }
+
+            var result = reportingPeriod.Start.UnitOfTimeGranularity;
             return result;
         }
 
