@@ -143,8 +143,8 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}"));
             }
 
-            reportingPeriod1 = reportingPeriod1.ConvertToMostGranular();
-            reportingPeriod2 = reportingPeriod2.ConvertToMostGranular();
+            reportingPeriod1 = reportingPeriod1.MakeMostGranular();
+            reportingPeriod2 = reportingPeriod2.MakeMostGranular();
 
             bool startIsContained;
             if (reportingPeriod1.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
@@ -502,17 +502,15 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        private static IReportingPeriod<UnitOfTime> MakeMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-
-        private static IReportingPeriod<UnitOfTime> ConvertToMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
-        {
-            var mostGranularStart = reportingPeriod.Start.ConvertToMostGranular();
-            var mostGranularEnd = reportingPeriod.End.ConvertToMostGranular();
+            var mostGranularStart = reportingPeriod.Start.MakeMostGranular();
+            var mostGranularEnd = reportingPeriod.End.MakeMostGranular();
             var result = new ReportingPeriod<UnitOfTime>(mostGranularStart.Start, mostGranularEnd.End);
             return result;
         }
 
-        private static IReportingPeriod<UnitOfTime> ConvertToMostGranular(this UnitOfTime unitOfTime)
+        private static IReportingPeriod<UnitOfTime> MakeMostGranular(this UnitOfTime unitOfTime)
         {
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
