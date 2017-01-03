@@ -198,6 +198,141 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Converts a <see cref="GenericUnitOfTime"/> to a specified kind of unit-of-time.
+        /// </summary>
+        /// <param name="genericUnitOfTime">The generic unit-of-time to convert.</param>
+        /// <param name="unitOfTimeKind">The kind of unit-of-time to convert to.</param>
+        /// <returns>
+        /// The specified unit-of-time converted to the specified kind of unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="genericUnitOfTime"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="unitOfTimeKind"/> is <see cref="UnitOfTimeKind.Invalid"/>.</exception>
+        public static UnitOfTime ToKind(this GenericUnitOfTime genericUnitOfTime, UnitOfTimeKind unitOfTimeKind)
+        {
+            if (genericUnitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(genericUnitOfTime));
+            }
+
+            if (unitOfTimeKind == UnitOfTimeKind.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(unitOfTimeKind)} is {nameof(UnitOfTimeKind.Invalid)}"));
+            }
+
+            UnitOfTime result;
+            if (unitOfTimeKind == UnitOfTimeKind.Generic)
+            {
+                result = genericUnitOfTime.ToGeneric();
+            }
+            else if (unitOfTimeKind == UnitOfTimeKind.Calendar)
+            {
+                result = genericUnitOfTime.ToCalendar();
+            }
+            else if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
+            {
+                result = genericUnitOfTime.ToFiscal();
+            }
+            else
+            {
+                throw new NotSupportedException("This unit-of-time kind is not supported: " + unitOfTimeKind);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="GenericUnitOfTime"/> to a <see cref="CalendarUnitOfTime"/>.
+        /// </summary>
+        /// <param name="genericUnitOfTime">The generic unit-of-time to convert.</param>
+        /// <returns>
+        /// The specified generic unit-of-time converted to a calendar unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="genericUnitOfTime"/> is null.</exception>
+        public static CalendarUnitOfTime ToCalendar(this GenericUnitOfTime genericUnitOfTime)
+        {
+            if (genericUnitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(genericUnitOfTime));
+            }
+
+            // ReSharper disable PossibleNullReferenceException
+            switch (genericUnitOfTime.UnitOfTimeGranularity)
+            {
+                case UnitOfTimeGranularity.Month:
+                    var genericMonth = genericUnitOfTime as GenericMonth;
+                    return new CalendarMonth(genericMonth.Year, (MonthOfYear)genericMonth.MonthNumber);
+                case UnitOfTimeGranularity.Quarter:
+                    var genericQuarter = genericUnitOfTime as GenericQuarter;
+                    return new CalendarQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
+                case UnitOfTimeGranularity.Year:
+                    var genericYear = genericUnitOfTime as GenericYear;
+                    return new CalendarYear(genericYear.Year);
+                case UnitOfTimeGranularity.Unbounded:
+                    return new CalendarUnbounded();
+                default:
+                    throw new NotSupportedException("The generic unit-of-time has this granularity, which is not supported: " + genericUnitOfTime.UnitOfTimeGranularity);
+            }
+
+            // ReSharper restore PossibleNullReferenceException
+        }
+
+        /// <summary>
+        /// Converts a <see cref="GenericUnitOfTime"/> to a <see cref="FiscalUnitOfTime"/>.
+        /// </summary>
+        /// <param name="genericUnitOfTime">The generic unit-of-time to convert.</param>
+        /// <returns>
+        /// The specified generic unit-of-time converted to a fiscal unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="genericUnitOfTime"/> is null.</exception>
+        public static FiscalUnitOfTime ToFiscal(this GenericUnitOfTime genericUnitOfTime)
+        {
+            if (genericUnitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(genericUnitOfTime));
+            }
+
+            // ReSharper disable PossibleNullReferenceException
+            switch (genericUnitOfTime.UnitOfTimeGranularity)
+            {
+                case UnitOfTimeGranularity.Month:
+                    var genericMonth = genericUnitOfTime as GenericMonth;
+                    return new FiscalMonth(genericMonth.Year, genericMonth.MonthNumber);
+                case UnitOfTimeGranularity.Quarter:
+                    var genericQuarter = genericUnitOfTime as GenericQuarter;
+                    return new FiscalQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
+                case UnitOfTimeGranularity.Year:
+                    var genericYear = genericUnitOfTime as GenericYear;
+                    return new FiscalYear(genericYear.Year);
+                case UnitOfTimeGranularity.Unbounded:
+                    return new FiscalUnbounded();
+                default:
+                    throw new NotSupportedException("The generic unit-of-time has this granularity, which is not supported: " + genericUnitOfTime.UnitOfTimeGranularity);
+            }
+
+            // ReSharper restore PossibleNullReferenceException
+        }
+
+        /// <summary>
+        /// Converts a <see cref="GenericUnitOfTime"/> to a <see cref="GenericUnitOfTime"/>.
+        /// </summary>
+        /// <param name="genericUnitOfTime">The generic unit-of-time to convert.</param>
+        /// <returns>
+        /// The specified generic unit-of-time converted to a generic unit-of-time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="genericUnitOfTime"/> is null.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "This method is here for completeness against the other GenericUnitOfTime conversion methods.")]
+        public static GenericUnitOfTime ToGeneric(this GenericUnitOfTime genericUnitOfTime)
+        {
+            if (genericUnitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(genericUnitOfTime));
+            }
+
+            var result = genericUnitOfTime.Clone<GenericUnitOfTime>();
+            return result;
+        }
+
+        /// <summary>
         /// Adds the specified number of units to a unit-of-time.
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time to add to.</param>
