@@ -267,7 +267,7 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            if ((reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded))
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
             }
@@ -306,7 +306,7 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            if ((reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded))
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
             }
