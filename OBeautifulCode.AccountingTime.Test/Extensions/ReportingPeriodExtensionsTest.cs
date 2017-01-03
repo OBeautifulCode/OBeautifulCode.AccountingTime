@@ -1075,6 +1075,157 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2019, QuarterNumber.Q3)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2019, QuarterNumber.Q4)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2019, QuarterNumber.Q3))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                    ExpectedCount = 31 + 30 + 31
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty) },
+                    ExpectedCount = 548
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
         public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
@@ -1118,6 +1269,1170 @@ namespace OBeautifulCode.AccountingTime.Test
             // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
             // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.June)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.September)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.December)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.May)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.August)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.November)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.November)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2018, MonthOfYear.December)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.November)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2018, MonthOfYear.December)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2018, MonthOfYear.December)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.November)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.November)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.February)),
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.April))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.September)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.June)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.September)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.November)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) },
+                    ExpectedCount = 30
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.November)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.Thirty) },
+                    ExpectedCount = 365 + 30
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.Thirty)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.TwentyNine)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.Thirty)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyNine)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.April, DayOfMonth.Thirty)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.Thirty)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Three), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.One)),
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.ThirtyOne))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Month))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.December, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),  },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two) },
+                    ExpectedCount = 1
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Four), },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Eight), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Nine), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten) },
+                    ExpectedCount = 30 + 28 + 10
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three), new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Six), new FiscalMonth(2018, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Eight), new FiscalMonth(2018, MonthNumber.Nine), new FiscalMonth(2018, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Twelve) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2019, QuarterNumber.Q3)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2019, QuarterNumber.Q4)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2019, QuarterNumber.Q3))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q2)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Seven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2019, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2019, MonthNumber.Twelve))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Six)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Nine)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Five)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Eight)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Four))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Nine)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Six)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Nine)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Three)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three), new GenericMonth(2018, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Six), new GenericMonth(2018, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Eight), new GenericMonth(2018, MonthNumber.Nine), new GenericMonth(2018, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Twelve) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2019, QuarterNumber.Q3)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2019, QuarterNumber.Q4)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2019, QuarterNumber.Q3))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q2)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2019, MonthNumber.Seven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2019, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2019, MonthNumber.Twelve))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Six)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Nine)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Five)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Eight)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2018, MonthNumber.Twelve)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Eleven)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Two)),
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Four))
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Nine)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Six)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Nine)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3) }
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Twelve)),
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) }
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Three)),
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) }
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            // ReSharper disable CoVariantArrayConversion
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+            // ReSharper restore CoVariantArrayConversion
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Three)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
