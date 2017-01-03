@@ -100,6 +100,104 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Converts a <see cref="FiscalQuarter"/> to a <see cref="CalendarQuarter"/>.
+        /// </summary>
+        /// <param name="calendarQuarter">The calendar quarter to convert.</param>
+        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
+        /// <returns>
+        /// The fiscal quarter associated with the specified calendar quarter.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        public static FiscalQuarter ToFiscalQuarter(this CalendarQuarter calendarQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        {
+            if (calendarQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(calendarQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
+            }
+
+            int offset;
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
+            {
+                offset = 1;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
+            {
+                offset = 2;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
+            {
+                offset = 3;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
+            {
+                offset = 0;
+            }
+            else
+            {
+                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
+            }
+
+            var fiscalQuarter = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
+            fiscalQuarter = fiscalQuarter.Plus(offset);
+            return fiscalQuarter;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="CalendarQuarter"/> to a <see cref="FiscalQuarter"/>.
+        /// </summary>
+        /// <param name="fiscalQuarter">The fiscal quarter to convert.</param>
+        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
+        /// <returns>
+        /// The calendar quarter associated with the specified fiscal quarter.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="fiscalQuarter"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        public static CalendarQuarter ToCalendarQuarter(this FiscalQuarter fiscalQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        {
+            if (fiscalQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
+            }
+
+            int offset;
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
+            {
+                offset = -1;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
+            {
+                offset = -2;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
+            {
+                offset = -3;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
+            {
+                offset = 0;
+            }
+            else
+            {
+                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
+            }
+
+            var calendarQuarter = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
+            calendarQuarter = calendarQuarter.Plus(offset);
+            return calendarQuarter;
+        }
+
+        /// <summary>
         /// Adds the specified number of units to a unit-of-time.
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time to add to.</param>
@@ -296,104 +394,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             throw new InvalidOperationException("should not get here");
-        }
-
-        /// <summary>
-        /// Converts a <see cref="FiscalQuarter"/> to a <see cref="CalendarQuarter"/>.
-        /// </summary>
-        /// <param name="calendarQuarter">The calendar quarter to convert.</param>
-        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
-        /// <returns>
-        /// The fiscal quarter associated with the specified calendar quarter.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
-        public static FiscalQuarter ToFiscalQuarter(this CalendarQuarter calendarQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
-        {
-            if (calendarQuarter == null)
-            {
-                throw new ArgumentNullException(nameof(calendarQuarter));
-            }
-
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
-            }
-
-            int offset;
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
-            {
-                offset = 1;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
-            {
-                offset = 2;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
-            {
-                offset = 3;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
-            {
-                offset = 0;
-            }
-            else
-            {
-                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
-            }
-
-            var fiscalQuarter = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
-            fiscalQuarter = fiscalQuarter.Plus(offset);
-            return fiscalQuarter;
-        }
-
-        /// <summary>
-        /// Converts a <see cref="CalendarQuarter"/> to a <see cref="FiscalQuarter"/>.
-        /// </summary>
-        /// <param name="fiscalQuarter">The fiscal quarter to convert.</param>
-        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
-        /// <returns>
-        /// The calendar quarter associated with the specified fiscal quarter.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="fiscalQuarter"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
-        public static CalendarQuarter ToCalendarQuarter(this FiscalQuarter fiscalQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
-        {
-            if (fiscalQuarter == null)
-            {
-                throw new ArgumentNullException(nameof(fiscalQuarter));
-            }
-
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
-            }
-
-            int offset;
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
-            {
-                offset = -1;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
-            {
-                offset = -2;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
-            {
-                offset = -3;
-            }
-            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
-            {
-                offset = 0;
-            }
-            else
-            {
-                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
-            }
-
-            var calendarQuarter = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
-            calendarQuarter = calendarQuarter.Plus(offset);
-            return calendarQuarter;
         }
 
         /// <summary>

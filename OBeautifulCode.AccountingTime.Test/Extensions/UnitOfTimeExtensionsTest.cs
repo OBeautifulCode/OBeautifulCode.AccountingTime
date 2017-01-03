@@ -17,6 +17,8 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
+    using Naos.Recipes.TupleInitializers;
+
     using Xunit;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
@@ -95,6 +97,146 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             actualYear.Should().BeOfType<GenericYear>();
             actualYear.Year.Should().Be(systemUnderTest.Year);
+        }
+
+        [Fact]
+        public static void ToFiscalQuarter___Should_throw_ArgumentNullException___When_parameter_calendarQuarter_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.ToFiscalQuarter(null, A.Dummy<QuarterNumber>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToFiscalQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => A.Dummy<CalendarQuarter>().ToFiscalQuarter(QuarterNumber.Invalid));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void ToFiscalQuarter___Should_adjust_calendar_quarter_to_fiscal_quarter___When_called()
+        {
+            // Arrange
+            // note: See green and yellow highlighted area in embedded spreadsheet FiscalQuarterToCalendarQuarter.xlsx
+            var calQuarter2 = new CalendarQuarter(2013, QuarterNumber.Q2);
+            var calQuarter1 = new CalendarQuarter(2013, QuarterNumber.Q1);
+            var calQuarter3 = new CalendarQuarter(2013, QuarterNumber.Q3);
+            var calQuarter4 = new CalendarQuarter(2013, QuarterNumber.Q4);
+
+            // Act
+            var fiscalQuarter1a = calQuarter1.ToFiscalQuarter((QuarterNumber)4);
+            var fiscalQuarter1b = calQuarter1.ToFiscalQuarter((QuarterNumber)3);
+            var fiscalQuarter1c = calQuarter1.ToFiscalQuarter((QuarterNumber)2);
+            var fiscalQuarter1d = calQuarter1.ToFiscalQuarter((QuarterNumber)1);
+
+            var fiscalQuarter2a = calQuarter2.ToFiscalQuarter((QuarterNumber)4);
+            var fiscalQuarter2b = calQuarter2.ToFiscalQuarter((QuarterNumber)3);
+            var fiscalQuarter2c = calQuarter2.ToFiscalQuarter((QuarterNumber)2);
+            var fiscalQuarter2d = calQuarter2.ToFiscalQuarter((QuarterNumber)1);
+
+            var fiscalQuarter3a = calQuarter3.ToFiscalQuarter((QuarterNumber)4);
+            var fiscalQuarter3b = calQuarter3.ToFiscalQuarter((QuarterNumber)3);
+            var fiscalQuarter3c = calQuarter3.ToFiscalQuarter((QuarterNumber)2);
+            var fiscalQuarter3d = calQuarter3.ToFiscalQuarter((QuarterNumber)1);
+
+            var fiscalQuarter4a = calQuarter4.ToFiscalQuarter((QuarterNumber)4);
+            var fiscalQuarter4b = calQuarter4.ToFiscalQuarter((QuarterNumber)3);
+            var fiscalQuarter4c = calQuarter4.ToFiscalQuarter((QuarterNumber)2);
+            var fiscalQuarter4d = calQuarter4.ToFiscalQuarter((QuarterNumber)1);
+
+            // Assert
+            fiscalQuarter1a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)2));
+            fiscalQuarter1b.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
+            fiscalQuarter1c.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
+            fiscalQuarter1d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)1));
+            fiscalQuarter2a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
+            fiscalQuarter2b.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
+            fiscalQuarter2c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
+            fiscalQuarter2d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)2));
+            fiscalQuarter3a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
+            fiscalQuarter3b.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
+            fiscalQuarter3c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)2));
+            fiscalQuarter3d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
+            fiscalQuarter4a.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
+            fiscalQuarter4b.Should().Be(new FiscalQuarter(2014, (QuarterNumber)2));
+            fiscalQuarter4c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)3));
+            fiscalQuarter4d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
+        }
+
+        [Fact]
+        public static void ToCalendarQuarter___Should_throw_ArgumentNullException___When_parameter_fiscalQuarter_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.ToCalendarQuarter(null, A.Dummy<QuarterNumber>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToCalendarQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => A.Dummy<FiscalQuarter>().ToCalendarQuarter(QuarterNumber.Invalid));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void ToCalendarQuarter___Should_adjust_fiscal_quarter_to_calendar_quarter___When_called()
+        {
+            // Arrange
+            // note: See red and green highlighted area in embedded spreadsheet FiscalQuarterToCalendarQuarter.xlsx
+            var expected1 = new CalendarQuarter(2013, (QuarterNumber)3);
+            var expected2 = new CalendarQuarter(2013, (QuarterNumber)2);
+            var expected3 = new CalendarQuarter(2013, (QuarterNumber)1);
+            var expected4 = new CalendarQuarter(2012, (QuarterNumber)4);
+
+            // Act
+            var actual1a = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)4);
+            var actual1b = new FiscalQuarter(2014, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)3);
+            var actual1c = new FiscalQuarter(2014, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)2);
+            var actual1d = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)1);
+
+            var actual2a = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)4);
+            var actual2b = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)3);
+            var actual2c = new FiscalQuarter(2014, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)2);
+            var actual2d = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)1);
+
+            var actual3a = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)4);
+            var actual3b = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)3);
+            var actual3c = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)2);
+            var actual3d = new FiscalQuarter(2013, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)1);
+
+            var actual4a = new FiscalQuarter(2013, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)4);
+            var actual4b = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)3);
+            var actual4c = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)2);
+            var actual4d = new FiscalQuarter(2012, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)1);
+
+            // Assert
+            actual1a.Should().Be(expected1);
+            actual1b.Should().Be(expected1);
+            actual1c.Should().Be(expected1);
+            actual1d.Should().Be(expected1);
+            actual2a.Should().Be(expected2);
+            actual2b.Should().Be(expected2);
+            actual2c.Should().Be(expected2);
+            actual2d.Should().Be(expected2);
+            actual3a.Should().Be(expected3);
+            actual3b.Should().Be(expected3);
+            actual3c.Should().Be(expected3);
+            actual3d.Should().Be(expected3);
+            actual4a.Should().Be(expected4);
+            actual4b.Should().Be(expected4);
+            actual4c.Should().Be(expected4);
+            actual4d.Should().Be(expected4);
         }
 
         [Fact]
@@ -1038,146 +1180,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
-        }
-
-        [Fact]
-        public static void ToFiscalQuarter___Should_throw_ArgumentNullException___When_parameter_calendarQuarter_is_null()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.ToFiscalQuarter(null, A.Dummy<QuarterNumber>()));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        public static void ToFiscalQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => A.Dummy<CalendarQuarter>().ToFiscalQuarter(QuarterNumber.Invalid));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentException>();
-        }
-
-        [Fact]
-        public static void ToFiscalQuarter___Should_adjust_calendar_quarter_to_fiscal_quarter___When_called()
-        {
-            // Arrange
-            // note: See green and yellow highlighted area in embedded spreadsheet FiscalQuarterToCalendarQuarter.xlsx
-            var calQuarter2 = new CalendarQuarter(2013, QuarterNumber.Q2);
-            var calQuarter1 = new CalendarQuarter(2013, QuarterNumber.Q1);
-            var calQuarter3 = new CalendarQuarter(2013, QuarterNumber.Q3);
-            var calQuarter4 = new CalendarQuarter(2013, QuarterNumber.Q4);
-
-            // Act
-            var fiscalQuarter1a = calQuarter1.ToFiscalQuarter((QuarterNumber)4);
-            var fiscalQuarter1b = calQuarter1.ToFiscalQuarter((QuarterNumber)3);
-            var fiscalQuarter1c = calQuarter1.ToFiscalQuarter((QuarterNumber)2);
-            var fiscalQuarter1d = calQuarter1.ToFiscalQuarter((QuarterNumber)1);
-
-            var fiscalQuarter2a = calQuarter2.ToFiscalQuarter((QuarterNumber)4);
-            var fiscalQuarter2b = calQuarter2.ToFiscalQuarter((QuarterNumber)3);
-            var fiscalQuarter2c = calQuarter2.ToFiscalQuarter((QuarterNumber)2);
-            var fiscalQuarter2d = calQuarter2.ToFiscalQuarter((QuarterNumber)1);
-
-            var fiscalQuarter3a = calQuarter3.ToFiscalQuarter((QuarterNumber)4);
-            var fiscalQuarter3b = calQuarter3.ToFiscalQuarter((QuarterNumber)3);
-            var fiscalQuarter3c = calQuarter3.ToFiscalQuarter((QuarterNumber)2);
-            var fiscalQuarter3d = calQuarter3.ToFiscalQuarter((QuarterNumber)1);
-
-            var fiscalQuarter4a = calQuarter4.ToFiscalQuarter((QuarterNumber)4);
-            var fiscalQuarter4b = calQuarter4.ToFiscalQuarter((QuarterNumber)3);
-            var fiscalQuarter4c = calQuarter4.ToFiscalQuarter((QuarterNumber)2);
-            var fiscalQuarter4d = calQuarter4.ToFiscalQuarter((QuarterNumber)1);
-
-            // Assert
-            fiscalQuarter1a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)2));
-            fiscalQuarter1b.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
-            fiscalQuarter1c.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
-            fiscalQuarter1d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)1));
-            fiscalQuarter2a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
-            fiscalQuarter2b.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
-            fiscalQuarter2c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
-            fiscalQuarter2d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)2));
-            fiscalQuarter3a.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
-            fiscalQuarter3b.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
-            fiscalQuarter3c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)2));
-            fiscalQuarter3d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)3));
-            fiscalQuarter4a.Should().Be(new FiscalQuarter(2014, (QuarterNumber)1));
-            fiscalQuarter4b.Should().Be(new FiscalQuarter(2014, (QuarterNumber)2));
-            fiscalQuarter4c.Should().Be(new FiscalQuarter(2014, (QuarterNumber)3));
-            fiscalQuarter4d.Should().Be(new FiscalQuarter(2013, (QuarterNumber)4));
-        }
-
-        [Fact]
-        public static void ToCalendarQuarter___Should_throw_ArgumentNullException___When_parameter_fiscalQuarter_is_null()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.ToCalendarQuarter(null, A.Dummy<QuarterNumber>()));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        public static void ToCalendarQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => A.Dummy<FiscalQuarter>().ToCalendarQuarter(QuarterNumber.Invalid));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentException>();
-        }
-
-        [Fact]
-        public static void ToCalendarQuarter___Should_adjust_fiscal_quarter_to_calendar_quarter___When_called()
-        {
-            // Arrange
-            // note: See red and green highlighted area in embedded spreadsheet FiscalQuarterToCalendarQuarter.xlsx
-            var expected1 = new CalendarQuarter(2013, (QuarterNumber)3);
-            var expected2 = new CalendarQuarter(2013, (QuarterNumber)2);
-            var expected3 = new CalendarQuarter(2013, (QuarterNumber)1);
-            var expected4 = new CalendarQuarter(2012, (QuarterNumber)4);
-
-            // Act
-            var actual1a = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)4);
-            var actual1b = new FiscalQuarter(2014, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)3);
-            var actual1c = new FiscalQuarter(2014, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)2);
-            var actual1d = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)1);
-
-            var actual2a = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)4);
-            var actual2b = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)3);
-            var actual2c = new FiscalQuarter(2014, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)2);
-            var actual2d = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)1);
-
-            var actual3a = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)4);
-            var actual3b = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)3);
-            var actual3c = new FiscalQuarter(2013, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)2);
-            var actual3d = new FiscalQuarter(2013, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)1);
-
-            var actual4a = new FiscalQuarter(2013, (QuarterNumber)1).ToCalendarQuarter((QuarterNumber)4);
-            var actual4b = new FiscalQuarter(2013, (QuarterNumber)2).ToCalendarQuarter((QuarterNumber)3);
-            var actual4c = new FiscalQuarter(2013, (QuarterNumber)3).ToCalendarQuarter((QuarterNumber)2);
-            var actual4d = new FiscalQuarter(2012, (QuarterNumber)4).ToCalendarQuarter((QuarterNumber)1);
-
-            // Assert
-            actual1a.Should().Be(expected1);
-            actual1b.Should().Be(expected1);
-            actual1c.Should().Be(expected1);
-            actual1d.Should().Be(expected1);
-            actual2a.Should().Be(expected2);
-            actual2b.Should().Be(expected2);
-            actual2c.Should().Be(expected2);
-            actual2d.Should().Be(expected2);
-            actual3a.Should().Be(expected3);
-            actual3b.Should().Be(expected3);
-            actual3c.Should().Be(expected3);
-            actual3d.Should().Be(expected3);
-            actual4a.Should().Be(expected4);
-            actual4b.Should().Be(expected4);
-            actual4c.Should().Be(expected4);
-            actual4d.Should().Be(expected4);
         }
 
         [Fact]
