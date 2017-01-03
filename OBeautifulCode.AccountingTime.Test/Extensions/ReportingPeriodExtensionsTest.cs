@@ -8158,6 +8158,71 @@ namespace OBeautifulCode.AccountingTime.Test
             result3.Should().BeTrue();
         }
 
+        [Fact]
+        public static void ToCalendar_with_IReportingPeriod_of_GenericUnitOfTime___Should_throw_ArgumentNullException___When_parameter_genericUnitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToCalendar(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToCalendar_with_IReportingPeriod_of_GenericUnitOfTime___Should_return_the_reportingPeriod_converted_into_an_IReportingPeriod_of_CalendarUnitOfTime____When_called()
+        {
+            // Arrange
+            var toConvert = new List<Tuple<IReportingPeriod<GenericUnitOfTime>, IReportingPeriod<CalendarUnitOfTime>>>
+            {
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Six)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.June))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericMonth(2017, MonthNumber.Six)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2017, MonthOfYear.June))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2017, MonthNumber.Eleven), new GenericUnbounded()),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarMonth(2017, MonthOfYear.November), new CalendarUnbounded())
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericQuarter(2018, QuarterNumber.Q4)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarQuarter(2018, QuarterNumber.Q4))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericUnbounded()),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarUnbounded())
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericYear(2017), new GenericYear(2018)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarYear(2017), new CalendarYear(2018))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericYear(2018)),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarYear(2018))
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericYear(2017), new GenericUnbounded()),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarYear(2017), new CalendarUnbounded())
+                },
+                {
+                    new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), new GenericUnbounded()),
+                    new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarUnbounded())
+                }
+            };
+
+            // Act
+            var results = toConvert.Select(_ => new { Actual = _.Item1.ToCalendar(), Expected = _.Item2 }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }
