@@ -198,6 +198,24 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Creates a reporting period from a unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time to use in the reporting period.</param>
+        /// <returns>
+        /// A reporting period where the Start and End components are equal to the specified unit-of-time.
+        /// </returns>
+        public static IReportingPeriod<UnitOfTime> ToReportingPeriod(this UnitOfTime unitOfTime)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+            return result;
+        }
+
+        /// <summary>
         /// Adds the specified number of units to a unit-of-time.
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time to add to.</param>

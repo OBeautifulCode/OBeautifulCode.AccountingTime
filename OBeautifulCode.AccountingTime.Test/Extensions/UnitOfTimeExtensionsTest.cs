@@ -240,6 +240,30 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void ToReportingPeriod___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.ToReportingPeriod(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToReportingPeriod___Should_return_a_reporting_period_with_Start_and_End_equal_to_unitOfTime___When_called()
+        {
+            // Arrange,
+            var unitOfTime = A.Dummy<UnitOfTime>();
+
+            // Act
+            var reportingPeriod = unitOfTime.ToReportingPeriod();
+
+            // Assert
+            reportingPeriod.Start.Should().Be(unitOfTime);
+            reportingPeriod.End.Should().Be(unitOfTime);
+        }
+
+        [Fact]
         public static void Plus___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
             // Arrange, Act
