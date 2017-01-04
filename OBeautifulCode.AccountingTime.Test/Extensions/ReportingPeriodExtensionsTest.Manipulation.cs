@@ -2435,6 +2435,32 @@ namespace OBeautifulCode.AccountingTime.Test
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
+        [Fact]
+        public static void ToMostGranular___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToMostGranular(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToMostGranular___Should_return_a_reporting_period_whose_Start_is_the_most_granular_reportingPeriod_Start_and_whose_End_is_the_most_granular_reportingPeriod_End()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>();
+            var mostGranularStart = reportingPeriod.Start.ToMostGranular();
+            var mostGranularEnd = reportingPeriod.End.ToMostGranular();
+            var expectedReportingPeriod = new ReportingPeriod<UnitOfTime>(mostGranularStart.Start, mostGranularEnd.End);
+
+            // Act
+            var actualReportingPeriod = reportingPeriod.ToMostGranular();
+
+            // Assert
+            actualReportingPeriod.Should().Be(expectedReportingPeriod);
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

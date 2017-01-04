@@ -177,109 +177,27 @@ namespace OBeautifulCode.AccountingTime
             }
         }
 
-        private static IReportingPeriod<UnitOfTime> MakeMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        /// <summary>
+        /// Converts the the specified reporting period into the most
+        /// granular possible, but equivalent, reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to operate on.</param>
+        /// <returns>
+        /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
+        /// but is the most granular version possible of that reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static IReportingPeriod<UnitOfTime> ToMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            var mostGranularStart = reportingPeriod.Start.MakeMostGranular();
-            var mostGranularEnd = reportingPeriod.End.MakeMostGranular();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var mostGranularStart = reportingPeriod.Start.ToMostGranular();
+            var mostGranularEnd = reportingPeriod.End.ToMostGranular();
             var result = new ReportingPeriod<UnitOfTime>(mostGranularStart.Start, mostGranularEnd.End);
             return result;
-        }
-
-        private static IReportingPeriod<UnitOfTime> MakeMostGranular(this UnitOfTime unitOfTime)
-        {
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
-            {
-                var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
-                return result;
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
-            {
-                // ReSharper disable PossibleNullReferenceException
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
-                {
-                    var calendarYear = unitOfTime as CalendarYear;
-                    var result = new ReportingPeriod<UnitOfTime>(calendarYear.GetFirstCalendarDay(), calendarYear.GetLastCalendarDay());
-                    return result;
-                }
-
-                var year = unitOfTime as IHaveAYear;
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(year.Year, MonthNumber.One), new FiscalMonth(year.Year, MonthNumber.Twelve));
-                    return result;
-                }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(year.Year, MonthNumber.One), new GenericMonth(year.Year, MonthNumber.Twelve));
-                    return result;
-                }
-
-                // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
-            {
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
-                {
-                    var calendarQuarter = unitOfTime as CalendarQuarter;
-                    var result = new ReportingPeriod<UnitOfTime>(calendarQuarter.GetFirstCalendarDay(), calendarQuarter.GetLastCalendarDay());
-                    return result;
-                }
-
-                // ReSharper disable PossibleNullReferenceException
-                var quarter = unitOfTime as IHaveAQuarter;
-                var startMonth = (((int)quarter.QuarterNumber - 1) * 3) + 1;
-                var endMonth = (int)quarter.QuarterNumber * 3;
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(quarter.Year, (MonthNumber)startMonth), new FiscalMonth(quarter.Year, (MonthNumber)endMonth));
-                    return result;
-                }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(quarter.Year, (MonthNumber)startMonth), new GenericMonth(quarter.Year, (MonthNumber)endMonth));
-                    return result;
-                }
-
-                // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
-            {
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
-                {
-                    var calendarMonth = unitOfTime as CalendarMonth;
-                    var result = new ReportingPeriod<UnitOfTime>(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
-                    return result;
-                }
-
-                if ((unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal) || (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic))
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
-                    return result;
-                }
-
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Day)
-            {
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
-                {
-                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
-                    return result;
-                }
-
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
-            }
-
-            throw new NotSupportedException("This granularity is not supported: " + unitOfTime.UnitOfTimeGranularity);
         }
 
         private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
