@@ -52,7 +52,10 @@
     <Compile Include="AccountingPeriodSystem\DateTimeExtensions.cs" />
     <Compile Include="Extensions\OverflowStrategy.cs" />
     <Compile Include="Extensions\QuarterNumberExtensions.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensions.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Manipulation.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Properties.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Serialization.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.cs" />
     <Compile Include="Extensions\UnitOfTimeGranularityExtensions.cs" />
     <Compile Include="ReportingPeriod\IReportingPeriod{T}.cs" />

@@ -99,9 +99,10 @@
     <Compile Include="Common.cs" />
     <Compile Include="DummyFactory.cs" />
     <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensionsContainmentTest.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensionsSerializationTest.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensionsTest.Comparison.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensionsTest.Manipulation.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensionsTest.Serialization.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensionsTest.Properties.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.cs" />
     <Compile Include="Extensions\UnitOfTimeGranularityExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
