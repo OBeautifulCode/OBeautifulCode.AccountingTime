@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportingPeriodExtensionsSerializationTest.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodExtensionsTest.Serialization.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -16,48 +16,9 @@ namespace OBeautifulCode.AccountingTime.Test
     using Xunit;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
-    public static class ReportingPeriodExtensionsSerializationTest
+    public static partial class ReportingPeriodExtensionsTest
     {
         // ReSharper disable InconsistentNaming
-        [Fact]
-        public static void SerializeToString__Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.SerializeToString(null));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test various flavors of unit-of-time.")]
-        public static void SerializeToString__Should_return_expected_serialized_string_representation_of_reportingPeriod___When_reportingPeriod_is_a_IReportingPeriod()
-        {
-            // Arrange
-            var reportingPeriods = new Dictionary<string, IReportingPeriod<UnitOfTime>>
-            {
-                { "c-2017-05-17,c-2018-12-09", new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
-                { "c-2017-05,c-2018-12", new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
-                { "f-2017-05,f-2018-12", new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
-                { "g-2017-05,g-2018-12", new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
-                { "c-2017-Q2,c-2018-Q4", new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
-                { "f-2017-Q2,f-2018-Q4", new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
-                { "g-2017-Q2,g-2018-Q4", new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
-                { "c-2017,c-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
-                { "f-2017,f-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
-                { "g-2017,g-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
-                { "c-unbounded,c-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
-                { "g-2012-02,g-unbounded", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
-                { "f-unbounded,f-unbounded", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
-            };
-
-            // Act
-            var serialized = reportingPeriods.Select(_ => new { Actual = _.Value.SerializeToString(), Expected = _.Key }).ToList();
-
-            // Assert
-            serialized.ForEach(_ => _.Actual.Should().Be(_.Expected));
-        }
-
         [Fact]
         public static void DeserializeFromString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
@@ -787,6 +748,45 @@ namespace OBeautifulCode.AccountingTime.Test
             deserialized3d.Should().Be(expected3);
             deserialized3e.Should().Be(expected3);
             deserialized3f.Should().Be(expected3);
+        }
+
+        [Fact]
+        public static void SerializeToString__Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.SerializeToString(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test various flavors of unit-of-time.")]
+        public static void SerializeToString__Should_return_expected_serialized_string_representation_of_reportingPeriod___When_reportingPeriod_is_a_IReportingPeriod()
+        {
+            // Arrange
+            var reportingPeriods = new Dictionary<string, IReportingPeriod<UnitOfTime>>
+            {
+                { "c-2017-05-17,c-2018-12-09", new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.May, DayOfMonth.Seventeen), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Nine)) },
+                { "c-2017-05,c-2018-12", new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.December)) },
+                { "f-2017-05,f-2018-12", new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Twelve)) },
+                { "g-2017-05,g-2018-12", new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Twelve)) },
+                { "c-2017-Q2,c-2018-Q4", new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q4)) },
+                { "f-2017-Q2,f-2018-Q4", new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q4)) },
+                { "g-2017-Q2,g-2018-Q4", new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q4)) },
+                { "c-2017,c-2018", new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)) },
+                { "f-2017,f-2018", new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)) },
+                { "g-2017,g-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
+                { "c-unbounded,c-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
+                { "g-2012-02,g-unbounded", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
+                { "f-unbounded,f-unbounded", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
+            };
+
+            // Act
+            var serialized = reportingPeriods.Select(_ => new { Actual = _.Value.SerializeToString(), Expected = _.Key }).ToList();
+
+            // Assert
+            serialized.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
         // ReSharper restore InconsistentNaming
