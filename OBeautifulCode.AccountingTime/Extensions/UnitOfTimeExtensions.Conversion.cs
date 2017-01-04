@@ -1,0 +1,192 @@
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UnitOfTimeExtensions.Conversion.cs" company="OBeautifulCode">
+//   Copyright (c) OBeautifulCode. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+// ReSharper disable CheckNamespace
+namespace OBeautifulCode.AccountingTime
+{
+    using System;
+
+    /// <summary>
+    /// Conversion-related extension methods on <see cref="UnitOfTime"/>.
+    /// </summary>
+    public static partial class UnitOfTimeExtensions
+    {
+        /// <summary>
+        /// Converts the specified <see cref="IHaveAMonth"/> to a <see cref="GenericMonth"/>.
+        /// </summary>
+        /// <param name="month">The month to convert.</param>
+        /// <returns>
+        /// A <see cref="GenericMonth"/> converted from an <see cref="IHaveAMonth"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="month"/> is null.</exception>
+        public static GenericMonth ToGenericMonth(this IHaveAMonth month)
+        {
+            if (month == null)
+            {
+                throw new ArgumentNullException(nameof(month));
+            }
+
+            var result = new GenericMonth(month.Year, month.MonthNumber);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="IHaveAQuarter"/> to a <see cref="GenericQuarter"/>.
+        /// </summary>
+        /// <param name="quarter">The quarter to convert.</param>
+        /// <returns>
+        /// A <see cref="GenericQuarter"/> converted from an <see cref="IHaveAQuarter"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="quarter"/> is null.</exception>
+        public static GenericQuarter ToGenericQuarter(this IHaveAQuarter quarter)
+        {
+            if (quarter == null)
+            {
+                throw new ArgumentNullException(nameof(quarter));
+            }
+
+            var result = new GenericQuarter(quarter.Year, quarter.QuarterNumber);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="IHaveAYear"/> to a <see cref="GenericYear"/>.
+        /// </summary>
+        /// <param name="year">The year to convert.</param>
+        /// <returns>
+        /// A <see cref="GenericYear"/> converted from an <see cref="IHaveAYear"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="year"/> is null.</exception>
+        public static GenericYear ToGenericYear(this IHaveAYear year)
+        {
+            if (year == null)
+            {
+                throw new ArgumentNullException(nameof(year));
+            }
+
+            var result = new GenericYear(year.Year);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="FiscalQuarter"/> to a <see cref="CalendarQuarter"/>.
+        /// </summary>
+        /// <param name="calendarQuarter">The calendar quarter to convert.</param>
+        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
+        /// <returns>
+        /// The fiscal quarter associated with the specified calendar quarter.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        public static FiscalQuarter ToFiscalQuarter(this CalendarQuarter calendarQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        {
+            if (calendarQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(calendarQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
+            }
+
+            int offset;
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
+            {
+                offset = 1;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
+            {
+                offset = 2;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
+            {
+                offset = 3;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
+            {
+                offset = 0;
+            }
+            else
+            {
+                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
+            }
+
+            var fiscalQuarter = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
+            fiscalQuarter = fiscalQuarter.Plus(offset);
+            return fiscalQuarter;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="CalendarQuarter"/> to a <see cref="FiscalQuarter"/>.
+        /// </summary>
+        /// <param name="fiscalQuarter">The fiscal quarter to convert.</param>
+        /// <param name="calendarQuarterThatIsFirstFiscalQuarter">The calendar quarter that is associated with the first fiscal quarter for the company.</param>
+        /// <returns>
+        /// The calendar quarter associated with the specified fiscal quarter.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="fiscalQuarter"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        public static CalendarQuarter ToCalendarQuarter(this FiscalQuarter fiscalQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        {
+            if (fiscalQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
+            }
+
+            int offset;
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
+            {
+                offset = -1;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q3)
+            {
+                offset = -2;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q2)
+            {
+                offset = -3;
+            }
+            else if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q1)
+            {
+                offset = 0;
+            }
+            else
+            {
+                throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
+            }
+
+            var calendarQuarter = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
+            calendarQuarter = calendarQuarter.Plus(offset);
+            return calendarQuarter;
+        }
+
+        /// <summary>
+        /// Creates a reporting period from a unit-of-time.
+        /// </summary>
+        /// <param name="unitOfTime">The unit-of-time to use in the reporting period.</param>
+        /// <returns>
+        /// A reporting period where the Start and End components are equal to the specified unit-of-time.
+        /// </returns>
+        public static IReportingPeriod<UnitOfTime> ToReportingPeriod(this UnitOfTime unitOfTime)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+            return result;
+        }
+    }
+}
+
+// ReSharper restore CheckNamespace
