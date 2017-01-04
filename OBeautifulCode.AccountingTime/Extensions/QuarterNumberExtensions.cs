@@ -24,6 +24,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A calendar quarter constructed from the specified <see cref="QuarterNumber"/> and year.
         /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/></exception>
         public static CalendarQuarter ToCalendar(this QuarterNumber quarterNumber, int year)
         {
             if (quarterNumber == QuarterNumber.Invalid)
@@ -43,6 +44,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A fiscal quarter constructed from the specified <see cref="QuarterNumber"/> and year.
         /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/></exception>
         public static FiscalQuarter ToFiscal(this QuarterNumber quarterNumber, int year)
         {
             if (quarterNumber == QuarterNumber.Invalid)
@@ -62,6 +64,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A generic quarter constructed from the specified <see cref="QuarterNumber"/> and year.
         /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/></exception>
         public static GenericQuarter ToGeneric(this QuarterNumber quarterNumber, int year)
         {
             if (quarterNumber == QuarterNumber.Invalid)
