@@ -98,6 +98,7 @@
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DummyFactory.cs" />
+    <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsContainmentTest.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsSerializationTest.cs" />
