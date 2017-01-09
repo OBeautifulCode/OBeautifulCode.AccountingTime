@@ -93,11 +93,12 @@
     <Compile Include=".Spritely.Recipes\SecureStringJsonConverter\SecureStringJsonConverter.cs" />
     <Compile Include=".Spritely.Recipes\SecureString\SecureString.cs" />
     <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystemTest.cs" />
-    <Compile Include="AccountingPeriodSystem\DateTimeExtensionsTest.cs" />
+    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemHelpersTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="DummyFactory.cs" />
+    <Compile Include="Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Comparison.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Manipulation.cs" />

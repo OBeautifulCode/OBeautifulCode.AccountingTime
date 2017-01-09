@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DateTimeExtensions.cs" company="OBeautifulCode">
+// <copyright file="AccountingPeriodSystemHelpers.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,9 +10,9 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <summary>
-    /// Container for extension methods on object <see cref="DateTime"/>.
+    /// Heplper methods for objects of type <see cref="AccountingPeriodSystem"/>.
     /// </summary>
-    internal static class DateTimeExtensions
+    internal static class AccountingPeriodSystemHelpers
     {
         /// <summary>
         /// Finds a specified day-of-week after a reference date.
@@ -50,19 +50,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             return value.AddDays(daysToAdd);
-        }
-
-        /// <summary>
-        /// Converts a <see cref="DateTime"/> into a <see cref="CalendarDay"/>.
-        /// </summary>
-        /// <param name="value">The date/time to convert.</param>
-        /// <returns>
-        /// A <see cref="CalendarDay"/> converted from a <see cref="DateTime"/>.
-        /// </returns>
-        public static CalendarDay ToCalendarDay(this DateTime value)
-        {
-            var result = new CalendarDay(value.Year, (MonthOfYear)value.Month, (DayOfMonth)value.Day);
-            return result;
         }
     }
 }

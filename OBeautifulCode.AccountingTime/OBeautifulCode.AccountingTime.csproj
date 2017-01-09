@@ -49,7 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\HashCodeHelper.cs" />
-    <Compile Include="AccountingPeriodSystem\DateTimeExtensions.cs" />
+    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemHelpers.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\OverflowStrategy.cs" />
     <Compile Include="Extensions\QuarterNumberExtensions.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
