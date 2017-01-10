@@ -141,6 +141,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has a component that is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="overflowStrategy"/> is not <see cref="OverflowStrategy.ThrowOnOverflow"/>.</exception>
         /// <exception cref="InvalidOperationException">There was some overflow when splitting.</exception>
         public static IList<UnitOfTime> Split(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity, OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
@@ -158,6 +159,11 @@ namespace OBeautifulCode.AccountingTime
             if (granularity == UnitOfTimeGranularity.Invalid)
             {
                 throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
             }
 
             if (overflowStrategy != OverflowStrategy.ThrowOnOverflow)

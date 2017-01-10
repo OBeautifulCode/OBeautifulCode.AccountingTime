@@ -956,6 +956,19 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void Split___Should_throw_ArgumentException___When_parameter_granularity_is_Unbounded()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => !_.HasComponentWithUnboundedGranularity());
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.Split(UnitOfTimeGranularity.Unbounded));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
         public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarYear_and_granularity_is_Year()
         {
             // Arrange
