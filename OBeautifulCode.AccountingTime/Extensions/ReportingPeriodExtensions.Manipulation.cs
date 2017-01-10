@@ -81,7 +81,7 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="maxUnitsInAnyReportingPeriod">Maximum number of units-of-time in each reporting period.</param>
         /// <returns>All possible reporting periods containing between 1 and <paramref name="maxUnitsInAnyReportingPeriod"/> units-of-time, contained within <paramref name="reportingPeriod"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has an <see cref="UnitOfTimeGranularity.Unbounded"/> component.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
         public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(this IReportingPeriod<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
@@ -94,7 +94,7 @@ namespace OBeautifulCode.AccountingTime
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
             if (maxUnitsInAnyReportingPeriod < 1)
@@ -139,8 +139,9 @@ namespace OBeautifulCode.AccountingTime
         /// will return <see cref="FiscalYear"/> objects).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has a component that is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has an <see cref="UnitOfTimeGranularity.Unbounded"/> component.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="overflowStrategy"/> is not <see cref="OverflowStrategy.ThrowOnOverflow"/>.</exception>
         /// <exception cref="InvalidOperationException">There was some overflow when splitting.</exception>
         public static IList<UnitOfTime> Split(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity, OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
@@ -152,7 +153,7 @@ namespace OBeautifulCode.AccountingTime
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
             if (granularity == UnitOfTimeGranularity.Invalid)
@@ -160,21 +161,33 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
             }
 
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
             if (overflowStrategy != OverflowStrategy.ThrowOnOverflow)
             {
                 throw new ArgumentException(Invariant($"{nameof(overflowStrategy)} is not {nameof(OverflowStrategy.ThrowOnOverflow)}"));
             }
 
-            if (reportingPeriod.GetUnitOfTimeGranularity().IsAsGranularOrLessGranularThan(granularity))
+            var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
+
+            IList<UnitOfTime> result;
+            if (reportingPeriodGranularity == granularity)
             {
-                var result = reportingPeriod.MakeMoreGranular(granularity).GetUnitsWithin();
-                return result;
+                result = reportingPeriod.GetUnitsWithin();
+            }
+            else if (reportingPeriodGranularity.IsLessGranularThan(granularity))
+            {
+                result = reportingPeriod.MakeMoreGranular(granularity).GetUnitsWithin();
             }
             else
             {
-                var result = reportingPeriod.MakeLessGranular(granularity).GetUnitsWithin();
-                return result;
+                result = reportingPeriod.MakeLessGranular(granularity).GetUnitsWithin();
             }
+
+            return result;
         }
 
         /// <summary>
@@ -200,11 +213,78 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <summary>
+        /// Converts the the specified reporting period into the least
+        /// granular possible, but equivalent, reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to operate on.</param>
+        /// <returns>
+        /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
+        /// but is the least granular version possible of that reporting period.
+        /// Any reporting period with one unbounded and one bounded component will be returned
+        /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017)
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static IReportingPeriod<UnitOfTime> ToLeastGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            IReportingPeriod<UnitOfTime> result;
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                result = reportingPeriod.Clone();
+            }
+            else
+            {
+                var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
+                if (targetGranularity == UnitOfTimeGranularity.Unbounded)
+                {
+                    result = reportingPeriod.Clone();
+                }
+                else
+                {
+                    try
+                    {
+                        result = reportingPeriod.MakeLessGranular(targetGranularity).ToLeastGranular();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        result = reportingPeriod.Clone();
+                    }
+                }
+            }
+
+            return result;
+        }
+
         private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
         {
-            if (reportingPeriod.GetUnitOfTimeGranularity().IsMoreGranularThan(granularity))
+            if (reportingPeriod == null)
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is more granular than {nameof(granularity)}"));
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
+            if (reportingPeriod.GetUnitOfTimeGranularity().IsAsGranularOrMoreGranularThan(granularity))
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or more granular than {nameof(granularity)}"));
             }
 
             var moreGranularStart = reportingPeriod.Start.MakeMoreGranular(granularity);
@@ -215,17 +295,32 @@ namespace OBeautifulCode.AccountingTime
 
         private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this UnitOfTime unitOfTime, UnitOfTimeGranularity granularity)
         {
-            if (unitOfTime.UnitOfTimeGranularity.IsMoreGranularThan(granularity))
+            if (unitOfTime == null)
             {
-                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is more granular than {nameof(granularity)}"));
+                throw new ArgumentNullException(nameof(unitOfTime));
             }
 
-            if (unitOfTime.UnitOfTimeGranularity == granularity)
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
-                var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
-                return result;
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} granularity is {nameof(UnitOfTimeGranularity.Unbounded)}"));
             }
 
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
+            if (unitOfTime.UnitOfTimeGranularity.IsAsGranularOrMoreGranularThan(granularity))
+            {
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is as granular or more granular than {nameof(granularity)}"));
+            }
+
+            IReportingPeriod<UnitOfTime> moreGranularReportingPeriod;
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
             {
                 // ReSharper disable PossibleNullReferenceException
@@ -235,30 +330,24 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new CalendarQuarter(unitOfTimeAsYear.Year, startQuarter), new CalendarQuarter(unitOfTimeAsYear.Year, endQuarter));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new CalendarQuarter(unitOfTimeAsYear.Year, startQuarter), new CalendarQuarter(unitOfTimeAsYear.Year, endQuarter));
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new FiscalQuarter(unitOfTimeAsYear.Year, startQuarter), new FiscalQuarter(unitOfTimeAsYear.Year, endQuarter));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new FiscalQuarter(unitOfTimeAsYear.Year, startQuarter), new FiscalQuarter(unitOfTimeAsYear.Year, endQuarter));
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new GenericQuarter(unitOfTimeAsYear.Year, startQuarter), new GenericQuarter(unitOfTimeAsYear.Year, endQuarter));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new GenericQuarter(unitOfTimeAsYear.Year, startQuarter), new GenericQuarter(unitOfTimeAsYear.Year, endQuarter));
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
                 }
 
                 // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
             }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
+            else if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
             {
                 // ReSharper disable PossibleNullReferenceException
                 var unitOfTimeAsQuarter = unitOfTime as IHaveAQuarter;
@@ -267,68 +356,86 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new CalendarMonth(unitOfTimeAsQuarter.Year, (MonthOfYear)startMonth), new CalendarMonth(unitOfTimeAsQuarter.Year, (MonthOfYear)endMonth));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new CalendarMonth(unitOfTimeAsQuarter.Year, (MonthOfYear)startMonth), new CalendarMonth(unitOfTimeAsQuarter.Year, (MonthOfYear)endMonth));
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new FiscalMonth(unitOfTimeAsQuarter.Year, (MonthNumber)startMonth), new FiscalMonth(unitOfTimeAsQuarter.Year, (MonthNumber)endMonth));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new FiscalMonth(unitOfTimeAsQuarter.Year, (MonthNumber)startMonth), new FiscalMonth(unitOfTimeAsQuarter.Year, (MonthNumber)endMonth));
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new GenericMonth(unitOfTimeAsQuarter.Year, (MonthNumber)startMonth), new GenericMonth(unitOfTimeAsQuarter.Year, (MonthNumber)endMonth));
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new GenericMonth(unitOfTimeAsQuarter.Year, (MonthNumber)startMonth), new GenericMonth(unitOfTimeAsQuarter.Year, (MonthNumber)endMonth));
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
                 }
 
                 // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
             }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
+            else if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
             {
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var calendarUnitOfTime = unitOfTime as CalendarUnitOfTime;
-                    var moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(calendarUnitOfTime.GetFirstCalendarDay(), calendarUnitOfTime.GetLastCalendarDay());
-                    var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
-                    return result;
+                    moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(calendarUnitOfTime.GetFirstCalendarDay(), calendarUnitOfTime.GetLastCalendarDay());
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     throw new NotSupportedException("The Fiscal kind cannot be made more granular than Month.");
                 }
-
-                if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
+                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     throw new NotSupportedException("The Generic kind cannot be made more granular than Month.");
                 }
-
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
+                }
+            }
+            else
+            {
+                throw new NotSupportedException("This granularity is not supported: " + unitOfTime.UnitOfTimeGranularity);
             }
 
-            throw new NotSupportedException("This granularity is not supported: " + unitOfTime.UnitOfTimeGranularity);
+            if (moreGranularReportingPeriod.GetUnitOfTimeGranularity() == granularity)
+            {
+                return moreGranularReportingPeriod;
+            }
+
+            var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
+            return result;
         }
 
         private static IReportingPeriod<UnitOfTime> MakeLessGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
         {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component"));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+            }
+
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
-            if (reportingPeriodGranularity.IsLessGranularThan(granularity))
+            if (reportingPeriodGranularity.IsAsGranularOrLessGranularThan(granularity))
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is less granular than {nameof(granularity)}"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or less granular than {nameof(granularity)}"));
             }
 
-            if (reportingPeriodGranularity == granularity)
-            {
-                return reportingPeriod;
-            }
-
+            IReportingPeriod<UnitOfTime> lessGranularReportingPeriod;
             var unitOfTimeKind = reportingPeriod.GetUnitOfTimeKind();
             if (reportingPeriodGranularity == UnitOfTimeGranularity.Day)
             {
@@ -349,16 +456,16 @@ namespace OBeautifulCode.AccountingTime
                         throw new InvalidOperationException("Cannot convert a calendar day reporting period to a calendar month reporting period when the reporting period end time is not the last day of a month.");
                     }
 
-                    var lessGranularReportingPeriod = new ReportingPeriod<CalendarMonth>(startMonth, endMonth);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<CalendarMonth>(startMonth, endMonth);
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
 
                 // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
             }
-
-            if (reportingPeriodGranularity == UnitOfTimeGranularity.Month)
+            else if (reportingPeriodGranularity == UnitOfTimeGranularity.Month)
             {
                 // ReSharper disable PossibleNullReferenceException
                 var startAsMonth = reportingPeriod.Start as IHaveAMonth;
@@ -394,34 +501,28 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var startQuarter = new CalendarQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
                     var endQuarter = new CalendarQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    var lessGranularReportingPeriod = new ReportingPeriod<CalendarQuarter>(startQuarter, endQuarter);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<CalendarQuarter>(startQuarter, endQuarter);
                 }
-
-                if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     var startQuarter = new FiscalQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
                     var endQuarter = new FiscalQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    var lessGranularReportingPeriod = new ReportingPeriod<FiscalQuarter>(startQuarter, endQuarter);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<FiscalQuarter>(startQuarter, endQuarter);
                 }
-
-                if (unitOfTimeKind == UnitOfTimeKind.Generic)
+                else if (unitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     var startQuarter = new GenericQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
                     var endQuarter = new GenericQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    var lessGranularReportingPeriod = new ReportingPeriod<GenericQuarter>(startQuarter, endQuarter);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<GenericQuarter>(startQuarter, endQuarter);
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
 
                 // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
             }
-
-            if (reportingPeriodGranularity == UnitOfTimeGranularity.Quarter)
+            else if (reportingPeriodGranularity == UnitOfTimeGranularity.Quarter)
             {
                 // ReSharper disable PossibleNullReferenceException
                 var startAsQuarter = reportingPeriod.Start as IHaveAQuarter;
@@ -429,46 +530,53 @@ namespace OBeautifulCode.AccountingTime
 
                 if (startAsQuarter.QuarterNumber != QuarterNumber.Q1)
                 {
-                    throw new InvalidOperationException("Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period start time is not Q1.");
+                    throw new InvalidOperationException(
+                        "Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period start time is not Q1.");
                 }
 
                 if (endAsQuarter.QuarterNumber != QuarterNumber.Q4)
                 {
-                    throw new InvalidOperationException("Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period end is not Q4.");
+                    throw new InvalidOperationException(
+                        "Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period end is not Q4.");
                 }
 
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var startYear = new CalendarYear(startAsQuarter.Year);
                     var endYear = new CalendarYear(endAsQuarter.Year);
-                    var lessGranularReportingPeriod = new ReportingPeriod<CalendarYear>(startYear, endYear);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<CalendarYear>(startYear, endYear);
                 }
-
-                if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     var startYear = new FiscalYear(startAsQuarter.Year);
                     var endYear = new FiscalYear(endAsQuarter.Year);
-                    var lessGranularReportingPeriod = new ReportingPeriod<FiscalYear>(startYear, endYear);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<FiscalYear>(startYear, endYear);
                 }
-
-                if (unitOfTimeKind == UnitOfTimeKind.Generic)
+                else if (unitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     var startYear = new GenericYear(startAsQuarter.Year);
                     var endYear = new GenericYear(endAsQuarter.Year);
-                    var lessGranularReportingPeriod = new ReportingPeriod<GenericYear>(startYear, endYear);
-                    var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
-                    return result;
+                    lessGranularReportingPeriod = new ReportingPeriod<GenericYear>(startYear, endYear);
+                }
+                else
+                {
+                    throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
 
                 // ReSharper restore PossibleNullReferenceException
-                throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
+            }
+            else
+            {
+                throw new NotSupportedException("This granularity is not supported: " + reportingPeriodGranularity);
             }
 
-            throw new NotSupportedException("This granularity is not supported: " + reportingPeriodGranularity);
+            if (lessGranularReportingPeriod.GetUnitOfTimeGranularity() == granularity)
+            {
+                return lessGranularReportingPeriod;
+            }
+
+            var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
+            return result;
         }
     }
 }
