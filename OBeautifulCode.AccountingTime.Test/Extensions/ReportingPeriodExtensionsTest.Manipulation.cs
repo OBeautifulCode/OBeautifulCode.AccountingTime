@@ -2472,6 +2472,357 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod.Should().Be(expectedReportingPeriod);
         }
 
+        [Fact]
+        public static void ToLeastGranular___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToLeastGranular(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToLeastGranular___Should_return_clone_of_reportingPeriod___When_one_or_both_components_are_Unbounded()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Expected = _, Actual = _.ToLeastGranular() }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Expected.Should().Be(_.Actual));
+            results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
+        }
+
+        [Fact]
+        public static void ToLeastGranular___Should_return_the_least_granular_possible_but_equivalent_reporting_period___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarMonth(2017, MonthOfYear.February))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarMonth(2018, MonthOfYear.March))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q2))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarMonth(2017, MonthOfYear.April)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarMonth(2017, MonthOfYear.April))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.October),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q4),
+                        new CalendarQuarter(2017, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.October),
+                        new CalendarMonth(2018, MonthOfYear.June)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q4),
+                        new CalendarQuarter(2018, QuarterNumber.Q2))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.December)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarMonth(2017, MonthOfYear.January),
+                        new CalendarMonth(2018, MonthOfYear.December)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q1),
+                        new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarQuarter(2017, QuarterNumber.Q1),
+                        new CalendarQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalMonth(2017, MonthNumber.Four)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalMonth(2017, MonthNumber.Four))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.Ten),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q4),
+                        new FiscalQuarter(2017, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.Ten),
+                        new FiscalMonth(2018, MonthNumber.Six)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q4),
+                        new FiscalQuarter(2018, QuarterNumber.Q2))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalMonth(2018, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q1),
+                        new FiscalQuarter(2017, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalQuarter(2017, QuarterNumber.Q1),
+                        new FiscalQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2018)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new FiscalYear(2017),
+                        new FiscalYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericMonth(2017, MonthNumber.Four)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericMonth(2017, MonthNumber.Four))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.Ten),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q4),
+                        new GenericQuarter(2017, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.Ten),
+                        new GenericMonth(2018, MonthNumber.Six)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q4),
+                        new GenericQuarter(2018, QuarterNumber.Q2))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericMonth(2018, MonthNumber.Twelve)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q4))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q1),
+                        new GenericQuarter(2017, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2017))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericQuarter(2017, QuarterNumber.Q1),
+                        new GenericQuarter(2018, QuarterNumber.Q4)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2018))
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2018)),
+                    LeastGranular = new ReportingPeriod<UnitOfTime>(
+                        new GenericYear(2017),
+                        new GenericYear(2018))
+                }
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Expected = _.LeastGranular, Actual = _.ReportingPeriod.ToLeastGranular() }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Expected.Should().Be(_.Actual));
+            results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

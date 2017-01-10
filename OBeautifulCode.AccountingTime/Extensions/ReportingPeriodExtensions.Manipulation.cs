@@ -213,6 +213,53 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <summary>
+        /// Converts the the specified reporting period into the least
+        /// granular possible, but equivalent, reporting period.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to operate on.</param>
+        /// <returns>
+        /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
+        /// but is the least granular version possible of that reporting period.
+        /// Any reporting period with one unbounded and one bounded component will be returned
+        /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017)
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static IReportingPeriod<UnitOfTime> ToLeastGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            IReportingPeriod<UnitOfTime> result;
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                result = reportingPeriod.Clone();
+            }
+            else
+            {
+                var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
+                if (targetGranularity == UnitOfTimeGranularity.Unbounded)
+                {
+                    result = reportingPeriod.Clone();
+                }
+                else
+                {
+                    try
+                    {
+                        result = reportingPeriod.MakeLessGranular(targetGranularity).ToLeastGranular();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        result = reportingPeriod.Clone();
+                    }
+                }
+            }
+
+            return result;
+        }
+
         private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
         {
             if (reportingPeriod == null)
