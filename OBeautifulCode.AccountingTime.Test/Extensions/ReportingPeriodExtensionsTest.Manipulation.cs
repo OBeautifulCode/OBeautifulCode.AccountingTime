@@ -17,8 +17,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
-    using Naos.Recipes.TupleInitializers;
-
     using Xunit;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]

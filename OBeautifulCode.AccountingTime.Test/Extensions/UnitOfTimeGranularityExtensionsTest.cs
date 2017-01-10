@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using FakeItEasy;
 
@@ -23,8 +24,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = UnitOfTimeGranularity.Invalid;
-            UnitOfTimeGranularity granularity2 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity1 = UnitOfTimeGranularity.Invalid;
+            var granularity2 = A.Dummy<UnitOfTimeGranularity>();
 
             // Act
             var ex = Record.Exception(() => granularity1.IsLessGranularThan(granularity2));
@@ -37,8 +38,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = A.Dummy<UnitOfTimeGranularity>();
-            UnitOfTimeGranularity granularity2 = UnitOfTimeGranularity.Invalid;
+            var granularity1 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity2 = UnitOfTimeGranularity.Invalid;
 
             // Act
             var ex = Record.Exception(() => granularity1.IsLessGranularThan(granularity2));
@@ -105,8 +106,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = UnitOfTimeGranularity.Invalid;
-            UnitOfTimeGranularity granularity2 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity1 = UnitOfTimeGranularity.Invalid;
+            var granularity2 = A.Dummy<UnitOfTimeGranularity>();
 
             // Act
             var ex = Record.Exception(() => granularity1.IsAsGranularOrLessGranularThan(granularity2));
@@ -119,8 +120,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = A.Dummy<UnitOfTimeGranularity>();
-            UnitOfTimeGranularity granularity2 = UnitOfTimeGranularity.Invalid;
+            var granularity1 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity2 = UnitOfTimeGranularity.Invalid;
 
             // Act
             var ex = Record.Exception(() => granularity1.IsAsGranularOrLessGranularThan(granularity2));
@@ -187,8 +188,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = UnitOfTimeGranularity.Invalid;
-            UnitOfTimeGranularity granularity2 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity1 = UnitOfTimeGranularity.Invalid;
+            var granularity2 = A.Dummy<UnitOfTimeGranularity>();
 
             // Act
             var ex = Record.Exception(() => granularity1.IsMoreGranularThan(granularity2));
@@ -201,8 +202,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = A.Dummy<UnitOfTimeGranularity>();
-            UnitOfTimeGranularity granularity2 = UnitOfTimeGranularity.Invalid;
+            var granularity1 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity2 = UnitOfTimeGranularity.Invalid;
 
             // Act
             var ex = Record.Exception(() => granularity1.IsMoreGranularThan(granularity2));
@@ -269,8 +270,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = UnitOfTimeGranularity.Invalid;
-            UnitOfTimeGranularity granularity2 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity1 = UnitOfTimeGranularity.Invalid;
+            var granularity2 = A.Dummy<UnitOfTimeGranularity>();
 
             // Act
             var ex = Record.Exception(() => granularity1.IsAsGranularOrMoreGranularThan(granularity2));
@@ -283,8 +284,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
-            UnitOfTimeGranularity granularity1 = A.Dummy<UnitOfTimeGranularity>();
-            UnitOfTimeGranularity granularity2 = UnitOfTimeGranularity.Invalid;
+            var granularity1 = A.Dummy<UnitOfTimeGranularity>();
+            var granularity2 = UnitOfTimeGranularity.Invalid;
 
             // Act
             var ex = Record.Exception(() => granularity1.IsAsGranularOrMoreGranularThan(granularity2));
@@ -345,6 +346,174 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             results.ForEach(_ => _.Should().BeTrue());
+        }
+
+        [Fact]
+        public static void IsMostGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Invalid;
+
+            // Act
+            var ex = Record.Exception(() => granularity.IsMostGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void IsMostGranular___Should_return_false___When_parameter_granularity_is_not_Day()
+        {
+            // Arrange
+            var granularity = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Unbounded, UnitOfTimeGranularity.Year };
+
+            // Act
+            var results = granularity.Select(_ => _.IsMostGranular()).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void IsMostGranular___Should_return_true___When_parameter_granularity_is_Day()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Day;
+
+            // Act
+            var result = granularity.IsMostGranular();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsLeastGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Invalid;
+
+            // Act
+            var ex = Record.Exception(() => granularity.IsLeastGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void IsLeastGranular___Should_return_false___When_parameter_granularity_is_not_Unbounded()
+        {
+            // Arrange
+            var granularity = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Year };
+
+            // Act
+            var results = granularity.Select(_ => _.IsLeastGranular()).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void IsLeastGranular___Should_return_true___When_parameter_granularity_is_Unbounded()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Unbounded;
+
+            // Act
+            var result = granularity.IsLeastGranular();
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void OneNotchMoreGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Invalid;
+
+            // Act
+            var ex = Record.Exception(() => granularity.OneNotchMoreGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void OneNotchMoreGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Day()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Day;
+
+            // Act
+            var ex = Record.Exception(() => granularity.OneNotchMoreGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void OneNotchMoreGranular___Should_return_a_granularity_that_is_one_notch_more_granular___When_parameter_granularity_is_not_Day()
+        {
+            // Arrange
+            var granularity = new[]
+            {
+                new { Granularity = UnitOfTimeGranularity.Month, OneNotchMoreGranular = UnitOfTimeGranularity.Day },
+                new { Granularity = UnitOfTimeGranularity.Quarter, OneNotchMoreGranular = UnitOfTimeGranularity.Month },
+                new { Granularity = UnitOfTimeGranularity.Year, OneNotchMoreGranular = UnitOfTimeGranularity.Quarter },
+                new { Granularity = UnitOfTimeGranularity.Unbounded, OneNotchMoreGranular = UnitOfTimeGranularity.Year }
+            };
+
+            // Act
+            var results = granularity.Select(_ => new { Expected = _.OneNotchMoreGranular, Actual = _.Granularity.OneNotchMoreGranular() }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Expected.Should().Be(_.Actual));
+        }
+
+        [Fact]
+        public static void OneNotchLessGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Invalid;
+
+            // Act
+            var ex = Record.Exception(() => granularity.OneNotchLessGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void OneNotchLessGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Unbounded()
+        {
+            // Arrange
+            var granularity = UnitOfTimeGranularity.Unbounded;
+
+            // Act
+            var ex = Record.Exception(() => granularity.OneNotchLessGranular());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void OneNotchLessGranular___Should_return_a_granularity_that_is_one_notch_more_granular___When_parameter_granularity_is_not_Unbounded()
+        {
+            // Arrange
+            var granularity = new[]
+            {
+                new { Granularity = UnitOfTimeGranularity.Day, OneNotchLessGranular = UnitOfTimeGranularity.Month },
+                new { Granularity = UnitOfTimeGranularity.Month, OneNotchLessGranular = UnitOfTimeGranularity.Quarter },
+                new { Granularity = UnitOfTimeGranularity.Quarter, OneNotchLessGranular = UnitOfTimeGranularity.Year },
+                new { Granularity = UnitOfTimeGranularity.Year, OneNotchLessGranular = UnitOfTimeGranularity.Unbounded }
+            };
+
+            // Act
+            var results = granularity.Select(_ => new { Expected = _.OneNotchLessGranular, Actual = _.Granularity.OneNotchLessGranular() }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Expected.Should().Be(_.Actual));
         }
 
         // ReSharper restore InconsistentNaming
