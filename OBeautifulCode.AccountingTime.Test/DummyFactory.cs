@@ -15,6 +15,8 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FakeItEasy;
 
+    using OBeautifulCode.Math;
+
     /// <summary>
     /// A dummy factory for Accounting Time types.
     /// </summary>
@@ -25,6 +27,10 @@ namespace OBeautifulCode.AccountingTime.Test
 #endif
     public class DummyFactory : IDummyFactory
     {
+        private const int MinYear = 1950;
+
+        private const int MaxYear = 2050;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DummyFactory"/> class.
         /// </summary>
@@ -51,101 +57,93 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IAmBoundedTime>();
             AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IAmUnboundedTime>();
 
-            // note: this customization is required because AutoFixture doesn't use A.Dummy<>
-            // and thus will, from time-to-time, try to create this type with MonthOfYear.Invalid
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>());
-                    return result;
-                });
-
-            // note: this customization is required because AutoFixture doesn't use A.Dummy<>
-            // and thus will, from time-to-time, try to create this type with MonthOfYear.Invalid
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(A.Dummy<DayOfWeek>(), A.Dummy<MonthOfYear>(), A.Dummy<FiftyTwoFiftyThreeWeekMethodology>());
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new GenericMonth(year, A.Dummy<MonthNumber>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new GenericMonth(date.Year, A.Dummy<MonthNumber>());
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new GenericQuarter(year, A.Dummy<QuarterNumber>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new GenericQuarter(date.Year, A.Dummy<QuarterNumber>());
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new GenericYear(year);
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new GenericYear(date.Year);
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new FiscalMonth(year, A.Dummy<MonthNumber>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new FiscalMonth(date.Year, A.Dummy<MonthNumber>());
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new FiscalQuarter(year, A.Dummy<QuarterNumber>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new FiscalQuarter(date.Year, A.Dummy<QuarterNumber>());
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new FiscalYear(year);
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new FiscalYear(date.Year);
+                    while (true)
+                    {
+                        try
+                        {
+                            var date = A.Dummy<DateTime>();
+                            var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                            var result = new CalendarDay(year, (MonthOfYear)date.Month, (DayOfMonth)date.Day);
+                            return result;
+                        }
+                        catch (ArgumentException)
+                        {
+                        }
+                    }
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new CalendarMonth(year, A.Dummy<MonthOfYear>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new CalendarDay(date.Year, (MonthOfYear)date.Month, (DayOfMonth)date.Day);
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new CalendarQuarter(year, A.Dummy<QuarterNumber>());
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var date = A.Dummy<DateTime>();
-                    var result = new CalendarMonth(date.Year, A.Dummy<MonthOfYear>());
-                    return result;
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var date = A.Dummy<DateTime>();
-                    var result = new CalendarQuarter(date.Year, A.Dummy<QuarterNumber>());
-                    return result;
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var date = A.Dummy<DateTime>();
-                    var result = new CalendarYear(date.Year);
+                    var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+                    var result = new CalendarYear(year);
                     return result;
                 });
 

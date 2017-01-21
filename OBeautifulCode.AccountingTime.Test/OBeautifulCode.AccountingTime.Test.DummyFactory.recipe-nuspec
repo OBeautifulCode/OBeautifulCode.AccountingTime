@@ -8,6 +8,7 @@
     <dependencies>
         <dependency id="OBeautifulCode.AccountingTime" version="1.0.44" />
         <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.76" />
+        <dependency id="OBeautifulCode.Math.ThreadSafeRandom" version ="1.0.52" />
     </dependencies>
   </metadata>
   <files>
