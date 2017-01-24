@@ -33,7 +33,7 @@ namespace OBeautifulCode.AccountingTime
         {
             if ((year < 1) || (year > 9999))
             {
-                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
             }
 
             if (monthOfYear == MonthOfYear.Invalid)
@@ -49,7 +49,7 @@ namespace OBeautifulCode.AccountingTime
             var totalDaysInMonth = DateTime.DaysInMonth(year, (int)monthOfYear);
             if ((int)dayOfMonth > totalDaysInMonth)
             {
-                throw new ArgumentException("day is not a valid day in the specified month and year", nameof(dayOfMonth));
+                throw new ArgumentException(Invariant($"day ({dayOfMonth}) is not a valid day in the specified month ({monthOfYear}) and year ({year})"), nameof(dayOfMonth));
             }
 
             this.Year = year;

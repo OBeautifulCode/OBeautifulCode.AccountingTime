@@ -30,7 +30,7 @@ namespace OBeautifulCode.AccountingTime
         {
             if ((year < 1) || (year > 9999))
             {
-                throw new ArgumentOutOfRangeException(nameof(year), "year is less than 1 or greater than 9999");
+                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
             }
 
             if (monthNumber == MonthNumber.Invalid)
