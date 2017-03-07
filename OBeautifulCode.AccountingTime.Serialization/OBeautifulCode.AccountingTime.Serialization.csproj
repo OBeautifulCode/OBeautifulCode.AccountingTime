@@ -64,6 +64,7 @@
     <Compile Include="UnitOfTimeSerializer{TValue}.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OBeautifulCode.AccountingTime.JsonSerialization.recipe-nuspec" />
     <None Include="OBeautifulCode.AccountingTime.BsonSerialization.recipe-nuspec" />
     <None Include="OBeautifulCode.AccountingTime.Serialization.template-nuspec" />
     <None Include="packages.config" />

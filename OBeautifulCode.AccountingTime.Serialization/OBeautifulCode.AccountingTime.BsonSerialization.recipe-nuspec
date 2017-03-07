@@ -11,9 +11,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="AccountingTimeSerializer.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\AccountingTimeSerializer.cs" />
-    <file src="UnitOfTimeSerializer{TValue}.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\UnitOfTimeSerializer{TValue}.cs" />
-    <file src="IReportingPeriodSerializer{TValue}.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\IReportingPeriodSerializer{TValue}.cs" />
-    <file src="ReportingPeriodPersistenceModel.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.BsonSerialization\ReportingPeriodPersistenceModel.cs" />
+    <file src="AccountingTimeSerializer.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\AccountingTimeSerializer.cs" />
+    <file src="UnitOfTimeSerializer{TValue}.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\UnitOfTimeSerializer{TValue}.cs" />
+    <file src="IReportingPeriodSerializer{TValue}.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\IReportingPeriodSerializer{TValue}.cs" />
+    <file src="ReportingPeriodPersistenceModel.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\ReportingPeriodPersistenceModel.cs" />
   </files>
 </package>
