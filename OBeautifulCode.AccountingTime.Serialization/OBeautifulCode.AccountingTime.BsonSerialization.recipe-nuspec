@@ -6,7 +6,7 @@
     <tags>accounting time bson mongo mongodb</tags>
     <developmentDependency>true</developmentDependency>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="1.0.44" />
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.66" />
         <dependency id="MongoDB.Bson" version ="2.4.0" />
     </dependencies>
   </metadata>
