@@ -7,8 +7,8 @@
     <ProjectGuid>{0BA40593-40F0-4984-A8AE-98B3C62EEB51}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.AccountingTime.BsonSerialization.Test</RootNamespace>
-    <AssemblyName>OBeautifulCode.AccountingTime.BsonSerialization.Test</AssemblyName>
+    <RootNamespace>OBeautifulCode.AccountingTime.Serialization.Test</RootNamespace>
+    <AssemblyName>OBeautifulCode.AccountingTime.Serialization.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -123,9 +123,9 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OBeautifulCode.AccountingTime.BsonSerialization\OBeautifulCode.AccountingTime.BsonSerialization.csproj">
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization\OBeautifulCode.AccountingTime.Serialization.csproj">
       <Project>{d9b73cfe-77e1-4fd6-9c7a-3a0cc410b561}</Project>
-      <Name>OBeautifulCode.AccountingTime.BsonSerialization</Name>
+      <Name>OBeautifulCode.AccountingTime.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj">
       <Project>{fa79388d-2555-42ee-ab7b-55b1ea1e2676}</Project>

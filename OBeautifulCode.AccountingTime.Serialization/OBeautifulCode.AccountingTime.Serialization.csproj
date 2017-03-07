@@ -7,8 +7,8 @@
     <ProjectGuid>{D9B73CFE-77E1-4FD6-9C7A-3A0CC410B561}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.AccountingTime.BsonSerialization</RootNamespace>
-    <AssemblyName>OBeautifulCode.AccountingTime.BsonSerialization</AssemblyName>
+    <RootNamespace>OBeautifulCode.AccountingTime.Serialization</RootNamespace>
+    <AssemblyName>OBeautifulCode.AccountingTime.Serialization</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -23,7 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\OBeautifulCode.AccountingTime.BsonSerialization.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\OBeautifulCode.AccountingTime.Serialization.XML</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\common\analyzers.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
@@ -32,11 +32,11 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>CODE_ANALYSIS;OBeautifulCodeAccountingTimeBsonSerializationRecipesProject</DefineConstants>
+    <DefineConstants>CODE_ANALYSIS;OBeautifulCodeAccountingTimeSerializationRecipesProject</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\OBeautifulCode.AccountingTime.BsonSerialization.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\OBeautifulCode.AccountingTime.Serialization.XML</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\common\analyzers.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="OBeautifulCode.AccountingTime.BsonSerialization.recipe-nuspec" />
-    <None Include="OBeautifulCode.AccountingTime.BsonSerialization.template-nuspec" />
+    <None Include="OBeautifulCode.AccountingTime.Serialization.template-nuspec" />
     <None Include="packages.config" />
     <AdditionalFiles Include="..\common\stylecop.json">
       <Link>stylecop.json</Link>
