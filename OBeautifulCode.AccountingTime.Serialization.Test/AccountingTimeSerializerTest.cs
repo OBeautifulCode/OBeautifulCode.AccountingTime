@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.BsonSerialization.Test
+namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
     using System.Linq;

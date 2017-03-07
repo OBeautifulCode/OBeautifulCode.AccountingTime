@@ -21,8 +21,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
         /// </summary>
-        /// <typeparam name="TReportingPeriod">The type of reporting period.</typeparam>
-        /// <param name="reportingPeriod">The serialized reperiod period string to deserialize.</param>
+        /// <typeparam name="TReportingPeriod">The type of reporting period to deserialize into.</typeparam>
+        /// <param name="reportingPeriod">The serialized reporting period string to deserialize.</param>
         /// <returns>
         /// Gets a reporting period deserialized from it's string representation.
         /// </returns>
@@ -43,9 +43,48 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
             }
 
+            var requestedType = typeof(TReportingPeriod);
+            var result = reportingPeriod.DeserializeFromString(requestedType) as TReportingPeriod;
+            return result;
+        }
+
+        /// <summary>
+        /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
+        /// </summary>
+        /// <param name="reportingPeriod">The serialized reporting period string to deserialize.</param>
+        /// <param name="requestedType">The type of reporting period to deserialize into.</param>
+        /// <returns>
+        /// Gets a reporting period deserialized from it's string representation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="requestedType"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="requestedType"/> is not an <see cref="IReportingPeriod{UnitOfTime}"/>.</exception>
+        /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
+        public static object DeserializeFromString(this string reportingPeriod, Type requestedType)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (string.IsNullOrWhiteSpace(reportingPeriod))
+            {
+                throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
+            }
+
+            if (requestedType == null)
+            {
+                throw new ArgumentNullException(nameof(requestedType));
+            }
+
+            if (!typeof(IReportingPeriod<UnitOfTime>).IsAssignableFrom(requestedType))
+            {
+                throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}"), nameof(requestedType));
+            }
+
             Type unboundGenericType = typeof(ReportingPeriod<>);
             string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
-            var requestedType = typeof(TReportingPeriod);
             Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
             var typeArgs = new[] { requestedUnitOfTimeType };
             var genericTypeToCreate = unboundGenericType.MakeGenericType(typeArgs);
@@ -96,7 +135,7 @@ namespace OBeautifulCode.AccountingTime
             try
             {
                 var result = Activator.CreateInstance(genericTypeToCreate, start, end);
-                return result as TReportingPeriod;
+                return result;
             }
             catch (TargetInvocationException ex)
             {

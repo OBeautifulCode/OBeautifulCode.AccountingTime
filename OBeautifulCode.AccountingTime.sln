@@ -18,9 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		common\stylecop.json = common\stylecop.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime.BsonSerialization", "OBeautifulCode.AccountingTime.BsonSerialization\OBeautifulCode.AccountingTime.BsonSerialization.csproj", "{D9B73CFE-77E1-4FD6-9C7A-3A0CC410B561}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime.Serialization", "OBeautifulCode.AccountingTime.Serialization\OBeautifulCode.AccountingTime.Serialization.csproj", "{D9B73CFE-77E1-4FD6-9C7A-3A0CC410B561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime.BsonSerialization.Test", "OBeautifulCode.AccountingTime.BsonSerialization.Test\OBeautifulCode.AccountingTime.BsonSerialization.Test.csproj", "{0BA40593-40F0-4984-A8AE-98B3C62EEB51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime.Serialization.Test", "OBeautifulCode.AccountingTime.Serialization.Test\OBeautifulCode.AccountingTime.Serialization.Test.csproj", "{0BA40593-40F0-4984-A8AE-98B3C62EEB51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

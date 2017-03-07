@@ -12,11 +12,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OBeautifulCode.AccountingTime.BsonSerialization")]
-[assembly: AssemblyDescription("OBeautifulCode.AccountingTime.BsonSerialization")]
+[assembly: AssemblyTitle("OBeautifulCode.AccountingTime.Serialization")]
+[assembly: AssemblyDescription("OBeautifulCode.AccountingTime.Serialization")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OBeautifulCode")]
-[assembly: AssemblyProduct("OBeautifulCode.AccountingTime.BsonSerialization")]
+[assembly: AssemblyProduct("OBeautifulCode.AccountingTime.Serialization")]
 [assembly: AssemblyCopyright("Copyright (c) 2016 OBeautifulCode")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -42,4 +42,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: CLSCompliant(true)]
-[assembly: InternalsVisibleTo("OBeautifulCode.AccountingTime.BsonSerialization.Test")]
+[assembly: InternalsVisibleTo("OBeautifulCode.AccountingTime.Serialization.Test")]
