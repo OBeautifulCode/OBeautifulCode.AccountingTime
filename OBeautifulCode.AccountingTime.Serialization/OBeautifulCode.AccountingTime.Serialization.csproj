@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AccountingTimeSerializer.cs" />
     <Compile Include="IReportingPeriodSerializer{TValue}.cs" />
+    <Compile Include="ReportingPeriodConverter.cs" />
     <Compile Include="ReportingPeriodPersistenceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfTimeConverter.cs" />
