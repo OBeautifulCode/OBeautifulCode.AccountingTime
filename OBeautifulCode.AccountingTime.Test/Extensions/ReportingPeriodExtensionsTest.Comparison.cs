@@ -5915,6 +5915,129 @@ namespace OBeautifulCode.AccountingTime.Test
         {
         }
 
+        [Fact]
+        public static void IsGreaterThanAndAdjacentTo___Should_throw_ArgumentNullException___When_parameter_reportingPeriod1_is_null()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
+
+            // Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.IsGreaterThanAndAdjacentTo(null, reportingPeriod));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void IsGreaterThanAndAdjacentTo___Should_throw_ArgumentNullException___When_parameter_reportingPeriod2_is_null()
+        {
+            // Arrange
+            var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>();
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriod.IsGreaterThanAndAdjacentTo(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void IsGreaterThanAndAdjacentTo___Should_throw_ArgumentException___When_reporting_periods_have_different_UnitOfTimeKind()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod<UnitOfTime>>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
+
+            // Act
+            // ReSharper disable ExpressionIsAlwaysNull
+            var ex = Record.Exception(() => reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2));
+            // ReSharper restore ExpressionIsAlwaysNull
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_is_less_than_reportingPeriod2()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Five));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve));
+
+            // Act
+            var actual = reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_and_reportingPeriod2_overlap()
+        {
+            // Arrange
+            var reportingPeriod1a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve));
+            var reportingPeriod1b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+
+            var reportingPeriod2a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+            var reportingPeriod2b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+
+            var reportingPeriod3a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten));
+            var reportingPeriod3b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+
+            var reportingPeriod4a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten));
+            var reportingPeriod4b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six));
+
+            // Act
+            var actual1 = reportingPeriod1a.IsGreaterThanAndAdjacentTo(reportingPeriod1b);
+            var actual2 = reportingPeriod2a.IsGreaterThanAndAdjacentTo(reportingPeriod2b);
+            var actual3 = reportingPeriod3a.IsGreaterThanAndAdjacentTo(reportingPeriod3b);
+            var actual4 = reportingPeriod4a.IsGreaterThanAndAdjacentTo(reportingPeriod4b);
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+            actual3.Should().BeFalse();
+            actual4.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_is_greater_than_but_not_adjacent_to_reportingPeriod2()
+        {
+            // Arrange
+            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Eight), new FiscalMonth(2016, MonthNumber.Twelve));
+            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+
+            // Act
+            var actual = reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_is_greater_than_and_adjacent_to_reportingPeriod2()
+        {
+            // Arrange
+            var reportingPeriod1a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Seven), new FiscalMonth(2016, MonthNumber.Twelve));
+            var reportingPeriod1b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+
+            var reportingPeriod2a = new ReportingPeriod<FiscalQuarter>(QuarterNumber.Q2.ToFiscal(2015), QuarterNumber.Q3.ToFiscal(2015));
+            var reportingPeriod2b = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2015, MonthNumber.Three));
+
+            var reportingPeriod3a = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Seven), new FiscalMonth(2015, MonthNumber.Eight));
+            var reportingPeriod3b = new ReportingPeriod<FiscalQuarter>(QuarterNumber.Q1.ToFiscal(2015), QuarterNumber.Q2.ToFiscal(2015));
+
+            // Act
+            var actual1 = reportingPeriod1a.IsGreaterThanAndAdjacentTo(reportingPeriod1b);
+            var actual2 = reportingPeriod2a.IsGreaterThanAndAdjacentTo(reportingPeriod2b);
+            var actual3 = reportingPeriod3a.IsGreaterThanAndAdjacentTo(reportingPeriod3b);
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+            actual3.Should().BeTrue();
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

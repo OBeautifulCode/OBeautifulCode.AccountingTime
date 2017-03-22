@@ -168,6 +168,49 @@ namespace OBeautifulCode.AccountingTime
                 reportingPeriod2.Contains(reportingPeriod1.End);
             return result;
         }
+
+        /// <summary>
+        /// Determines if a reporting period is greater than and adjacent to a second reporting period.
+        /// </summary>
+        /// <remarks>
+        /// For this method to return true, the first reporting period's Start must be greater than the
+        /// second reporting period's End, and they must be adjacent (subtracting one unit in the same granularity
+        /// to the first reporting period's Start should make it equal to the second reporting period's End)
+        /// For example, 3Q2017-4Q2017 is greater than and adjacent to 1Q2017-2Q2017.
+        /// For example, 3Q2017-4Q2017 is NOT greater than 1Q2017-3Q2017, because they overlap.
+        /// For example, 4Q2017-4Q2017 is NOT adjacent to 1Q2017-2Q2017, because there's a gap of 3Q2017
+        /// </remarks>
+        /// <param name="reportingPeriod1">A reporting period to check if greater than and adjacent to a second reportin period.</param>
+        /// <param name="reportingPeriod2">The second reporting period.</param>
+        /// <returns>
+        /// true if the first reporting period is greater than and adjacent to the second reporting period; false, otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod1"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
+        public static bool IsGreaterThanAndAdjacentTo(this IReportingPeriod<UnitOfTime> reportingPeriod1, IReportingPeriod<UnitOfTime> reportingPeriod2)
+        {
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
+            if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}"));
+            }
+
+            var mostGranularReportingPeriod1 = reportingPeriod1.ToMostGranular();
+            var mostGranularReportingPeriod2 = reportingPeriod2.ToMostGranular();
+
+            var result = mostGranularReportingPeriod1.Start.Plus(-1).Equals(mostGranularReportingPeriod2.End);
+            return result;
+        }
     }
 }
 
