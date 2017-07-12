@@ -23,8 +23,11 @@ namespace $rootnamespace$
     [System.Diagnostics.DebuggerStepThrough]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
+	public
+#else
+	internal
 #endif
-    internal class ReportingPeriodConverter : JsonConverter
+    class ReportingPeriodConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
