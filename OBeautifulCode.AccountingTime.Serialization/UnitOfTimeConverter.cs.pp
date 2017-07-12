@@ -7,18 +7,27 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if OBeautifulCodeAccountingTimeSerializationRecipesProject
 namespace OBeautifulCode.AccountingTime.Serialization
+#else
+namespace $rootnamespace$
+#endif
 {
     using System;
 
     using Newtonsoft.Json;
 
 #if !OBeautifulCodeAccountingTimeSerializationRecipesProject
+    using OBeautifulCode.AccountingTime;
+
     [System.Diagnostics.DebuggerStepThrough]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
+	public
+#else
+    internal
 #endif
-    internal class UnitOfTimeConverter : JsonConverter
+    class UnitOfTimeConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

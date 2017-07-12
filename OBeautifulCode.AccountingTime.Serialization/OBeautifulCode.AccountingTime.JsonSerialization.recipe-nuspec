@@ -11,7 +11,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="UnitOfTimeConverter.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\UnitOfTimeConverter.cs" />
-    <file src="ReportingPeriodConverter.cs" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\ReportingPeriodConverter.cs" />
+    <file src="UnitOfTimeConverter.cs.pp" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\UnitOfTimeConverter.cs.pp" />
+    <file src="ReportingPeriodConverter.cs.pp" target="content\net461\.OBeautifulCode.Recipes\OBeautifulCode.AccountingTime.Serialization\ReportingPeriodConverter.cs.pp" />
   </files>
 </package>
