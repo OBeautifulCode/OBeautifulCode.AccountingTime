@@ -17,17 +17,17 @@ namespace $rootnamespace$
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
+    /// </summary>
 #if !OBeautifulCodeAccountingTimeSerializationRecipesProject
     using OBeautifulCode.AccountingTime;
 
     [System.Diagnostics.DebuggerStepThrough]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
-	public
-#else
-	internal
 #endif
-    class ReportingPeriodConverter : JsonConverter
+    public class ReportingPeriodConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
