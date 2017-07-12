@@ -18,19 +18,21 @@ namespace $rootnamespace$
     using Newtonsoft.Json;
 
 #if !OBeautifulCodeAccountingTimeSerializationRecipesProject
+    using OBeautifulCode.AccountingTime;
+
     [System.Diagnostics.DebuggerStepThrough]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
 #endif
-    internal class ReportingPeriodConverter : JsonConverter
+    internal class UnitOfTimeConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var reportingPeriod = value as IReportingPeriod<UnitOfTime>;
-            if (reportingPeriod != null)
+            var unitOfTime = value as UnitOfTime;
+            if (unitOfTime != null)
             {
-                var stringToWrite = reportingPeriod.SerializeToString();
+                var stringToWrite = unitOfTime.SerializeToSortableString();
                 writer.WriteValue(stringToWrite);
             }
         }
@@ -38,10 +40,10 @@ namespace $rootnamespace$
         /// <inheritdoc />
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            object result = null;
+            UnitOfTime result = null;
             if (reader.Value != null)
             {
-                result = reader.Value.ToString().DeserializeFromString(objectType);
+                result = reader.Value.ToString().DeserializeFromSortableString<UnitOfTime>();
             }
 
             return result;
@@ -50,14 +52,8 @@ namespace $rootnamespace$
         /// <inheritdoc />
         public override bool CanConvert(Type objectType)
         {
-            if (objectType.IsGenericType)
-            {
-                var genericType = objectType.MakeGenericType();
-                var result = genericType == typeof(IReportingPeriod<>);
-                return result;
-            }
-
-            return false;
+            var result = typeof(UnitOfTime).IsAssignableFrom(objectType);
+            return result;
         }
     }
 }
