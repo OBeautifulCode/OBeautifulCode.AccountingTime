@@ -7,7 +7,11 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
+#if OBeautifulCodeAccountingTimeSerializationRecipesProject
 namespace OBeautifulCode.AccountingTime.Serialization
+#else
+namespace $rootnamespace$
+#endif
 {
     using System;
 
