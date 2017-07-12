@@ -17,12 +17,12 @@ namespace $rootnamespace$
 
     using Newtonsoft.Json;
 
+	using OBeautifulCode.AccountingTime;
+
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
     /// </summary>
 #if !OBeautifulCodeAccountingTimeSerializationRecipesProject
-    using OBeautifulCode.AccountingTime;
-
     [System.Diagnostics.DebuggerStepThrough]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
