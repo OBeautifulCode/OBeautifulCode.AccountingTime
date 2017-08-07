@@ -873,6 +873,61 @@ namespace OBeautifulCode.AccountingTime.Test
             }
         }
 
+        [Fact]
+        public static void GetHashCode___Should_not_be_equal_for_two_UnitOfKind_objects___When_they_are_of_different_kinds_but_have_the_same_granularity_and_same_property_values()
+        {
+            // Arrange
+            var calendarUnbounded = A.Dummy<CalendarUnbounded>();
+            var fiscalUnbounded = new FiscalUnbounded();
+            var genericUnbounded = new GenericUnbounded();
+
+            var calendarYear = A.Dummy<CalendarYear>();
+            var fiscalYear = new FiscalYear(calendarYear.Year);
+            var genericYear = new GenericYear(calendarYear.Year);
+
+            var calendarQuarter = A.Dummy<CalendarQuarter>();
+            var fiscalQuarter = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
+            var genericQuarter = new GenericQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
+
+            var calendarMonth = A.Dummy<CalendarMonth>();
+            var fiscalMonth = new FiscalMonth(calendarMonth.Year, calendarMonth.MonthNumber);
+            var genericMonth = new GenericMonth(calendarMonth.Year, calendarMonth.MonthNumber);
+
+            // Act
+            var calendarUnboundedHashCode = calendarUnbounded.GetHashCode();
+            var fiscalUnboundedHashCode = fiscalUnbounded.GetHashCode();
+            var genericUnboundedHashCode = genericUnbounded.GetHashCode();
+
+            var calendarYearHashCode = calendarYear.GetHashCode();
+            var fiscalYearHashCode = fiscalYear.GetHashCode();
+            var genericYearHashCode = genericYear.GetHashCode();
+
+            var calendarQuarterHashCode = calendarQuarter.GetHashCode();
+            var fiscalQuarterHashCode = fiscalQuarter.GetHashCode();
+            var genericQuarterHashCode = genericQuarter.GetHashCode();
+
+            var calendarMonthHashCode = calendarMonth.GetHashCode();
+            var fiscalMonthHashCode = fiscalMonth.GetHashCode();
+            var genericMonthHashCode = genericMonth.GetHashCode();
+
+            // Assert
+            calendarUnboundedHashCode.Should().NotBe(fiscalUnboundedHashCode);
+            calendarUnboundedHashCode.Should().NotBe(genericUnboundedHashCode);
+            fiscalUnboundedHashCode.Should().NotBe(genericUnboundedHashCode);
+
+            calendarYearHashCode.Should().NotBe(fiscalYearHashCode);
+            calendarYearHashCode.Should().NotBe(genericYearHashCode);
+            fiscalYearHashCode.Should().NotBe(genericYearHashCode);
+
+            calendarQuarterHashCode.Should().NotBe(fiscalQuarterHashCode);
+            calendarQuarterHashCode.Should().NotBe(genericQuarterHashCode);
+            fiscalQuarterHashCode.Should().NotBe(genericQuarterHashCode);
+
+            calendarMonthHashCode.Should().NotBe(fiscalMonthHashCode);
+            calendarMonthHashCode.Should().NotBe(genericMonthHashCode);
+            fiscalMonthHashCode.Should().NotBe(genericMonthHashCode);
+        }
+
         // ReSharper restore InconsistentNaming
     }
 }

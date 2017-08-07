@@ -183,6 +183,8 @@ namespace OBeautifulCode.AccountingTime
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
                 // ReSharper disable NonReadonlyMemberInGetHashCode
+                .Hash(this.UnitOfTimeKind)
+                .Hash(this.UnitOfTimeGranularity)
                 .Hash(this.Year)
                 .Value;
                 // ReSharper restore NonReadonlyMemberInGetHashCode

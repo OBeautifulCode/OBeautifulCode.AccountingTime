@@ -1912,6 +1912,61 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetHashCode___Should_not_be_equal_for_two_ReportingPeriod___When_they_are_of_different_kinds_but_have_the_same_granularity_and_same_property_values()
+        {
+            // Arrange
+            var calendarUnbounded = A.Dummy<ReportingPeriod<CalendarUnbounded>>();
+            var fiscalUnbounded = A.Dummy<ReportingPeriod<FiscalUnbounded>>();
+            var genericUnbounded = A.Dummy<ReportingPeriod<GenericUnbounded>>();
+
+            var calendarYear = A.Dummy<ReportingPeriod<CalendarYear>>();
+            var fiscalYear = new ReportingPeriod<FiscalYear>(new FiscalYear(calendarYear.Start.Year), new FiscalYear(calendarYear.End.Year));
+            var genericYear = new ReportingPeriod<GenericYear>(new GenericYear(calendarYear.Start.Year), new GenericYear(calendarYear.End.Year));
+
+            var calendarQuarter = A.Dummy<ReportingPeriod<CalendarQuarter>>();
+            var fiscalQuarter = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(calendarQuarter.Start.Year, calendarQuarter.Start.QuarterNumber), new FiscalQuarter(calendarQuarter.End.Year, calendarQuarter.End.QuarterNumber));
+            var genericQuarter = new ReportingPeriod<GenericQuarter>(new GenericQuarter(calendarQuarter.Start.Year, calendarQuarter.Start.QuarterNumber), new GenericQuarter(calendarQuarter.End.Year, calendarQuarter.End.QuarterNumber));
+
+            var calendarMonth = A.Dummy<ReportingPeriod<CalendarMonth>>();
+            var fiscalMonth = new ReportingPeriod<FiscalMonth>(new FiscalMonth(calendarMonth.Start.Year, calendarMonth.Start.MonthNumber), new FiscalMonth(calendarMonth.End.Year, calendarMonth.End.MonthNumber));
+            var genericMonth = new ReportingPeriod<GenericMonth>(new GenericMonth(calendarMonth.Start.Year, calendarMonth.Start.MonthNumber), new GenericMonth(calendarMonth.End.Year, calendarMonth.End.MonthNumber));
+
+            // Act
+            var calendarUnboundedHashCode = calendarUnbounded.GetHashCode();
+            var fiscalUnboundedHashCode = fiscalUnbounded.GetHashCode();
+            var genericUnboundedHashCode = genericUnbounded.GetHashCode();
+
+            var calendarYearHashCode = calendarYear.GetHashCode();
+            var fiscalYearHashCode = fiscalYear.GetHashCode();
+            var genericYearHashCode = genericYear.GetHashCode();
+
+            var calendarQuarterHashCode = calendarQuarter.GetHashCode();
+            var fiscalQuarterHashCode = fiscalQuarter.GetHashCode();
+            var genericQuarterHashCode = genericQuarter.GetHashCode();
+
+            var calendarMonthHashCode = calendarMonth.GetHashCode();
+            var fiscalMonthHashCode = fiscalMonth.GetHashCode();
+            var genericMonthHashCode = genericMonth.GetHashCode();
+
+            // Assert
+            calendarUnboundedHashCode.Should().NotBe(fiscalUnboundedHashCode);
+            calendarUnboundedHashCode.Should().NotBe(genericUnboundedHashCode);
+            fiscalUnboundedHashCode.Should().NotBe(genericUnboundedHashCode);
+
+            calendarYearHashCode.Should().NotBe(fiscalYearHashCode);
+            calendarYearHashCode.Should().NotBe(genericYearHashCode);
+            fiscalYearHashCode.Should().NotBe(genericYearHashCode);
+
+            calendarQuarterHashCode.Should().NotBe(fiscalQuarterHashCode);
+            calendarQuarterHashCode.Should().NotBe(genericQuarterHashCode);
+            fiscalQuarterHashCode.Should().NotBe(genericQuarterHashCode);
+
+            calendarMonthHashCode.Should().NotBe(fiscalMonthHashCode);
+            calendarMonthHashCode.Should().NotBe(genericMonthHashCode);
+            fiscalMonthHashCode.Should().NotBe(genericMonthHashCode);
+        }
+
+        [Fact]
         public static void ToString___Should_return_friendly_string_representation_of_object___When_called()
         {
             // Arrange

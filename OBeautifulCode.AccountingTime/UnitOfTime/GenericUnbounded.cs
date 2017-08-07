@@ -159,6 +159,8 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
+                .Hash(this.UnitOfTimeKind)
+                .Hash(this.UnitOfTimeGranularity)
                 .Value;
 
         /// <inheritdoc />
