@@ -6,7 +6,6 @@
 //   Sourced from NuGet package. Will be overwritten with package update except in Naos.Recipes source.
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------
 
 namespace Naos.Recipes.TupleInitializers
 {
@@ -16,9 +15,11 @@ namespace Naos.Recipes.TupleInitializers
     /// <summary>
     /// Tuple initializers.
     /// </summary>
-    [System.Diagnostics.DebuggerStepThrough]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("Naos.Recipes", "See package version number")]
+    #if !NaosRecipesTupleInitializers
+        [System.Diagnostics.DebuggerStepThrough]
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        [System.CodeDom.Compiler.GeneratedCode("Naos.Recipes.TupleInitializers", "See package version number")]
+    #endif
     internal static class Initializers
     {
         /// <summary>
