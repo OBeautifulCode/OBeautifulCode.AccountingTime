@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OBeautifulCode")]
 [assembly: AssemblyProduct("OBeautifulCode.AccountingTime.Serialization")]
-[assembly: AssemblyCopyright("Copyright (c) 2016 OBeautifulCode")]
+[assembly: AssemblyCopyright("Copyright (c) OBeautifulCode 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

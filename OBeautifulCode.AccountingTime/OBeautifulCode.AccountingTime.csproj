@@ -102,7 +102,7 @@
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
-    <None Include="OBeautifulCode.AccountingTime.nuspec" />
+    <None Include="OBeautifulCode.AccountingTime.override-nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
