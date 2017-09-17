@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -323,7 +322,6 @@ namespace OBeautifulCode.AccountingTime
             IReportingPeriod<UnitOfTime> moreGranularReportingPeriod;
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
             {
-                // ReSharper disable PossibleNullReferenceException
                 var unitOfTimeAsYear = unitOfTime as IHaveAYear;
                 var startQuarter = QuarterNumber.Q1;
                 var endQuarter = QuarterNumber.Q4;
@@ -344,12 +342,9 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
                 }
-
-                // ReSharper restore PossibleNullReferenceException
             }
             else if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
             {
-                // ReSharper disable PossibleNullReferenceException
                 var unitOfTimeAsQuarter = unitOfTime as IHaveAQuarter;
                 var startMonth = ((((int)unitOfTimeAsQuarter.QuarterNumber) - 1) * 3) + 1;
                 var endMonth = ((int)unitOfTimeAsQuarter.QuarterNumber) * 3;
@@ -370,8 +365,6 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
                 }
-
-                // ReSharper restore PossibleNullReferenceException
             }
             else if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
             {
@@ -439,7 +432,6 @@ namespace OBeautifulCode.AccountingTime
             var unitOfTimeKind = reportingPeriod.GetUnitOfTimeKind();
             if (reportingPeriodGranularity == UnitOfTimeGranularity.Day)
             {
-                // ReSharper disable PossibleNullReferenceException
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var startAsCalendarDay = reportingPeriod.Start as CalendarDay;
@@ -462,12 +454,9 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
-
-                // ReSharper restore PossibleNullReferenceException
             }
             else if (reportingPeriodGranularity == UnitOfTimeGranularity.Month)
             {
-                // ReSharper disable PossibleNullReferenceException
                 var startAsMonth = reportingPeriod.Start as IHaveAMonth;
                 var endAsMonth = reportingPeriod.End as IHaveAMonth;
 
@@ -519,12 +508,9 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
-
-                // ReSharper restore PossibleNullReferenceException
             }
             else if (reportingPeriodGranularity == UnitOfTimeGranularity.Quarter)
             {
-                // ReSharper disable PossibleNullReferenceException
                 var startAsQuarter = reportingPeriod.Start as IHaveAQuarter;
                 var endAsQuarter = reportingPeriod.End as IHaveAQuarter;
 
@@ -562,8 +548,6 @@ namespace OBeautifulCode.AccountingTime
                 {
                     throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTimeKind);
                 }
-
-                // ReSharper restore PossibleNullReferenceException
             }
             else
             {
@@ -580,5 +564,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

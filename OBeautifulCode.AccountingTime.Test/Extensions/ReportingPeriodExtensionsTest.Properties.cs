@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -24,7 +23,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
     public static partial class ReportingPeriodExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void GetUnitOfTimeGranularity___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
@@ -385,9 +383,5 @@ namespace OBeautifulCode.AccountingTime.Test
             result2.Should().BeTrue();
             result3.Should().BeTrue();
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

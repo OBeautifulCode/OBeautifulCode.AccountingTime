@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -19,7 +18,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class QuarterNumberExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void ToCalendar___Should_throw_ArgumentException___When_parameter_quarterNumber_is_Invalid()
         {
@@ -88,9 +86,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             actualQuarter.Should().Be(expectedQuarter);
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

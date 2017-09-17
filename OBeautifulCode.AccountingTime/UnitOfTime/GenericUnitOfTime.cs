@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -19,5 +18,3 @@ namespace OBeautifulCode.AccountingTime
         public override UnitOfTimeKind UnitOfTimeKind => UnitOfTimeKind.Generic;
     }
 }
-
-// ReSharper restore CheckNamespace

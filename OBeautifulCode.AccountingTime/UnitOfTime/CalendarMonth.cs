@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -42,8 +41,6 @@ namespace OBeautifulCode.AccountingTime
             this.MonthOfYear = monthOfYear;
         }
 
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
-
         /// <inheritdoc />
         public int Year { get; private set; }
 
@@ -51,8 +48,6 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the month of the year.
         /// </summary>
         public MonthOfYear MonthOfYear { get; private set; }
-
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
         public MonthNumber MonthNumber => (MonthNumber)(int)this.MonthOfYear;
@@ -200,13 +195,11 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 .Hash(this.UnitOfTimeKind)
                 .Hash(this.UnitOfTimeGranularity)
                 .Hash(this.MonthOfYear)
                 .Hash(this.Year)
                 .Value;
-                // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <inheritdoc />
         public override UnitOfTime Clone()
@@ -222,5 +215,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

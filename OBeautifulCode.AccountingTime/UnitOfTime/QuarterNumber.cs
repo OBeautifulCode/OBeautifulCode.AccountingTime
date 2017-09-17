@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -44,5 +43,3 @@ namespace OBeautifulCode.AccountingTime
         Q4 = 4
     }
 }
-
-// ReSharper restore CheckNamespace

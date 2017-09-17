@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -65,15 +64,11 @@ namespace OBeautifulCode.AccountingTime
             this.End = end;
         }
 
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
-
         /// <inheritdoc />
         public T Start { get; private set; }
 
         /// <inheritdoc />
         public T End { get; private set; }
-
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <summary>
         /// Determines whether two objects of type <see cref="ReportingPeriod{T}" /> are equal.
@@ -174,11 +169,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>The hash code for this reporting period.</returns>
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 .Hash(this.Start)
                 .Hash(this.End)
                 .Value;
-                // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <summary>
         /// Returns a friendly string representation of this reporting period.
@@ -188,9 +181,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public override string ToString()
         {
-            // ReSharper disable RedundantToStringCall
             var result = Invariant($"{this.Start.ToString()} to {this.End.ToString()}");
-            // ReSharper restore RedundantToStringCall
 
             return result;
         }
@@ -212,7 +203,6 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            // ReSharper disable UseMethodIsInstanceOfType
             if (!requestedUnitOfTimeType.IsAssignableFrom(this.Start.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
@@ -248,13 +238,10 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            // ReSharper disable UseMethodIsInstanceOfType
             if (right.GetType().GetGenericTypeDefinition() != typeof(ReportingPeriod<>))
             {
                 return false;
             }
-
-            // ReSharper restore UseMethodIsInstanceOfType
 
             try
             {
@@ -268,5 +255,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

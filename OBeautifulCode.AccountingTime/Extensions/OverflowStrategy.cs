@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -21,5 +20,3 @@ namespace OBeautifulCode.AccountingTime
         ThrowOnOverflow
     }
 }
-
-// ReSharper restore CheckNamespace

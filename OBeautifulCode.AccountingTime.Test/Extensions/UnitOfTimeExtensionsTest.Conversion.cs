@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -19,7 +18,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void ToCalendarQuarter___Should_throw_ArgumentNullException___When_parameter_fiscalQuarter_is_null()
         {
@@ -487,9 +485,5 @@ namespace OBeautifulCode.AccountingTime.Test
             reportingPeriod.Start.Should().Be(unitOfTime);
             reportingPeriod.End.Should().Be(unitOfTime);
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

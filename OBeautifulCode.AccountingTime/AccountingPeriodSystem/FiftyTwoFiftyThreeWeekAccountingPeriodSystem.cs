@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -34,8 +33,6 @@ namespace OBeautifulCode.AccountingTime
             this.FiftyTwoFiftyThreeWeekMethodology = fiftyTwoFiftyThreeWeekMethodology;
         }
 
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
-
         /// <summary>
         /// Gets the day of the week that the fiscal year always ends on.
         /// </summary>
@@ -51,8 +48,6 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the methodology used to identify the last day of the accounting year.
         /// </summary>
         public FiftyTwoFiftyThreeWeekMethodology FiftyTwoFiftyThreeWeekMethodology { get; private set; }
-
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
@@ -100,5 +95,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

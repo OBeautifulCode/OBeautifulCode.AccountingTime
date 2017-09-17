@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -15,7 +14,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class DateTimeExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void ToCalendarDay___Should_return_CalendarDay_equivalent_of_parameter_value___When_called()
         {
@@ -42,9 +40,5 @@ namespace OBeautifulCode.AccountingTime.Test
             actualCalendarDay3.Should().Be(expectedCalendarDay3);
             actualCalendarDay4.Should().Be(expectedCalendarDay4);
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

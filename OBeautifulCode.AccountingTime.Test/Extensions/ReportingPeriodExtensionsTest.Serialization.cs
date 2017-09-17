@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -18,7 +17,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
     public static partial class ReportingPeriodExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void DeserializeFromString_TReportingPeriod___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
@@ -117,9 +115,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var type in allTypes)
                 {
                     var genericMethod = deserializeFromString.MakeGenericMethod(type.ReportingPeriodType);
-                    // ReSharper disable PossibleNullReferenceException
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { reportingPeriod })).InnerException);
-                    // ReSharper restore PossibleNullReferenceException
                 }
             }
 
@@ -172,9 +168,7 @@ namespace OBeautifulCode.AccountingTime.Test
             foreach (var reportingPeriod in reportingPeriods)
             {
                 var genericMethod = deserializeFromString.MakeGenericMethod(reportingPeriod.ReportingPeriodType);
-                // ReSharper disable PossibleNullReferenceException
                 exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { reportingPeriod.ReportingPeriod })).InnerException);
-                // ReSharper restore PossibleNullReferenceException
             }
 
             // Assert
@@ -1529,9 +1523,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             serialized.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

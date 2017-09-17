@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -194,7 +193,6 @@ namespace OBeautifulCode.AccountingTime
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
             {
-                // ReSharper disable PossibleNullReferenceException
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var calendarYear = unitOfTime as CalendarYear;
@@ -215,7 +213,6 @@ namespace OBeautifulCode.AccountingTime
                     return result;
                 }
 
-                // ReSharper restore PossibleNullReferenceException
                 throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
             }
 
@@ -228,7 +225,6 @@ namespace OBeautifulCode.AccountingTime
                     return result;
                 }
 
-                // ReSharper disable PossibleNullReferenceException
                 var quarter = unitOfTime as IHaveAQuarter;
                 var startMonth = (((int)quarter.QuarterNumber - 1) * 3) + 1;
                 var endMonth = (int)quarter.QuarterNumber * 3;
@@ -245,7 +241,6 @@ namespace OBeautifulCode.AccountingTime
                     return result;
                 }
 
-                // ReSharper restore PossibleNullReferenceException
                 throw new NotSupportedException("This kind of unit-of-time is not supported: " + unitOfTime.UnitOfTimeKind);
             }
 
@@ -300,5 +295,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

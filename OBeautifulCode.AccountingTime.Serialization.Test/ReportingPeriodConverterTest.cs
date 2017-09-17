@@ -176,8 +176,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         private class ReportingPeriodModel
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             [JsonConverter(typeof(ReportingPeriodConverter))]
             public ReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
 
@@ -229,16 +227,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             [JsonConverter(typeof(ReportingPeriodConverter))]
             public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
-        // ReSharper disable InconsistentNaming
         private class IReportingPeriodModel
-        // ReSharper restore InconsistentNaming
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             [JsonConverter(typeof(ReportingPeriodConverter))]
             public IReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
 
@@ -290,8 +282,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             [JsonConverter(typeof(ReportingPeriodConverter))]
             public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
     }
 }

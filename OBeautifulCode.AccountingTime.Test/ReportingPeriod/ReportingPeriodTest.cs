@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -24,7 +23,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are a lot of unit-of-time types.")]
     public static class ReportingPeriodTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void Constructor___Should_throw_ArgumentNullException___When_parameter_start_is_null()
         {
@@ -220,12 +218,10 @@ namespace OBeautifulCode.AccountingTime.Test
             ReportingPeriod<UnitOfTime> systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = systemUnderTest1 == systemUnderTest2;
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -236,14 +232,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 == systemUnderTest2;
             var result2 = systemUnderTest2 == systemUnderTest1;
 
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -253,14 +247,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = systemUnderTest == systemUnderTest;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -334,14 +326,12 @@ namespace OBeautifulCode.AccountingTime.Test
             ReportingPeriod<UnitOfTime> systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result1 = systemUnderTest1 == systemUnderTest2;
             var result2 = systemUnderTest2 == systemUnderTest1;
 
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -352,14 +342,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 == systemUnderTest2;
             var result2 = systemUnderTest2 == systemUnderTest1;
 
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -370,7 +358,6 @@ namespace OBeautifulCode.AccountingTime.Test
             IReportingPeriod<UnitOfTime> systemUnderTest2 = systemUnderTest1;
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result1 = systemUnderTest1 == systemUnderTest2;
             var result2 = systemUnderTest2 == systemUnderTest1;
@@ -379,7 +366,6 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -657,12 +643,10 @@ namespace OBeautifulCode.AccountingTime.Test
             ReportingPeriod<UnitOfTime> systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = systemUnderTest1 != systemUnderTest2;
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -673,14 +657,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 != systemUnderTest2;
             var result2 = systemUnderTest2 != systemUnderTest1;
 
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -690,14 +672,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = systemUnderTest != systemUnderTest;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -770,14 +750,12 @@ namespace OBeautifulCode.AccountingTime.Test
             ReportingPeriod<UnitOfTime> systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result1 = systemUnderTest1 != systemUnderTest2;
             var result2 = systemUnderTest2 != systemUnderTest1;
 
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -788,14 +766,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<ReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 != systemUnderTest2;
             var result2 = systemUnderTest2 != systemUnderTest1;
 
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -806,7 +782,6 @@ namespace OBeautifulCode.AccountingTime.Test
             IReportingPeriod<UnitOfTime> systemUnderTest2 = systemUnderTest1;
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result1 = systemUnderTest1 != systemUnderTest2;
             var result2 = systemUnderTest2 != systemUnderTest1;
@@ -815,7 +790,6 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -1194,9 +1168,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = A.Dummy<IReportingPeriod<UnitOfTime>>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
             var result = systemUnderTest.Equals(systemUnderTest);
-            // ReSharper restore EqualExpressionComparison
 
             // Assert
             result.Should().BeTrue();
@@ -1216,7 +1188,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = (IReportingPeriod<GenericUnitOfTime>)new Common.ReportingPeriodTest<GenericUnitOfTime>(A.Dummy<GenericUnbounded>(), A.Dummy<GenericUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
             var result1a = systemUnderTest1a.Equals(systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals(systemUnderTest1a);
 
@@ -1225,8 +1196,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result3a = systemUnderTest3a.Equals(systemUnderTest3b);
             var result3b = systemUnderTest3b.Equals(systemUnderTest3a);
-
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1308,7 +1277,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest4b = new ReportingPeriod<CalendarUnitOfTime>(A.Dummy<CalendarDay>(), A.Dummy<CalendarUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
             var result1a = systemUnderTest1a.Equals(systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals(systemUnderTest1a);
 
@@ -1320,8 +1288,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result4a = systemUnderTest4a.Equals(systemUnderTest4b);
             var result4b = systemUnderTest4b.Equals(systemUnderTest4a);
-
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1354,7 +1320,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest4b = new ReportingPeriod<CalendarUnitOfTime>(A.Dummy<CalendarDay>(), A.Dummy<CalendarUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
             var result1a = systemUnderTest1a.Equals(systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals(systemUnderTest1a);
 
@@ -1366,8 +1331,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result4a = systemUnderTest4a.Equals(systemUnderTest4b);
             var result4b = systemUnderTest4b.Equals(systemUnderTest4a);
-
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1446,7 +1409,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest5b = (IReportingPeriod<FiscalUnitOfTime>)new ReportingPeriod<FiscalUnitOfTime>(A.Dummy<FiscalUnbounded>(), A.Dummy<FiscalUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
             var result1a = systemUnderTest1a.Equals(systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals(systemUnderTest1a);
 
@@ -1461,8 +1423,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result5a = systemUnderTest5a.Equals(systemUnderTest5b);
             var result5b = systemUnderTest5b.Equals(systemUnderTest5a);
-
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeTrue();
@@ -1505,11 +1465,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<FiscalMonth>();
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result = systemUnderTest1.Equals((object)systemUnderTest2);
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result.Should().BeFalse();
@@ -1527,10 +1483,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var result1 = systemUnderTest1.Equals((object)systemUnderTest1);
 
-            // ReSharper disable RedundantCast
             var result2a = systemUnderTest2a.Equals((object)systemUnderTest2b);
             var result2b = systemUnderTest2b.Equals((object)systemUnderTest2a);
-            // ReSharper restore RedundantCast
 
             // Assert
             result1.Should().BeTrue();
@@ -1553,8 +1507,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest3b = (IReportingPeriod<GenericUnitOfTime>)new Common.ReportingPeriodTest<GenericUnitOfTime>(A.Dummy<GenericUnbounded>(), A.Dummy<GenericUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1563,9 +1515,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result3a = systemUnderTest3a.Equals((object)systemUnderTest3b);
             var result3b = systemUnderTest3b.Equals((object)systemUnderTest3a);
-
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1598,7 +1547,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest5b = new ReportingPeriod<CalendarUnitOfTime>(A.Dummy<CalendarDay>(), A.Dummy<CalendarUnbounded>());
 
             // Act
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1613,8 +1561,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result5a = systemUnderTest5a.Equals((object)systemUnderTest5b);
             var result5b = systemUnderTest5b.Equals((object)systemUnderTest5a);
-
-            // ReSharper restore RedundantCast
 
             // Assert
             result1a.Should().BeFalse();
@@ -1650,8 +1596,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest4b = new ReportingPeriod<CalendarUnitOfTime>(A.Dummy<CalendarDay>(), A.Dummy<CalendarUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1663,9 +1607,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result4a = systemUnderTest4a.Equals((object)systemUnderTest4b);
             var result4b = systemUnderTest4b.Equals((object)systemUnderTest4a);
-
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1698,8 +1639,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest4b = new ReportingPeriod<CalendarUnitOfTime>(A.Dummy<CalendarDay>(), A.Dummy<CalendarUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1711,9 +1650,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result4a = systemUnderTest4a.Equals((object)systemUnderTest4b);
             var result4b = systemUnderTest4b.Equals((object)systemUnderTest4a);
-
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeFalse();
@@ -1746,7 +1682,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest4b = (IReportingPeriod<UnitOfTime>)new ReportingPeriod<UnitOfTime>(A.Dummy<FiscalUnbounded>(), A.Dummy<FiscalUnbounded>());
 
             // Act
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1758,8 +1693,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result4a = systemUnderTest4a.Equals((object)systemUnderTest4b);
             var result4b = systemUnderTest4b.Equals((object)systemUnderTest4a);
-
-            // ReSharper restore RedundantCast
 
             // Assert
             result1a.Should().BeTrue();
@@ -1795,8 +1728,6 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest5b = (IReportingPeriod<FiscalUnitOfTime>)new ReportingPeriod<FiscalUnitOfTime>(A.Dummy<FiscalUnbounded>(), A.Dummy<FiscalUnbounded>());
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result1a = systemUnderTest1a.Equals((object)systemUnderTest1b);
             var result1b = systemUnderTest1b.Equals((object)systemUnderTest1a);
 
@@ -1811,9 +1742,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var result5a = systemUnderTest5a.Equals((object)systemUnderTest5b);
             var result5b = systemUnderTest5b.Equals((object)systemUnderTest5a);
-
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result1a.Should().BeTrue();
@@ -2094,9 +2022,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     var cloneMethod = reportingPeriod.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
                     var genericMethod = cloneMethod.MakeGenericMethod(type.ReportingPeriodType);
-                    // ReSharper disable PossibleNullReferenceException
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod, null)).InnerException);
-                    // ReSharper restore PossibleNullReferenceException
                 }
             }
 
@@ -2137,9 +2063,7 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 var cloneMethod = reportingPeriod.Item1.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
                 var genericMethod = cloneMethod.MakeGenericMethod(reportingPeriod.Item2);
-                // ReSharper disable PossibleNullReferenceException
                 exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod.Item1, null)).InnerException);
-                // ReSharper restore PossibleNullReferenceException
             }
 
             // Assert
@@ -2667,9 +2591,5 @@ namespace OBeautifulCode.AccountingTime.Test
                 _.End.Should().NotBeSameAs(reportingPeriod3.End);
             });
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

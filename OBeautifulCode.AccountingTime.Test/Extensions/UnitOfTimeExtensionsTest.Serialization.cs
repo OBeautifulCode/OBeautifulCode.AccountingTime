@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -18,7 +17,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void DeserializeFromSortableString___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
@@ -74,9 +72,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var type in unitsOfTime[unitOfTime])
                 {
                     var genericMethod = deserializeFromSortableString.MakeGenericMethod(type);
-                    // ReSharper disable PossibleNullReferenceException
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(null, new object[] { unitOfTime })).InnerException);
-                    // ReSharper restore PossibleNullReferenceException
                 }
             }
 
@@ -951,9 +947,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             results.All(_ => _.Actual == _.Expected).Should().BeTrue();
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

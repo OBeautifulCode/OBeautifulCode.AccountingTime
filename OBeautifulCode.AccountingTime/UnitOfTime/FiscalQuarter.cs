@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -42,15 +41,11 @@ namespace OBeautifulCode.AccountingTime
             this.QuarterNumber = quarterNumber;
         }
 
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
-
         /// <inheritdoc />
         public QuarterNumber QuarterNumber { get; private set; }
 
         /// <inheritdoc />
         public int Year { get; private set; }
-
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Quarter;
@@ -195,13 +190,11 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 .Hash(this.UnitOfTimeKind)
                 .Hash(this.UnitOfTimeGranularity)
                 .Hash(this.QuarterNumber)
                 .Hash(this.Year)
                 .Value;
-                // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <inheritdoc />
         public override UnitOfTime Clone()
@@ -217,5 +210,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

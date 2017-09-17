@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -22,7 +21,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
     public static partial class ReportingPeriodExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void Contains_with_unitOfTime___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
@@ -44,9 +42,7 @@ namespace OBeautifulCode.AccountingTime.Test
             UnitOfTime unitOfTime = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => reportingPeriod.Contains(unitOfTime));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -4326,9 +4322,7 @@ namespace OBeautifulCode.AccountingTime.Test
             IReportingPeriod<UnitOfTime> reportingPeriod2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => reportingPeriod1.Contains(reportingPeriod2));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -4342,9 +4336,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => reportingPeriod1.Contains(reportingPeriod2));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
@@ -4990,9 +4982,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => reportingPeriod1.HasOverlapWith(reportingPeriod2));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
@@ -5949,9 +5939,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod2 = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
@@ -6037,9 +6025,5 @@ namespace OBeautifulCode.AccountingTime.Test
             actual2.Should().BeTrue();
             actual3.Should().BeTrue();
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

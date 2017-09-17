@@ -302,8 +302,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         private class UnitOfTimeModel
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             public Guid Id { get; set; }
 
             public UnitOfTime UnitOfTime { get; set; }
@@ -340,14 +338,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
             public GenericUnbounded GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
         private class ReportingPeriodModel
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             public Guid Id { get; set; }
 
             public ReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
@@ -384,16 +378,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
             public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
-        // ReSharper disable InconsistentNaming
         private class IReportingPeriodModel
-        // ReSharper restore InconsistentNaming
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             public Guid Id { get; set; }
 
             public IReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
@@ -430,8 +418,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
             public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
     }
 }

@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -57,8 +56,6 @@ namespace OBeautifulCode.AccountingTime
             this.DayOfMonth = dayOfMonth;
         }
 
-        // ReSharper disable AutoPropertyCanBeMadeGetOnly.Local
-
         /// <inheritdoc />
         public int Year { get; private set; }
 
@@ -71,8 +68,6 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the day of the month.
         /// </summary>
         public DayOfMonth DayOfMonth { get; private set; }
-
-        // ReSharper restore AutoPropertyCanBeMadeGetOnly.Local
 
         /// <inheritdoc />
         public MonthNumber MonthNumber => (MonthNumber)(int)this.MonthOfYear;
@@ -223,14 +218,12 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override int GetHashCode() =>
             HashCodeHelper.Initialize()
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 .Hash(this.UnitOfTimeKind)
                 .Hash(this.UnitOfTimeGranularity)
                 .Hash(this.Year)
                 .Hash(this.MonthOfYear)
                 .Hash(this.DayOfMonth)
                 .Value;
-                // ReSharper restore NonReadonlyMemberInGetHashCode
 
         /// <summary>
         /// Converts this calendar day to an object of type <see cref="DateTime"/>.
@@ -266,5 +259,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

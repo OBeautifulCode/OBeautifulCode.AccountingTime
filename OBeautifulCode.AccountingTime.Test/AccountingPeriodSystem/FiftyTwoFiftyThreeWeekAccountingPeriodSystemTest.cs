@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -21,7 +20,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void Constructor___Should_throw_ArgumentException___When_parameter_anchorMonth_is_Invalid()
         {
@@ -198,16 +196,10 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = JsonConvert.DeserializeObject<AccountingPeriodSystem>(serializedJson, settings) as FiftyTwoFiftyThreeWeekAccountingPeriodSystem;
 
             // Assert
-            // ReSharper disable PossibleNullReferenceException
             systemUnderTest.Should().NotBeNull();
             systemUnderTest.AnchorMonth.Should().Be(expectedAccountingPeriodSystem.AnchorMonth);
             systemUnderTest.FiftyTwoFiftyThreeWeekMethodology.Should().Be(expectedAccountingPeriodSystem.FiftyTwoFiftyThreeWeekMethodology);
             systemUnderTest.LastDayOfWeekInAccountingYear.Should().Be(expectedAccountingPeriodSystem.LastDayOfWeekInAccountingYear);
-            // ReSharper restore PossibleNullReferenceException
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -22,7 +21,6 @@ namespace OBeautifulCode.AccountingTime.Test
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
     public static partial class ReportingPeriodExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void CloneWithAdjustment___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
@@ -990,9 +988,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1017,9 +1013,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1044,9 +1038,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1075,14 +1067,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ =>
             {
                 _.Actual.Should().StartWith(_.ExpectedBeginning);
                 _.Actual.Should().EndWith(_.ExpectedEnd);
                 _.Actual.Should().HaveCount(_.ExpectedCount);
             });
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1126,9 +1116,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1153,9 +1141,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1195,9 +1181,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1226,14 +1210,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ =>
             {
                 _.Actual.Should().StartWith(_.ExpectedBeginning);
                 _.Actual.Should().EndWith(_.ExpectedEnd);
                 _.Actual.Should().HaveCount(_.ExpectedCount);
             });
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1277,9 +1259,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1367,9 +1347,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1389,9 +1367,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1420,14 +1396,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ =>
             {
                 _.Actual.Should().StartWith(_.ExpectedBeginning);
                 _.Actual.Should().EndWith(_.ExpectedEnd);
                 _.Actual.Should().HaveCount(_.ExpectedCount);
             });
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1464,9 +1438,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1545,9 +1517,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1597,9 +1567,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1628,14 +1596,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ =>
             {
                 _.Actual.Should().StartWith(_.ExpectedBeginning);
                 _.Actual.Should().EndWith(_.ExpectedEnd);
                 _.Actual.Should().HaveCount(_.ExpectedCount);
             });
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1660,9 +1626,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1687,9 +1651,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1714,9 +1676,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1777,9 +1737,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1804,9 +1762,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1846,9 +1802,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1909,9 +1863,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -1999,9 +1951,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2021,9 +1971,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2064,9 +2012,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2091,9 +2037,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2118,9 +2062,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2181,9 +2123,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2208,9 +2148,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2250,9 +2188,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2313,9 +2249,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2403,9 +2337,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2425,9 +2357,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
-            // ReSharper disable CoVariantArrayConversion
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
-            // ReSharper restore CoVariantArrayConversion
         }
 
         [Fact]
@@ -2822,9 +2752,5 @@ namespace OBeautifulCode.AccountingTime.Test
             results.ForEach(_ => _.Expected.Should().Be(_.Actual));
             results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

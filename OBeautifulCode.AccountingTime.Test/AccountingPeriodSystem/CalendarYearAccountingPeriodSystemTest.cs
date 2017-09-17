@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using FakeItEasy;
@@ -19,7 +18,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class CalendarYearAccountingPeriodSystemTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_beginning_January_1_and_ending_December_31_of_specified_year___When_called()
         {
@@ -51,9 +49,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             systemUnderTest.Should().BeOfType<CalendarYearAccountingPeriodSystem>();
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

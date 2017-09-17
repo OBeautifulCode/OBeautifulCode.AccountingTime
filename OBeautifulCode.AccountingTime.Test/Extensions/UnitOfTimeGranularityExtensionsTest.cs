@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -19,7 +18,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class UnitOfTimeGranularityExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void IsLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
         {
@@ -515,9 +513,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             results.ForEach(_ => _.Expected.Should().Be(_.Actual));
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

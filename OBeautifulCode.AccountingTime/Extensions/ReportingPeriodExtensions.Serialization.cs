@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime
 {
     using System;
@@ -117,7 +116,6 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            // ReSharper disable UseMethodIsInstanceOfType
             errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
             if (!requestedUnitOfTimeType.IsAssignableFrom(start.GetType()))
             {
@@ -129,7 +127,6 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            // ReSharper restore UseMethodIsInstanceOfType
             errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.  The following error occured when attempting to create it: ");
 
             try
@@ -164,5 +161,3 @@ namespace OBeautifulCode.AccountingTime
         }
     }
 }
-
-// ReSharper restore CheckNamespace

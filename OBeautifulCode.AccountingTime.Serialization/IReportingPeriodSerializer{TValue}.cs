@@ -23,9 +23,7 @@ namespace OBeautifulCode.AccountingTime.Serialization
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
 #endif
-    // ReSharper disable InconsistentNaming
     internal class IReportingPeriodSerializer<TValue> : SerializerBase<TValue>
-    // ReSharper restore InconsistentNaming
         where TValue : class, IReportingPeriod<UnitOfTime>
     {
         /// <inheritdoc />

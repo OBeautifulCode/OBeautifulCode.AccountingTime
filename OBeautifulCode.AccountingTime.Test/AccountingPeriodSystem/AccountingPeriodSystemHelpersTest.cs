@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -13,7 +12,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class AccountingPeriodSystemHelpersTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void Next___Should_return_next_occurrence_of_specified_day_of_week___When_called()
         {
@@ -147,9 +145,5 @@ namespace OBeautifulCode.AccountingTime.Test
             Assert.Equal(new DateTime(2010, 11, 12), referenceDate7.Previous(DayOfWeek.Friday));
             Assert.Equal(new DateTime(2010, 11, 6), referenceDate7.Previous(DayOfWeek.Saturday));
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }
-
-// ReSharper restore CheckNamespace

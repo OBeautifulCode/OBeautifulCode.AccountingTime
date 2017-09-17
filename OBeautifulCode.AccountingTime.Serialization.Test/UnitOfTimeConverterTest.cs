@@ -109,8 +109,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         private class UnitOfTimeModel
         {
-            // ReSharper disable UnusedAutoPropertyAccessor.Local
-            // ReSharper disable MemberCanBePrivate.Local
             [JsonConverter(typeof(UnitOfTimeConverter))]
             public UnitOfTime UnitOfTime { get; set; }
 
@@ -162,8 +160,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             [JsonConverter(typeof(UnitOfTimeConverter))]
             public GenericUnbounded GenericUnbounded { get; set; }
 
-            // ReSharper restore MemberCanBePrivate.Local
-            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
     }
 }

@@ -4,7 +4,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable CheckNamespace
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
@@ -23,7 +22,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static class GenericMonthTest
     {
-        // ReSharper disable InconsistentNaming
         private enum GenericMonthComponent
         {
             Month,
@@ -112,12 +110,10 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = systemUnderTest1 == systemUnderTest2;
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -128,14 +124,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 == systemUnderTest2;
             var result2 = systemUnderTest2 == systemUnderTest1;
 
             // Assert
             result1.Should().BeFalse();
             result2.Should().BeFalse();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -145,14 +139,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = systemUnderTest == systemUnderTest;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeTrue();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -201,12 +193,10 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
             var result = systemUnderTest1 != systemUnderTest2;
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore ConditionIsAlwaysTrueOrFalse
         }
 
         [Fact]
@@ -217,14 +207,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result1 = systemUnderTest1 != systemUnderTest2;
             var result2 = systemUnderTest2 != systemUnderTest1;
 
             // Assert
             result1.Should().BeTrue();
             result2.Should().BeTrue();
-            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -234,14 +222,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable EqualExpressionComparison
 #pragma warning disable CS1718 // Comparison made to same variable
             var result = systemUnderTest != systemUnderTest;
 #pragma warning restore CS1718 // Comparison made to same variable
 
             // Assert
             result.Should().BeFalse();
-            // ReSharper restore EqualExpressionComparison
         }
 
         [Fact]
@@ -367,11 +353,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<CalendarQuarter>();
 
             // Act
-            // ReSharper disable SuspiciousTypeConversion.Global
-            // ReSharper disable RedundantCast
             var result = systemUnderTest1.Equals((object)systemUnderTest2);
-            // ReSharper restore RedundantCast
-            // ReSharper restore SuspiciousTypeConversion.Global
 
             // Assert
             result.Should().BeFalse();
@@ -480,9 +462,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 < systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -496,9 +476,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 < systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -512,9 +490,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 < systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -580,9 +556,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 <= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -596,9 +570,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 <= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -612,9 +584,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 <= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -680,9 +650,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 > systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -696,9 +664,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 > systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -712,9 +678,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 > systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -780,9 +744,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 >= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -796,9 +758,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<GenericMonth>();
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 >= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeFalse();
@@ -812,9 +772,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var result = systemUnderTest1 >= systemUnderTest2;
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             result.Should().BeTrue();
@@ -945,9 +903,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = A.Dummy<CalendarQuarter>();
 
             // Act
-            // ReSharper disable RedundantCast
             var ex = Record.Exception(() => systemUnderTest1.CompareTo((object)systemUnderTest2));
-            // ReSharper restore RedundantCast
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
@@ -961,9 +917,7 @@ namespace OBeautifulCode.AccountingTime.Test
             GenericMonth systemUnderTest2 = null;
 
             // Act
-            // ReSharper disable ExpressionIsAlwaysNull
             var ex = Record.Exception(() => systemUnderTest1.CompareTo((object)systemUnderTest2));
-            // ReSharper restore ExpressionIsAlwaysNull
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
@@ -1094,10 +1048,8 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest2 = JsonConvert.DeserializeObject<GenericUnitOfTime>(serializedJson, settings) as GenericMonth;
 
             // Assert
-            // ReSharper disable PossibleNullReferenceException
             systemUnderTest1.Should().Be(expectedUnitOfTime);
             systemUnderTest2.Should().Be(expectedUnitOfTime);
-            // ReSharper restore PossibleNullReferenceException
         }
 
         [Fact]
@@ -1164,8 +1116,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this generic month component is not supported: " + componentToTweak);
         }
 
-        // ReSharper restore InconsistentNaming
     }
 }
 
-// ReSharper restore CheckNamespace
+
