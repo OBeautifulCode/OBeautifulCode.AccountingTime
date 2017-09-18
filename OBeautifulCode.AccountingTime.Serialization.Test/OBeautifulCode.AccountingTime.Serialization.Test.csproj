@@ -107,9 +107,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization\OBeautifulCode.AccountingTime.Serialization.csproj">
-      <Project>{d9b73cfe-77e1-4fd6-9c7a-3a0cc410b561}</Project>
-      <Name>OBeautifulCode.AccountingTime.Serialization</Name>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.Bson\OBeautifulCode.AccountingTime.Serialization.Bson.csproj">
+      <Project>{1b543b16-26e9-4d17-96c8-99049152e6e3}</Project>
+      <Name>OBeautifulCode.AccountingTime.Serialization.Bson</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.Json\OBeautifulCode.AccountingTime.Serialization.Json.csproj">
+      <Project>{ac6b7d06-fc70-4d20-9390-24ceffc5eb0a}</Project>
+      <Name>OBeautifulCode.AccountingTime.Serialization.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj">
       <Project>{fa79388d-2555-42ee-ab7b-55b1ea1e2676}</Project>

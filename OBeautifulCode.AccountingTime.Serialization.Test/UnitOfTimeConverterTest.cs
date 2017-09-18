@@ -12,6 +12,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using Newtonsoft.Json;
 
+    using OBeautifulCode.AccountingTime.Serialization.Json;
+
     using Xunit;
 
     public static class UnitOfTimeConverterTest

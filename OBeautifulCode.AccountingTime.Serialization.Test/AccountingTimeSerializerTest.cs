@@ -17,6 +17,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     using MongoDB.Bson;
     using MongoDB.Driver;
 
+    using OBeautifulCode.AccountingTime.Serialization.Bson;
+
     using Xunit;
 
     public static class AccountingTimeSerializerTest

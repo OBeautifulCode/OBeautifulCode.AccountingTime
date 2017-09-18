@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.AccountingTime</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Serialization.Bson/nuget-icon.png</iconUrl>
+    <description>BSON serializers for AccountingTime types.</description>
+    <tags>accounting time bson mongo mongodb</tags>
+  </metadata>
+</package>

@@ -7,35 +7,26 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
-#if OBeautifulCodeAccountingTimeSerializationRecipesProject
-namespace OBeautifulCode.AccountingTime.Serialization
-#else
-namespace $rootnamespace$
-#endif
+namespace OBeautifulCode.AccountingTime.Serialization.Json
 {
     using System;
 
     using Newtonsoft.Json;
 
-    using OBeautifulCode.AccountingTime;
+	using OBeautifulCode.AccountingTime;
 
     /// <summary>
-    /// Converts a <see cref="UnitOfTime"/> to and from JSON.
+    /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeSerializationRecipesProject
-    [System.Diagnostics.DebuggerStepThrough]
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Serialization", "See package version number")]
-#endif
-    public class UnitOfTimeConverter : JsonConverter
+    public class ReportingPeriodConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var unitOfTime = value as UnitOfTime;
-            if (unitOfTime != null)
+            var reportingPeriod = value as IReportingPeriod<UnitOfTime>;
+            if (reportingPeriod != null)
             {
-                var stringToWrite = unitOfTime.SerializeToSortableString();
+                var stringToWrite = reportingPeriod.SerializeToString();
                 writer.WriteValue(stringToWrite);
             }
         }
@@ -43,10 +34,10 @@ namespace $rootnamespace$
         /// <inheritdoc />
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            UnitOfTime result = null;
+            object result = null;
             if (reader.Value != null)
             {
-                result = reader.Value.ToString().DeserializeFromSortableString<UnitOfTime>();
+                result = reader.Value.ToString().DeserializeFromString(objectType);
             }
 
             return result;
@@ -55,8 +46,14 @@ namespace $rootnamespace$
         /// <inheritdoc />
         public override bool CanConvert(Type objectType)
         {
-            var result = typeof(UnitOfTime).IsAssignableFrom(objectType);
-            return result;
+            if (objectType.IsGenericType)
+            {
+                var genericType = objectType.MakeGenericType();
+                var result = genericType == typeof(IReportingPeriod<>);
+                return result;
+            }
+
+            return false;
         }
     }
 }
