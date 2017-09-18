@@ -116,6 +116,17 @@
     <Rule Id="CA1806" Action="None" />
     
     <!--
+      ** Avoid uncalled private code **
+      Often enough, test projects have what looks to be uncalled private code, but in fact that code is
+      excersized using reflection (e.g. testing serialization/deserialization of a type).
+      In other cases, we have intentionally added some uncalled private code, like a method, for
+      completeness.  Maybe there are several overloads of a method and one is not used, but just a reminder
+      that it could be used.  Otherwise, a method might exist solely as an example of how to exercise some 
+      code.
+    -->
+    <Rule Id="CA1811" Action="None" />
+
+    <!--
       ** Mark members as static **
       Often enough we create abstract classes and put setup logical in the constructor (e.g. Its.Config 
       deserialization settings) so that unit test methods in concrete derivatives do not need to individually

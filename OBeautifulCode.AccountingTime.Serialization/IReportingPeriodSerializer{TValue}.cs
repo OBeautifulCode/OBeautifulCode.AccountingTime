@@ -29,6 +29,8 @@ namespace OBeautifulCode.AccountingTime.Serialization
         /// <inheritdoc />
         public override TValue Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
+
+
             var type = context.Reader.GetCurrentBsonType();
             switch (type)
             {

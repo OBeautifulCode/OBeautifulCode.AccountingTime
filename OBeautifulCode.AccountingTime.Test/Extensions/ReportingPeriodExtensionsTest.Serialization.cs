@@ -28,7 +28,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString_TReportingPeriod___Should_throw_ArgumentException___When_parameter_unitOfTime_is_whitespace()
+        public static void DeserializeFromString_TReportingPeriod___Should_throw_ArgumentException___When_parameter_unitOfTime_is_white_space()
         {
             // Arrange
             var reportingPeriods = new[] { string.Empty, "  ", "  \r\n " };
@@ -755,7 +755,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromString___Should_throw_ArgumentException___When_parameter_unitOfTime_is_whitespace()
+        public static void DeserializeFromString___Should_throw_ArgumentException___When_parameter_unitOfTime_is_white_space()
         {
             // Arrange
             var reportingPeriods = new[] { string.Empty, "  ", "  \r\n " };

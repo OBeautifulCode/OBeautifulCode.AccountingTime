@@ -32,6 +32,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_calendar_day___When_parameter_unitOfTime_is_a_CalendarDay_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -45,6 +46,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_calendar_days___When_parameter_unitOfTime_is_a_CalendarDay_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -78,6 +80,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_calendar_days___When_parameter_unitOfTime_is_a_CalendarDay_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -108,6 +111,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_calendar_month___When_parameter_unitOfTime_is_a_CalendarMonth_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -121,6 +125,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_calendar_months___When_parameter_unitOfTime_is_a_CalendarMonth_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -145,6 +150,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_calendar_months___When_parameter_unitOfTime_is_a_CalendarMonth_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -169,6 +175,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_fiscal_month___When_parameter_unitOfTime_is_a_FiscalMonth_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -182,6 +189,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_fiscal_months___When_parameter_unitOfTime_is_a_FiscalMonth_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -206,6 +214,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_fiscal_months___When_parameter_unitOfTime_is_a_FiscalMonth_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -230,6 +239,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_generic_month___When_parameter_unitOfTime_is_a_GenericMonth_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -243,6 +253,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_generic_months___When_parameter_unitOfTime_is_a_GenericMonth_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -267,6 +278,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_generic_months___When_parameter_unitOfTime_is_a_GenericMonth_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -291,6 +303,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_calendar_quarter___When_parameter_unitOfTime_is_a_CalendarQuarter_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -304,6 +317,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_calendar_quarters___When_parameter_unitOfTime_is_a_CalendarQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -340,6 +354,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_calendar_quarters___When_parameter_unitOfTime_is_a_CalendarQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -376,6 +391,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_fiscal_quarter___When_parameter_unitOfTime_is_a_FiscalQuarter_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -389,6 +405,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_fiscal_quarters___When_parameter_unitOfTime_is_a_FiscalQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -425,6 +442,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_fiscal_quarters___When_parameter_unitOfTime_is_a_FiscalQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -461,6 +479,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_generic_quarter___When_parameter_unitOfTime_is_a_GenericQuarter_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -474,6 +493,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_generic_quarters___When_parameter_unitOfTime_is_a_GenericQuarter_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -510,6 +530,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_generic_quarters___When_parameter_unitOfTime_is_a_GenericQuarter_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -546,6 +567,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_calendar_year___When_parameter_unitOfTime_is_a_CalendarYear_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -559,6 +581,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_calendar_years___When_parameter_unitOfTime_is_a_CalendarYear_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -580,6 +603,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_calendar_years___When_parameter_unitOfTime_is_a_CalendarYear_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -601,6 +625,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_fiscal_year___When_parameter_unitOfTime_is_a_FiscalYear_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -614,6 +639,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_fiscal_years___When_parameter_unitOfTime_is_a_FiscalYear_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -635,6 +661,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_fiscal_years___When_parameter_unitOfTime_is_a_FiscalYear_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -656,6 +683,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_return_same_generic_year___When_parameter_unitOfTime_is_a_GenericYear_and_parameter_unitsToAdd_is_0()
         {
             // Arrange
@@ -669,6 +697,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_add_generic_years___When_parameter_unitOfTime_is_a_GenericYear_and_parameter_unitsToAdd_is_positive()
         {
             // Arrange
@@ -690,6 +719,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus___Should_subtract_generic_years___When_parameter_unitOfTime_is_a_GenericYear_and_parameter_unitsToAdd_is_negative()
         {
             // Arrange
@@ -779,6 +809,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Invalid()
         {
             // Arrange
@@ -793,6 +824,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Unbounded()
         {
             // Arrange
@@ -807,6 +839,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_more_granular_than_parameter_unitOfTime()
         {
             // Arrange
@@ -839,6 +872,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_return_same_result_as_Plus_method_without_parameter_granularityOfUnitsToAdd___When_parameter_granularityOfUnitsToAdd_is_as_granular_as_unitOfTime()
         {
             // Arrange
@@ -868,6 +902,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_return_same_unitOfTime___When_unitsToAdd_is_0()
         {
             // Arrange
@@ -896,6 +931,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
         public static void Plus_with_granularityOfUnitsToAdd___Should_adjust_unitOfTime___When_granularityOfUnitsToAdd_is_less_granular_than_granularity_of_unitOfTime()
         {
             // Arrange

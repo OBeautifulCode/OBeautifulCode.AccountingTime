@@ -28,7 +28,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void DeserializeFromSortableString___Should_throw_ArgumentException___When_parameter_unitOfTime_is_whitespace()
+        public static void DeserializeFromSortableString___Should_throw_ArgumentException___When_parameter_unitOfTime_is_white_space()
         {
             // Arrange
             var unitsOfTime = new[] { string.Empty, "  ", "  \r\n " };
