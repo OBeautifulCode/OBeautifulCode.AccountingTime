@@ -96,8 +96,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\OBeautifulCode.AccountingTime.Test\DummyFactory.cs">
-      <Link>DummyFactory.cs</Link>
+    <Compile Include="..\OBeautifulCode.AccountingTime.Test\.OBeautifulCode.Recipes\AccountingTime\AccountingTimeDummyFactory.cs">
+      <Link>.OBeautifulCode.Recipes\AccountingTime\AccountingTimeDummyFactory.cs</Link>
     </Compile>
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
     <Compile Include=".OBeautifulCode.Recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />

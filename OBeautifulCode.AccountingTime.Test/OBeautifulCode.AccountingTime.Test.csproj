@@ -91,7 +91,7 @@
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
     <Compile Include="Common.cs" />
-    <Compile Include="DummyFactory.cs" />
+    <Compile Include=".OBeautifulCode.Recipes\AccountingTime\AccountingTimeDummyFactory.cs" />
     <Compile Include="Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Comparison.cs" />
@@ -124,8 +124,9 @@
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
-    <None Include="OBeautifulCode.AccountingTime.Test.DummyFactory.recipe-nuspec" />
-    <None Include="OBeautifulCode.AccountingTime.Test.template-nuspec" />
+    <None Include="AccountingTimeDummyFactory.recipe-nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
