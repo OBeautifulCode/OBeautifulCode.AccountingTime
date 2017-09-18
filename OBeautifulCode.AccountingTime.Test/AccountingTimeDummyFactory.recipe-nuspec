@@ -7,7 +7,7 @@
     <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.AccountingTime</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="1.0.77" />
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.82" />
         <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.87" />
         <dependency id="OBeautifulCode.Math.ThreadSafeRandom" version ="1.0.52" />
     </dependencies>
