@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>OBeautifulCode.AccountingTime.Test.DummyFactory</id>
+    <id>OBeautifulCode.AccountingTime.DummyFactory</id>
     <description>A dummy factory for AccountingTime types.</description>
     <tags>accounting time fakeiteasy autofixture dummy factory</tags>
     <developmentDependency>true</developmentDependency>
