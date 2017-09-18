@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Exposes a quarter.
     /// </summary>
+    // ReSharper disable once InheritdocConsiderUsage
     public interface IHaveAQuarter : IHaveAYear
     {
         /// <summary>

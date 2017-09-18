@@ -23,7 +23,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the first <see cref="UnitOfTimeGranularity"/> is less granular than the second <see cref="UnitOfTimeGranularity"/>; false otherwise.
         /// </returns>
-        public static bool IsLessGranularThan(this UnitOfTimeGranularity granularity1, UnitOfTimeGranularity granularity2)
+        public static bool IsLessGranularThan(
+            this UnitOfTimeGranularity granularity1,
+            UnitOfTimeGranularity granularity2)
         {
             var result = !granularity1.IsAsGranularOrMoreGranularThan(granularity2);
             return result;
@@ -37,7 +39,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the first <see cref="UnitOfTimeGranularity"/> is as granular or less granular than the second <see cref="UnitOfTimeGranularity"/>; false otherwise.
         /// </returns>
-        public static bool IsAsGranularOrLessGranularThan(this UnitOfTimeGranularity granularity1, UnitOfTimeGranularity granularity2)
+        public static bool IsAsGranularOrLessGranularThan(
+            this UnitOfTimeGranularity granularity1,
+            UnitOfTimeGranularity granularity2)
         {
             var result = !granularity1.IsMoreGranularThan(granularity2);
             return result;
@@ -51,7 +55,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the first <see cref="UnitOfTimeGranularity"/> is more granular than the second <see cref="UnitOfTimeGranularity"/>; false otherwise.
         /// </returns>
-        public static bool IsMoreGranularThan(this UnitOfTimeGranularity granularity1, UnitOfTimeGranularity granularity2)
+        public static bool IsMoreGranularThan(
+            this UnitOfTimeGranularity granularity1,
+            UnitOfTimeGranularity granularity2)
         {
             int granularityScore1 = GetGranularityScore(granularity1);
             int granularityScore2 = GetGranularityScore(granularity2);
@@ -67,7 +73,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the first <see cref="UnitOfTimeGranularity"/> is as granular or more granular than the second <see cref="UnitOfTimeGranularity"/>; false otherwise.
         /// </returns>
-        public static bool IsAsGranularOrMoreGranularThan(this UnitOfTimeGranularity granularity1, UnitOfTimeGranularity granularity2)
+        public static bool IsAsGranularOrMoreGranularThan(
+            this UnitOfTimeGranularity granularity1,
+            UnitOfTimeGranularity granularity2)
         {
             var isMoreGranular = granularity1.IsMoreGranularThan(granularity2);
             var result = isMoreGranular || (granularity1 == granularity2);
@@ -82,7 +90,8 @@ namespace OBeautifulCode.AccountingTime
         /// true if the specified granularity is the most granular one available, false otherwise.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
-        public static bool IsMostGranular(this UnitOfTimeGranularity granularity)
+        public static bool IsMostGranular(
+            this UnitOfTimeGranularity granularity)
         {
             if (granularity == UnitOfTimeGranularity.Invalid)
             {
@@ -101,7 +110,8 @@ namespace OBeautifulCode.AccountingTime
         /// true if the specified granularity is the least granular one available, false otherwise.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
-        public static bool IsLeastGranular(this UnitOfTimeGranularity granularity)
+        public static bool IsLeastGranular(
+            this UnitOfTimeGranularity granularity)
         {
             if (granularity == UnitOfTimeGranularity.Invalid)
             {
@@ -121,7 +131,8 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
         /// <exception cref="ArgumentException">No granularity is more granular than <paramref name="granularity"/></exception>
-        public static UnitOfTimeGranularity OneNotchMoreGranular(this UnitOfTimeGranularity granularity)
+        public static UnitOfTimeGranularity OneNotchMoreGranular(
+            this UnitOfTimeGranularity granularity)
         {
             if (granularity == UnitOfTimeGranularity.Invalid)
             {
@@ -157,7 +168,8 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
         /// <exception cref="ArgumentException">No granularity is less granular than <paramref name="granularity"/></exception>
-        public static UnitOfTimeGranularity OneNotchLessGranular(this UnitOfTimeGranularity granularity)
+        public static UnitOfTimeGranularity OneNotchLessGranular(
+            this UnitOfTimeGranularity granularity)
         {
             if (granularity == UnitOfTimeGranularity.Invalid)
             {
@@ -184,7 +196,8 @@ namespace OBeautifulCode.AccountingTime
             }
         }
 
-        private static int GetGranularityScore(UnitOfTimeGranularity granularity)
+        private static int GetGranularityScore(
+            UnitOfTimeGranularity granularity)
         {
             if (granularity == UnitOfTimeGranularity.Invalid)
             {

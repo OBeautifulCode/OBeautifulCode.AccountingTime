@@ -12,11 +12,13 @@ namespace OBeautifulCode.AccountingTime
     /// A calendar year is 12 consecutive months beginning on January 1st and ending on December 31st.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class CalendarYearAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
+        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
+            FiscalYear fiscalYear)
         {
             if (fiscalYear == null)
             {

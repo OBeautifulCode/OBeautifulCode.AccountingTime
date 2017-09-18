@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a generic unit of time, without any context.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public abstract class GenericUnitOfTime : UnitOfTime
     {
         /// <inheritdoc />

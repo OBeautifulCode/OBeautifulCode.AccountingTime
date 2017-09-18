@@ -24,6 +24,7 @@ namespace OBeautifulCode.AccountingTime
         /// Returns the reporting period, in calendar days, for the specified fiscal year.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public abstract ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear);
+        public abstract ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
+            FiscalYear fiscalYear);
     }
 }

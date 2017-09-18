@@ -15,6 +15,7 @@ namespace OBeautifulCode.AccountingTime
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
+    // ReSharper disable once InheritdocConsiderUsage
     public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
     {
         /// <summary>
@@ -33,7 +34,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first unit-of-time to compare.</param>
         /// <param name="right">The second unit-of-time to compare.</param>
         /// <returns>true if the two units-of-time are equal; false otherwise.</returns>
-        public static bool operator ==(UnitOfTime left, UnitOfTime right)
+        public static bool operator ==(
+            UnitOfTime left,
+            UnitOfTime right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -55,7 +58,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first unit-of-time to compare.</param>
         /// <param name="right">The second unit-of-time to compare.</param>
         /// <returns>true if the two units-of-time are not equal; false otherwise.</returns>
-        public static bool operator !=(UnitOfTime left, UnitOfTime right) => !(left == right);
+        public static bool operator !=(
+            UnitOfTime left,
+            UnitOfTime right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a unit-of-time is less than another unit-of-time.
@@ -63,7 +69,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unit-of-time to compare.</param>
         /// <param name="right">The right-hand unit-of-time to compare.</param>
         /// <returns>true if the the left-hand unit-of-time is less than the right-hand unit-of-time; false otherwise.</returns>
-        public static bool operator <(UnitOfTime left, UnitOfTime right)
+        public static bool operator <(
+            UnitOfTime left,
+            UnitOfTime right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -85,7 +93,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unit-of-time to compare.</param>
         /// <param name="right">The right-hand unit-of-time to compare.</param>
         /// <returns>true if the the left-hand unit-of-time is greater than the right-hand unit-of-time; false otherwise.</returns>
-        public static bool operator >(UnitOfTime left, UnitOfTime right)
+        public static bool operator >(
+            UnitOfTime left,
+            UnitOfTime right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -107,7 +117,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unit-of-time to compare.</param>
         /// <param name="right">The right-hand unit-of-time to compare.</param>
         /// <returns>true if the the left-hand unit-of-time is less than or equal to the right-hand unit-of-time; false otherwise.</returns>
-        public static bool operator <=(UnitOfTime left, UnitOfTime right) => (left == right) || (left < right);
+        public static bool operator <=(
+            UnitOfTime left,
+            UnitOfTime right)
+            => (left == right) || (left < right);
 
         /// <summary>
         /// Determines whether a unit-of-time is greater than or equal to than another unit-of-time.
@@ -115,16 +128,15 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unit-of-time to compare.</param>
         /// <param name="right">The right-hand unit-of-time to compare.</param>
         /// <returns>true if the the left-hand unit-of-time is greater than or equal to the right-hand unit-of-time; false otherwise.</returns>
-        public static bool operator >=(UnitOfTime left, UnitOfTime right) => (left == right) || (left > right);
+        public static bool operator >=(
+            UnitOfTime left,
+            UnitOfTime right)
+            => (left == right) || (left > right);
 
-        /// <summary>
-        /// Determines whether the specified <see cref="UnitOfTime"/> is equal to this one.
-        /// </summary>
-        /// <param name="other">The unit-of-time to compare with this one.</param>
-        /// <returns>
-        /// true if this unit-of-time is of the same concrete type and equal to the specified unit-of-time; false otherwise.
-        /// </returns>
-        public bool Equals(UnitOfTime other) => this == other;
+        /// <inheritdoc />
+        public bool Equals(
+            UnitOfTime other)
+            => this == other;
 
         /// <summary>
         /// Determines whether the specified object is equal to this one, as per <see cref="Equals(UnitOfTime)"/>.
@@ -133,7 +145,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the other object is a unit-of-time of the same concrete type and equal to this one; false otherwise, consistent with <see cref="Equals(UnitOfTime)"/>
         /// </returns>
-        public abstract override bool Equals(object obj);
+        public abstract override bool Equals(
+            object obj);
 
         /// <summary>
         /// Returns the hash code for this unit-of-time.
@@ -143,17 +156,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public abstract override int GetHashCode();
 
-        /// <summary>
-        /// Compares the current instance with another object of the same type
-        /// and returns an integer that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="other">A <see cref="UnitOfTime"/> to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
+        /// <inheritdoc />
         public int CompareTo(UnitOfTime other)
         {
             if (other == null)
@@ -164,19 +167,10 @@ namespace OBeautifulCode.AccountingTime
             return this.CompareTo((object)other);
         }
 
-        /// <summary>
-        /// Compares the current instance with another object and returns an integer
-        /// that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="obj">An object to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
+        /// <inheritdoc />
         /// <exception cref="ArgumentException"><paramref name="obj"/> is not of the same type as this object.</exception>
-        public abstract int CompareTo(object obj);
+        public abstract int CompareTo(
+            object obj);
 
         /// <summary>
         /// Deep clones a unit-of-time.

@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar day.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
     {
         /// <summary>
@@ -28,7 +29,10 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="monthOfYear"/> is invalid.</exception>
         /// <exception cref="ArgumentException"><paramref name="dayOfMonth"/> is invalid.</exception>
         /// <exception cref="ArgumentException"><paramref name="dayOfMonth"/> is not a valid day in the specified <paramref name="monthOfYear"/> and <paramref name="year"/>.</exception>
-        public CalendarDay(int year, MonthOfYear monthOfYear, DayOfMonth dayOfMonth)
+        public CalendarDay(
+            int year,
+            MonthOfYear monthOfYear,
+            DayOfMonth dayOfMonth)
         {
             if ((year < 1) || (year > 9999))
             {
@@ -57,16 +61,19 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public int Year { get; private set; }
 
         /// <summary>
         /// Gets the month of the year.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public MonthOfYear MonthOfYear { get; private set; }
 
         /// <summary>
         /// Gets the day of the month.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public DayOfMonth DayOfMonth { get; private set; }
 
         /// <inheritdoc />
@@ -81,7 +88,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first day to compare.</param>
         /// <param name="right">The second day to compare.</param>
         /// <returns>true if the two days are equal; false otherwise.</returns>
-        public static bool operator ==(CalendarDay left, CalendarDay right)
+        public static bool operator ==(
+            CalendarDay left,
+            CalendarDay right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -106,7 +115,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first day to compare.</param>
         /// <param name="right">The second day to compare.</param>
         /// <returns>true if the two days are not equal; false otherwise.</returns>
-        public static bool operator !=(CalendarDay left, CalendarDay right) => !(left == right);
+        public static bool operator !=(
+            CalendarDay left,
+            CalendarDay right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a day is less than another day.
@@ -114,7 +126,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is less than the right-hand day; false otherwise.</returns>
-        public static bool operator <(CalendarDay left, CalendarDay right)
+        public static bool operator <(
+            CalendarDay left,
+            CalendarDay right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -136,7 +150,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is greater than the right-hand day; false otherwise.</returns>
-        public static bool operator >(CalendarDay left, CalendarDay right)
+        public static bool operator >(
+            CalendarDay left,
+            CalendarDay right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -158,7 +174,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is less than or equal to the right-hand day; false otherwise.</returns>
-        public static bool operator <=(CalendarDay left, CalendarDay right) => (left == right) || (left < right);
+        public static bool operator <=(
+            CalendarDay left,
+            CalendarDay right)
+            => (left == right) || (left < right);
 
         /// <summary>
         /// Determines whether a day is greater than or equal to than another day.
@@ -166,32 +185,24 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand day to compare.</param>
         /// <param name="right">The right-hand day to compare.</param>
         /// <returns>true if the the left-hand day is greater than or equal to the right-hand day; false otherwise.</returns>
-        public static bool operator >=(CalendarDay left, CalendarDay right) => (left == right) || (left > right);
-
-        /// <summary>
-        /// Determines whether the specified <see cref="CalendarDay"/> is equal to this one.
-        /// </summary>
-        /// <param name="other">The day to compare with this one.</param>
-        /// <returns>
-        /// true if this day is equal to the specified day; false otherwise.
-        /// </returns>
-        public bool Equals(CalendarDay other) => this == other;
+        public static bool operator >=(
+            CalendarDay left,
+            CalendarDay right)
+            => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as CalendarDay);
+        public bool Equals(
+            CalendarDay other)
+            => this == other;
 
-        /// <summary>
-        /// Compares the current instance with another object of the same type
-        /// and returns an integer that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="other">A <see cref="CalendarDay"/> to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
-        public int CompareTo(CalendarDay other)
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj)
+            => this == (obj as CalendarDay);
+
+        /// <inheritdoc />
+        public int CompareTo(
+            CalendarDay other)
         {
             if (other == null)
             {
@@ -204,7 +215,8 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override int CompareTo(object obj)
+        public override int CompareTo(
+            object obj)
         {
             var other = obj as CalendarDay;
             if (other == null)
@@ -251,7 +263,9 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider = null)
+        public string ToString(
+            string format,
+            IFormatProvider formatProvider = null)
         {
             var dateTime = this.ToDateTime();
             var result = dateTime.ToString(format, formatProvider);

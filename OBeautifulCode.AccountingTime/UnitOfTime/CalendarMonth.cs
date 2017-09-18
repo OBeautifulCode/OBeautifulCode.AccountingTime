@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar month in a specified year.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class CalendarMonth : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<CalendarMonth>, IComparable<CalendarMonth>
     {
         /// <summary>
@@ -25,7 +26,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="monthOfYear">The month of the year.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
         /// <exception cref="ArgumentException"><paramref name="monthOfYear"/> is invalid.</exception>
-        public CalendarMonth(int year, MonthOfYear monthOfYear)
+        public CalendarMonth(
+            int year,
+            MonthOfYear monthOfYear)
         {
             if ((year < 1) || (year > 9999))
             {
@@ -42,11 +45,13 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public int Year { get; private set; }
 
         /// <summary>
         /// Gets the month of the year.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public MonthOfYear MonthOfYear { get; private set; }
 
         /// <inheritdoc />
@@ -61,7 +66,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first month to compare.</param>
         /// <param name="right">The second month to compare.</param>
         /// <returns>true if the two months are equal; false otherwise.</returns>
-        public static bool operator ==(CalendarMonth left, CalendarMonth right)
+        public static bool operator ==(
+            CalendarMonth left,
+            CalendarMonth right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -83,7 +90,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first month to compare.</param>
         /// <param name="right">The second month to compare.</param>
         /// <returns>true if the two months are not equal; false otherwise.</returns>
-        public static bool operator !=(CalendarMonth left, CalendarMonth right) => !(left == right);
+        public static bool operator !=(
+            CalendarMonth left,
+            CalendarMonth right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a month is less than another month.
@@ -91,7 +101,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is less than the right-hand month; false otherwise.</returns>
-        public static bool operator <(CalendarMonth left, CalendarMonth right)
+        public static bool operator <(
+            CalendarMonth left,
+            CalendarMonth right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -113,7 +125,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is greater than the right-hand month; false otherwise.</returns>
-        public static bool operator >(CalendarMonth left, CalendarMonth right)
+        public static bool operator >(
+            CalendarMonth left,
+            CalendarMonth right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -135,7 +149,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is less than or equal to the right-hand month; false otherwise.</returns>
-        public static bool operator <=(CalendarMonth left, CalendarMonth right) => (left == right) || (left < right);
+        public static bool operator <=(
+            CalendarMonth left,
+            CalendarMonth right)
+            => (left == right) || (left < right);
 
         /// <summary>
         /// Determines whether a month is greater than or equal to than another month.
@@ -143,32 +160,24 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand month to compare.</param>
         /// <param name="right">The right-hand month to compare.</param>
         /// <returns>true if the the left-hand month is greater than or equal to the right-hand month; false otherwise.</returns>
-        public static bool operator >=(CalendarMonth left, CalendarMonth right) => (left == right) || (left > right);
-
-        /// <summary>
-        /// Determines whether the specified <see cref="CalendarMonth"/> is equal to this one.
-        /// </summary>
-        /// <param name="other">The month to compare with this one.</param>
-        /// <returns>
-        /// true if this month is equal to the specified month; false otherwise.
-        /// </returns>
-        public bool Equals(CalendarMonth other) => this == other;
+        public static bool operator >=(
+            CalendarMonth left,
+            CalendarMonth right)
+            => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as CalendarMonth);
+        public bool Equals(
+            CalendarMonth other)
+            => this == other;
 
-        /// <summary>
-        /// Compares the current instance with another object of the same type
-        /// and returns an integer that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="other">A <see cref="CalendarMonth"/> to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
-        public int CompareTo(CalendarMonth other)
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj)
+            => this == (obj as CalendarMonth);
+
+        /// <inheritdoc />
+        public int CompareTo(
+            CalendarMonth other)
         {
             if (other == null)
             {
@@ -181,7 +190,8 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override int CompareTo(object obj)
+        public override int CompareTo(
+            object obj)
         {
             var other = obj as CalendarMonth;
             if (other == null)

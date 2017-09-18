@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Exposes a month.
     /// </summary>
+    // ReSharper disable once InheritdocConsiderUsage
     public interface IHaveAMonth : IHaveAYear
     {
         /// <summary>

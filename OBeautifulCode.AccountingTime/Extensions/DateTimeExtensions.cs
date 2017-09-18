@@ -20,7 +20,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A <see cref="CalendarDay"/> converted from a <see cref="DateTime"/>.
         /// </returns>
-        public static CalendarDay ToCalendarDay(this DateTime value)
+        public static CalendarDay ToCalendarDay(
+            this DateTime value)
         {
             var result = new CalendarDay(value.Year, (MonthOfYear)value.Month, (DayOfMonth)value.Day);
             return result;

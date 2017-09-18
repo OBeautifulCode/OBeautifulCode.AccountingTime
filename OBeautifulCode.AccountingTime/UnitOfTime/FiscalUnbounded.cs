@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents an unbounded fiscal unit-of-time.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class FiscalUnbounded : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmUnboundedTime, IEquatable<FiscalUnbounded>, IComparable<FiscalUnbounded>
     {
         /// <inheritdoc />
@@ -27,7 +28,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first unbounded time to compare.</param>
         /// <param name="right">The second unbounded time to compare.</param>
         /// <returns>true if the two unbounded times are equal; false otherwise.</returns>
-        public static bool operator ==(FiscalUnbounded left, FiscalUnbounded right)
+        public static bool operator ==(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,7 +51,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first unbounded time to compare.</param>
         /// <param name="right">The second unbounded time to compare.</param>
         /// <returns>true if the two unbounded times are not equal; false otherwise.</returns>
-        public static bool operator !=(FiscalUnbounded left, FiscalUnbounded right) => !(left == right);
+        public static bool operator !=(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a unbounded is less than another unbounded.
@@ -56,7 +62,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unbounded to compare.</param>
         /// <param name="right">The right-hand unbounded to compare.</param>
         /// <returns>true if the the left-hand unbounded is less than the right-hand unbounded; false otherwise.</returns>
-        public static bool operator <(FiscalUnbounded left, FiscalUnbounded right)
+        public static bool operator <(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -78,7 +86,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unbounded to compare.</param>
         /// <param name="right">The right-hand unbounded to compare.</param>
         /// <returns>true if the the left-hand unbounded is greater than the right-hand unbounded; false otherwise.</returns>
-        public static bool operator >(FiscalUnbounded left, FiscalUnbounded right)
+        public static bool operator >(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -100,7 +110,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unbounded to compare.</param>
         /// <param name="right">The right-hand unbounded to compare.</param>
         /// <returns>true if the the left-hand unbounded is less than or equal to the right-hand unbounded; false otherwise.</returns>
-        public static bool operator <=(FiscalUnbounded left, FiscalUnbounded right) => (left == right) || (left < right);
+        public static bool operator <=(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
+            => (left == right) || (left < right);
 
         /// <summary>
         /// Determines whether a unbounded is greater than or equal to than another unbounded.
@@ -108,32 +121,22 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand unbounded to compare.</param>
         /// <param name="right">The right-hand unbounded to compare.</param>
         /// <returns>true if the the left-hand unbounded is greater than or equal to the right-hand unbounded; false otherwise.</returns>
-        public static bool operator >=(FiscalUnbounded left, FiscalUnbounded right) => (left == right) || (left > right);
-
-        /// <summary>
-        /// Determines whether the specified <see cref="FiscalUnbounded"/> is equal to this one.
-        /// </summary>
-        /// <param name="other">The unbounded time to compare with this one.</param>
-        /// <returns>
-        /// true if this unbounded time is equal to the specified unbounded time; false otherwise.
-        /// </returns>
-        public bool Equals(FiscalUnbounded other) => this == other;
+        public static bool operator >=(
+            FiscalUnbounded left,
+            FiscalUnbounded right)
+            => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as FiscalUnbounded);
+        public bool Equals(
+            FiscalUnbounded other) => this == other;
 
-        /// <summary>
-        /// Compares the current instance with another object of the same type
-        /// and returns an integer that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="other">A <see cref="FiscalUnbounded"/> to compare to this instance.</param>
-        /// <returns>
-        /// 0 if the other instance is not null.
-        /// 1 if the other instance is null.
-        /// -1 is never returned.
-        /// </returns>
-        public int CompareTo(FiscalUnbounded other)
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj) => this == (obj as FiscalUnbounded);
+
+        /// <inheritdoc />
+        public int CompareTo(
+            FiscalUnbounded other)
         {
             if (other == null)
             {
@@ -144,7 +147,8 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override int CompareTo(object obj)
+        public override int CompareTo(
+            object obj)
         {
             var other = obj as FiscalUnbounded;
             if (other == null)

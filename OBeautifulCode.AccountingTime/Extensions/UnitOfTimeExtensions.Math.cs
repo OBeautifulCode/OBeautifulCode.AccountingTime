@@ -25,89 +25,40 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
-        public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd)
+        public static UnitOfTime Plus(
+            this UnitOfTime unitOfTime,
+            int unitsToAdd)
         {
-            if (unitOfTime == null)
+            switch (unitOfTime)
             {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
-
-            var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
-            if (unitOfTimeAsCalendarDay != null)
-            {
-                return unitOfTimeAsCalendarDay.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
-            if (unitOfTimeAsCalendarMonth != null)
-            {
-                return unitOfTimeAsCalendarMonth.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
-            if (unitOfTimeAsCalendarQuarter != null)
-            {
-                return unitOfTimeAsCalendarQuarter.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
-            if (unitOfTimeAsCalendarYear != null)
-            {
-                return unitOfTimeAsCalendarYear.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
-            if (unitOfTimeAsCalendarUnbounded != null)
-            {
-                throw new InvalidOperationException("Cannot add to unbounded time.");
-            }
-
-            var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
-            if (unitOfTimeAsFiscalMonth != null)
-            {
-                return unitOfTimeAsFiscalMonth.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
-            if (unitOfTimeAsFiscalQuarter != null)
-            {
-                return unitOfTimeAsFiscalQuarter.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
-            if (unitOfTimeAsFiscalYear != null)
-            {
-                return unitOfTimeAsFiscalYear.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
-            if (unitOfTimeAsFiscalUnbounded != null)
-            {
-                throw new InvalidOperationException("Cannot add to unbounded time.");
-            }
-
-            var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
-            if (unitOfTimeAsGenericMonth != null)
-            {
-                return unitOfTimeAsGenericMonth.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
-            if (unitOfTimeAsGenericQuarter != null)
-            {
-                return unitOfTimeAsGenericQuarter.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
-            if (unitOfTimeAsGenericYear != null)
-            {
-                return unitOfTimeAsGenericYear.Plus(unitsToAdd);
-            }
-
-            var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
-            if (unitOfTimeAsGenericUnbounded != null)
-            {
-                throw new InvalidOperationException("Cannot add to unbounded time.");
+                case null:
+                    throw new ArgumentNullException(nameof(unitOfTime));
+                case CalendarDay unitOfTimeAsCalendarDay:
+                    return unitOfTimeAsCalendarDay.Plus(unitsToAdd);
+                case CalendarMonth unitOfTimeAsCalendarMonth:
+                    return unitOfTimeAsCalendarMonth.Plus(unitsToAdd);
+                case CalendarQuarter unitOfTimeAsCalendarQuarter:
+                    return unitOfTimeAsCalendarQuarter.Plus(unitsToAdd);
+                case CalendarYear unitOfTimeAsCalendarYear:
+                    return unitOfTimeAsCalendarYear.Plus(unitsToAdd);
+                case CalendarUnbounded _:
+                    throw new InvalidOperationException("Cannot add to unbounded time.");
+                case FiscalMonth unitOfTimeAsFiscalMonth:
+                    return unitOfTimeAsFiscalMonth.Plus(unitsToAdd);
+                case FiscalQuarter unitOfTimeAsFiscalQuarter:
+                    return unitOfTimeAsFiscalQuarter.Plus(unitsToAdd);
+                case FiscalYear unitOfTimeAsFiscalYear:
+                    return unitOfTimeAsFiscalYear.Plus(unitsToAdd);
+                case FiscalUnbounded _:
+                    throw new InvalidOperationException("Cannot add to unbounded time.");
+                case GenericMonth unitOfTimeAsGenericMonth:
+                    return unitOfTimeAsGenericMonth.Plus(unitsToAdd);
+                case GenericQuarter unitOfTimeAsGenericQuarter:
+                    return unitOfTimeAsGenericQuarter.Plus(unitsToAdd);
+                case GenericYear unitOfTimeAsGenericYear:
+                    return unitOfTimeAsGenericYear.Plus(unitsToAdd);
+                case GenericUnbounded _:
+                    throw new InvalidOperationException("Cannot add to unbounded time.");
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
@@ -130,7 +81,10 @@ namespace OBeautifulCode.AccountingTime
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "3*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "12*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "4*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
-        public static UnitOfTime Plus(this UnitOfTime unitOfTime, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
+        public static UnitOfTime Plus(
+            this UnitOfTime unitOfTime,
+            int unitsToAdd,
+            UnitOfTimeGranularity granularityOfUnitsToAdd)
         {
             if (unitOfTime == null)
             {
@@ -214,28 +168,36 @@ namespace OBeautifulCode.AccountingTime
             throw new InvalidOperationException("should not get here");
         }
 
-        private static CalendarDay Plus(this CalendarDay unitOfTime, int unitsToAdd)
+        private static CalendarDay Plus(
+            this CalendarDay unitOfTime,
+            int unitsToAdd)
         {
             var dayAsDateTime = unitOfTime.ToDateTime().AddDays(unitsToAdd);
             var result = new CalendarDay(dayAsDateTime.Year, (MonthOfYear)dayAsDateTime.Month, (DayOfMonth)dayAsDateTime.Day);
             return result;
         }
 
-        private static CalendarMonth Plus(this CalendarMonth unitOfTime, int unitsToAdd)
+        private static CalendarMonth Plus(
+            this CalendarMonth unitOfTime,
+            int unitsToAdd)
         {
             var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
             var result = new CalendarMonth(genericMonth.Year, (MonthOfYear)genericMonth.MonthNumber);
             return result;
         }
 
-        private static FiscalMonth Plus(this FiscalMonth unitOfTime, int unitsToAdd)
+        private static FiscalMonth Plus(
+            this FiscalMonth unitOfTime,
+            int unitsToAdd)
         {
             var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
             var result = new FiscalMonth(genericMonth.Year, genericMonth.MonthNumber);
             return result;
         }
 
-        private static GenericMonth Plus(this GenericMonth unitOfTime, int unitsToAdd)
+        private static GenericMonth Plus(
+            this GenericMonth unitOfTime,
+            int unitsToAdd)
         {
             var monthAsDateTime = new DateTime(unitOfTime.Year, (int)unitOfTime.MonthNumber, 1);
             monthAsDateTime = monthAsDateTime.AddMonths(unitsToAdd);
@@ -243,21 +205,27 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarQuarter Plus(this CalendarQuarter unitOfTime, int unitsToAdd)
+        private static CalendarQuarter Plus(
+            this CalendarQuarter unitOfTime,
+            int unitsToAdd)
         {
             var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
             var result = new CalendarQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
             return result;
         }
 
-        private static FiscalQuarter Plus(this FiscalQuarter unitOfTime, int unitsToAdd)
+        private static FiscalQuarter Plus(
+            this FiscalQuarter unitOfTime,
+            int unitsToAdd)
         {
             var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
             var result = new FiscalQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
             return result;
         }
 
-        private static GenericQuarter Plus(this GenericQuarter unitOfTime, int unitsToAdd)
+        private static GenericQuarter Plus(
+            this GenericQuarter unitOfTime,
+            int unitsToAdd)
         {
             int year = unitOfTime.Year;
             int quarterNumber = (int)unitOfTime.QuarterNumber;
@@ -281,21 +249,27 @@ namespace OBeautifulCode.AccountingTime
             return quarter;
         }
 
-        private static CalendarYear Plus(this CalendarYear unitOfTime, int unitsToAdd)
+        private static CalendarYear Plus(
+            this CalendarYear unitOfTime,
+            int unitsToAdd)
         {
             var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
             var result = new CalendarYear(genericYear.Year);
             return result;
         }
 
-        private static FiscalYear Plus(this FiscalYear unitOfTime, int unitsToAdd)
+        private static FiscalYear Plus(
+            this FiscalYear unitOfTime,
+            int unitsToAdd)
         {
             var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
             var result = new FiscalYear(genericYear.Year);
             return result;
         }
 
-        private static GenericYear Plus(this GenericYear unitOfTime, int unitsToAdd)
+        private static GenericYear Plus(
+            this GenericYear unitOfTime,
+            int unitsToAdd)
         {
             var result = new GenericYear(unitOfTime.Year + unitsToAdd);
             return result;

@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar year.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
     {
         /// <summary>
@@ -23,7 +24,8 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="year">The year.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
-        public CalendarYear(int year)
+        public CalendarYear(
+            int year)
         {
             if ((year < 1) || (year > 9999))
             {
@@ -34,6 +36,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public int Year { get; private set; }
 
         /// <inheritdoc />
@@ -45,7 +48,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first year to compare.</param>
         /// <param name="right">The second year to compare.</param>
         /// <returns>true if the two years are equal; false otherwise.</returns>
-        public static bool operator ==(CalendarYear left, CalendarYear right)
+        public static bool operator ==(
+            CalendarYear left,
+            CalendarYear right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -67,7 +72,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first year to compare.</param>
         /// <param name="right">The second year to compare.</param>
         /// <returns>true if the two years are not equal; false otherwise.</returns>
-        public static bool operator !=(CalendarYear left, CalendarYear right) => !(left == right);
+        public static bool operator !=(
+            CalendarYear left,
+            CalendarYear right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a year is less than another year.
@@ -75,7 +83,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is less than the right-hand year; false otherwise.</returns>
-        public static bool operator <(CalendarYear left, CalendarYear right)
+        public static bool operator <(
+            CalendarYear left,
+            CalendarYear right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -97,7 +107,9 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is greater than the right-hand year; false otherwise.</returns>
-        public static bool operator >(CalendarYear left, CalendarYear right)
+        public static bool operator >(
+            CalendarYear left,
+            CalendarYear right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -119,7 +131,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is less than or equal to the right-hand year; false otherwise.</returns>
-        public static bool operator <=(CalendarYear left, CalendarYear right) => (left == right) || (left < right);
+        public static bool operator <=(
+            CalendarYear left,
+            CalendarYear right)
+            => (left == right) || (left < right);
 
         /// <summary>
         /// Determines whether a year is greater than or equal to than another year.
@@ -127,32 +142,22 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The left-hand year to compare.</param>
         /// <param name="right">The right-hand year to compare.</param>
         /// <returns>true if the the left-hand year is greater than or equal to the right-hand year; false otherwise.</returns>
-        public static bool operator >=(CalendarYear left, CalendarYear right) => (left == right) || (left > right);
-
-        /// <summary>
-        /// Determines whether the specified <see cref="CalendarYear"/> is equal to this one.
-        /// </summary>
-        /// <param name="other">The year to compare with this one.</param>
-        /// <returns>
-        /// true if this year is equal to the specified year; false otherwise.
-        /// </returns>
-        public bool Equals(CalendarYear other) => this == other;
+        public static bool operator >=(
+            CalendarYear left,
+            CalendarYear right)
+            => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as CalendarYear);
+        public bool Equals(
+            CalendarYear other) => this == other;
 
-        /// <summary>
-        /// Compares the current instance with another object of the same type
-        /// and returns an integer that indicates whether the current instance precedes,
-        /// follows, or occurs in the same position in the sort order as the other object
-        /// </summary>
-        /// <param name="other">A <see cref="CalendarYear"/> to compare to this instance.</param>
-        /// <returns>
-        /// -1 if the current instance is less than other.
-        /// 0 if the current instance is equal to the other.
-        /// 1 if the current instance is greater than the other.
-        /// </returns>
-        public int CompareTo(CalendarYear other)
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj) => this == (obj as CalendarYear);
+
+        /// <inheritdoc />
+        public int CompareTo(
+            CalendarYear other)
         {
             if (other == null)
             {
@@ -163,7 +168,8 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override int CompareTo(object obj)
+        public override int CompareTo(
+            object obj)
         {
             var other = obj as CalendarYear;
             if (other == null)

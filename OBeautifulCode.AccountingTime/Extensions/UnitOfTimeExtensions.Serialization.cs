@@ -53,7 +53,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid unit-of-time.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Deserializing is inheritently complex and requires lots of types.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Deserializing is inheritently complex and requires lots of types.")]
-        public static T DeserializeFromSortableString<T>(this string unitOfTime)
+        public static T DeserializeFromSortableString<T>(
+            this string unitOfTime)
             where T : UnitOfTime
         {
             if (unitOfTime == null)
@@ -271,7 +272,8 @@ namespace OBeautifulCode.AccountingTime
         /// other unit-of-times (of the same type) would sort (earlier time first, later time last).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static string SerializeToSortableString(this UnitOfTime unitOfTime)
+        public static string SerializeToSortableString(
+            this UnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
@@ -279,101 +281,84 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var unitOfTimeType = unitOfTime.GetType();
-            var unitOfTimeAsCalendarDay = unitOfTime as CalendarDay;
-            if (unitOfTimeAsCalendarDay != null)
-            {
-                string result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
-                return result;
-            }
 
-            var unitOfTimeAsCalendarMonth = unitOfTime as CalendarMonth;
-            if (unitOfTimeAsCalendarMonth != null)
+            switch (unitOfTime)
             {
-                string result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
-                return result;
+                case CalendarDay unitOfTimeAsCalendarDay:
+                {
+                    var result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+                    return result;
+                }
+                case CalendarMonth unitOfTimeAsCalendarMonth:
+                {
+                    var result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+                    return result;
+                }
+                case CalendarQuarter unitOfTimeAsCalendarQuarter:
+                {
+                    var result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+                    return result;
+                }
+                case CalendarYear unitOfTimeAsCalendarYear:
+                {
+                    var result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
+                    return result;
+                }
+                case CalendarUnbounded _:
+                {
+                    var result = "c-unbounded";
+                    return result;
+                }
+                case FiscalMonth unitOfTimeAsFiscalMonth:
+                {
+                    var result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+                    return result;
+                }
+                case FiscalQuarter unitOfTimeAsFiscalQuarter:
+                {
+                    var result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+                    return result;
+                }
+                case FiscalYear unitOfTimeAsFiscalYear:
+                {
+                    var result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
+                    return result;
+                }
+                case FiscalUnbounded _:
+                {
+                    var result = "f-unbounded";
+                    return result;
+                }
+                case GenericMonth unitOfTimeAsGenericMonth:
+                {
+                    var result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+                    return result;
+                }
+                case GenericQuarter unitOfTimeAsGenericQuarter:
+                {
+                    var result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+                    return result;
+                }
+                case GenericYear unitOfTimeAsGenericYear:
+                {
+                    var result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
+                    return result;
+                }
+                case GenericUnbounded _:
+                {
+                    var result = "g-unbounded";
+                        return result;
+                }
+                default:
+                    throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
             }
-
-            var unitOfTimeAsCalendarQuarter = unitOfTime as CalendarQuarter;
-            if (unitOfTimeAsCalendarQuarter != null)
-            {
-                string result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
-                return result;
-            }
-
-            var unitOfTimeAsCalendarYear = unitOfTime as CalendarYear;
-            if (unitOfTimeAsCalendarYear != null)
-            {
-                string result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
-                return result;
-            }
-
-            var unitOfTimeAsCalendarUnbounded = unitOfTime as CalendarUnbounded;
-            if (unitOfTimeAsCalendarUnbounded != null)
-            {
-                return "c-unbounded";
-            }
-
-            var unitOfTimeAsFiscalMonth = unitOfTime as FiscalMonth;
-            if (unitOfTimeAsFiscalMonth != null)
-            {
-                string result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
-                return result;
-            }
-
-            var unitOfTimeAsFiscalQuarter = unitOfTime as FiscalQuarter;
-            if (unitOfTimeAsFiscalQuarter != null)
-            {
-                string result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
-                return result;
-            }
-
-            var unitOfTimeAsFiscalYear = unitOfTime as FiscalYear;
-            if (unitOfTimeAsFiscalYear != null)
-            {
-                string result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
-                return result;
-            }
-
-            var unitOfTimeAsFiscalUnbounded = unitOfTime as FiscalUnbounded;
-            if (unitOfTimeAsFiscalUnbounded != null)
-            {
-                return "f-unbounded";
-            }
-
-            var unitOfTimeAsGenericMonth = unitOfTime as GenericMonth;
-            if (unitOfTimeAsGenericMonth != null)
-            {
-                string result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
-                return result;
-            }
-
-            var unitOfTimeAsGenericQuarter = unitOfTime as GenericQuarter;
-            if (unitOfTimeAsGenericQuarter != null)
-            {
-                string result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
-                return result;
-            }
-
-            var unitOfTimeAsGenericYear = unitOfTime as GenericYear;
-            if (unitOfTimeAsGenericYear != null)
-            {
-                string result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
-                return result;
-            }
-
-            var unitOfTimeAsGenericUnbounded = unitOfTime as GenericUnbounded;
-            if (unitOfTimeAsGenericUnbounded != null)
-            {
-                return "g-unbounded";
-            }
-
-            throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
         }
 
-        private static int ParseIntOrThrow(string token, string errorMessage)
+        private static int ParseIntOrThrow(
+            string token,
+            string errorMessage)
         {
-            int intValue;
-            if (!int.TryParse(token, out intValue))
+            if (!int.TryParse(token, out var intValue))
             {
                 throw new InvalidOperationException(errorMessage);
             }
@@ -381,7 +366,9 @@ namespace OBeautifulCode.AccountingTime
             return intValue;
         }
 
-        private static T ParseEnumOrThrow<T>(string token, string errorMessage)
+        private static T ParseEnumOrThrow<T>(
+            string token,
+            string errorMessage)
             where T : struct, IConvertible
         {
             int intValue = ParseIntOrThrow(token, errorMessage);

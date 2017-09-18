@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime
 
     using static System.FormattableString;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IReportingPeriod{T}" />
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
     public class ReportingPeriod<T> : IReportingPeriod<T>, IEquatable<ReportingPeriod<T>>, IEquatable<IReportingPeriod<UnitOfTime>>
@@ -28,7 +28,9 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="start"/> and <paramref name="end"/> are bounded and are diffrent concrete types of units-of-time.</exception>
         /// <exception cref="ArgumentException"><paramref name="start"/> and/or <paramref name="end"/> is unbounded and are different kinds of units-of-time.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="start"/> is greater than <paramref name="end"/>.</exception>
-        public ReportingPeriod(T start, T end)
+        public ReportingPeriod(
+            T start,
+            T end)
         {
             if (start == null)
             {
@@ -65,9 +67,11 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public T Start { get; private set; }
 
         /// <inheritdoc />
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public T End { get; private set; }
 
         /// <summary>
@@ -79,7 +83,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
-        public static bool operator ==(ReportingPeriod<T> left, ReportingPeriod<T> right) => IsEqual(left, right);
+        public static bool operator ==(
+            ReportingPeriod<T> left,
+            ReportingPeriod<T> right)
+            => IsEqual(left, right);
 
         /// <summary>
         /// Determines whether an object of type <see cref="ReportingPeriod{T}" /> and <see cref="IReportingPeriod{T}" /> are equal.
@@ -90,7 +97,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
-        public static bool operator ==(ReportingPeriod<T> left, IReportingPeriod<UnitOfTime> right) => IsEqual(left, right);
+        public static bool operator ==(
+            ReportingPeriod<T> left,
+            IReportingPeriod<UnitOfTime> right)
+            => IsEqual(left, right);
 
         /// <summary>
         /// Determines whether an object of type <see cref="ReportingPeriod{T}" /> and <see cref="IReportingPeriod{T}" /> are equal.
@@ -101,7 +111,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
-        public static bool operator ==(IReportingPeriod<UnitOfTime> left, ReportingPeriod<T> right) => IsEqual(right, left);
+        public static bool operator ==(
+            IReportingPeriod<UnitOfTime> left,
+            ReportingPeriod<T> right)
+            => IsEqual(right, left);
 
         /// <summary>
         /// Determines whether two objects of type <see cref="ReportingPeriod{T}" /> are not equal.
@@ -112,7 +125,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
-        public static bool operator !=(ReportingPeriod<T> left, ReportingPeriod<T> right) => !(left == right);
+        public static bool operator !=(
+            ReportingPeriod<T> left,
+            ReportingPeriod<T> right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether an object of type <see cref="ReportingPeriod{T}" /> and <see cref="IReportingPeriod{T}" /> are not equal.
@@ -123,7 +139,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
-        public static bool operator !=(IReportingPeriod<UnitOfTime> left, ReportingPeriod<T> right) => !(left == right);
+        public static bool operator !=(
+            IReportingPeriod<UnitOfTime> left,
+            ReportingPeriod<T> right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether an object of type <see cref="ReportingPeriod{T}" /> and <see cref="IReportingPeriod{T}" /> are not equal.
@@ -134,34 +153,29 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="left">The first reporting period to compare.</param>
         /// <param name="right">The second reporting period to compare.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
-        public static bool operator !=(ReportingPeriod<T> left, IReportingPeriod<UnitOfTime> right) => !(left == right);
+        public static bool operator !=(
+            ReportingPeriod<T> left,
+            IReportingPeriod<UnitOfTime> right)
+            => !(left == right);
 
-        /// <summary>
-        /// Determines whether the specified <see cref="ReportingPeriod{T}"/> is equal to this one.
-        /// </summary>
-        /// <remarks>
-        /// Reporting periods are equal if they have the same start and end unit-of-time.
-        /// </remarks>
-        /// <param name="other">The reporting period to compare this one with.</param>
-        /// <returns>true if this reporting period is equal to the specified reporting period; false otherwise.</returns>
-        public bool Equals(ReportingPeriod<T> other) => this == other;
+        /// <inheritdoc />
+        public bool Equals(
+            ReportingPeriod<T> other)
+            => this == other;
 
-        /// <summary>
-        /// Determines whether the specified <see cref="IReportingPeriod{T}"/> is equal to this one.
-        /// </summary>
-        /// <remarks>
-        /// Reporting periods are equal if they have the same start and end unit-of-time.
-        /// </remarks>
-        /// <param name="other">The reporting period to compare this one with.</param>
-        /// <returns>true if this reporting period is equal to the specified reporting period; false otherwise.</returns>
-        public bool Equals(IReportingPeriod<UnitOfTime> other) => this == other;
+        /// <inheritdoc />
+        public bool Equals(
+            IReportingPeriod<UnitOfTime> other)
+            => this == other;
 
         /// <summary>
         /// Determines whether the specified object is equal to this one, as per <see cref="Equals(ReportingPeriod{T})"/>.
         /// </summary>
         /// <param name="obj">The value to compare this one with.</param>
         /// <returns>true if the other object is a reporting period equal to this one; false otherwise, consistent with <see cref="Equals(ReportingPeriod{T})"/>.</returns>
-        public override bool Equals(object obj) => this == (obj as IReportingPeriod<UnitOfTime>);
+        public override bool Equals(
+            object obj)
+            => this == (obj as IReportingPeriod<UnitOfTime>);
 
         /// <summary>
         /// Returns the hash code for this reporting period.
@@ -195,6 +209,8 @@ namespace OBeautifulCode.AccountingTime
 
             var thisUnboundGenericType = this.GetType().GetGenericTypeDefinition();
             var typeArgs = new[] { requestedUnitOfTimeType };
+
+            // ReSharper disable once PossibleNullReferenceException
             var genericTypeToCreate = thisUnboundGenericType.MakeGenericType(typeArgs);
 
             string errorMessage = "A clone of this reporting-period is not assignable to the type of reporting period requested.";
@@ -203,11 +219,13 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
+            // ReSharper disable once UseMethodIsInstanceOfType
             if (!requestedUnitOfTimeType.IsAssignableFrom(this.Start.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
+            // ReSharper disable once UseMethodIsInstanceOfType
             if (!requestedUnitOfTimeType.IsAssignableFrom(this.End.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
@@ -226,7 +244,9 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static bool IsEqual(ReportingPeriod<T> left, IReportingPeriod<UnitOfTime> right)
+        private static bool IsEqual(
+            ReportingPeriod<T> left,
+            IReportingPeriod<UnitOfTime> right)
         {
             if (ReferenceEquals(left, right))
             {

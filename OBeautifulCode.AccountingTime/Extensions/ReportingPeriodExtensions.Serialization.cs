@@ -29,7 +29,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
-        public static TReportingPeriod DeserializeFromString<TReportingPeriod>(this string reportingPeriod)
+        public static TReportingPeriod DeserializeFromString<TReportingPeriod>(
+            this string reportingPeriod)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             if (reportingPeriod == null)
@@ -60,7 +61,9 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="requestedType"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="requestedType"/> is not an <see cref="IReportingPeriod{UnitOfTime}"/>.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
-        public static object DeserializeFromString(this string reportingPeriod, Type requestedType)
+        public static object DeserializeFromString(
+            this string reportingPeriod,
+            Type requestedType)
         {
             if (reportingPeriod == null)
             {
@@ -117,11 +120,14 @@ namespace OBeautifulCode.AccountingTime
             }
 
             errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
+
+            // ReSharper disable once UseMethodIsInstanceOfType
             if (!requestedUnitOfTimeType.IsAssignableFrom(start.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
+            // ReSharper disable once UseMethodIsInstanceOfType
             if (!requestedUnitOfTimeType.IsAssignableFrom(end.GetType()))
             {
                 throw new InvalidOperationException(errorMessage);
@@ -149,7 +155,8 @@ namespace OBeautifulCode.AccountingTime
         /// into the same reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static string SerializeToString(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static string SerializeToString(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {

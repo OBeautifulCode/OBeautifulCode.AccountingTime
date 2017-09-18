@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>
@@ -21,7 +22,10 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="anchorMonth">The month that the fiscal year end is anchored to.  See <see cref="FiftyTwoFiftyThreeWeekMethodology"/>.</param>
         /// <param name="fiftyTwoFiftyThreeWeekMethodology">The methodology used to identify the last day of the accounting year.</param>
         /// <exception cref="ArgumentException"><paramref name="anchorMonth"/> is invalid.</exception>
-        public FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek lastDayOfWeekInAccountingYear, MonthOfYear anchorMonth, FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
+        public FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
+            DayOfWeek lastDayOfWeekInAccountingYear,
+            MonthOfYear anchorMonth,
+            FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
         {
             if (anchorMonth == MonthOfYear.Invalid)
             {
@@ -36,23 +40,27 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Gets the day of the week that the fiscal year always ends on.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public DayOfWeek LastDayOfWeekInAccountingYear { get; private set; }
 
         /// <summary>
         /// Gets the month that the fiscal year end is anchored to.
         /// See <see cref="FiftyTwoFiftyThreeWeekMethodology"/>.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public MonthOfYear AnchorMonth { get; private set; }
 
         /// <summary>
         /// Gets the methodology used to identify the last day of the accounting year.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public FiftyTwoFiftyThreeWeekMethodology FiftyTwoFiftyThreeWeekMethodology { get; private set; }
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
-        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
+        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
+            FiscalYear fiscalYear)
         {
             if (fiscalYear == null)
             {
@@ -65,7 +73,8 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private DateTime GetAccountingYearEndDate(int year)
+        private DateTime GetAccountingYearEndDate(
+            int year)
         {
             var lastDayInYear = new DateTime(year, (int)this.AnchorMonth, DateTime.DaysInMonth(year, (int)this.AnchorMonth));
             if (this.FiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth)

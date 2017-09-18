@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// A fiscal year is 12 consecutive months ending on the last day of any month except December 31st.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public class FiscalYearAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>
@@ -20,7 +21,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="lastMonthInFiscalYear">The last month of the fiscal year.</param>
         /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is invalid.</exception>
         /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is <see cref="MonthOfYear.December"/>.</exception>
-        public FiscalYearAccountingPeriodSystem(MonthOfYear lastMonthInFiscalYear)
+        public FiscalYearAccountingPeriodSystem(
+            MonthOfYear lastMonthInFiscalYear)
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
             {
@@ -38,11 +40,13 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Gets the last month of the fiscal year.
         /// </summary>
+        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public MonthOfYear LastMonthInFiscalYear { get; private set; }
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(FiscalYear fiscalYear)
+        public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
+            FiscalYear fiscalYear)
         {
             if (fiscalYear == null)
             {

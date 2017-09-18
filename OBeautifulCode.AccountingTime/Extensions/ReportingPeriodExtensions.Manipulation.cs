@@ -33,7 +33,11 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the reporting period component.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
         /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod{T}.Start"/> to be greater than <see cref="ReportingPeriod{T}.End"/></exception>
         /// <exception cref="InvalidOperationException">The adjusted reporting period cannot be converted into a <typeparamref name="TReportingPeriod"/></exception>
-        public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(this IReportingPeriod<UnitOfTime> reportingPeriod, ReportingPeriodComponent component, int unitsToAdd, UnitOfTimeGranularity granularityOfUnitsToAdd)
+        public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(
+            this IReportingPeriod<UnitOfTime> reportingPeriod,
+            ReportingPeriodComponent component,
+            int unitsToAdd,
+            UnitOfTimeGranularity granularityOfUnitsToAdd)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             if (reportingPeriod == null)
@@ -83,7 +87,9 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has an <see cref="UnitOfTimeGranularity.Unbounded"/> component.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
-        public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(this IReportingPeriod<T> reportingPeriod, int maxUnitsInAnyReportingPeriod)
+        public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(
+            this IReportingPeriod<T> reportingPeriod,
+            int maxUnitsInAnyReportingPeriod)
             where T : UnitOfTime
         {
             if (reportingPeriod == null)
@@ -143,7 +149,10 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="overflowStrategy"/> is not <see cref="OverflowStrategy.ThrowOnOverflow"/>.</exception>
         /// <exception cref="InvalidOperationException">There was some overflow when splitting.</exception>
-        public static IList<UnitOfTime> Split(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity, OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
+        public static IList<UnitOfTime> Split(
+            this IReportingPeriod<UnitOfTime> reportingPeriod,
+            UnitOfTimeGranularity granularity,
+            OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
         {
             if (reportingPeriod == null)
             {
@@ -199,7 +208,8 @@ namespace OBeautifulCode.AccountingTime
         /// but is the most granular version possible of that reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static IReportingPeriod<UnitOfTime> ToMostGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static IReportingPeriod<UnitOfTime> ToMostGranular(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {
@@ -224,7 +234,8 @@ namespace OBeautifulCode.AccountingTime
         /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017)
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static IReportingPeriod<UnitOfTime> ToLeastGranular(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static IReportingPeriod<UnitOfTime> ToLeastGranular(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {
@@ -259,7 +270,9 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
+        private static IReportingPeriod<UnitOfTime> MakeMoreGranular(
+            this IReportingPeriod<UnitOfTime> reportingPeriod,
+            UnitOfTimeGranularity granularity)
         {
             if (reportingPeriod == null)
             {
@@ -292,7 +305,9 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static IReportingPeriod<UnitOfTime> MakeMoreGranular(this UnitOfTime unitOfTime, UnitOfTimeGranularity granularity)
+        private static IReportingPeriod<UnitOfTime> MakeMoreGranular(
+            this UnitOfTime unitOfTime,
+            UnitOfTimeGranularity granularity)
         {
             if (unitOfTime == null)
             {
@@ -328,14 +343,17 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new CalendarQuarter(unitOfTimeAsYear.Year, startQuarter), new CalendarQuarter(unitOfTimeAsYear.Year, endQuarter));
                 }
                 else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new FiscalQuarter(unitOfTimeAsYear.Year, startQuarter), new FiscalQuarter(unitOfTimeAsYear.Year, endQuarter));
                 }
                 else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     moreGranularReportingPeriod = new ReportingPeriod<UnitOfTime>(new GenericQuarter(unitOfTimeAsYear.Year, startQuarter), new GenericQuarter(unitOfTimeAsYear.Year, endQuarter));
                 }
                 else
@@ -346,6 +364,8 @@ namespace OBeautifulCode.AccountingTime
             else if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
             {
                 var unitOfTimeAsQuarter = unitOfTime as IHaveAQuarter;
+
+                // ReSharper disable once PossibleNullReferenceException
                 var startMonth = ((((int)unitOfTimeAsQuarter.QuarterNumber) - 1) * 3) + 1;
                 var endMonth = ((int)unitOfTimeAsQuarter.QuarterNumber) * 3;
 
@@ -400,7 +420,9 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static IReportingPeriod<UnitOfTime> MakeLessGranular(this IReportingPeriod<UnitOfTime> reportingPeriod, UnitOfTimeGranularity granularity)
+        private static IReportingPeriod<UnitOfTime> MakeLessGranular(
+            this IReportingPeriod<UnitOfTime> reportingPeriod,
+            UnitOfTimeGranularity granularity)
         {
             if (reportingPeriod == null)
             {
@@ -435,6 +457,8 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var startAsCalendarDay = reportingPeriod.Start as CalendarDay;
+
+                    // ReSharper disable once PossibleNullReferenceException
                     var startMonth = new CalendarMonth(startAsCalendarDay.Year, startAsCalendarDay.MonthOfYear);
                     if (startMonth.GetFirstCalendarDay() != startAsCalendarDay)
                     {
@@ -442,6 +466,8 @@ namespace OBeautifulCode.AccountingTime
                     }
 
                     var endAsCalendarDay = reportingPeriod.End as CalendarDay;
+
+                    // ReSharper disable once PossibleNullReferenceException
                     var endMonth = new CalendarMonth(endAsCalendarDay.Year, endAsCalendarDay.MonthOfYear);
                     if (endMonth.GetLastCalendarDay() != endAsCalendarDay)
                     {
@@ -476,11 +502,13 @@ namespace OBeautifulCode.AccountingTime
                     { 12, QuarterNumber.Q4 }
                 };
 
+                // ReSharper disable once PossibleNullReferenceException
                 if (!quarterByStartMonth.ContainsKey((int)startAsMonth.MonthNumber))
                 {
                     throw new InvalidOperationException("Cannot convert a monthly reporting period to a quarterly reporting period when the reporting period start time is not the first month of a recognized quarter.");
                 }
 
+                // ReSharper disable once PossibleNullReferenceException
                 if (!quarterByEndMonth.ContainsKey((int)endAsMonth.MonthNumber))
                 {
                     throw new InvalidOperationException("Cannot convert a monthly reporting period to a quarterly reporting period when the reporting period end time is not the last month of a recognized quarter.");
@@ -514,12 +542,14 @@ namespace OBeautifulCode.AccountingTime
                 var startAsQuarter = reportingPeriod.Start as IHaveAQuarter;
                 var endAsQuarter = reportingPeriod.End as IHaveAQuarter;
 
+                // ReSharper disable once PossibleNullReferenceException
                 if (startAsQuarter.QuarterNumber != QuarterNumber.Q1)
                 {
                     throw new InvalidOperationException(
                         "Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period start time is not Q1.");
                 }
 
+                // ReSharper disable once PossibleNullReferenceException
                 if (endAsQuarter.QuarterNumber != QuarterNumber.Q4)
                 {
                     throw new InvalidOperationException(

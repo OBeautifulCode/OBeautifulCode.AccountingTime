@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a unit of time tied to the (gregorian) calendar.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public abstract class CalendarUnitOfTime : UnitOfTime
     {
         /// <inheritdoc />

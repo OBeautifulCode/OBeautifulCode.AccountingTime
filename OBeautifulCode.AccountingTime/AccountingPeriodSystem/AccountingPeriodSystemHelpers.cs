@@ -21,7 +21,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// Returns the specified day-of-week that falls after the reference date.
         /// </returns>
-        public static DateTime Next(this DateTime value, DayOfWeek dayOfWeek)
+        public static DateTime Next(
+            this DateTime value,
+            DayOfWeek dayOfWeek)
         {
             int daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
             if (value.DayOfWeek >= dayOfWeek)
@@ -40,7 +42,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// Returns the specified day-of-week that falls prior to the reference date.
         /// </returns>
-        public static DateTime Previous(this DateTime value, DayOfWeek dayOfWeek)
+        public static DateTime Previous(
+            this DateTime value,
+            DayOfWeek dayOfWeek)
         {
             int daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
             if (value.DayOfWeek <= dayOfWeek)

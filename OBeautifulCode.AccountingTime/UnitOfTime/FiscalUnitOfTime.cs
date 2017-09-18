@@ -12,6 +12,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a unit of time in the context of some company's fiscal year.
     /// </summary>
     [Serializable]
+    // ReSharper disable once InheritdocConsiderUsage
     public abstract class FiscalUnitOfTime : UnitOfTime
     {
         /// <inheritdoc />

@@ -25,7 +25,8 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod{T}.Start"/> and <see cref="ReportingPeriod{T}.End"/> has different granularity.</exception>
-        public static UnitOfTimeGranularity GetUnitOfTimeGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {
@@ -49,7 +50,8 @@ namespace OBeautifulCode.AccountingTime
         /// The kind of the unit-of-time used in the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        public static UnitOfTimeKind GetUnitOfTimeKind(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static UnitOfTimeKind GetUnitOfTimeKind(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {
@@ -74,7 +76,8 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
-        public static IList<T> GetUnitsWithin<T>(this IReportingPeriod<T> reportingPeriod)
+        public static IList<T> GetUnitsWithin<T>(
+            this IReportingPeriod<T> reportingPeriod)
             where T : UnitOfTime
         {
             if (reportingPeriod == null)
@@ -106,7 +109,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if one or both components of the reporting period has unbounded granularity; otherwise false.
         /// </returns>
-        public static bool HasComponentWithUnboundedGranularity(this IReportingPeriod<UnitOfTime> reportingPeriod)
+        public static bool HasComponentWithUnboundedGranularity(
+            this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
             if (reportingPeriod == null)
             {

@@ -23,7 +23,9 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="fiscalQuarter"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
-        public static CalendarQuarter ToCalendarQuarter(this FiscalQuarter fiscalQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        public static CalendarQuarter ToCalendarQuarter(
+            this FiscalQuarter fiscalQuarter,
+            QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
             if (fiscalQuarter == null)
             {
@@ -72,7 +74,9 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
-        public static FiscalQuarter ToFiscalQuarter(this CalendarQuarter calendarQuarter, QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
+        public static FiscalQuarter ToFiscalQuarter(
+            this CalendarQuarter calendarQuarter,
+            QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
             if (calendarQuarter == null)
             {
@@ -119,7 +123,8 @@ namespace OBeautifulCode.AccountingTime
         /// A <see cref="GenericMonth"/> converted from an <see cref="IHaveAMonth"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="month"/> is null.</exception>
-        public static GenericMonth ToGenericMonth(this IHaveAMonth month)
+        public static GenericMonth ToGenericMonth(
+            this IHaveAMonth month)
         {
             if (month == null)
             {
@@ -138,7 +143,8 @@ namespace OBeautifulCode.AccountingTime
         /// A <see cref="GenericQuarter"/> converted from an <see cref="IHaveAQuarter"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="quarter"/> is null.</exception>
-        public static GenericQuarter ToGenericQuarter(this IHaveAQuarter quarter)
+        public static GenericQuarter ToGenericQuarter(
+            this IHaveAQuarter quarter)
         {
             if (quarter == null)
             {
@@ -157,7 +163,8 @@ namespace OBeautifulCode.AccountingTime
         /// A <see cref="GenericYear"/> converted from an <see cref="IHaveAYear"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="year"/> is null.</exception>
-        public static GenericYear ToGenericYear(this IHaveAYear year)
+        public static GenericYear ToGenericYear(
+            this IHaveAYear year)
         {
             if (year == null)
             {
@@ -178,7 +185,8 @@ namespace OBeautifulCode.AccountingTime
         /// but is the most granular version possible of that unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static IReportingPeriod<UnitOfTime> ToMostGranular(this UnitOfTime unitOfTime)
+        public static IReportingPeriod<UnitOfTime> ToMostGranular(
+            this UnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
@@ -203,12 +211,14 @@ namespace OBeautifulCode.AccountingTime
                 var year = unitOfTime as IHaveAYear;
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(year.Year, MonthNumber.One), new FiscalMonth(year.Year, MonthNumber.Twelve));
                     return result;
                 }
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
+                    // ReSharper disable once PossibleNullReferenceException
                     var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(year.Year, MonthNumber.One), new GenericMonth(year.Year, MonthNumber.Twelve));
                     return result;
                 }
@@ -226,6 +236,8 @@ namespace OBeautifulCode.AccountingTime
                 }
 
                 var quarter = unitOfTime as IHaveAQuarter;
+
+                // ReSharper disable once PossibleNullReferenceException
                 var startMonth = (((int)quarter.QuarterNumber - 1) * 3) + 1;
                 var endMonth = (int)quarter.QuarterNumber * 3;
 
@@ -283,7 +295,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A reporting period where the Start and End components are equal to the specified unit-of-time.
         /// </returns>
-        public static IReportingPeriod<UnitOfTime> ToReportingPeriod(this UnitOfTime unitOfTime)
+        public static IReportingPeriod<UnitOfTime> ToReportingPeriod(
+            this UnitOfTime unitOfTime)
         {
             if (unitOfTime == null)
             {
