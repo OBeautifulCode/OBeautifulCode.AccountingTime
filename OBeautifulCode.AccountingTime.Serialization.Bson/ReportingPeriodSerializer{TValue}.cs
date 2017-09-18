@@ -53,7 +53,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
                 var persistenceModel = new ReportingPeriodPersistenceModel
                 {
                     Start = value.Start.SerializeToSortableString(),
-                    End = value.End.SerializeToSortableString()
+                    End = value.End.SerializeToSortableString(),
                 };
 
                 ReportingPeriodPersistenceModel.Serializer.Serialize(context, persistenceModel);

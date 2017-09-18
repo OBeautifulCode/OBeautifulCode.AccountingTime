@@ -33,9 +33,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
                 unitOfTimeTypesToRegister.ForEach(
                     t =>
                     {
-                        BsonSerializer.RegisterSerializer(t,
-                            Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as
-                                IBsonSerializer);
+                        BsonSerializer.RegisterSerializer(
+                            t,
+                            Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as IBsonSerializer);
                     });
 
                 // register various flavors of IReportingPeriod

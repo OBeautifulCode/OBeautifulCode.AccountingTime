@@ -13,6 +13,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     /// </summary>
     internal class ReportingPeriodPersistenceModel
     {
+        /// <summary>
+        /// The reporting period serializer.
+        /// </summary>
         public static readonly BsonClassMapSerializer<ReportingPeriodPersistenceModel> Serializer =
                 new BsonClassMapSerializer<ReportingPeriodPersistenceModel>(BsonClassMap.LookupClassMap(typeof(ReportingPeriodPersistenceModel)));
 

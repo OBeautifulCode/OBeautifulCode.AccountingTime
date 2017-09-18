@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeConverter.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodConverter.cs" company="OBeautifulCode">
 //    Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
     using Newtonsoft.Json;
 
-	using OBeautifulCode.AccountingTime;
+    using OBeautifulCode.AccountingTime;
 
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
