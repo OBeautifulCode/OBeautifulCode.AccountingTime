@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IReportingPeriodSerializer{TValue}.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodSerializer{TValue}.cs" company="OBeautifulCode">
 //    Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,14 +15,14 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using static System.FormattableString;
 
     /// <inheritdoc />
-    internal class IReportingPeriodSerializer<TValue> : SerializerBase<TValue>
+    internal class ReportingPeriodSerializer<TValue> : SerializerBase<TValue>
         where TValue : class, IReportingPeriod<UnitOfTime>
     {
         /// <inheritdoc />
-        public override TValue Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+        public override TValue Deserialize(
+            BsonDeserializationContext context,
+            BsonDeserializationArgs args)
         {
-
-
             var type = context.Reader.GetCurrentBsonType();
             switch (type)
             {
@@ -39,7 +39,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
         }
 
         /// <inheritdoc />
-        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TValue value)
+        public override void Serialize(
+            BsonSerializationContext context,
+            BsonSerializationArgs args,
+            TValue value)
         {
             if (value == null)
             {

@@ -19,7 +19,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
         where TValue : UnitOfTime
     {
         /// <inheritdoc />
-        public override TValue Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+        public override TValue Deserialize(
+            BsonDeserializationContext context,
+            BsonDeserializationArgs args)
         {
             var type = context.Reader.GetCurrentBsonType();
             switch (type)
@@ -35,7 +37,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
         }
 
         /// <inheritdoc />
-        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, TValue value)
+        public override void Serialize(
+            BsonSerializationContext context,
+            BsonSerializationArgs args,
+            TValue value)
         {
             if (value == null)
             {

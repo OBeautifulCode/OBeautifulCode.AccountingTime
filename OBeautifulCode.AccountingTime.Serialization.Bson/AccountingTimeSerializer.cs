@@ -58,7 +58,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
                             BsonSerializer.RegisterSerializer(
                                 reportingPeriodTypeToRegister.MakeGenericType(t),
                                 Activator.CreateInstance(
-                                    typeof(IReportingPeriodSerializer<>).MakeGenericType(
+                                    typeof(ReportingPeriodSerializer<>).MakeGenericType(
                                         reportingPeriodTypeToRegister.MakeGenericType(t))) as IBsonSerializer);
                         });
                 }
