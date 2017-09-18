@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using Xunit;
 
-    public static class ReportingPeriodConverterTest
+    public static class ReportingPeriodJsonConverterTest
     {
         [Fact]
         public static void ReportingPeriodModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodConverter()
@@ -178,110 +178,110 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         private class ReportingPeriodModel
         {
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarDay> CalendarDay { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarMonth> CalendarMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarQuarter> CalendarQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarYear> CalendarYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<FiscalQuarter> FiscalQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<FiscalYear> FiscalYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<GenericMonth> GenericMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<GenericYear> GenericYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
         }
 
         private class IReportingPeriodModel
         {
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarDay> CalendarDay { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarMonth> CalendarMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarQuarter> CalendarQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarYear> CalendarYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<FiscalQuarter> FiscalQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<FiscalYear> FiscalYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<GenericMonth> GenericMonth { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<GenericYear> GenericYear { get; set; }
 
-            [JsonConverter(typeof(ReportingPeriodConverter))]
+            [JsonConverter(typeof(ReportingPeriodJsonConverter))]
             public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
 
         }

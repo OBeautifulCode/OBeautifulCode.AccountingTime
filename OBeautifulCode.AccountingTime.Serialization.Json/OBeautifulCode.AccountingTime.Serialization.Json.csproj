@@ -54,10 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportingPeriodConverter.cs" />
+    <Compile Include="ReportingPeriodJsonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitOfTimeConverter.cs" />
+    <Compile Include="UnitOfTimeJsonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />

@@ -17,24 +17,37 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     using MongoDB.Bson;
     using MongoDB.Driver;
 
+    using Naos.Serialization.Bson;
+
     using OBeautifulCode.AccountingTime.Serialization.Bson;
 
     using Xunit;
 
-    public static class AccountingTimeSerializerTest
+    public class AccountingTimeBsonConfigurationTest
     {
         private const string DatabaseName = "test";
 
         private static readonly IMongoDatabase Database = new MongoClient().GetDatabase(DatabaseName);
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = "This is calling a method.  No fields are initized in the constructor.")]
-        static AccountingTimeSerializerTest()
+        public AccountingTimeBsonConfigurationTest()
         {
-            AccountingTimeSerializer.Register();
+            BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>();
         }
 
         [Fact]
-        public static async Task UnitOfTimeModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
+        public static void Register___Should_not_throw___When_called_multiple_times()
+        {
+            // Arrange, Act
+            var ex1 = Record.Exception(() => BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
+            var ex2 = Record.Exception(() => BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
+
+            // Assert
+            ex1.Should().BeNull();
+            ex2.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task UnitOfTimeModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
         {
             // Arrange
             var collection = Database.GetCollection<UnitOfTimeModel>(nameof(UnitOfTimeModel));
@@ -65,7 +78,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static async Task UnitOfTimeModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
+        public async Task UnitOfTimeModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
         {
             // Arrange
             var collection = Database.GetCollection<UnitOfTimeModel>(nameof(UnitOfTimeModel));
@@ -96,7 +109,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModel_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_custom_UnitOfTime_serializers()
+        public void UnitOfTimeModel_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_custom_UnitOfTime_serializers()
         {
             // Arrange
             var model = A.Dummy<UnitOfTimeModel>();
@@ -127,7 +140,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static async Task ReportingPeriodModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
+        public async Task ReportingPeriodModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
         {
             // Arrange
             var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
@@ -182,7 +195,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static async Task ReportingPeriodModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
+        public async Task ReportingPeriodModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
         {
             // Arrange
             var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
@@ -237,7 +250,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void ReportingPeriodModel_without_nulls___Should_serialize_to_ReportingPeriodPersistenceModel_representation_of_ReportingPeriod___When_using_custom_serializers()
+        public void ReportingPeriodModel_without_nulls___Should_serialize_to_ReportingPeriodPersistenceModel_representation_of_ReportingPeriod___When_using_custom_serializers()
         {
             // Arrange
             var model1 = A.Dummy<ReportingPeriodModel>();
@@ -288,18 +301,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             // Assert
             actualJson1.Should().Contain(expectedJson1);
             actualJson2.Should().Contain(expectedJson2);
-        }
-
-        [Fact]
-        public static void Register___Should_not_throw___When_called_multiple_times()
-        {
-            // Arrange, Act
-            var ex1 = Record.Exception(() => AccountingTimeSerializer.Register());
-            var ex2 = Record.Exception(() => AccountingTimeSerializer.Register());
-
-            // Assert
-            ex1.Should().BeNull();
-            ex2.Should().BeNull();
         }
 
         private class UnitOfTimeModel

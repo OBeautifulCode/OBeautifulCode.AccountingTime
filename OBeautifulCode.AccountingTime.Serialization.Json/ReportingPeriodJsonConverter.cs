@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeConverter.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodJsonConverter.cs" company="OBeautifulCode">
 //    Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,10 +15,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using Spritely.Recipes;
 
     /// <summary>
-    /// Converts a <see cref="UnitOfTime"/> to and from JSON.
+    /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
     /// </summary>
     // ReSharper disable once InheritdocConsiderUsage
-    public class UnitOfTimeConverter : JsonConverter
+    public class ReportingPeriodJsonConverter : JsonConverter
     {
         /// <inheritdoc />
         public override void WriteJson(
@@ -26,12 +26,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object value,
             JsonSerializer serializer)
         {
-            var unitOfTime = value as UnitOfTime;
-            if (unitOfTime != null)
+            if (value is IReportingPeriod<UnitOfTime> reportingPeriod)
             {
                 new { writer }.Must().NotBeNull().OrThrow();
 
-                var stringToWrite = unitOfTime.SerializeToSortableString();
+                var stringToWrite = reportingPeriod.SerializeToString();
                 writer.WriteValue(stringToWrite);
             }
         }
@@ -45,10 +44,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         {
             new { reader }.Must().NotBeNull().OrThrow();
 
-            UnitOfTime result = null;
+            object result = null;
             if (reader.Value != null)
             {
-                result = reader.Value.ToString().DeserializeFromSortableString<UnitOfTime>();
+                result = reader.Value.ToString().DeserializeFromString(objectType);
             }
 
             return result;
@@ -58,8 +57,16 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         public override bool CanConvert(
             Type objectType)
         {
-            var result = typeof(UnitOfTime).IsAssignableFrom(objectType);
-            return result;
+            new { objectType }.Must().NotBeNull().OrThrow();
+
+            if (objectType.IsGenericType)
+            {
+                var genericType = objectType.MakeGenericType();
+                var result = genericType == typeof(IReportingPeriod<>);
+                return result;
+            }
+
+            return false;
         }
     }
 }

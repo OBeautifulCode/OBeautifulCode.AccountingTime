@@ -16,7 +16,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using Xunit;
 
-    public static class UnitOfTimeConverterTest
+    public static class UnitOfTimeJsonConverterTest
     {
         [Fact]
         public static void UnitOfTimeModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeConverter()
@@ -111,55 +111,55 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         private class UnitOfTimeModel
         {
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public UnitOfTime UnitOfTime { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarUnitOfTime CalendarUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarDay CalendarDay { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarMonth CalendarMonth { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarQuarter CalendarQuarter { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarYear CalendarYear { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public CalendarUnbounded CalendarUnbounded { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public FiscalUnitOfTime FiscalUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public FiscalMonth FiscalMonth { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public FiscalQuarter FiscalQuarter { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public FiscalYear FiscalYear { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public FiscalUnbounded FiscalUnbounded { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericUnitOfTime GenericUnitOfTime { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericMonth GenericMonth { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericQuarter GenericQuarter { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericYear GenericYear { get; set; }
 
-            [JsonConverter(typeof(UnitOfTimeConverter))]
+            [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericUnbounded GenericUnbounded { get; set; }
 
         }
