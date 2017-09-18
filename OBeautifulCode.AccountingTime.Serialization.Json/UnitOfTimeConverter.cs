@@ -12,6 +12,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
     using OBeautifulCode.AccountingTime;
 
+    using Spritely.Recipes;
+
     /// <summary>
     /// Converts a <see cref="UnitOfTime"/> to and from JSON.
     /// </summary>
@@ -19,19 +21,30 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     public class UnitOfTimeConverter : JsonConverter
     {
         /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(
+            JsonWriter writer,
+            object value,
+            JsonSerializer serializer)
         {
             var unitOfTime = value as UnitOfTime;
             if (unitOfTime != null)
             {
+                new { writer }.Must().NotBeNull().OrThrow();
+
                 var stringToWrite = unitOfTime.SerializeToSortableString();
                 writer.WriteValue(stringToWrite);
             }
         }
 
         /// <inheritdoc />
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object existingValue,
+            JsonSerializer serializer)
         {
+            new { reader }.Must().NotBeNull().OrThrow();
+
             UnitOfTime result = null;
             if (reader.Value != null)
             {
@@ -42,7 +55,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         }
 
         /// <inheritdoc />
-        public override bool CanConvert(Type objectType)
+        public override bool CanConvert(
+            Type objectType)
         {
             var result = typeof(UnitOfTime).IsAssignableFrom(objectType);
             return result;

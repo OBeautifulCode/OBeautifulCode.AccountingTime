@@ -12,6 +12,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.Serializers;
 
+    using Spritely.Recipes;
+
     using static System.FormattableString;
 
     /// <inheritdoc />
@@ -23,6 +25,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             BsonDeserializationContext context,
             BsonDeserializationArgs args)
         {
+            new { context }.Must().NotBeNull().OrThrow();
+
             var type = context.Reader.GetCurrentBsonType();
             switch (type)
             {
@@ -44,6 +48,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             BsonSerializationArgs args,
             TValue value)
         {
+            new { context }.Must().NotBeNull().OrThrow();
+
             if (value == null)
             {
                 context.Writer.WriteNull();

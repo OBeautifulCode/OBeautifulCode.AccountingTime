@@ -12,6 +12,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
     using OBeautifulCode.AccountingTime;
 
+    using Spritely.Recipes;
+
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
     /// </summary>
@@ -19,18 +21,29 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     public class ReportingPeriodConverter : JsonConverter
     {
         /// <inheritdoc />
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(
+            JsonWriter writer,
+            object value,
+            JsonSerializer serializer)
         {
             if (value is IReportingPeriod<UnitOfTime> reportingPeriod)
             {
+                new { writer }.Must().NotBeNull().OrThrow();
+
                 var stringToWrite = reportingPeriod.SerializeToString();
                 writer.WriteValue(stringToWrite);
             }
         }
 
         /// <inheritdoc />
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object existingValue,
+            JsonSerializer serializer)
         {
+            new { reader }.Must().NotBeNull().OrThrow();
+
             object result = null;
             if (reader.Value != null)
             {
@@ -41,8 +54,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         }
 
         /// <inheritdoc />
-        public override bool CanConvert(Type objectType)
+        public override bool CanConvert(
+            Type objectType)
         {
+            new { objectType }.Must().NotBeNull().OrThrow();
+
             if (objectType.IsGenericType)
             {
                 var genericType = objectType.MakeGenericType();
