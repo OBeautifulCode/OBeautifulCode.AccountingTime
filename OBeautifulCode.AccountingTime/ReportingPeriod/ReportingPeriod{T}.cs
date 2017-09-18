@@ -67,12 +67,10 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public T Start { get; private set; }
+        public T Start { get; }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public T End { get; private set; }
+        public T End { get; }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="ReportingPeriod{T}" /> are equal.

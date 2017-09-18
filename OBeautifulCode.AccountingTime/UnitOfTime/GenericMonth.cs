@@ -45,12 +45,10 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public int Year { get; private set; }
+        public int Year { get; }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public MonthNumber MonthNumber { get; private set; }
+        public MonthNumber MonthNumber { get; }
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Month;

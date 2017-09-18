@@ -45,14 +45,12 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public int Year { get; private set; }
+        public int Year { get; }
 
         /// <summary>
         /// Gets the month of the year.
         /// </summary>
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public MonthOfYear MonthOfYear { get; private set; }
+        public MonthOfYear MonthOfYear { get; }
 
         /// <inheritdoc />
         public MonthNumber MonthNumber => (MonthNumber)(int)this.MonthOfYear;

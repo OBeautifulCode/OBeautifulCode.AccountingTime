@@ -36,8 +36,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-        public int Year { get; private set; }
+        public int Year { get; }
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Year;
