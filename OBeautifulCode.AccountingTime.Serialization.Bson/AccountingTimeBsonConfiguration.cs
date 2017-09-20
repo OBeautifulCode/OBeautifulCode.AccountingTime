@@ -22,11 +22,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
         protected override void CustomConfiguration()
         {
             // register serializer for various flavors of UnitOfTime
-            var unitOfTimeType = typeof(UnitOfTime);
-            var unitOfTimeTypesToRegister =
-                unitOfTimeType.Assembly.GetTypes()
-                    .Where(type => (type == unitOfTimeType) || type.IsSubclassOf(unitOfTimeType))
-                    .ToList();
+            var unitOfTimeTypesToRegister = this.GetSubclassTypes(typeof(UnitOfTime), includeSpecifiedTypeInReturnList: true).ToList();
+
             unitOfTimeTypesToRegister.ForEach(
                 t =>
                 {
