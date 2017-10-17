@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using Math;
+    using OBeautifulCode.Math.Recipes;
 
     using static System.FormattableString;
 

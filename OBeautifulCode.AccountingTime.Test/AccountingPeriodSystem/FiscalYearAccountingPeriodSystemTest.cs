@@ -14,10 +14,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
-    using Newtonsoft.Json;
-
-    using Spritely.Recipes;
-
     using Xunit;
 
     public static class FiscalYearAccountingPeriodSystemTest
@@ -148,22 +144,6 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod9LeapYear.Should().Be(expectedReportingPeriod9LeapYear);
             actualReportingPeriod10LeapYear.Should().Be(expectedReportingPeriod10LeapYear);
             actualReportingPeriod11LeapYear.Should().Be(expectedReportingPeriod11LeapYear);
-        }
-
-        [Fact]
-        public static void Deserialize___Should_return_equivalent_object_of_type_FiscalYearAccountingPeriodSystem___When_an_object_of_that_type_is_serialized_to_json_and_deserialized_as_AccountingPeriodSystem()
-        {
-            // Arrange
-            var settings = JsonConfiguration.DefaultSerializerSettings;
-            var expectedAccountingPeriodSystem = new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December));
-            var serializedJson = JsonConvert.SerializeObject(expectedAccountingPeriodSystem, settings);
-
-            // Act
-            var systemUnderTest = JsonConvert.DeserializeObject<AccountingPeriodSystem>(serializedJson, settings) as FiscalYearAccountingPeriodSystem;
-
-            // Assert
-            systemUnderTest.Should().NotBeNull();
-            systemUnderTest.LastMonthInFiscalYear.Should().Be(expectedAccountingPeriodSystem.LastMonthInFiscalYear);
         }
     }
 }

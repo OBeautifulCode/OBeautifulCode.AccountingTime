@@ -12,10 +12,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
-    using Newtonsoft.Json;
-
-    using Spritely.Recipes;
-
     using Xunit;
 
     public static class FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest
@@ -182,24 +178,6 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod11.Should().Be(expectedReportingPeriod11);
             actualReportingPeriod12.Should().Be(expectedReportingPeriod12);
             actualReportingPeriod13.Should().Be(expectedReportingPeriod13);
-        }
-
-        [Fact]
-        public static void Deserialize___Should_return_equivalent_object_of_type_FiftyTwoFiftyThreeWeekAccountingPeriodSystem___When_an_object_of_that_type_is_serialized_to_json_and_deserialized_as_AccountingPeriodSystem()
-        {
-            // Arrange
-            var settings = JsonConfiguration.DefaultSerializerSettings;
-            var expectedAccountingPeriodSystem = A.Dummy<FiftyTwoFiftyThreeWeekAccountingPeriodSystem>();
-            var serializedJson = JsonConvert.SerializeObject(expectedAccountingPeriodSystem, settings);
-
-            // Act
-            var systemUnderTest = JsonConvert.DeserializeObject<AccountingPeriodSystem>(serializedJson, settings) as FiftyTwoFiftyThreeWeekAccountingPeriodSystem;
-
-            // Assert
-            systemUnderTest.Should().NotBeNull();
-            systemUnderTest.AnchorMonth.Should().Be(expectedAccountingPeriodSystem.AnchorMonth);
-            systemUnderTest.FiftyTwoFiftyThreeWeekMethodology.Should().Be(expectedAccountingPeriodSystem.FiftyTwoFiftyThreeWeekMethodology);
-            systemUnderTest.LastDayOfWeekInAccountingYear.Should().Be(expectedAccountingPeriodSystem.LastDayOfWeekInAccountingYear);
-        }
+        }        
     }
 }
