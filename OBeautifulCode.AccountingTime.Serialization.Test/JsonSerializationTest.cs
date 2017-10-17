@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.Test
+namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using FakeItEasy;
 
