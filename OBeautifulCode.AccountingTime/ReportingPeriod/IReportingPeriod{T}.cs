@@ -8,10 +8,13 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
+    using Naos.Serialization.Domain.Extensions;
+
     /// <summary>
     /// Represents a range of time over which to report, inclusive of the endpoints.
     /// </summary>
     /// <typeparam name="T">The unit-of-time used to define the start and end of the reporting period.</typeparam>
+    [NaosStringSerializer(typeof(ReportingPeriodStringSerializer))]
     public interface IReportingPeriod<out T>
         where T : UnitOfTime
     {

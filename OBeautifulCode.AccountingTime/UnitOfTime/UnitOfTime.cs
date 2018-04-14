@@ -9,12 +9,15 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.ComponentModel;
 
+    using Naos.Serialization.Domain.Extensions;
+
     /// <summary>
     /// Represents a unit of time, such as a month, quarter, or year.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
+    [NaosStringSerializer(typeof(UnitOfTimeStringSerializer))]
     // ReSharper disable once InheritdocConsiderUsage
     public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
     {

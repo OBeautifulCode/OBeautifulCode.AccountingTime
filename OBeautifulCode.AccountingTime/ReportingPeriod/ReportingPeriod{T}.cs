@@ -9,6 +9,8 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.ComponentModel;
 
+    using Naos.Serialization.Domain.Extensions;
+
     using OBeautifulCode.Math.Recipes;
 
     using static System.FormattableString;
@@ -16,6 +18,7 @@ namespace OBeautifulCode.AccountingTime
     /// <inheritdoc cref="IReportingPeriod{T}" />
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
+    [NaosStringSerializer(typeof(ReportingPeriodStringSerializer))]
     public class ReportingPeriod<T> : IReportingPeriod<T>, IEquatable<ReportingPeriod<T>>, IEquatable<IReportingPeriod<UnitOfTime>>
         where T : UnitOfTime
     {
