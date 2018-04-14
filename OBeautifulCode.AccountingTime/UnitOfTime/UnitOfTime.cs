@@ -213,5 +213,26 @@ namespace OBeautifulCode.AccountingTime
         /// A friendly representation of this unit-of-time.
         /// </returns>
         public abstract override string ToString();
+
+        /// <summary>
+        /// Checks to see if the type provided is a <see cref="UnitOfTime" />.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not it's a valid type.</returns>
+        public static bool IsUnitOfTimeType(Type type)
+        {
+            var iteratingType = type;
+            while (iteratingType != null)
+            {
+                if (iteratingType == typeof(UnitOfTime))
+                {
+                    return true;
+                }
+
+                iteratingType = iteratingType.BaseType;
+            }
+
+            return false;
+        }
     }
 }

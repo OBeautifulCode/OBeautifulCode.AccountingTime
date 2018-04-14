@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Naos.Serialization.Domain;
@@ -46,12 +47,35 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public object Deserialize(string serializedString, Type type)
         {
-            if (!(type?.GetInterfaces().Contains(typeof(IReportingPeriod<UnitOfTime>)) ?? false))
+            if (!IsReportingPeriod(type))
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(IReportingPeriod<UnitOfTime>)}"));
             }
 
             return serializedString.DeserializeFromString(type);
+        }
+
+        private static bool IsReportingPeriod(Type type)
+        {
+            var queue = new Queue<Type>(new[] { type });
+            while (queue.Any())
+            {
+                var item = queue.Dequeue();
+                if (item == null)
+                {
+                    continue;
+                }
+
+                if (item.IsGenericType && item.GetGenericTypeDefinition() == typeof(IReportingPeriod<>))
+                {
+                    return true;
+                }
+
+                item.GetInterfaces().ToList().ForEach(_ => queue.Enqueue(_));
+                queue.Enqueue(item.BaseType);
+            }
+
+            return false;
         }
     }
 }

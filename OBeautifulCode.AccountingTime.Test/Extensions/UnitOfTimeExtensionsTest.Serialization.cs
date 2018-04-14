@@ -63,7 +63,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 { "g-unbounded", Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) }
             };
 
-            var deserializeFromSortableString = typeof(UnitOfTimeExtensions).GetMethod(nameof(UnitOfTimeExtensions.DeserializeFromSortableString));
+            var deserializeFromSortableString = typeof(UnitOfTimeExtensions).GetMethods()
+                .Single(_ => _.Name == nameof(UnitOfTimeExtensions.DeserializeFromSortableString) && _.IsGenericMethod);
 
             // Act
             var exceptions = new List<Exception>();

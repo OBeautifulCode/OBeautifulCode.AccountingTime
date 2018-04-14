@@ -7,7 +7,6 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-    using System.Linq;
 
     using Naos.Serialization.Domain;
 
@@ -46,12 +45,12 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public object Deserialize(string serializedString, Type type)
         {
-            if (!(type?.GetInterfaces().Contains(typeof(UnitOfTime)) ?? false))
+            if (!UnitOfTime.IsUnitOfTimeType(type))
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
             }
 
-            return serializedString.DeserializeFromString(type);
+            return serializedString.DeserializeFromSortableString(type);
         }
     }
 }
