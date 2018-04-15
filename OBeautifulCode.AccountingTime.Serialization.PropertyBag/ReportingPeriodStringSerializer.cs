@@ -1,10 +1,10 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportingPeriodComponent.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodStringSerializer.cs" company="OBeautifulCode">
 //    Copyright (c) OBeautifulCode 2017. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime
+namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
     using System;
     using System.Collections.Generic;

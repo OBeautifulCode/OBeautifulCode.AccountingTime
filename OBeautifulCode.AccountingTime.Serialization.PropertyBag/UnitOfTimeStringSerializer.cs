@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime
+namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
     using System;
 

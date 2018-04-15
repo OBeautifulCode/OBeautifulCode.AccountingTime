@@ -12,15 +12,17 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using FluentAssertions;
 
+    using Naos.Serialization.Domain;
     using Naos.Serialization.PropertyBag;
 
-    using Newtonsoft.Json;
-
+    using OBeautifulCode.AccountingTime.Serialization.PropertyBag;
 
     using Xunit;
 
     public static class UnitOfTimeStringSerializerTest
     {
+        private static readonly NaosPropertyBagSerializer PropertyBagSerializer = new NaosPropertyBagSerializer(SerializationKind.Default, typeof(AccountingTimePropertyBagConfiguration));
+
         [Fact]
         public static void UnitOfTimeModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeConverter()
         {
@@ -28,8 +30,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var expectedModel = A.Dummy<UnitOfTimeModel>();
 
             // Act
-            var json = new NaosPropertyBagSerializer().SerializeToString(expectedModel);
-            var actualModel = new NaosPropertyBagSerializer().Deserialize<UnitOfTimeModel>(json);
+            var json = PropertyBagSerializer.SerializeToString(expectedModel);
+            var actualModel = PropertyBagSerializer.Deserialize<UnitOfTimeModel>(json);
 
             // Assert
             actualModel.UnitOfTime.Should().Be(expectedModel.UnitOfTime);
@@ -58,8 +60,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var expectedModel = new UnitOfTimeModel();
 
             // Act
-            var json = new NaosPropertyBagSerializer().SerializeToString(expectedModel);
-            var actualModel = new NaosPropertyBagSerializer().Deserialize<UnitOfTimeModel>(json);
+            var json = PropertyBagSerializer.SerializeToString(expectedModel);
+            var actualModel = PropertyBagSerializer.Deserialize<UnitOfTimeModel>(json);
 
             // Assert
             actualModel.UnitOfTime.Should().BeNull();
@@ -106,7 +108,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
                 nameof(model.GenericUnbounded) + "=" + model.GenericUnbounded.SerializeToSortableString() + Environment.NewLine;
 
             // Act
-            var actualJson = new NaosPropertyBagSerializer().SerializeToString(model);
+            var actualJson = PropertyBagSerializer.SerializeToString(model);
 
             // Assert
             actualJson.Should().Contain(expectedJson);

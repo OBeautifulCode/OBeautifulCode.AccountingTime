@@ -12,12 +12,17 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using FluentAssertions;
 
+    using Naos.Serialization.Domain;
     using Naos.Serialization.PropertyBag;
+
+    using OBeautifulCode.AccountingTime.Serialization.PropertyBag;
 
     using Xunit;
 
     public static class ReportingPeriodStringSerializerTest
     {
+        private static readonly NaosPropertyBagSerializer PropertyBagSerializer = new NaosPropertyBagSerializer(SerializationKind.Default, typeof(AccountingTimePropertyBagConfiguration));
+
         [Fact]
         public static void ReportingPeriodModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodConverter()
         {
@@ -26,11 +31,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var expectedModel2 = A.Dummy<IReportingPeriodModel>();
 
             // Act
-            var json1 = new NaosPropertyBagSerializer().SerializeToString(expectedModel1);
-            var json2 = new NaosPropertyBagSerializer().SerializeToString(expectedModel2);
+            var json1 = PropertyBagSerializer.SerializeToString(expectedModel1);
+            var json2 = PropertyBagSerializer.SerializeToString(expectedModel2);
 
-            var actualModel1 = new NaosPropertyBagSerializer().Deserialize<ReportingPeriodModel>(json1);
-            var actualModel2 = new NaosPropertyBagSerializer().Deserialize<IReportingPeriodModel>(json2);
+            var actualModel1 = PropertyBagSerializer.Deserialize<ReportingPeriodModel>(json1);
+            var actualModel2 = PropertyBagSerializer.Deserialize<IReportingPeriodModel>(json2);
 
             // Assert
             actualModel1.UnitOfTime.Should().Be(expectedModel1.UnitOfTime);
@@ -78,11 +83,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var expectedModel2 = new IReportingPeriodModel();
 
             // Act
-            var json1 = new NaosPropertyBagSerializer().SerializeToString(expectedModel1);
-            var json2 = new NaosPropertyBagSerializer().SerializeToString(expectedModel2);
+            var json1 = PropertyBagSerializer.SerializeToString(expectedModel1);
+            var json2 = PropertyBagSerializer.SerializeToString(expectedModel2);
 
-            var actualModel1 = new NaosPropertyBagSerializer().Deserialize<ReportingPeriodModel>(json1);
-            var actualModel2 = new NaosPropertyBagSerializer().Deserialize<IReportingPeriodModel>(json2);
+            var actualModel1 = PropertyBagSerializer.Deserialize<ReportingPeriodModel>(json1);
+            var actualModel2 = PropertyBagSerializer.Deserialize<IReportingPeriodModel>(json2);
 
             // Assert
             actualModel1.UnitOfTime.Should().BeNull();
@@ -168,8 +173,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
                 nameof(model2.GenericUnbounded) + "=" + model2.GenericUnbounded.SerializeToString() + Environment.NewLine;
 
             // Act
-            var actualJson1 = new NaosPropertyBagSerializer().SerializeToString(model1);
-            var actualJson2 = new NaosPropertyBagSerializer().SerializeToString(model2);
+            var actualJson1 = PropertyBagSerializer.SerializeToString(model1);
+            var actualJson2 = PropertyBagSerializer.SerializeToString(model2);
 
             // Assert
             actualJson1.Should().Contain(expectedJson1);
