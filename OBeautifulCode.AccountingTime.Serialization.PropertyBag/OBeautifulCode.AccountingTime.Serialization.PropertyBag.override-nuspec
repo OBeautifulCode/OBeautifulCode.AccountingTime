@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.AccountingTime</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Serialization.PropertyBag/nuget-icon.png</iconUrl>
+    <description>Naos PropertyBag converters for AccountingTime types.</description>
+    <tags>accounting time</tags>
+  </metadata>
+</package>
