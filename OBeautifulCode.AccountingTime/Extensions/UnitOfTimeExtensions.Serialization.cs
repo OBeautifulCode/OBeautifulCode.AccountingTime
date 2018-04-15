@@ -72,11 +72,18 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid unit-of-time.</exception>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Keeping previous layout, is easy to read.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Keeping previous layout, is easy to read.")]
         public static UnitOfTime DeserializeFromSortableString(this string unitOfTime, Type type)
         {
             if (!UnitOfTime.IsUnitOfTimeType(type))
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
             }
 
             if (unitOfTime == null)
