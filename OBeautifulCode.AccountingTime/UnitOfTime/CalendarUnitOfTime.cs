@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CalendarUnitOfTime.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a unit of time tied to the (gregorian) calendar.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public abstract class CalendarUnitOfTime : UnitOfTime
     {
         /// <inheritdoc />

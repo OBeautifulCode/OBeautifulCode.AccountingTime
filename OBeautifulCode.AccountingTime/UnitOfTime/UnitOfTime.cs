@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTime.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -15,7 +15,6 @@ namespace OBeautifulCode.AccountingTime
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     [Serializable]
     [Bindable(true, BindingDirection.TwoWay)]
-    // ReSharper disable once InheritdocConsiderUsage
     public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
     {
         /// <summary>
@@ -133,6 +132,27 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTime right)
             => (left == right) || (left > right);
 
+        /// <summary>
+        /// Checks to see if the type provided is a <see cref="UnitOfTime" />.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not it's a valid type.</returns>
+        public static bool IsUnitOfTimeType(Type type)
+        {
+            var iteratingType = type;
+            while (iteratingType != null)
+            {
+                if (iteratingType == typeof(UnitOfTime))
+                {
+                    return true;
+                }
+
+                iteratingType = iteratingType.BaseType;
+            }
+
+            return false;
+        }
+
         /// <inheritdoc />
         public bool Equals(
             UnitOfTime other)
@@ -143,7 +163,7 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="obj">The value to compare this one with.</param>
         /// <returns>
-        /// true if the other object is a unit-of-time of the same concrete type and equal to this one; false otherwise, consistent with <see cref="Equals(UnitOfTime)"/>
+        /// true if the other object is a unit-of-time of the same concrete type and equal to this one; false otherwise, consistent with <see cref="Equals(UnitOfTime)"/>.
         /// </returns>
         public abstract override bool Equals(
             object obj);
@@ -210,26 +230,5 @@ namespace OBeautifulCode.AccountingTime
         /// A friendly representation of this unit-of-time.
         /// </returns>
         public abstract override string ToString();
-
-        /// <summary>
-        /// Checks to see if the type provided is a <see cref="UnitOfTime" />.
-        /// </summary>
-        /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not it's a valid type.</returns>
-        public static bool IsUnitOfTimeType(Type type)
-        {
-            var iteratingType = type;
-            while (iteratingType != null)
-            {
-                if (iteratingType == typeof(UnitOfTime))
-                {
-                    return true;
-                }
-
-                iteratingType = iteratingType.BaseType;
-            }
-
-            return false;
-        }
     }
 }

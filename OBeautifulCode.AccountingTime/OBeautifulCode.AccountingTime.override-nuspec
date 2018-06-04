@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.AccountingTime</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime/nuget-icon.png</iconUrl>
     <description>Specifies types to help with dates and times in an accounting/finance context.</description>
     <tags>accounting time</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime/nuget-icon.png</iconUrl>
   </metadata>
 </package>

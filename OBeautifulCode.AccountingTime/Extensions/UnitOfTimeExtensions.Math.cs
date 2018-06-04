@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeExtensions.Math.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="unitOfTime">The unit-of-time to add to.</param>
         /// <param name="unitsToAdd">The number of units to add (use negative numbers to subtract units).</param>
-        /// <param name="granularityOfUnitsToAdd">The granularity of the units to add.  Must be as or less granular than the <paramref name="unitOfTime"/> (e.g. can add CalendarYear to a CalendarQuarter, but not vice-versa)</param>
+        /// <param name="granularityOfUnitsToAdd">The granularity of the units to add.  Must be as or less granular than the <paramref name="unitOfTime"/> (e.g. can add CalendarYear to a CalendarQuarter, but not vice-versa).</param>
         /// <returns>
         /// The result of adding the specified number of units of the specified granularity to a unit-of-time.
         /// </returns>

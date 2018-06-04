@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportingPeriodConverterTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+// <copyright file="ReportingPeriodStringSerializerTest.cs" company="OBeautifulCode">
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -216,7 +216,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             public ReportingPeriod<GenericYear> GenericYear { get; set; }
 
             public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
-
         }
 
         private class IReportingPeriodModel
@@ -254,7 +253,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             public IReportingPeriod<GenericYear> GenericYear { get; set; }
 
             public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
-
         }
     }
 }

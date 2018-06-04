@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="QuarterNumber.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -40,6 +40,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Fourth quarter.
         /// </summary>
-        Q4 = 4
+        Q4 = 4,
     }
 }

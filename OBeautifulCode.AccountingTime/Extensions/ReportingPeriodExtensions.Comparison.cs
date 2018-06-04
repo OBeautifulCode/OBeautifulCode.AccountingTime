@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensions.Comparison.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -183,7 +183,7 @@ namespace OBeautifulCode.AccountingTime
         /// to the first reporting period's Start should make it equal to the second reporting period's End)
         /// For example, 3Q2017-4Q2017 is greater than and adjacent to 1Q2017-2Q2017.
         /// For example, 3Q2017-4Q2017 is NOT greater than 1Q2017-3Q2017, because they overlap.
-        /// For example, 4Q2017-4Q2017 is NOT adjacent to 1Q2017-2Q2017, because there's a gap of 3Q2017
+        /// For example, 4Q2017-4Q2017 is NOT adjacent to 1Q2017-2Q2017, because there's a gap of 3Q2017.
         /// </remarks>
         /// <param name="reportingPeriod1">A reporting period to check if greater than and adjacent to a second reportin period.</param>
         /// <param name="reportingPeriod2">The second reporting period.</param>

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ namespace OBeautifulCode.AccountingTime
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>

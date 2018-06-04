@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DayOfMonth.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -175,6 +175,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Day 31.
         /// </summary>
-        ThirtyOne = 31
+        ThirtyOne = 31,
     }
 }

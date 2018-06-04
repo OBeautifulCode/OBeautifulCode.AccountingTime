@@ -4,15 +4,14 @@
     <id>OBeautifulCode.AccountingTime.Recipes.DummyFactory</id>
     <description>A dummy factory for AccountingTime types.</description>
     <tags>accounting time fakeiteasy autofixture dummy factory</tags>
-    <projectUrl>https://github.com/OBeautifulCode/OBeautifulCode.AccountingTime</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="1.0.91" />
-        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.96" />
-        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.54" />
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.101" />
+        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.107" />
+        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.62" />
     </dependencies>
   </metadata>
   <files>
-    <file src=".recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" target="content\net461\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
+    <file src=".recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
   </files>
 </package>

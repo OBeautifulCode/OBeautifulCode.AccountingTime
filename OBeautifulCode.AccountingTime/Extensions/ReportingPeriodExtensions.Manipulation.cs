@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensions.Manipulation.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -31,8 +31,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the reporting period component.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
-        /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod{T}.Start"/> to be greater than <see cref="ReportingPeriod{T}.End"/></exception>
-        /// <exception cref="InvalidOperationException">The adjusted reporting period cannot be converted into a <typeparamref name="TReportingPeriod"/></exception>
+        /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod{T}.Start"/> to be greater than <see cref="ReportingPeriod{T}.End"/>.</exception>
+        /// <exception cref="InvalidOperationException">The adjusted reporting period cannot be converted into a <typeparamref name="TReportingPeriod"/>.</exception>
         public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(
             this IReportingPeriod<UnitOfTime> reportingPeriod,
             ReportingPeriodComponent component,
@@ -231,7 +231,7 @@ namespace OBeautifulCode.AccountingTime
         /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
         /// but is the least granular version possible of that reporting period.
         /// Any reporting period with one unbounded and one bounded component will be returned
-        /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017)
+        /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static IReportingPeriod<UnitOfTime> ToLeastGranular(
@@ -491,7 +491,7 @@ namespace OBeautifulCode.AccountingTime
                     { 1, QuarterNumber.Q1 },
                     { 4, QuarterNumber.Q2 },
                     { 7, QuarterNumber.Q3 },
-                    { 10, QuarterNumber.Q4 }
+                    { 10, QuarterNumber.Q4 },
                 };
 
                 var quarterByEndMonth = new Dictionary<int, QuarterNumber>
@@ -499,7 +499,7 @@ namespace OBeautifulCode.AccountingTime
                     { 3, QuarterNumber.Q1 },
                     { 6, QuarterNumber.Q2 },
                     { 9, QuarterNumber.Q3 },
-                    { 12, QuarterNumber.Q4 }
+                    { 12, QuarterNumber.Q4 },
                 };
 
                 // ReSharper disable once PossibleNullReferenceException

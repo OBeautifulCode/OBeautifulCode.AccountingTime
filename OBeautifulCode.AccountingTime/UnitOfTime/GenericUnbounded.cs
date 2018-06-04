@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GenericUnbounded.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents an unbounded generic unit-of-time.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class GenericUnbounded : GenericUnitOfTime, IAmAConcreteUnitOfTime, IAmUnboundedTime, IEquatable<GenericUnbounded>, IComparable<GenericUnbounded>
     {
         /// <inheritdoc />

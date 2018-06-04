@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensionsTest.Properties.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,13 +10,13 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
 
     using Naos.Recipes.TupleInitializers;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -74,7 +74,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<IReportingPeriod<GenericMonth>>(), UnitOfTimeGranularity.Month },
                 { A.Dummy<IReportingPeriod<GenericQuarter>>(), UnitOfTimeGranularity.Quarter },
                 { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<GenericUnbounded>>(), UnitOfTimeGranularity.Unbounded }
+                { A.Dummy<IReportingPeriod<GenericUnbounded>>(), UnitOfTimeGranularity.Unbounded },
             };
 
             // Act

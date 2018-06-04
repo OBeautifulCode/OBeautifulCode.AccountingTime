@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiscalYear.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a fiscal year.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class FiscalYear : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<FiscalYear>, IComparable<FiscalYear>
     {
         /// <summary>

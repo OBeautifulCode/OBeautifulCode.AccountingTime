@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeGranularityExtensions.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -89,7 +89,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the specified granularity is the most granular one available, false otherwise.
         /// </returns>
-        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         public static bool IsMostGranular(
             this UnitOfTimeGranularity granularity)
         {
@@ -109,7 +109,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// true if the specified granularity is the least granular one available, false otherwise.
         /// </returns>
-        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         public static bool IsLeastGranular(
             this UnitOfTimeGranularity granularity)
         {
@@ -129,8 +129,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// The granularity that is one notch more granular than the specified granuliarty.
         /// </returns>
-        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
-        /// <exception cref="ArgumentException">No granularity is more granular than <paramref name="granularity"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException">No granularity is more granular than <paramref name="granularity"/>.</exception>
         public static UnitOfTimeGranularity OneNotchMoreGranular(
             this UnitOfTimeGranularity granularity)
         {
@@ -166,8 +166,8 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// The granularity that is one notch less granular than the specified granuliarty.
         /// </returns>
-        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/></exception>
-        /// <exception cref="ArgumentException">No granularity is less granular than <paramref name="granularity"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException">No granularity is less granular than <paramref name="granularity"/>.</exception>
         public static UnitOfTimeGranularity OneNotchLessGranular(
             this UnitOfTimeGranularity granularity)
         {

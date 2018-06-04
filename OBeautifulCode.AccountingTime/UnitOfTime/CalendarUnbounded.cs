@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CalendarUnbounded.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents an unbounded calendar unit-of-time.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class CalendarUnbounded : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmUnboundedTime, IEquatable<CalendarUnbounded>, IComparable<CalendarUnbounded>
     {
         /// <inheritdoc />

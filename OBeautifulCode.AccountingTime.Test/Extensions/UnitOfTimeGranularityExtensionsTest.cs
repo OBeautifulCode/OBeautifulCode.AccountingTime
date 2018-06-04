@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeGranularityExtensionsTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } },
             };
 
             // Act
@@ -83,7 +83,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Day } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
             };
 
             // Act
@@ -138,7 +138,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new UnitOfTimeGranularity[] { } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new UnitOfTimeGranularity[] { } },
             };
 
             // Act
@@ -165,7 +165,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
             };
 
             // Act
@@ -220,7 +220,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
             };
 
             // Act
@@ -247,7 +247,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new UnitOfTimeGranularity[] { } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new UnitOfTimeGranularity[] { } },
             };
 
             // Act
@@ -302,7 +302,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Day } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
             };
 
             // Act
@@ -329,7 +329,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity1 = UnitOfTimeGranularity.Month, Granularity2 = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Quarter, Granularity2 = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
                 new { Granularity1 = UnitOfTimeGranularity.Year, Granularity2 = new[] { UnitOfTimeGranularity.Year, UnitOfTimeGranularity.Unbounded } },
-                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } }
+                new { Granularity1 = UnitOfTimeGranularity.Unbounded, Granularity2 = new[] { UnitOfTimeGranularity.Unbounded } },
             };
 
             // Act
@@ -459,7 +459,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity = UnitOfTimeGranularity.Month, OneNotchMoreGranular = UnitOfTimeGranularity.Day },
                 new { Granularity = UnitOfTimeGranularity.Quarter, OneNotchMoreGranular = UnitOfTimeGranularity.Month },
                 new { Granularity = UnitOfTimeGranularity.Year, OneNotchMoreGranular = UnitOfTimeGranularity.Quarter },
-                new { Granularity = UnitOfTimeGranularity.Unbounded, OneNotchMoreGranular = UnitOfTimeGranularity.Year }
+                new { Granularity = UnitOfTimeGranularity.Unbounded, OneNotchMoreGranular = UnitOfTimeGranularity.Year },
             };
 
             // Act
@@ -504,7 +504,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Granularity = UnitOfTimeGranularity.Day, OneNotchLessGranular = UnitOfTimeGranularity.Month },
                 new { Granularity = UnitOfTimeGranularity.Month, OneNotchLessGranular = UnitOfTimeGranularity.Quarter },
                 new { Granularity = UnitOfTimeGranularity.Quarter, OneNotchLessGranular = UnitOfTimeGranularity.Year },
-                new { Granularity = UnitOfTimeGranularity.Year, OneNotchLessGranular = UnitOfTimeGranularity.Unbounded }
+                new { Granularity = UnitOfTimeGranularity.Year, OneNotchLessGranular = UnitOfTimeGranularity.Unbounded },
             };
 
             // Act

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,11 +10,11 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -815,7 +815,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<GenericQuarter>(), new[] { typeof(GenericQuarter), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericMonth>(), new[] { typeof(GenericMonth), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
                 { A.Dummy<GenericYear>(), new[] { typeof(GenericYear), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
-                { A.Dummy<GenericUnbounded>(), new[] { typeof(GenericUnbounded), typeof(GenericUnitOfTime), typeof(UnitOfTime) } }
+                { A.Dummy<GenericUnbounded>(), new[] { typeof(GenericUnbounded), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
             };
 
             var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
@@ -887,8 +887,5 @@ namespace OBeautifulCode.AccountingTime.Test
             calendarMonthHashCode.Should().NotBe(genericMonthHashCode);
             fiscalMonthHashCode.Should().NotBe(genericMonthHashCode);
         }
-
     }
 }
-
-

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeExtensionsTest.Math.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,11 +10,11 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -854,7 +854,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { UnitOfTime = (UnitOfTime)A.Dummy<FiscalYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
                 new { UnitOfTime = (UnitOfTime)A.Dummy<GenericMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
                 new { UnitOfTime = (UnitOfTime)A.Dummy<GenericQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { UnitOfTime = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } }
+                new { UnitOfTime = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
             };
 
             // Act
@@ -916,7 +916,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { Expected = (UnitOfTime)A.Dummy<FiscalYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } },
                 new { Expected = (UnitOfTime)A.Dummy<GenericMonth>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
                 new { Expected = (UnitOfTime)A.Dummy<GenericQuarter>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Year } },
-                new { Expected = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } }
+                new { Expected = (UnitOfTime)A.Dummy<GenericYear>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Year } },
             };
 
             // Act, Assert

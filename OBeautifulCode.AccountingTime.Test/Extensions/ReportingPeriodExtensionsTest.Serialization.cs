@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensionsTest.Serialization.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -80,7 +80,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericUnbounded>) },
-                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) }
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) },
             };
 
             var reportingPeriods = new[]
@@ -103,7 +103,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "f-2017-Q3,f-unbounded",
                 "g-unbounded,g-unbounded",
                 "g-unbounded,g-2018",
-                "g-2017-Q3,g-unbounded"
+                "g-2017-Q3,g-unbounded",
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethods().Single(_ => _.Name == nameof(ReportingPeriodExtensions.DeserializeFromString) && _.ContainsGenericParameters);
@@ -158,7 +158,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriod = "f-unbounded,f-unbounded", ReportingPeriodType = typeof(ReportingPeriod<FiscalYear>) },
                 new { ReportingPeriod = "g-unbounded,g-2017-10", ReportingPeriodType = typeof(ReportingPeriod<GenericMonth>) },
                 new { ReportingPeriod = "g-2017-10,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "g-unbounded,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) }
+                new { ReportingPeriod = "g-unbounded,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
             };
 
             var deserializeFromString = typeof(ReportingPeriodExtensions).GetMethods().Single(_ => _.Name == nameof(ReportingPeriodExtensions.DeserializeFromString) && _.ContainsGenericParameters);
@@ -188,7 +188,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-03,,",
                 ",c-2017-03,",
                 "c-2017-03,c-2017-04,",
-                "c-2017-03,c-2017-04,c-2017-04"
+                "c-2017-03,c-2017-04,c-2017-04",
             };
 
             // Act
@@ -218,7 +218,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2007-99,c-2017-10",
                 "c-2007-00,c-2017-10",
                 "c-2007-001,c-2017-10",
-                "c-2007-012,c-2017-10"
+                "c-2007-012,c-2017-10",
             };
 
             // Act
@@ -248,7 +248,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-04,c-2007-99",
                 "c-2017-04,c-2007-00",
                 "c-2017-04,c-2007-001",
-                "c-2017-04,c-2007-012"
+                "c-2017-04,c-2007-012",
             };
 
             // Act
@@ -266,13 +266,13 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 "c-2017-04,c-2017-04-11",
                 "f-2017-Q4,g-2018-Q1",
-                "c-2017,f-2018-05"
+                "c-2017,f-2018-05",
             };
 
             var unitsOfTime2 = new[]
             {
                 "c-2017-04,c-2017-04-11",
-                "c-2017,c-2018-05"
+                "c-2017,c-2018-05",
             };
 
             // Act
@@ -293,7 +293,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-04,c-2016-04",
                 "c-2017-Q3,c-2017-Q2",
                 "c-2017-03-04,c-2017-03-01",
-                "f-2017,f-2016"
+                "f-2017,f-2016",
             };
 
             // Act
@@ -312,7 +312,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "g-unbounded,c-2016-04",
                 "c-2017-Q3,g-unbounded",
                 "c-unbounded,g-unbounded",
-                "f-unbounded,c-unbounded"
+                "f-unbounded,c-unbounded",
             };
 
             // Act
@@ -827,7 +827,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericUnbounded>) },
-                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) }
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) },
             };
 
             var reportingPeriods = new[]
@@ -850,7 +850,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "f-2017-Q3,f-unbounded",
                 "g-unbounded,g-unbounded",
                 "g-unbounded,g-2018",
-                "g-2017-Q3,g-unbounded"
+                "g-2017-Q3,g-unbounded",
             };
 
             // Act
@@ -902,7 +902,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriod = "f-unbounded,f-unbounded", ReportingPeriodType = typeof(ReportingPeriod<FiscalYear>) },
                 new { ReportingPeriod = "g-unbounded,g-2017-10", ReportingPeriodType = typeof(ReportingPeriod<GenericMonth>) },
                 new { ReportingPeriod = "g-2017-10,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<GenericQuarter>) },
-                new { ReportingPeriod = "g-unbounded,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) }
+                new { ReportingPeriod = "g-unbounded,g-unbounded", ReportingPeriodType = typeof(ReportingPeriod<CalendarUnitOfTime>) },
             };
 
             // Act
@@ -929,7 +929,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-03,,",
                 ",c-2017-03,",
                 "c-2017-03,c-2017-04,",
-                "c-2017-03,c-2017-04,c-2017-04"
+                "c-2017-03,c-2017-04,c-2017-04",
             };
 
             // Act
@@ -959,7 +959,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2007-99,c-2017-10",
                 "c-2007-00,c-2017-10",
                 "c-2007-001,c-2017-10",
-                "c-2007-012,c-2017-10"
+                "c-2007-012,c-2017-10",
             };
 
             // Act
@@ -989,7 +989,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-04,c-2007-99",
                 "c-2017-04,c-2007-00",
                 "c-2017-04,c-2007-001",
-                "c-2017-04,c-2007-012"
+                "c-2017-04,c-2007-012",
             };
 
             // Act
@@ -1007,13 +1007,13 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 "c-2017-04,c-2017-04-11",
                 "f-2017-Q4,g-2018-Q1",
-                "c-2017,f-2018-05"
+                "c-2017,f-2018-05",
             };
 
             var unitsOfTime2 = new[]
             {
                 "c-2017-04,c-2017-04-11",
-                "c-2017,c-2018-05"
+                "c-2017,c-2018-05",
             };
 
             // Act
@@ -1034,7 +1034,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "c-2017-04,c-2016-04",
                 "c-2017-Q3,c-2017-Q2",
                 "c-2017-03-04,c-2017-03-01",
-                "f-2017,f-2016"
+                "f-2017,f-2016",
             };
 
             // Act
@@ -1053,7 +1053,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 "g-unbounded,c-2016-04",
                 "c-2017-Q3,g-unbounded",
                 "c-unbounded,g-unbounded",
-                "f-unbounded,c-unbounded"
+                "f-unbounded,c-unbounded",
             };
 
             // Act
@@ -1514,7 +1514,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { "g-2017,g-2018", new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)) },
                 { "c-unbounded,c-2012-02", new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), new CalendarMonth(2012, MonthOfYear.February)) },
                 { "g-2012-02,g-unbounded", new ReportingPeriod<GenericUnitOfTime>(new GenericMonth(2012, MonthNumber.Two), new GenericUnbounded()) },
-                { "f-unbounded,f-unbounded", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) }
+                { "f-unbounded,f-unbounded", new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded()) },
             };
 
             // Act

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodComponent.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -32,6 +32,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Both the start and the end of a reporting period.
         /// </summary>
-        Both
+        Both,
     }
 }

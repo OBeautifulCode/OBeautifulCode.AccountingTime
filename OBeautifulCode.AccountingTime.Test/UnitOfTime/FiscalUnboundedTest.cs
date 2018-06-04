@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiscalUnboundedTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -588,8 +588,5 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             granularity.Should().Be(UnitOfTimeGranularity.Unbounded);
         }
-
     }
 }
-
-

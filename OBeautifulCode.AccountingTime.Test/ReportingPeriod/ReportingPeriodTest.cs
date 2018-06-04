@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,13 +10,13 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
 
     using Naos.Recipes.TupleInitializers;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -1936,7 +1936,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 A.Dummy<ReportingPeriod<GenericMonth>>(),
                 A.Dummy<ReportingPeriod<GenericQuarter>>(),
                 A.Dummy<ReportingPeriod<GenericYear>>(),
-                A.Dummy<ReportingPeriod<GenericUnbounded>>()
+                A.Dummy<ReportingPeriod<GenericUnbounded>>(),
             };
 
             // Act
@@ -1990,7 +1990,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericYear>) },
                 new { ReportingPeriodType = typeof(Common.ReportingPeriodTest<GenericUnbounded>) },
-                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) }
+                new { ReportingPeriodType = typeof(Common.IReportingPeriodTest<GenericUnbounded>) },
             };
 
             var reportingPeriods = new List<IReportingPeriod<UnitOfTime>>
@@ -2011,7 +2011,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 A.Dummy<ReportingPeriod<GenericMonth>>(),
                 A.Dummy<ReportingPeriod<GenericQuarter>>(),
                 A.Dummy<ReportingPeriod<GenericYear>>(),
-                A.Dummy<ReportingPeriod<GenericUnbounded>>()
+                A.Dummy<ReportingPeriod<GenericUnbounded>>(),
             };
 
             // Act
@@ -2054,7 +2054,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<ReportingPeriod<CalendarUnitOfTime>>(), typeof(ReportingPeriod<GenericUnbounded>) },
                 { A.Dummy<ReportingPeriod<CalendarMonth>>(), typeof(ReportingPeriod<GenericUnbounded>) },
                 { A.Dummy<ReportingPeriod<CalendarUnbounded>>(), typeof(ReportingPeriod<FiscalQuarter>) },
-                { A.Dummy<ReportingPeriod<CalendarUnbounded>>(), typeof(ReportingPeriod<FiscalUnitOfTime>) }
+                { A.Dummy<ReportingPeriod<CalendarUnbounded>>(), typeof(ReportingPeriod<FiscalUnitOfTime>) },
             };
 
             // Act
@@ -2112,7 +2112,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<CalendarMonth>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarMonth>>()
+                reportingPeriod.Clone<ReportingPeriod<CalendarMonth>>(),
             };
 
             // Assert
@@ -2139,7 +2139,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<CalendarQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarQuarter>>()
+                reportingPeriod.Clone<ReportingPeriod<CalendarQuarter>>(),
             };
 
             // Assert
@@ -2166,7 +2166,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<CalendarYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarYear>>()
+                reportingPeriod.Clone<ReportingPeriod<CalendarYear>>(),
             };
 
             // Assert
@@ -2193,7 +2193,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<CalendarUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnbounded>>()
+                reportingPeriod.Clone<ReportingPeriod<CalendarUnbounded>>(),
             };
 
             // Assert
@@ -2220,7 +2220,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<CalendarUnitOfTime>>()
+                reportingPeriod1.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
@@ -2228,7 +2228,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<CalendarUnitOfTime>>()
+                reportingPeriod2.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
@@ -2236,7 +2236,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<CalendarUnitOfTime>>()
+                reportingPeriod3.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             // Assert
@@ -2304,7 +2304,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<FiscalQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalQuarter>>()
+                reportingPeriod.Clone<ReportingPeriod<FiscalQuarter>>(),
             };
 
             // Assert
@@ -2331,7 +2331,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<FiscalYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalYear>>()
+                reportingPeriod.Clone<ReportingPeriod<FiscalYear>>(),
             };
 
             // Assert
@@ -2358,7 +2358,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<FiscalUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnbounded>>()
+                reportingPeriod.Clone<ReportingPeriod<FiscalUnbounded>>(),
             };
 
             // Assert
@@ -2385,7 +2385,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<FiscalUnitOfTime>>()
+                reportingPeriod1.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
@@ -2393,7 +2393,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<FiscalUnitOfTime>>()
+                reportingPeriod2.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
@@ -2401,7 +2401,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<FiscalUnitOfTime>>()
+                reportingPeriod3.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             // Assert
@@ -2442,7 +2442,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<GenericMonth>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericMonth>>()
+                reportingPeriod.Clone<ReportingPeriod<GenericMonth>>(),
             };
 
             // Assert
@@ -2469,7 +2469,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<GenericQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericQuarter>>()
+                reportingPeriod.Clone<ReportingPeriod<GenericQuarter>>(),
             };
 
             // Assert
@@ -2496,7 +2496,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<GenericYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericYear>>()
+                reportingPeriod.Clone<ReportingPeriod<GenericYear>>(),
             };
 
             // Assert
@@ -2523,7 +2523,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
                 reportingPeriod.Clone<IReportingPeriod<GenericUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnbounded>>()
+                reportingPeriod.Clone<ReportingPeriod<GenericUnbounded>>(),
             };
 
             // Assert
@@ -2550,7 +2550,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod1.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<GenericUnitOfTime>>()
+                reportingPeriod1.Clone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
@@ -2558,7 +2558,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod2.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<GenericUnitOfTime>>()
+                reportingPeriod2.Clone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
@@ -2566,7 +2566,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
                 reportingPeriod3.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<GenericUnitOfTime>>()
+                reportingPeriod3.Clone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             // Assert

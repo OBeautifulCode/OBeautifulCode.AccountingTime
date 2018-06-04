@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MonthNumber.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -80,6 +80,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Month 12.
         /// </summary>
-        Twelve = 12
+        Twelve = 12,
     }
 }

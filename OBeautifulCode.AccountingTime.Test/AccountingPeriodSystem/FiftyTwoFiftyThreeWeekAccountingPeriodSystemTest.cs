@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -178,6 +178,6 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod11.Should().Be(expectedReportingPeriod11);
             actualReportingPeriod12.Should().Be(expectedReportingPeriod12);
             actualReportingPeriod13.Should().Be(expectedReportingPeriod13);
-        }        
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeExtensions.Serialization.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ namespace OBeautifulCode.AccountingTime
             new SerializationFormat { Type = typeof(GenericMonth)     , Regex = new Regex("^g-(\\d{4})-(\\d{2})$") },
             new SerializationFormat { Type = typeof(GenericQuarter)   , Regex = new Regex("^g-(\\d{4})-Q(\\d)$") },
             new SerializationFormat { Type = typeof(GenericYear)      , Regex = new Regex("^g-(\\d{4})$") },
-            new SerializationFormat { Type = typeof(GenericUnbounded) , Regex = new Regex("^g-unbounded$") }
+            new SerializationFormat { Type = typeof(GenericUnbounded) , Regex = new Regex("^g-unbounded$") },
             #pragma warning restore SA1001 // Commas must be spaced correctly
             #pragma warning restore SA1009 // Closing parenthesis must be spaced correctly
             #pragma warning restore SA1025 // Code must not contain multiple whitespace in a row
@@ -317,66 +317,79 @@ namespace OBeautifulCode.AccountingTime
                     var result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
                     return result;
                 }
+
                 case CalendarMonth unitOfTimeAsCalendarMonth:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
                     return result;
                 }
+
                 case CalendarQuarter unitOfTimeAsCalendarQuarter:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
                     return result;
                 }
+
                 case CalendarYear unitOfTimeAsCalendarYear:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
                     return result;
                 }
+
                 case CalendarUnbounded _:
                 {
                     var result = "c-unbounded";
                     return result;
                 }
+
                 case FiscalMonth unitOfTimeAsFiscalMonth:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
                     return result;
                 }
+
                 case FiscalQuarter unitOfTimeAsFiscalQuarter:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
                     return result;
                 }
+
                 case FiscalYear unitOfTimeAsFiscalYear:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
                     return result;
                 }
+
                 case FiscalUnbounded _:
                 {
                     var result = "f-unbounded";
                     return result;
                 }
+
                 case GenericMonth unitOfTimeAsGenericMonth:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
                     return result;
                 }
+
                 case GenericQuarter unitOfTimeAsGenericQuarter:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
                     return result;
                 }
+
                 case GenericYear unitOfTimeAsGenericYear:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
                     return result;
                 }
+
                 case GenericUnbounded _:
                 {
                     var result = "g-unbounded";
-                        return result;
+                    return result;
                 }
+
                 default:
                     throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTimeType);
             }

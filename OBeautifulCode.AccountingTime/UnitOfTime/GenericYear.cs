@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GenericYear.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a generic year.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class GenericYear : GenericUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<GenericYear>, IComparable<GenericYear>
     {
         /// <summary>

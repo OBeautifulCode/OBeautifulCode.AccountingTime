@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="OverflowStrategy.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -17,6 +17,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Throw on any overflow.
         /// </summary>
-        ThrowOnOverflow
+        ThrowOnOverflow,
     }
 }

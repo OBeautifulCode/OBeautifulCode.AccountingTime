@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiscalYearTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -8,11 +8,11 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -881,8 +881,5 @@ namespace OBeautifulCode.AccountingTime.Test
             var result = new FiscalYear(tweakedYear);
             return result;
         }
-
     }
 }
-
-

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiscalYearAccountingPeriodSystem.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ namespace OBeautifulCode.AccountingTime
     /// A fiscal year is 12 consecutive months ending on the last day of any month except December 31st.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public class FiscalYearAccountingPeriodSystem : AccountingPeriodSystem
     {
         /// <summary>

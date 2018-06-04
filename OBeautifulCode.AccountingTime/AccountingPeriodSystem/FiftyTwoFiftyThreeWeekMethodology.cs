@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="FiftyTwoFiftyThreeWeekMethodology.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -22,6 +22,6 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Accounting year ends on the chosen day of week that is nearest to the last day of the anchor month.
         /// </summary>
-        ClosestToLastDayOfAnchorMonth
+        ClosestToLastDayOfAnchorMonth,
     }
 }

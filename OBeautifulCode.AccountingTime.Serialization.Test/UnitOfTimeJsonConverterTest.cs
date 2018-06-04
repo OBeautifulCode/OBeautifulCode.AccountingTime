@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeConverterTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+// <copyright file="UnitOfTimeJsonConverterTest.cs" company="OBeautifulCode">
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -161,7 +161,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
             [JsonConverter(typeof(UnitOfTimeJsonConverter))]
             public GenericUnbounded GenericUnbounded { get; set; }
-
         }
     }
 }

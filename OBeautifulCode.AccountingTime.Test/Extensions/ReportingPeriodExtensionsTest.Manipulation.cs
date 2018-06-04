@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensionsTest.Manipulation.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,11 +10,11 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -136,7 +136,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<FiscalYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
                 new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericMonth>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
                 new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericQuarter>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } }
+                new { ReportingPeriod = (IReportingPeriod<UnitOfTime>)A.Dummy<IReportingPeriod<GenericYear>>(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
             };
 
             // Act
@@ -181,7 +181,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
                     ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
-                }
+                },
             };
 
             // Act, Assert
@@ -203,22 +203,22 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 1,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Twelve))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Twelve)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = -2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
-                }
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven)),
+                },
             };
 
             // Act, Assert
@@ -240,22 +240,22 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 1,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = -2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
-                }
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven)),
+                },
             };
 
             // Act, Assert
@@ -277,22 +277,22 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
                     UnitsToAdd = 1,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded())
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
                     UnitsToAdd = -2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalUnbounded())
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalUnbounded()),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2014, MonthNumber.Four), new FiscalUnbounded()),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded())
-                }
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                },
             };
 
             // Act, Assert
@@ -314,22 +314,22 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 1,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Twelve))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Twelve)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = -2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Five))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Five)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2019, MonthNumber.Eleven))
-                }
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalMonth(2019, MonthNumber.Eleven)),
+                },
             };
 
             // Act, Assert
@@ -351,22 +351,22 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 1,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Twelve)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = -2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five))
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Five)),
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven))
-                }
+                    ExpectedReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Eleven)),
+                },
             };
 
             // Act, Assert
@@ -402,7 +402,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Eleven)),
                     UnitsToAdd = 2,
                     GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
-                }
+                },
             };
 
             // Act, Assert
@@ -425,20 +425,20 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Eleven)),
                     UnitsToAdd = 8,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Eleven)),
                     UnitsToAdd = 3,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Three)),
                     UnitsToAdd = 3,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year
-                }
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                },
             };
 
             // Act, Assert
@@ -459,20 +459,20 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Eleven)),
                     UnitsToAdd = -8,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Month,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Eleven)),
                     UnitsToAdd = -3,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Quarter,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2014, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Three)),
                     UnitsToAdd = -3,
-                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year
-                }
+                    GranularityOfUnitsToAdd = UnitOfTimeGranularity.Year,
+                },
             };
 
             // Act, Assert
@@ -978,13 +978,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
             };
 
             // Act
@@ -1003,13 +1003,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
+                },
             };
 
             // Act
@@ -1028,13 +1028,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March), new CalendarMonth(2018, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.June), new CalendarMonth(2018, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.August), new CalendarMonth(2018, MonthOfYear.September), new CalendarMonth(2018, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.December) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March), new CalendarMonth(2018, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.June), new CalendarMonth(2018, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.August), new CalendarMonth(2018, MonthOfYear.September), new CalendarMonth(2018, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.December) },
+                },
             };
 
             // Act
@@ -1055,15 +1055,15 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2017)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne) },
-                    ExpectedCount = 365
+                    ExpectedCount = 365,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne) },
-                    ExpectedCount = 365 * 2
-                }
+                    ExpectedCount = 365 * 2,
+                },
             };
 
             // Act
@@ -1087,7 +1087,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2019, QuarterNumber.Q3)),
                 new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2019, QuarterNumber.Q4)),
                 new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2019, QuarterNumber.Q3))
+                new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2019, QuarterNumber.Q3)),
             };
 
             // Act
@@ -1106,13 +1106,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
             };
 
             // Act
@@ -1131,12 +1131,12 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
                 },
             };
 
@@ -1156,28 +1156,28 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) },
+                },
             };
 
             // Act
@@ -1198,15 +1198,15 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne) },
-                    ExpectedCount = 31 + 30 + 31
+                    ExpectedCount = 31 + 30 + 31,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty) },
-                    ExpectedCount = 548
-                }
+                    ExpectedCount = 548,
+                },
             };
 
             // Act
@@ -1230,7 +1230,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2018, MonthOfYear.February)),
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2019, MonthOfYear.July)),
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2019, MonthOfYear.November)),
-                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2019, MonthOfYear.December))
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2019, MonthOfYear.December)),
             };
 
             // Act
@@ -1249,13 +1249,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.December)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.December)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
             };
 
             // Act
@@ -1288,7 +1288,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.November)),
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.November)),
                 new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.February)),
-                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.April))
+                new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.April)),
             };
 
             // Act
@@ -1307,42 +1307,42 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.March)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.September)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.December)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.March)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.June)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.September)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.December)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
                 },
             };
 
@@ -1362,8 +1362,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.March)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) },
+                },
             };
 
             // Act
@@ -1384,15 +1384,15 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.November)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) },
-                    ExpectedCount = 30
+                    ExpectedCount = 30,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.November)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.Thirty) },
-                    ExpectedCount = 365 + 30
-                }
+                    ExpectedCount = 365 + 30,
+                },
             };
 
             // Act
@@ -1433,7 +1433,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) }
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
                 },
             };
 
@@ -1477,42 +1477,42 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.Thirty)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
                 },
             };
 
@@ -1533,7 +1533,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
                 new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Three), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.One)),
                 new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.One)),
-                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.ThirtyOne))
+                new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.August, DayOfMonth.ThirtyOne)),
             };
 
             // Act
@@ -1552,18 +1552,18 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.December, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January) }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.February, DayOfMonth.TwentyEight)),
-                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February) }
-                }
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February) },
+                },
             };
 
             // Act
@@ -1584,14 +1584,14 @@ namespace OBeautifulCode.AccountingTime.Test
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),  },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two) },
-                    ExpectedCount = 1
+                    ExpectedCount = 1,
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten)),
                     ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Four), },
                     ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Eight), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Nine), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten) },
-                    ExpectedCount = 30 + 28 + 10
+                    ExpectedCount = 30 + 28 + 10,
                 },
             };
 
@@ -1616,13 +1616,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) },
+                },
             };
 
             // Act
@@ -1641,13 +1641,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) },
+                },
             };
 
             // Act
@@ -1666,13 +1666,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three), new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Six), new FiscalMonth(2018, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Eight), new FiscalMonth(2018, MonthNumber.Nine), new FiscalMonth(2018, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Twelve) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six), new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine), new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three), new FiscalMonth(2018, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Five), new FiscalMonth(2018, MonthNumber.Six), new FiscalMonth(2018, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Eight), new FiscalMonth(2018, MonthNumber.Nine), new FiscalMonth(2018, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Twelve) },
+                },
             };
 
             // Act
@@ -1708,7 +1708,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2019, QuarterNumber.Q3)),
                 new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2019, QuarterNumber.Q4)),
                 new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2019, QuarterNumber.Q3))
+                new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2019, QuarterNumber.Q3)),
             };
 
             // Act
@@ -1727,13 +1727,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) },
+                },
             };
 
             // Act
@@ -1752,12 +1752,12 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) },
                 },
             };
 
@@ -1777,28 +1777,28 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three) }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.Three) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six) }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Five), new FiscalMonth(2017, MonthNumber.Six) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine) }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Eight), new FiscalMonth(2017, MonthNumber.Nine) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) },
+                },
             };
 
             // Act
@@ -1834,7 +1834,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Three), new FiscalMonth(2018, MonthNumber.Two)),
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2019, MonthNumber.Seven)),
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2019, MonthNumber.Eleven)),
-                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2019, MonthNumber.Twelve))
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Two), new FiscalMonth(2019, MonthNumber.Twelve)),
             };
 
             // Act
@@ -1853,13 +1853,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalYear(2017), new FiscalYear(2018) },
+                },
             };
 
             // Act
@@ -1892,7 +1892,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Eleven)),
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Eleven)),
                 new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Two)),
-                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Four))
+                new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Four)),
             };
 
             // Act
@@ -1911,42 +1911,42 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Nine)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2018, MonthNumber.Six)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2018, MonthNumber.Nine)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2018, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new FiscalQuarter(2017, QuarterNumber.Q4), new FiscalQuarter(2018, QuarterNumber.Q1), new FiscalQuarter(2018, QuarterNumber.Q2), new FiscalQuarter(2018, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q4) },
                 },
             };
 
@@ -1966,8 +1966,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) }
-                }
+                    ExpectedUnitsOfTime = new[] { new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2017, MonthNumber.Twelve), new FiscalMonth(2018, MonthNumber.One), new FiscalMonth(2018, MonthNumber.Two), new FiscalMonth(2018, MonthNumber.Three) },
+                },
             };
 
             // Act
@@ -2002,13 +2002,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) },
+                },
             };
 
             // Act
@@ -2027,13 +2027,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) },
+                },
             };
 
             // Act
@@ -2052,13 +2052,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2017)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three), new GenericMonth(2018, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Six), new GenericMonth(2018, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Eight), new GenericMonth(2018, MonthNumber.Nine), new GenericMonth(2018, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Twelve) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six), new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine), new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three), new GenericMonth(2018, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Five), new GenericMonth(2018, MonthNumber.Six), new GenericMonth(2018, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Eight), new GenericMonth(2018, MonthNumber.Nine), new GenericMonth(2018, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Twelve) },
+                },
             };
 
             // Act
@@ -2094,7 +2094,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2019, QuarterNumber.Q3)),
                 new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2019, QuarterNumber.Q4)),
                 new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
-                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2019, QuarterNumber.Q3))
+                new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2019, QuarterNumber.Q3)),
             };
 
             // Act
@@ -2113,13 +2113,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) },
+                },
             };
 
             // Act
@@ -2138,12 +2138,12 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) },
                 },
             };
 
@@ -2163,28 +2163,28 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three) }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2017, MonthNumber.Three) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q2)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six) }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Five), new GenericMonth(2017, MonthNumber.Six) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q3)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine) }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Eight), new GenericMonth(2017, MonthNumber.Nine) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q4)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) },
+                },
             };
 
             // Act
@@ -2220,7 +2220,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Three), new GenericMonth(2018, MonthNumber.Two)),
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2019, MonthNumber.Seven)),
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2019, MonthNumber.Eleven)),
-                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2019, MonthNumber.Twelve))
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Two), new GenericMonth(2019, MonthNumber.Twelve)),
             };
 
             // Act
@@ -2239,13 +2239,13 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericYear(2017), new GenericYear(2018) },
+                },
             };
 
             // Act
@@ -2278,7 +2278,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Eleven)),
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Eleven)),
                 new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Two)),
-                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Four))
+                new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Four)),
             };
 
             // Act
@@ -2297,42 +2297,42 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Nine)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2018, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2018, MonthNumber.Six)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2018, MonthNumber.Nine)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3) },
                 },
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2018, MonthNumber.Twelve)),
-                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) }
+                    ExpectedUnitsOfTime = new[] { new GenericQuarter(2017, QuarterNumber.Q4), new GenericQuarter(2018, QuarterNumber.Q1), new GenericQuarter(2018, QuarterNumber.Q2), new GenericQuarter(2018, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q4) },
                 },
             };
 
@@ -2352,8 +2352,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 new
                 {
                     ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Three)),
-                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) }
-                }
+                    ExpectedUnitsOfTime = new[] { new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2017, MonthNumber.Twelve), new GenericMonth(2018, MonthNumber.One), new GenericMonth(2018, MonthNumber.Two), new GenericMonth(2018, MonthNumber.Three) },
+                },
             };
 
             // Act
@@ -2447,7 +2447,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
-                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten))
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten)),
                 },
                 new
                 {
@@ -2456,7 +2456,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarMonth(2017, MonthOfYear.February),
-                        new CalendarMonth(2017, MonthOfYear.February))
+                        new CalendarMonth(2017, MonthOfYear.February)),
                 },
                 new
                 {
@@ -2465,7 +2465,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarMonth(2017, MonthOfYear.February),
-                        new CalendarMonth(2018, MonthOfYear.March))
+                        new CalendarMonth(2018, MonthOfYear.March)),
                 },
                 new
                 {
@@ -2474,7 +2474,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q2),
-                        new CalendarQuarter(2017, QuarterNumber.Q2))
+                        new CalendarQuarter(2017, QuarterNumber.Q2)),
                 },
                 new
                 {
@@ -2483,7 +2483,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q2),
-                        new CalendarQuarter(2018, QuarterNumber.Q3))
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
                 },
                 new
                 {
@@ -2492,7 +2492,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2017))
+                        new CalendarYear(2017)),
                 },
                 new
                 {
@@ -2501,7 +2501,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2018))
+                        new CalendarYear(2018)),
                 },
                 new
                 {
@@ -2510,7 +2510,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarMonth(2017, MonthOfYear.April)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarMonth(2017, MonthOfYear.February),
-                        new CalendarMonth(2017, MonthOfYear.April))
+                        new CalendarMonth(2017, MonthOfYear.April)),
                 },
                 new
                 {
@@ -2519,7 +2519,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarMonth(2017, MonthOfYear.December)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q4),
-                        new CalendarQuarter(2017, QuarterNumber.Q4))
+                        new CalendarQuarter(2017, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2528,7 +2528,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarMonth(2018, MonthOfYear.June)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q4),
-                        new CalendarQuarter(2018, QuarterNumber.Q2))
+                        new CalendarQuarter(2018, QuarterNumber.Q2)),
                 },
                 new
                 {
@@ -2537,7 +2537,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarMonth(2017, MonthOfYear.December)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2017))
+                        new CalendarYear(2017)),
                 },
                 new
                 {
@@ -2546,7 +2546,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarMonth(2018, MonthOfYear.December)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2018))
+                        new CalendarYear(2018)),
                 },
                 new
                 {
@@ -2555,7 +2555,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q2),
-                        new CalendarQuarter(2018, QuarterNumber.Q4))
+                        new CalendarQuarter(2018, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2564,7 +2564,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarQuarter(2017, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2017))
+                        new CalendarYear(2017)),
                 },
                 new
                 {
@@ -2573,7 +2573,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2018))
+                        new CalendarYear(2018)),
                 },
                 new
                 {
@@ -2582,7 +2582,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new CalendarYear(2018)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new CalendarYear(2017),
-                        new CalendarYear(2018))
+                        new CalendarYear(2018)),
                 },
                 new
                 {
@@ -2591,7 +2591,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalMonth(2017, MonthNumber.Four)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalMonth(2017, MonthNumber.Two),
-                        new FiscalMonth(2017, MonthNumber.Four))
+                        new FiscalMonth(2017, MonthNumber.Four)),
                 },
                 new
                 {
@@ -2600,7 +2600,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalMonth(2017, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalQuarter(2017, QuarterNumber.Q4),
-                        new FiscalQuarter(2017, QuarterNumber.Q4))
+                        new FiscalQuarter(2017, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2609,7 +2609,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalMonth(2018, MonthNumber.Six)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalQuarter(2017, QuarterNumber.Q4),
-                        new FiscalQuarter(2018, QuarterNumber.Q2))
+                        new FiscalQuarter(2018, QuarterNumber.Q2)),
                 },
                 new
                 {
@@ -2618,7 +2618,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalMonth(2017, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalYear(2017),
-                        new FiscalYear(2017))
+                        new FiscalYear(2017)),
                 },
                 new
                 {
@@ -2627,7 +2627,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalMonth(2018, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalYear(2017),
-                        new FiscalYear(2018))
+                        new FiscalYear(2018)),
                 },
                 new
                 {
@@ -2636,7 +2636,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalQuarter(2017, QuarterNumber.Q2),
-                        new FiscalQuarter(2018, QuarterNumber.Q4))
+                        new FiscalQuarter(2018, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2645,7 +2645,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalQuarter(2017, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalYear(2017),
-                        new FiscalYear(2017))
+                        new FiscalYear(2017)),
                 },
                 new
                 {
@@ -2654,7 +2654,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalYear(2017),
-                        new FiscalYear(2018))
+                        new FiscalYear(2018)),
                 },
                 new
                 {
@@ -2663,7 +2663,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiscalYear(2018)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new FiscalYear(2017),
-                        new FiscalYear(2018))
+                        new FiscalYear(2018)),
                 },
                 new
                 {
@@ -2672,7 +2672,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericMonth(2017, MonthNumber.Four)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericMonth(2017, MonthNumber.Two),
-                        new GenericMonth(2017, MonthNumber.Four))
+                        new GenericMonth(2017, MonthNumber.Four)),
                 },
                 new
                 {
@@ -2681,7 +2681,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericMonth(2017, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericQuarter(2017, QuarterNumber.Q4),
-                        new GenericQuarter(2017, QuarterNumber.Q4))
+                        new GenericQuarter(2017, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2690,7 +2690,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericMonth(2018, MonthNumber.Six)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericQuarter(2017, QuarterNumber.Q4),
-                        new GenericQuarter(2018, QuarterNumber.Q2))
+                        new GenericQuarter(2018, QuarterNumber.Q2)),
                 },
                 new
                 {
@@ -2699,7 +2699,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericMonth(2017, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericYear(2017),
-                        new GenericYear(2017))
+                        new GenericYear(2017)),
                 },
                 new
                 {
@@ -2708,7 +2708,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericMonth(2018, MonthNumber.Twelve)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericYear(2017),
-                        new GenericYear(2018))
+                        new GenericYear(2018)),
                 },
                 new
                 {
@@ -2717,7 +2717,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericQuarter(2017, QuarterNumber.Q2),
-                        new GenericQuarter(2018, QuarterNumber.Q4))
+                        new GenericQuarter(2018, QuarterNumber.Q4)),
                 },
                 new
                 {
@@ -2726,7 +2726,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericQuarter(2017, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericYear(2017),
-                        new GenericYear(2017))
+                        new GenericYear(2017)),
                 },
                 new
                 {
@@ -2735,7 +2735,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericQuarter(2018, QuarterNumber.Q4)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericYear(2017),
-                        new GenericYear(2018))
+                        new GenericYear(2018)),
                 },
                 new
                 {
@@ -2744,8 +2744,8 @@ namespace OBeautifulCode.AccountingTime.Test
                         new GenericYear(2018)),
                     LeastGranular = new ReportingPeriod<UnitOfTime>(
                         new GenericYear(2017),
-                        new GenericYear(2018))
-                }
+                        new GenericYear(2018)),
+                },
             };
 
             // Act

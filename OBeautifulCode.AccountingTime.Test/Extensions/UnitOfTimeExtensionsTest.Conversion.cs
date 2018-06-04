@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeExtensionsTest.Conversion.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -248,7 +248,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new CalendarUnbounded(), ReportingPeriod = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded()) }
+                new { UnitOfTime = new CalendarUnbounded(), ReportingPeriod = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded()) },
             };
 
             // Act
@@ -264,7 +264,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new CalendarYear(2017), ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)) }
+                new { UnitOfTime = new CalendarYear(2017), ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)) },
             };
 
             // Act
@@ -299,7 +299,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new CalendarMonth(2016, MonthOfYear.February), ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)) }
+                new { UnitOfTime = new CalendarMonth(2016, MonthOfYear.February), ReportingPeriod = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)) },
             };
 
             // Act
@@ -316,7 +316,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var calendarDay = A.Dummy<CalendarDay>();
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = calendarDay, ReportingPeriod = new ReportingPeriod<CalendarDay>(calendarDay, calendarDay) }
+                new { UnitOfTime = calendarDay, ReportingPeriod = new ReportingPeriod<CalendarDay>(calendarDay, calendarDay) },
             };
 
             // Act
@@ -332,7 +332,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new FiscalUnbounded(), ReportingPeriod = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded()) }
+                new { UnitOfTime = new FiscalUnbounded(), ReportingPeriod = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded()) },
             };
 
             // Act
@@ -348,7 +348,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new FiscalYear(2017), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Twelve)) }
+                new { UnitOfTime = new FiscalYear(2017), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Twelve)) },
             };
 
             // Act
@@ -367,7 +367,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { UnitOfTime = new FiscalQuarter(2017, QuarterNumber.Q1), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.One), new FiscalMonth(2017, MonthNumber.Three)) },
                 new { UnitOfTime = new FiscalQuarter(2017, QuarterNumber.Q2), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Four), new FiscalMonth(2017, MonthNumber.Six)) },
                 new { UnitOfTime = new FiscalQuarter(2017, QuarterNumber.Q3), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Seven), new FiscalMonth(2017, MonthNumber.Nine)) },
-                new { UnitOfTime = new FiscalQuarter(2017, QuarterNumber.Q4), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Twelve)) }
+                new { UnitOfTime = new FiscalQuarter(2017, QuarterNumber.Q4), ReportingPeriod = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2017, MonthNumber.Ten), new FiscalMonth(2017, MonthNumber.Twelve)) },
             };
 
             // Act
@@ -384,7 +384,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var month = A.Dummy<FiscalMonth>();
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = month, ReportingPeriod = new ReportingPeriod<FiscalMonth>(month, month) }
+                new { UnitOfTime = month, ReportingPeriod = new ReportingPeriod<FiscalMonth>(month, month) },
             };
 
             // Act
@@ -400,7 +400,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new GenericUnbounded(), ReportingPeriod = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded()) }
+                new { UnitOfTime = new GenericUnbounded(), ReportingPeriod = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded()) },
             };
 
             // Act
@@ -416,7 +416,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = new GenericYear(2017), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Twelve)) }
+                new { UnitOfTime = new GenericYear(2017), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Twelve)) },
             };
 
             // Act
@@ -435,7 +435,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 new { UnitOfTime = new GenericQuarter(2017, QuarterNumber.Q1), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.One), new GenericMonth(2017, MonthNumber.Three)) },
                 new { UnitOfTime = new GenericQuarter(2017, QuarterNumber.Q2), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Four), new GenericMonth(2017, MonthNumber.Six)) },
                 new { UnitOfTime = new GenericQuarter(2017, QuarterNumber.Q3), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Seven), new GenericMonth(2017, MonthNumber.Nine)) },
-                new { UnitOfTime = new GenericQuarter(2017, QuarterNumber.Q4), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Twelve)) }
+                new { UnitOfTime = new GenericQuarter(2017, QuarterNumber.Q4), ReportingPeriod = new ReportingPeriod<GenericMonth>(new GenericMonth(2017, MonthNumber.Ten), new GenericMonth(2017, MonthNumber.Twelve)) },
             };
 
             // Act
@@ -452,7 +452,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var month = A.Dummy<GenericMonth>();
             var unitsOfTime = new[]
             {
-                new { UnitOfTime = month, ReportingPeriod = new ReportingPeriod<GenericMonth>(month, month) }
+                new { UnitOfTime = month, ReportingPeriod = new ReportingPeriod<GenericMonth>(month, month) },
             };
 
             // Act

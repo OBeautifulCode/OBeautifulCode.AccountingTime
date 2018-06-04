@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="UnitOfTimeExtensions.Conversion.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ namespace OBeautifulCode.AccountingTime
         /// The calendar quarter associated with the specified fiscal quarter.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="fiscalQuarter"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
         public static CalendarQuarter ToCalendarQuarter(
             this FiscalQuarter fiscalQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
@@ -73,7 +73,7 @@ namespace OBeautifulCode.AccountingTime
         /// The fiscal quarter associated with the specified calendar quarter.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/></exception>
+        /// <exception cref="ArgumentException"><paramref name="calendarQuarterThatIsFirstFiscalQuarter"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
         public static FiscalQuarter ToFiscalQuarter(
             this CalendarQuarter calendarQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)

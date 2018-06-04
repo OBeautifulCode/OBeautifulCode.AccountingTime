@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="GenericUnitOfTime.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a generic unit of time, without any context.
     /// </summary>
     [Serializable]
-    // ReSharper disable once InheritdocConsiderUsage
     public abstract class GenericUnitOfTime : UnitOfTime
     {
         /// <inheritdoc />

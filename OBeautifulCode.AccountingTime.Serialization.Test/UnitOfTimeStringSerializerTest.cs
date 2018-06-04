@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeConverterTest.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+// <copyright file="UnitOfTimeStringSerializerTest.cs" company="OBeautifulCode">
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -149,7 +149,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             public GenericYear GenericYear { get; set; }
 
             public GenericUnbounded GenericUnbounded { get; set; }
-
         }
     }
 }

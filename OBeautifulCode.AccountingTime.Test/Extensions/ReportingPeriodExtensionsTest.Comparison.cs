@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ReportingPeriodExtensionsTest.Comparison.cs" company="OBeautifulCode">
-//    Copyright (c) OBeautifulCode 2017. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -10,11 +10,11 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoFakeItEasy;
-
     using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
 
@@ -772,7 +772,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.February, DayOfMonth.Two),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February),
                 },
                 new
                 {
@@ -780,15 +780,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
-                },
-                new
-                {
-                    ReportingPeriod =
-                    new ReportingPeriod<CalendarUnitOfTime>(
-                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
-                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -796,7 +788,15 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January),
+                },
+                new
+                {
+                    ReportingPeriod =
+                    new ReportingPeriod<CalendarUnitOfTime>(
+                        new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April),
                 },
                 new
                 {
@@ -804,7 +804,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -812,7 +812,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April),
                 },
                 new
                 {
@@ -820,7 +820,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January),
                 },
                 new
                 {
@@ -828,7 +828,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Two),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -836,7 +836,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January),
                 },
                 new
                 {
@@ -844,7 +844,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March),
                 },
                 new
                 {
@@ -852,7 +852,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -860,7 +860,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -868,7 +868,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -876,7 +876,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -884,7 +884,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -892,7 +892,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -900,7 +900,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -908,7 +908,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.Two),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -916,7 +916,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -924,7 +924,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -932,7 +932,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -940,7 +940,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -948,7 +948,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015),
                 },
                 new
                 {
@@ -956,7 +956,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -964,7 +964,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -972,7 +972,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -980,7 +980,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -988,7 +988,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -996,7 +996,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1004,7 +1004,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1012,7 +1012,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1020,7 +1020,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1028,8 +1028,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
-                }
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
+                },
             };
 
             // Act
@@ -1055,7 +1055,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.February, DayOfMonth.Two),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -1063,7 +1063,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.February),
                 },
                 new
                 {
@@ -1071,7 +1071,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -1079,7 +1079,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January),
                 },
                 new
                 {
@@ -1087,7 +1087,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.March),
                 },
                 new
                 {
@@ -1095,7 +1095,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -1103,7 +1103,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April),
                 },
                 new
                 {
@@ -1111,7 +1111,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.January),
                 },
                 new
                 {
@@ -1119,7 +1119,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1127,7 +1127,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.TwentyNine)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1135,7 +1135,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1143,7 +1143,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1151,7 +1151,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1159,7 +1159,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2016, MonthOfYear.September, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -1167,7 +1167,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -1175,7 +1175,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1183,7 +1183,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.October, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -1191,7 +1191,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1199,7 +1199,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2016, MonthOfYear.January, DayOfMonth.Two),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1207,7 +1207,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1215,7 +1215,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1223,7 +1223,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1231,8 +1231,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
-                }
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
+                },
             };
 
             // Act
@@ -1258,7 +1258,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -1266,7 +1266,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1274,7 +1274,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Ten)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Ten),
                 },
                 new
                 {
@@ -1282,7 +1282,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.February, DayOfMonth.Ten)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.February, DayOfMonth.Ten),
                 },
                 new
                 {
@@ -1290,7 +1290,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1298,7 +1298,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.March, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.March, DayOfMonth.One),
                 },
                 new
                 {
@@ -1306,7 +1306,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine),
                 },
                 new
                 {
@@ -1314,7 +1314,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.March, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.March, DayOfMonth.One),
                 },
                 new
                 {
@@ -1322,7 +1322,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1330,7 +1330,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.May)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1338,7 +1338,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1346,7 +1346,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -1354,7 +1354,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1362,7 +1362,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1370,7 +1370,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1378,7 +1378,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1386,7 +1386,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.April),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1394,7 +1394,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.April),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1402,7 +1402,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2017, MonthOfYear.November)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1410,7 +1410,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1418,7 +1418,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015),
                 },
                 new
                 {
@@ -1426,7 +1426,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -1434,7 +1434,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -1442,7 +1442,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015),
                 },
                 new
                 {
@@ -1450,7 +1450,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1458,7 +1458,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2017, MonthOfYear.December),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1466,7 +1466,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
             };
 
@@ -1493,7 +1493,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.February, DayOfMonth.One),
                 },
                 new
                 {
@@ -1501,7 +1501,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -1509,7 +1509,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                 },
                 new
                 {
@@ -1517,7 +1517,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -1525,7 +1525,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                 },
                 new
                 {
@@ -1533,7 +1533,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.March)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.One),
                 },
                 new
                 {
@@ -1541,7 +1541,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.One),
                 },
                 new
                 {
@@ -1549,7 +1549,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1557,7 +1557,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
                 },
                 new
                 {
@@ -1565,7 +1565,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.June)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1573,7 +1573,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2016, MonthOfYear.May)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1581,7 +1581,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2016, MonthOfYear.August)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1589,7 +1589,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.August)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1597,7 +1597,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.August)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -1605,7 +1605,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2016, MonthOfYear.August)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1613,7 +1613,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.May),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -1621,7 +1621,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.May),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -1629,7 +1629,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.May),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -1637,7 +1637,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarMonth(2017, MonthOfYear.November)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1645,7 +1645,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.February),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1653,7 +1653,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2017, MonthOfYear.November)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1661,7 +1661,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarMonth(2017, MonthOfYear.December)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -1669,7 +1669,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.January),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1677,7 +1677,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarMonth(2016, MonthOfYear.March),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
             };
 
@@ -1704,7 +1704,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty),
                 },
                 new
                 {
@@ -1712,7 +1712,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One),
                 },
                 new
                 {
@@ -1720,7 +1720,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1728,7 +1728,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1736,7 +1736,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One),
                 },
                 new
                 {
@@ -1744,7 +1744,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.July, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.July, DayOfMonth.One),
                 },
                 new
                 {
@@ -1752,7 +1752,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q3),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty),
                 },
                 new
                 {
@@ -1760,7 +1760,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q3),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.August, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.August, DayOfMonth.One),
                 },
                 new
                 {
@@ -1768,7 +1768,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -1776,7 +1776,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October),
                 },
                 new
                 {
@@ -1784,7 +1784,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July),
                 },
                 new
                 {
@@ -1792,7 +1792,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.July)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.July),
                 },
                 new
                 {
@@ -1800,7 +1800,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.October),
                 },
                 new
                 {
@@ -1808,7 +1808,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.July),
                 },
                 new
                 {
@@ -1816,7 +1816,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.March),
                 },
                 new
                 {
@@ -1824,7 +1824,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.June)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.June),
                 },
                 new
                 {
@@ -1832,7 +1832,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1840,7 +1840,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -1848,7 +1848,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -1856,7 +1856,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2019)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2019),
                 },
                 new
                 {
@@ -1864,7 +1864,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -1872,7 +1872,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2015),
                 },
                 new
                 {
@@ -1880,7 +1880,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1888,7 +1888,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -1896,7 +1896,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
             };
 
@@ -1923,7 +1923,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1931,7 +1931,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty),
                 },
                 new
                 {
@@ -1939,7 +1939,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
                 },
                 new
                 {
@@ -1947,7 +1947,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty),
                 },
                 new
                 {
@@ -1955,7 +1955,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty),
                 },
                 new
                 {
@@ -1963,7 +1963,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q3),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One),
                 },
                 new
                 {
@@ -1971,7 +1971,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2017, QuarterNumber.Q3),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One),
                 },
                 new
                 {
@@ -1979,7 +1979,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April),
                 },
                 new
                 {
@@ -1987,7 +1987,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September),
                 },
                 new
                 {
@@ -1995,7 +1995,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.December),
                 },
                 new
                 {
@@ -2003,7 +2003,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.September),
                 },
                 new
                 {
@@ -2011,7 +2011,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.April),
                 },
                 new
                 {
@@ -2019,7 +2019,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.April),
                 },
                 new
                 {
@@ -2027,7 +2027,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.August)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.August),
                 },
                 new
                 {
@@ -2035,7 +2035,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -2043,7 +2043,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q1),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
                 },
                 new
                 {
@@ -2051,7 +2051,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -2059,7 +2059,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarQuarter(2018, QuarterNumber.Q4)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2018),
                 },
                 new
                 {
@@ -2067,7 +2067,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q2),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2017),
                 },
                 new
                 {
@@ -2075,8 +2075,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarQuarter(2016, QuarterNumber.Q1),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016)
-                }
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarYear(2016),
+                },
             };
 
             // Act
@@ -2102,7 +2102,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2015, MonthOfYear.December, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -2110,7 +2110,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One),
                 },
                 new
                 {
@@ -2118,7 +2118,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.January, DayOfMonth.One),
                 },
                 new
                 {
@@ -2126,7 +2126,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -2134,7 +2134,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January),
                 },
                 new
                 {
@@ -2142,7 +2142,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2015, MonthOfYear.December),
                 },
                 new
                 {
@@ -2150,7 +2150,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.January),
                 },
                 new
                 {
@@ -2158,7 +2158,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.December),
                 },
                 new
                 {
@@ -2166,7 +2166,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2174,7 +2174,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2182,7 +2182,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2190,7 +2190,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2198,7 +2198,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -2206,7 +2206,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
                 },
                 new
                 {
@@ -2214,8 +2214,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded()
-                }
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarUnbounded(),
+                },
             };
 
             // Act
@@ -2241,7 +2241,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2016, MonthOfYear.January, DayOfMonth.One),
                 },
                 new
                 {
@@ -2249,7 +2249,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -2257,7 +2257,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen),
                 },
                 new
                 {
@@ -2265,7 +2265,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne),
                 },
                 new
                 {
@@ -2273,7 +2273,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Fifteen),
                 },
                 new
                 {
@@ -2281,7 +2281,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.January, DayOfMonth.One)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2018, MonthOfYear.January, DayOfMonth.One),
                 },
                 new
                 {
@@ -2289,7 +2289,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.June, DayOfMonth.Fifteen)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarDay(2019, MonthOfYear.June, DayOfMonth.Fifteen),
                 },
                 new
                 {
@@ -2297,7 +2297,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2016, MonthOfYear.January),
                 },
                 new
                 {
@@ -2305,7 +2305,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December),
                 },
                 new
                 {
@@ -2313,7 +2313,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June),
                 },
                 new
                 {
@@ -2321,7 +2321,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December),
                 },
                 new
                 {
@@ -2329,7 +2329,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January),
                 },
                 new
                 {
@@ -2337,7 +2337,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2017, MonthOfYear.June),
                 },
                 new
                 {
@@ -2345,7 +2345,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.December),
                 },
                 new
                 {
@@ -2353,7 +2353,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2018, MonthOfYear.January),
                 },
                 new
                 {
@@ -2361,7 +2361,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.June)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarMonth(2019, MonthOfYear.June),
                 },
                 new
                 {
@@ -2369,7 +2369,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2377,7 +2377,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2385,7 +2385,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2016),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2393,7 +2393,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2401,7 +2401,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2409,7 +2409,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarYear(2018)),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2417,7 +2417,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2425,7 +2425,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2433,8 +2433,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarYear(2018),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q2)
-                }
+                    UnitOfTime = (CalendarUnitOfTime)new CalendarQuarter(2019, QuarterNumber.Q2),
+                },
             };
 
             // Act
@@ -2460,7 +2460,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarDay>()
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarDay>(),
                 },
                 new
                 {
@@ -2468,7 +2468,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarMonth>()
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarMonth>(),
                 },
                 new
                 {
@@ -2476,7 +2476,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarQuarter>()
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarQuarter>(),
                 },
                 new
                 {
@@ -2484,8 +2484,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarUnitOfTime>(
                         new CalendarUnbounded(),
                         new CalendarUnbounded()),
-                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarYear>()
-                }
+                    UnitOfTime = (CalendarUnitOfTime)A.Dummy<CalendarYear>(),
+                },
             };
 
             // Act
@@ -2511,7 +2511,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Two),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2519,7 +2519,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Five)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2527,7 +2527,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -2535,7 +2535,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2543,7 +2543,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2551,7 +2551,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2559,7 +2559,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -2567,7 +2567,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2575,7 +2575,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Four),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2583,7 +2583,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Four),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2591,7 +2591,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -2599,7 +2599,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Two),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2607,7 +2607,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015),
                 },
                 new
                 {
@@ -2615,7 +2615,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018),
                 },
                 new
                 {
@@ -2623,7 +2623,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018),
                 },
                 new
                 {
@@ -2631,7 +2631,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015),
                 },
                 new
                 {
@@ -2639,7 +2639,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -2647,7 +2647,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2017, MonthNumber.Twelve),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -2655,7 +2655,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
             };
 
@@ -2682,7 +2682,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Two),
                         new FiscalMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2690,7 +2690,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2016, MonthNumber.Five)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2698,7 +2698,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Two),
                         new FiscalMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2706,7 +2706,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2714,7 +2714,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -2722,7 +2722,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q3)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -2730,7 +2730,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Five),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -2738,7 +2738,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Five),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -2746,7 +2746,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Five),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -2754,7 +2754,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2762,7 +2762,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Two),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -2770,7 +2770,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2778,7 +2778,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -2786,7 +2786,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.One),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2794,7 +2794,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalMonth(2016, MonthNumber.Three),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
             };
 
@@ -2821,7 +2821,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three),
                 },
                 new
                 {
@@ -2829,7 +2829,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten),
                 },
                 new
                 {
@@ -2837,7 +2837,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven),
                 },
                 new
                 {
@@ -2845,7 +2845,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Seven)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Seven),
                 },
                 new
                 {
@@ -2853,7 +2853,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Ten),
                 },
                 new
                 {
@@ -2861,7 +2861,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Seven),
                 },
                 new
                 {
@@ -2869,7 +2869,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Three),
                 },
                 new
                 {
@@ -2877,7 +2877,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Six)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Six),
                 },
                 new
                 {
@@ -2885,7 +2885,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2893,7 +2893,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018),
                 },
                 new
                 {
@@ -2901,7 +2901,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018),
                 },
                 new
                 {
@@ -2909,7 +2909,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2019)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2019),
                 },
                 new
                 {
@@ -2917,7 +2917,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -2925,7 +2925,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2015),
                 },
                 new
                 {
@@ -2933,7 +2933,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -2941,7 +2941,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -2949,7 +2949,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
             };
 
@@ -2976,7 +2976,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four),
                 },
                 new
                 {
@@ -2984,7 +2984,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine),
                 },
                 new
                 {
@@ -2992,7 +2992,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3000,7 +3000,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Nine),
                 },
                 new
                 {
@@ -3008,7 +3008,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Four)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Four),
                 },
                 new
                 {
@@ -3016,7 +3016,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Four),
                 },
                 new
                 {
@@ -3024,7 +3024,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Eight)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.Eight),
                 },
                 new
                 {
@@ -3032,7 +3032,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -3040,7 +3040,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q1),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
                 },
                 new
                 {
@@ -3048,7 +3048,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -3056,7 +3056,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalQuarter(2018, QuarterNumber.Q4)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2018),
                 },
                 new
                 {
@@ -3064,7 +3064,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q2),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2017),
                 },
                 new
                 {
@@ -3072,8 +3072,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalQuarter(2016, QuarterNumber.Q1),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016)
-                }
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalYear(2016),
+                },
             };
 
             // Act
@@ -3099,7 +3099,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One),
                 },
                 new
                 {
@@ -3107,7 +3107,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2015, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3115,7 +3115,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.One),
                 },
                 new
                 {
@@ -3123,7 +3123,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3131,7 +3131,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3139,7 +3139,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3147,7 +3147,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3155,7 +3155,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3163,7 +3163,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -3171,7 +3171,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
                 },
                 new
                 {
@@ -3179,8 +3179,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded()
-                }
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalUnbounded(),
+                },
             };
 
             // Act
@@ -3206,7 +3206,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.One)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2016, MonthNumber.One),
                 },
                 new
                 {
@@ -3214,7 +3214,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3222,7 +3222,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six),
                 },
                 new
                 {
@@ -3230,7 +3230,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3238,7 +3238,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One),
                 },
                 new
                 {
@@ -3246,7 +3246,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2017, MonthNumber.Six),
                 },
                 new
                 {
@@ -3254,7 +3254,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3262,7 +3262,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2018, MonthNumber.One),
                 },
                 new
                 {
@@ -3270,7 +3270,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.Six)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalMonth(2019, MonthNumber.Six),
                 },
                 new
                 {
@@ -3278,7 +3278,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3286,7 +3286,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3294,7 +3294,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2016),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3302,7 +3302,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3310,7 +3310,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3318,7 +3318,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalYear(2018)),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3326,7 +3326,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3334,7 +3334,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3342,8 +3342,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalYear(2018),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q2)
-                }
+                    UnitOfTime = (FiscalUnitOfTime)new FiscalQuarter(2019, QuarterNumber.Q2),
+                },
             };
 
             // Act
@@ -3369,7 +3369,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalMonth>()
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalMonth>(),
                 },
                 new
                 {
@@ -3377,7 +3377,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalQuarter>()
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalQuarter>(),
                 },
                 new
                 {
@@ -3385,8 +3385,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalUnitOfTime>(
                         new FiscalUnbounded(),
                         new FiscalUnbounded()),
-                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalYear>()
-                }
+                    UnitOfTime = (FiscalUnitOfTime)A.Dummy<FiscalYear>(),
+                },
             };
 
             // Act
@@ -3412,7 +3412,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Two),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3420,7 +3420,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Five)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3428,7 +3428,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -3436,7 +3436,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3444,7 +3444,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3452,7 +3452,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3460,7 +3460,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -3468,7 +3468,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3476,7 +3476,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Four),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3484,7 +3484,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Four),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3492,7 +3492,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3500,7 +3500,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Two),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3508,7 +3508,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015),
                 },
                 new
                 {
@@ -3516,7 +3516,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018),
                 },
                 new
                 {
@@ -3524,7 +3524,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018),
                 },
                 new
                 {
@@ -3532,7 +3532,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015),
                 },
                 new
                 {
@@ -3540,7 +3540,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -3548,7 +3548,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2017, MonthNumber.Twelve),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -3556,7 +3556,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
             };
 
@@ -3583,7 +3583,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Two),
                         new GenericMonth(2016, MonthNumber.Six)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3591,7 +3591,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2016, MonthNumber.Five)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3599,7 +3599,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Two),
                         new GenericMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3607,7 +3607,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3615,7 +3615,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -3623,7 +3623,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2016, MonthNumber.Eight)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q3)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -3631,7 +3631,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Five),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q3),
                 },
                 new
                 {
@@ -3639,7 +3639,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Five),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -3647,7 +3647,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Five),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -3655,7 +3655,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3663,7 +3663,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Two),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3671,7 +3671,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2017, MonthNumber.Eleven)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3679,7 +3679,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericMonth(2017, MonthNumber.Twelve)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3687,7 +3687,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.One),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3695,7 +3695,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericMonth(2016, MonthNumber.Three),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
             };
 
@@ -3722,7 +3722,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three),
                 },
                 new
                 {
@@ -3730,7 +3730,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten),
                 },
                 new
                 {
@@ -3738,7 +3738,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven),
                 },
                 new
                 {
@@ -3746,7 +3746,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Seven)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Seven),
                 },
                 new
                 {
@@ -3754,7 +3754,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Ten),
                 },
                 new
                 {
@@ -3762,7 +3762,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Seven),
                 },
                 new
                 {
@@ -3770,7 +3770,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Three),
                 },
                 new
                 {
@@ -3778,7 +3778,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Six)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Six),
                 },
                 new
                 {
@@ -3786,7 +3786,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3794,7 +3794,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018),
                 },
                 new
                 {
@@ -3802,7 +3802,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018),
                 },
                 new
                 {
@@ -3810,7 +3810,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2019)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2019),
                 },
                 new
                 {
@@ -3818,7 +3818,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3826,7 +3826,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2015),
                 },
                 new
                 {
@@ -3834,7 +3834,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -3842,7 +3842,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -3850,7 +3850,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
             };
 
@@ -3877,7 +3877,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four),
                 },
                 new
                 {
@@ -3885,7 +3885,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine),
                 },
                 new
                 {
@@ -3893,7 +3893,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -3901,7 +3901,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Nine),
                 },
                 new
                 {
@@ -3909,7 +3909,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2017, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Four)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Four),
                 },
                 new
                 {
@@ -3917,7 +3917,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Four),
                 },
                 new
                 {
@@ -3925,7 +3925,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Eight)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.Eight),
                 },
                 new
                 {
@@ -3933,7 +3933,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3941,7 +3941,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q1),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
                 },
                 new
                 {
@@ -3949,7 +3949,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2018, QuarterNumber.Q3)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3957,7 +3957,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericQuarter(2018, QuarterNumber.Q4)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2018),
                 },
                 new
                 {
@@ -3965,7 +3965,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q2),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017)
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2017),
                 },
                 new
                 {
@@ -3973,8 +3973,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericQuarter(2016, QuarterNumber.Q1),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016)
-                }
+                    UnitOfTime = (GenericUnitOfTime)new GenericYear(2016),
+                },
             };
 
             // Act
@@ -4000,7 +4000,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One),
                 },
                 new
                 {
@@ -4008,7 +4008,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2015, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -4016,7 +4016,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.One),
                 },
                 new
                 {
@@ -4024,7 +4024,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -4032,7 +4032,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2015, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -4040,7 +4040,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -4048,7 +4048,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -4056,7 +4056,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -4064,7 +4064,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -4072,7 +4072,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
                 },
                 new
                 {
@@ -4080,8 +4080,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded()
-                }
+                    UnitOfTime = (GenericUnitOfTime)new GenericUnbounded(),
+                },
             };
 
             // Act
@@ -4107,7 +4107,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.One)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2016, MonthNumber.One),
                 },
                 new
                 {
@@ -4115,7 +4115,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -4123,7 +4123,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six),
                 },
                 new
                 {
@@ -4131,7 +4131,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -4139,7 +4139,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One),
                 },
                 new
                 {
@@ -4147,7 +4147,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2017, MonthNumber.Six),
                 },
                 new
                 {
@@ -4155,7 +4155,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.Twelve),
                 },
                 new
                 {
@@ -4163,7 +4163,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2018, MonthNumber.One),
                 },
                 new
                 {
@@ -4171,7 +4171,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.Six)
+                    UnitOfTime = (GenericUnitOfTime)new GenericMonth(2019, MonthNumber.Six),
                 },
                 new
                 {
@@ -4179,7 +4179,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2016, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -4187,7 +4187,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -4195,7 +4195,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2016),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -4203,7 +4203,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -4211,7 +4211,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -4219,7 +4219,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericYear(2018)),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2017, QuarterNumber.Q2),
                 },
                 new
                 {
@@ -4227,7 +4227,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q1),
                 },
                 new
                 {
@@ -4235,7 +4235,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4)
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2018, QuarterNumber.Q4),
                 },
                 new
                 {
@@ -4243,8 +4243,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericYear(2018),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q2)
-                }
+                    UnitOfTime = (GenericUnitOfTime)new GenericQuarter(2019, QuarterNumber.Q2),
+                },
             };
 
             // Act
@@ -4270,7 +4270,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericMonth>()
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericMonth>(),
                 },
                 new
                 {
@@ -4278,7 +4278,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericQuarter>()
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericQuarter>(),
                 },
                 new
                 {
@@ -4286,8 +4286,8 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericUnitOfTime>(
                         new GenericUnbounded(),
                         new GenericUnbounded()),
-                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericYear>()
-                }
+                    UnitOfTime = (GenericUnitOfTime)A.Dummy<GenericYear>(),
+                },
             };
 
             // Act
@@ -4356,7 +4356,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.ThirtyOne)),
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten)),
-                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten))
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2016, MonthOfYear.April, DayOfMonth.Ten)),
                 };
 
             // Act
@@ -4376,7 +4376,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine)),
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.TwentyNine)),
                     new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyNine), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
-                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty))
+                    new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Thirty)),
                 };
 
             // Act
@@ -4400,7 +4400,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.June)),
                     new ReportingPeriod<CalendarMonth>(new CalendarMonth(2015, MonthOfYear.March), new CalendarMonth(2016, MonthOfYear.June)),
                     new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.May), new CalendarMonth(2016, MonthOfYear.June)),
-                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.September))
+                    new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.June), new CalendarMonth(2016, MonthOfYear.September)),
                 };
 
             // Act
@@ -4444,7 +4444,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4)),
-                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1))
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q1)),
                 };
 
             // Act
@@ -4464,7 +4464,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2)),
-                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q2))
+                    new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2015, QuarterNumber.Q3), new CalendarQuarter(2016, QuarterNumber.Q2)),
                 };
 
             // Act
@@ -4488,7 +4488,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2018)),
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018)),
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2017), new CalendarYear(2018)),
-                    new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019))
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2018), new CalendarYear(2019)),
                 };
 
             // Act
@@ -4508,7 +4508,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2017)),
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017)),
                     new ReportingPeriod<CalendarYear>(new CalendarYear(2015), new CalendarYear(2016)),
-                    new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016))
+                    new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016)),
                 };
 
             // Act
@@ -4525,7 +4525,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod1 = new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded());
             var reportingPeriod2 = new[]
                 {
-                    new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded())
+                    new ReportingPeriod<CalendarUnbounded>(new CalendarUnbounded(), new CalendarUnbounded()),
                 };
 
             // Act
@@ -4549,7 +4549,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Six)),
                     new ReportingPeriod<FiscalMonth>(new FiscalMonth(2015, MonthNumber.Three), new FiscalMonth(2016, MonthNumber.Six)),
                     new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Six)),
-                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Nine))
+                    new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Nine)),
                 };
 
             // Act
@@ -4593,7 +4593,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4)),
-                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1))
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q4), new FiscalQuarter(2017, QuarterNumber.Q1)),
                 };
 
             // Act
@@ -4613,7 +4613,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2)),
-                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q2))
+                    new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2015, QuarterNumber.Q3), new FiscalQuarter(2016, QuarterNumber.Q2)),
                 };
 
             // Act
@@ -4637,7 +4637,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2018)),
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018)),
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2017), new FiscalYear(2018)),
-                    new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019))
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2018), new FiscalYear(2019)),
                 };
 
             // Act
@@ -4657,7 +4657,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2017)),
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017)),
                     new ReportingPeriod<FiscalYear>(new FiscalYear(2015), new FiscalYear(2016)),
-                    new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016))
+                    new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016)),
                 };
 
             // Act
@@ -4674,7 +4674,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod1 = new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded());
             var reportingPeriod2 = new[]
                 {
-                    new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded())
+                    new ReportingPeriod<FiscalUnbounded>(new FiscalUnbounded(), new FiscalUnbounded()),
                 };
 
             // Act
@@ -4698,7 +4698,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Six)),
                     new ReportingPeriod<GenericMonth>(new GenericMonth(2015, MonthNumber.Three), new GenericMonth(2016, MonthNumber.Six)),
                     new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Five), new GenericMonth(2016, MonthNumber.Six)),
-                    new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Nine))
+                    new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Six), new GenericMonth(2016, MonthNumber.Nine)),
                 };
 
             // Act
@@ -4742,7 +4742,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q4)),
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4)),
-                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1))
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q4), new GenericQuarter(2017, QuarterNumber.Q1)),
                 };
 
             // Act
@@ -4762,7 +4762,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q3)),
                     new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2)),
-                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q2))
+                    new ReportingPeriod<GenericQuarter>(new GenericQuarter(2015, QuarterNumber.Q3), new GenericQuarter(2016, QuarterNumber.Q2)),
                 };
 
             // Act
@@ -4786,7 +4786,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2018)),
                     new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018)),
                     new ReportingPeriod<GenericYear>(new GenericYear(2017), new GenericYear(2018)),
-                    new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2019))
+                    new ReportingPeriod<GenericYear>(new GenericYear(2018), new GenericYear(2019)),
                 };
 
             // Act
@@ -4806,7 +4806,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2017)),
                     new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017)),
                     new ReportingPeriod<GenericYear>(new GenericYear(2015), new GenericYear(2016)),
-                    new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016))
+                    new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016)),
                 };
 
             // Act
@@ -4823,7 +4823,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod1 = new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded());
             var reportingPeriod2 = new[]
                 {
-                    new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded())
+                    new ReportingPeriod<GenericUnbounded>(new GenericUnbounded(), new GenericUnbounded()),
                 };
 
             // Act
