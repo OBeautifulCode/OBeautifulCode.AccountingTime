@@ -11,8 +11,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using Newtonsoft.Json;
 
     using OBeautifulCode.AccountingTime;
-
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Converts a <see cref="UnitOfTime"/> to and from JSON.
@@ -29,7 +28,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             var unitOfTime = value as UnitOfTime;
             if (unitOfTime != null)
             {
-                new { writer }.Must().NotBeNull().OrThrow();
+                new { writer }.Must().NotBeNull();
 
                 var stringToWrite = unitOfTime.SerializeToSortableString();
                 writer.WriteValue(stringToWrite);
@@ -43,7 +42,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object existingValue,
             JsonSerializer serializer)
         {
-            new { reader }.Must().NotBeNull().OrThrow();
+            new { reader }.Must().NotBeNull();
 
             UnitOfTime result = null;
             if (reader.Value != null)

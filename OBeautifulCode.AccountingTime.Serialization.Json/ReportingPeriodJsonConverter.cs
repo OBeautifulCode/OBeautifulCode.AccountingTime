@@ -11,8 +11,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using Newtonsoft.Json;
 
     using OBeautifulCode.AccountingTime;
-
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
@@ -28,7 +27,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         {
             if (value is IReportingPeriod<UnitOfTime> reportingPeriod)
             {
-                new { writer }.Must().NotBeNull().OrThrow();
+                new { writer }.Must().NotBeNull();
 
                 var stringToWrite = reportingPeriod.SerializeToString();
                 writer.WriteValue(stringToWrite);
@@ -42,7 +41,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object existingValue,
             JsonSerializer serializer)
         {
-            new { reader }.Must().NotBeNull().OrThrow();
+            new { reader }.Must().NotBeNull();
 
             object result = null;
             if (reader.Value != null)
@@ -57,7 +56,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         public override bool CanConvert(
             Type objectType)
         {
-            new { objectType }.Must().NotBeNull().OrThrow();
+            new { objectType }.Must().NotBeNull();
 
             if (objectType.IsGenericType)
             {
