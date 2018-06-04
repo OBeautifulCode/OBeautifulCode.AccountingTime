@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using FakeItEasy;
 
     using FluentAssertions;
+    using FluentAssertions.Extensions;
 
     using Xunit;
 
