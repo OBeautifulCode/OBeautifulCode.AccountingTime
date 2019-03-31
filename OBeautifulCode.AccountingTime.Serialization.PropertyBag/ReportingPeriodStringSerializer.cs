@@ -48,7 +48,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             string serializedString,
             Type type)
         {
-            if (!ReportingPeriod<UnitOfTime>.IsReportingPeriodType(type))
+            if (!type.IsReportingPeriodType())
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(IReportingPeriod<UnitOfTime>)}"));
             }

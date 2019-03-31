@@ -80,7 +80,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Keeping previous layout, is easy to read.")]
         public static UnitOfTime DeserializeFromSortableString(this string unitOfTime, Type type)
         {
-            if (!UnitOfTime.IsUnitOfTimeType(type))
+            if (!type.IsUnitOfTimeType())
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
             }

@@ -46,7 +46,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
         /// <inheritdoc />
         public object Deserialize(string serializedString, Type type)
         {
-            if (!UnitOfTime.IsUnitOfTimeType(type))
+            if (!type.IsUnitOfTimeType())
             {
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(UnitOfTime)}."));
             }

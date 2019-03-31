@@ -149,18 +149,6 @@ namespace OBeautifulCode.AccountingTime
             IReportingPeriod<UnitOfTime> right)
             => !(left == right);
 
-        /// <summary>
-        /// Checks to see if the type provided is a <see cref="ReportingPeriod{T}" /> type.
-        /// </summary>
-        /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not it's a valid type.</returns>
-        public static bool IsReportingPeriodType(Type type)
-        {
-            var result = TypeHelper.GetAllBoundReportingPeriodTypes().Contains(type);
-
-            return result;
-        }
-
         /// <inheritdoc />
         public bool Equals(
             ReportingPeriod<T> other)

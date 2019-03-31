@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Provides helper methods related to account time types.
     /// </summary>
-    public class TypeHelper
+    public static class TypeHelper
     {
         /// <summary>
         /// Gets all <see cref="UnitOfTime"/> types (that type along with all subclasses).
@@ -43,6 +43,32 @@ namespace OBeautifulCode.AccountingTime
             var unboundReportingPeriodTypes = new[] { typeof(IReportingPeriod<>), typeof(ReportingPeriod<>) };
 
             var result = unboundReportingPeriodTypes.SelectMany(rp => unitOfTimeTypes.Select(ut => rp.MakeGenericType(ut))).ToList();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Checks to see if the type provided is a <see cref="UnitOfTime" />.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not it's a valid type.</returns>
+        public static bool IsUnitOfTimeType(
+            this Type type)
+        {
+            var result = GetAllUnitOfTimeTypes().Contains(type);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Checks to see if the type provided is a <see cref="ReportingPeriod{T}" /> type.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not it's a valid type.</returns>
+        public static bool IsReportingPeriodType(
+            this Type type)
+        {
+            var result = GetAllBoundReportingPeriodTypes().Contains(type);
 
             return result;
         }

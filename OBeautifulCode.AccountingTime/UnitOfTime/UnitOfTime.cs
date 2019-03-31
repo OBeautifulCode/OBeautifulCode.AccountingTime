@@ -136,18 +136,6 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTime right)
             => (left == right) || (left > right);
 
-        /// <summary>
-        /// Checks to see if the type provided is a <see cref="UnitOfTime" />.
-        /// </summary>
-        /// <param name="type">Type to check.</param>
-        /// <returns>A value indicating whether or not it's a valid type.</returns>
-        public static bool IsUnitOfTimeType(Type type)
-        {
-            var result = TypeHelper.GetAllUnitOfTimeTypes().Contains(type);
-
-            return result;
-        }
-
         /// <inheritdoc />
         public bool Equals(
             UnitOfTime other)

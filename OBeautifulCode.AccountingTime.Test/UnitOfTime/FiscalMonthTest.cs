@@ -50,7 +50,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Constructor___Should_throw_ArgumentOutOfRangeExceptionn___When_parameter_monthNumber_is_Invalid()
+        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_monthNumber_is_Invalid()
         {
             // Arrange
             var validMonth = A.Dummy<FiscalMonth>();
