@@ -10,6 +10,8 @@ namespace OBeautifulCode.AccountingTime
 
     using OBeautifulCode.Math.Recipes;
 
+    using OBeautifulCode.Validation.Recipes;
+
     using static System.FormattableString;
 
     /// <summary>
@@ -29,15 +31,8 @@ namespace OBeautifulCode.AccountingTime
             int year,
             MonthOfYear monthOfYear)
         {
-            if ((year < 1) || (year > 9999))
-            {
-                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
-            }
-
-            if (monthOfYear == MonthOfYear.Invalid)
-            {
-                throw new ArgumentException("month is invalid", nameof(monthOfYear));
-            }
+            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
+            new { monthOfYear }.Must().NotBeEqualTo(MonthOfYear.Invalid);
 
             this.Year = year;
             this.MonthOfYear = monthOfYear;
@@ -60,8 +55,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="CalendarMonth" /> are equal.
         /// </summary>
-        /// <param name="left">The first month to compare.</param>
-        /// <param name="right">The second month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two months are equal; false otherwise.</returns>
         public static bool operator ==(
             CalendarMonth left,
@@ -78,14 +73,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = (left.MonthOfYear == right.MonthOfYear) && (left.Year == right.Year);
+
             return result;
         }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="CalendarMonth" /> are not equal.
         /// </summary>
-        /// <param name="left">The first month to compare.</param>
-        /// <param name="right">The second month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two months are not equal; false otherwise.</returns>
         public static bool operator !=(
             CalendarMonth left,
@@ -95,8 +91,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a month is less than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is less than the right-hand month; false otherwise.</returns>
         public static bool operator <(
             CalendarMonth left,
@@ -113,14 +109,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a month is greater than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is greater than the right-hand month; false otherwise.</returns>
         public static bool operator >(
             CalendarMonth left,
@@ -137,14 +134,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a month is less than or equal to than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is less than or equal to the right-hand month; false otherwise.</returns>
         public static bool operator <=(
             CalendarMonth left,
@@ -154,8 +152,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a month is greater than or equal to than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is greater than or equal to the right-hand month; false otherwise.</returns>
         public static bool operator >=(
             CalendarMonth left,
@@ -183,7 +181,10 @@ namespace OBeautifulCode.AccountingTime
 
             var thisDay = new DateTime(this.Year, (int)this.MonthOfYear, 1);
             var otherDay = new DateTime(other.Year, (int)other.MonthOfYear, 1);
-            return thisDay.CompareTo(otherDay);
+
+            var result = thisDay.CompareTo(otherDay);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -196,7 +197,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("object is not a calendar month", nameof(obj));
             }
 
-            return this.CompareTo(other);
+            var result = this.CompareTo(other);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -211,14 +214,17 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
-            var clone = new CalendarMonth(this.Year, this.MonthOfYear);
-            return clone;
+            var result = new CalendarMonth(this.Year, this.MonthOfYear);
+
+            return result;
         }
 
         /// <inheritdoc />
         public override string ToString()
         {
-            return Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
+            var result = Invariant($"{this.Year:D4}-{(int)this.MonthOfYear:D2}");
+
+            return result;
         }
     }
 }

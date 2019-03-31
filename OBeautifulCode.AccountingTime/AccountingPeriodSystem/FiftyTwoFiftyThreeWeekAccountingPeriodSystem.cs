@@ -7,12 +7,16 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
     /// </summary>
     [Serializable]
-    public class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : AccountingPeriodSystem
+    public class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : AccountingPeriodSystem, IEquatable<FiftyTwoFiftyThreeWeekAccountingPeriodSystem>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem"/> class.
@@ -26,10 +30,8 @@ namespace OBeautifulCode.AccountingTime
             MonthOfYear anchorMonth,
             FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
         {
-            if (anchorMonth == MonthOfYear.Invalid)
-            {
-                throw new ArgumentException("anchor month is invalid", nameof(anchorMonth));
-            }
+            new { anchorMonth }.Must().NotBeEqualTo(MonthOfYear.Invalid);
+            new { fiftyTwoFiftyThreeWeekMethodology }.Must().NotBeEqualTo(FiftyTwoFiftyThreeWeekMethodology.Unknown);
 
             this.LastDayOfWeekInAccountingYear = lastDayOfWeekInAccountingYear;
             this.AnchorMonth = anchorMonth;
@@ -55,43 +57,104 @@ namespace OBeautifulCode.AccountingTime
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
         public FiftyTwoFiftyThreeWeekMethodology FiftyTwoFiftyThreeWeekMethodology { get; private set; }
 
+        /// <summary>
+        /// Determines whether two objects of type <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem"/> are equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>True if the two items are equal; false otherwise.</returns>
+        public static bool operator ==(
+            FiftyTwoFiftyThreeWeekAccountingPeriodSystem left,
+            FiftyTwoFiftyThreeWeekAccountingPeriodSystem right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            var result =
+                (left.LastDayOfWeekInAccountingYear == right.LastDayOfWeekInAccountingYear) &&
+                (left.AnchorMonth == right.AnchorMonth) &&
+                (left.FiftyTwoFiftyThreeWeekMethodology == right.FiftyTwoFiftyThreeWeekMethodology);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem"/> are not equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>True if the two items not equal; false otherwise.</returns>
+        public static bool operator !=(
+            FiftyTwoFiftyThreeWeekAccountingPeriodSystem left,
+            FiftyTwoFiftyThreeWeekAccountingPeriodSystem right)
+            => !(left == right);
+
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
         public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            if (fiscalYear == null)
-            {
-                throw new ArgumentNullException(nameof(fiscalYear));
-            }
+            new { fiscalYear }.Must().NotBeNull();
 
             var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
             var lastDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year).ToCalendarDay();
+
             var result = new ReportingPeriod<CalendarDay>(firstDayInYear, lastDayInYear);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public bool Equals(FiftyTwoFiftyThreeWeekAccountingPeriodSystem other) => this == other;
+
+        /// <inheritdoc />
+        public override bool Equals(object obj) => this == (obj as FiftyTwoFiftyThreeWeekAccountingPeriodSystem);
+
+        /// <inheritdoc />
+        public override int GetHashCode() =>
+            HashCodeHelper.Initialize()
+                .Hash(this.LastDayOfWeekInAccountingYear)
+                .Hash(this.AnchorMonth)
+                .Hash(this.FiftyTwoFiftyThreeWeekMethodology)
+                .Value;
+
+        /// <inheritdoc />
+        public override AccountingPeriodSystem DeepClone()
+        {
+            var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(this.LastDayOfWeekInAccountingYear, this.AnchorMonth, this.FiftyTwoFiftyThreeWeekMethodology);
+
             return result;
         }
 
         private DateTime GetAccountingYearEndDate(
             int year)
         {
-            var lastDayInYear = new DateTime(year, (int)this.AnchorMonth, DateTime.DaysInMonth(year, (int)this.AnchorMonth));
+            var result = new DateTime(year, (int)this.AnchorMonth, DateTime.DaysInMonth(year, (int)this.AnchorMonth));
+
             if (this.FiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth)
             {
-                if (lastDayInYear.DayOfWeek != this.LastDayOfWeekInAccountingYear)
+                if (result.DayOfWeek != this.LastDayOfWeekInAccountingYear)
                 {
-                    lastDayInYear = lastDayInYear.Previous(this.LastDayOfWeekInAccountingYear);
+                    result = result.Previous(this.LastDayOfWeekInAccountingYear);
                 }
             }
             else if (this.FiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth)
             {
-                if (lastDayInYear.DayOfWeek != this.LastDayOfWeekInAccountingYear)
+                if (result.DayOfWeek != this.LastDayOfWeekInAccountingYear)
                 {
-                    var prior = lastDayInYear.Previous(this.LastDayOfWeekInAccountingYear);
-                    var next = lastDayInYear.Next(this.LastDayOfWeekInAccountingYear);
-                    var priorDaysDifference = (lastDayInYear - prior).TotalDays;
-                    var nextDaysDifference = (next - lastDayInYear).TotalDays;
-                    lastDayInYear = priorDaysDifference < nextDaysDifference ? prior : next;
+                    var prior = result.Previous(this.LastDayOfWeekInAccountingYear);
+                    var next = result.Next(this.LastDayOfWeekInAccountingYear);
+                    var priorDaysDifference = (result - prior).TotalDays;
+                    var nextDaysDifference = (next - result).TotalDays;
+                    result = priorDaysDifference < nextDaysDifference ? prior : next;
                 }
             }
             else
@@ -99,7 +162,7 @@ namespace OBeautifulCode.AccountingTime
                 throw new NotSupportedException("This methodology is not supported: " + this.FiftyTwoFiftyThreeWeekMethodology);
             }
 
-            return lastDayInYear;
+            return result;
         }
     }
 }

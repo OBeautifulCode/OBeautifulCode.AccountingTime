@@ -15,6 +15,11 @@ namespace OBeautifulCode.AccountingTime
     public enum FiftyTwoFiftyThreeWeekMethodology
     {
         /// <summary>
+        /// Unknown (default).
+        /// </summary>
+        Unknown,
+
+        /// <summary>
         /// Accounting year ends on whatever date the chosen day of the week last occurs in the anchor month.
         /// </summary>
         LastOccurrenceInAnchorMonth,

@@ -19,13 +19,13 @@ namespace OBeautifulCode.AccountingTime.Test
     public static class QuarterNumberExtensionsTest
     {
         [Fact]
-        public static void ToCalendar___Should_throw_ArgumentException___When_parameter_quarterNumber_is_Invalid()
+        public static void ToCalendar___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
             var ex = Record.Exception(() => QuarterNumber.Invalid.ToCalendar(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -42,13 +42,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void ToFiscal___Should_throw_ArgumentException___When_parameter_quarterNumber_is_Invalid()
+        public static void ToFiscal___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
             var ex = Record.Exception(() => QuarterNumber.Invalid.ToFiscal(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -65,13 +65,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void ToGeneric___Should_throw_ArgumentException___When_parameter_quarterNumber_is_Invalid()
+        public static void ToGeneric___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
             var ex = Record.Exception(() => QuarterNumber.Invalid.ToGeneric(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

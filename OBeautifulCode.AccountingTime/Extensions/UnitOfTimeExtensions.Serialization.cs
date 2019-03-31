@@ -7,8 +7,11 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Text.RegularExpressions;
+
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -51,14 +54,15 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid unit-of-time.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Deserializing is inheritently complex and requires lots of types.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Deserializing is inheritently complex and requires lots of types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Deserializing is inheritently complex and requires lots of types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Deserializing is inheritently complex and requires lots of types.")]
         public static T DeserializeFromSortableString<T>(
             this string unitOfTime)
             where T : UnitOfTime
         {
-            var ret = (T)DeserializeFromSortableString(unitOfTime, typeof(T));
-            return ret;
+            var result = (T)DeserializeFromSortableString(unitOfTime, typeof(T));
+
+            return result;
         }
 
         /// <summary>
@@ -72,8 +76,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid unit-of-time.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Keeping previous layout, is easy to read.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Keeping previous layout, is easy to read.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Keeping previous layout, is easy to read.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Keeping previous layout, is easy to read.")]
         public static UnitOfTime DeserializeFromSortableString(this string unitOfTime, Type type)
         {
             if (!UnitOfTime.IsUnitOfTimeType(type))
@@ -81,20 +85,8 @@ namespace OBeautifulCode.AccountingTime
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
             }
 
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
-
-            if (string.IsNullOrWhiteSpace(unitOfTime))
-            {
-                throw new ArgumentException("unit-of-time string is whitespace", nameof(unitOfTime));
-            }
+            new { type }.Must().NotBeNull();
+            new { unitOfTime }.Must().NotBeNullNorWhiteSpace();
 
             var serializationFormatMatch = SerializationFormatByType.Select(_ => new { Match = _.Regex.Match(unitOfTime), SerializationFormat = _ }).SingleOrDefault(_ => _.Match.Success);
             if (serializationFormatMatch == null)
@@ -119,8 +111,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new CalendarDay(year, month, day);
-                    return deserialized;
+                    var result = new CalendarDay(year, month, day);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -135,8 +128,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new CalendarMonth(year, month);
-                    return deserialized;
+                    var result = new CalendarMonth(year, month);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -151,8 +145,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new CalendarQuarter(year, quarter);
-                    return deserialized;
+                    var result = new CalendarQuarter(year, quarter);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -166,8 +161,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new CalendarYear(year);
-                    return deserialized;
+                    var result = new CalendarYear(year);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -177,8 +173,9 @@ namespace OBeautifulCode.AccountingTime
 
             if (serializedType == typeof(CalendarUnbounded))
             {
-                var deserialized = new CalendarUnbounded();
-                return deserialized;
+                var result = new CalendarUnbounded();
+
+                return result;
             }
 
             if (serializedType == typeof(FiscalMonth))
@@ -188,8 +185,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new FiscalMonth(year, month);
-                    return deserialized;
+                    var result = new FiscalMonth(year, month);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -204,8 +202,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new FiscalQuarter(year, quarter);
-                    return deserialized;
+                    var result = new FiscalQuarter(year, quarter);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -219,8 +218,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new FiscalYear(year);
-                    return deserialized;
+                    var result = new FiscalYear(year);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -230,8 +230,9 @@ namespace OBeautifulCode.AccountingTime
 
             if (serializedType == typeof(FiscalUnbounded))
             {
-                var deserialized = new FiscalUnbounded();
-                return deserialized;
+                var result = new FiscalUnbounded();
+
+                return result;
             }
 
             if (serializedType == typeof(GenericMonth))
@@ -241,8 +242,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new GenericMonth(year, month);
-                    return deserialized;
+                    var result = new GenericMonth(year, month);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -257,8 +259,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new GenericQuarter(year, quarter);
-                    return deserialized;
+                    var result = new GenericQuarter(year, quarter);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -272,8 +275,9 @@ namespace OBeautifulCode.AccountingTime
 
                 try
                 {
-                    var deserialized = new GenericYear(year);
-                    return deserialized;
+                    var result = new GenericYear(year);
+
+                    return result;
                 }
                 catch (ArgumentException)
                 {
@@ -283,8 +287,9 @@ namespace OBeautifulCode.AccountingTime
 
             if (serializedType == typeof(GenericUnbounded))
             {
-                var deserialized = new GenericUnbounded();
-                return deserialized;
+                var result = new GenericUnbounded();
+
+                return result;
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + serializedType);
@@ -303,10 +308,7 @@ namespace OBeautifulCode.AccountingTime
         public static string SerializeToSortableString(
             this UnitOfTime unitOfTime)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
+            new { unitOfTime }.Must().NotBeNull();
 
             var unitOfTimeType = unitOfTime.GetType();
 
@@ -315,24 +317,28 @@ namespace OBeautifulCode.AccountingTime
                 case CalendarDay unitOfTimeAsCalendarDay:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarDay.Year:D4}-{(int)unitOfTimeAsCalendarDay.MonthNumber:D2}-{(int)unitOfTimeAsCalendarDay.DayOfMonth:D2}");
+
                     return result;
                 }
 
                 case CalendarMonth unitOfTimeAsCalendarMonth:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarMonth.Year:D4}-{(int)unitOfTimeAsCalendarMonth.MonthNumber:D2}");
+
                     return result;
                 }
 
                 case CalendarQuarter unitOfTimeAsCalendarQuarter:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarQuarter.Year:D4}-Q{(int)unitOfTimeAsCalendarQuarter.QuarterNumber}");
+
                     return result;
                 }
 
                 case CalendarYear unitOfTimeAsCalendarYear:
                 {
                     var result = Invariant($"c-{unitOfTimeAsCalendarYear.Year:D4}");
+
                     return result;
                 }
 
@@ -345,18 +351,21 @@ namespace OBeautifulCode.AccountingTime
                 case FiscalMonth unitOfTimeAsFiscalMonth:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalMonth.Year:D4}-{(int)unitOfTimeAsFiscalMonth.MonthNumber:D2}");
+
                     return result;
                 }
 
                 case FiscalQuarter unitOfTimeAsFiscalQuarter:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalQuarter.Year:D4}-Q{(int)unitOfTimeAsFiscalQuarter.QuarterNumber}");
+
                     return result;
                 }
 
                 case FiscalYear unitOfTimeAsFiscalYear:
                 {
                     var result = Invariant($"f-{unitOfTimeAsFiscalYear.Year:D4}");
+
                     return result;
                 }
 
@@ -369,24 +378,28 @@ namespace OBeautifulCode.AccountingTime
                 case GenericMonth unitOfTimeAsGenericMonth:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericMonth.Year:D4}-{(int)unitOfTimeAsGenericMonth.MonthNumber:D2}");
+
                     return result;
                 }
 
                 case GenericQuarter unitOfTimeAsGenericQuarter:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericQuarter.Year:D4}-Q{(int)unitOfTimeAsGenericQuarter.QuarterNumber}");
+
                     return result;
                 }
 
                 case GenericYear unitOfTimeAsGenericYear:
                 {
                     var result = Invariant($"g-{unitOfTimeAsGenericYear.Year:D4}");
+
                     return result;
                 }
 
                 case GenericUnbounded _:
                 {
                     var result = "g-unbounded";
+
                     return result;
                 }
 
@@ -399,12 +412,12 @@ namespace OBeautifulCode.AccountingTime
             string token,
             string errorMessage)
         {
-            if (!int.TryParse(token, out var intValue))
+            if (!int.TryParse(token, out var result))
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
-            return intValue;
+            return result;
         }
 
         private static T ParseEnumOrThrow<T>(
@@ -412,15 +425,15 @@ namespace OBeautifulCode.AccountingTime
             string errorMessage)
             where T : struct, IConvertible
         {
-            int intValue = ParseIntOrThrow(token, errorMessage);
+            var intValue = ParseIntOrThrow(token, errorMessage);
             var enumType = typeof(T);
-            T enumValue = (T)Enum.ToObject(enumType, intValue);
-            if (!Enum.IsDefined(enumType, enumValue))
+            T result = (T)Enum.ToObject(enumType, intValue);
+            if (!Enum.IsDefined(enumType, result))
             {
                 throw new InvalidOperationException(errorMessage);
             }
 
-            return enumValue;
+            return result;
         }
 
         private class SerializationFormat

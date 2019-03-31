@@ -18,13 +18,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class UnitOfTimeStringSerializer : IStringSerializeAndDeserialize
     {
         /// <inheritdoc />
-        public SerializationKind SerializationKind => SerializationKind.Default;
-
-        /// <inheritdoc />
         public Type ConfigurationType => null;
 
         /// <inheritdoc />
-        public string SerializeToString(object objectToSerialize)
+        public string SerializeToString(
+            object objectToSerialize)
         {
             if (objectToSerialize is UnitOfTime objectAsUnitOfTime)
             {
@@ -32,14 +30,17 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implmenter {nameof(UnitOfTime)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(UnitOfTime)}."));
             }
         }
 
         /// <inheritdoc />
-        public T Deserialize<T>(string serializedString)
+        public T Deserialize<T>(
+            string serializedString)
         {
-            return (T)this.Deserialize(serializedString, typeof(T));
+            var result = (T)this.Deserialize(serializedString, typeof(T));
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -47,10 +48,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
         {
             if (!UnitOfTime.IsUnitOfTimeType(type))
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(UnitOfTime)}."));
             }
 
-            return serializedString.DeserializeFromSortableString(type);
+            var result = serializedString.DeserializeFromSortableString(type);
+
+            return result;
         }
     }
 }

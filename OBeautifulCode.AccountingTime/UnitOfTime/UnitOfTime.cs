@@ -7,14 +7,15 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-    using System.ComponentModel;
+
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     /// <summary>
     /// Represents a unit of time, such as a month, quarter, or year.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     [Serializable]
-    [Bindable(true, BindingDirection.TwoWay)]
+    [SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
     public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
     {
         /// <summary>
@@ -23,15 +24,15 @@ namespace OBeautifulCode.AccountingTime
         public abstract UnitOfTimeKind UnitOfTimeKind { get; }
 
         /// <summary>
-        /// Gets the granuarlity of the unit-of-time.
+        /// Gets the granularity of the unit-of-time.
         /// </summary>
         public abstract UnitOfTimeGranularity UnitOfTimeGranularity { get; }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="UnitOfTime" /> are equal.
         /// </summary>
-        /// <param name="left">The first unit-of-time to compare.</param>
-        /// <param name="right">The second unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two units-of-time are equal; false otherwise.</returns>
         public static bool operator ==(
             UnitOfTime left,
@@ -48,14 +49,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.Equals((object)right);
+
             return result;
         }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="UnitOfTime" /> are not equal.
         /// </summary>
-        /// <param name="left">The first unit-of-time to compare.</param>
-        /// <param name="right">The second unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two units-of-time are not equal; false otherwise.</returns>
         public static bool operator !=(
             UnitOfTime left,
@@ -65,8 +67,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a unit-of-time is less than another unit-of-time.
         /// </summary>
-        /// <param name="left">The left-hand unit-of-time to compare.</param>
-        /// <param name="right">The right-hand unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unit-of-time is less than the right-hand unit-of-time; false otherwise.</returns>
         public static bool operator <(
             UnitOfTime left,
@@ -83,14 +85,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a unit-of-time is greater than another unit-of-time.
         /// </summary>
-        /// <param name="left">The left-hand unit-of-time to compare.</param>
-        /// <param name="right">The right-hand unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unit-of-time is greater than the right-hand unit-of-time; false otherwise.</returns>
         public static bool operator >(
             UnitOfTime left,
@@ -107,14 +110,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a unit-of-time is less than or equal to than another unit-of-time.
         /// </summary>
-        /// <param name="left">The left-hand unit-of-time to compare.</param>
-        /// <param name="right">The right-hand unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unit-of-time is less than or equal to the right-hand unit-of-time; false otherwise.</returns>
         public static bool operator <=(
             UnitOfTime left,
@@ -124,8 +128,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a unit-of-time is greater than or equal to than another unit-of-time.
         /// </summary>
-        /// <param name="left">The left-hand unit-of-time to compare.</param>
-        /// <param name="right">The right-hand unit-of-time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unit-of-time is greater than or equal to the right-hand unit-of-time; false otherwise.</returns>
         public static bool operator >=(
             UnitOfTime left,
@@ -139,18 +143,9 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>A value indicating whether or not it's a valid type.</returns>
         public static bool IsUnitOfTimeType(Type type)
         {
-            var iteratingType = type;
-            while (iteratingType != null)
-            {
-                if (iteratingType == typeof(UnitOfTime))
-                {
-                    return true;
-                }
+            var result = TypeHelper.GetAllUnitOfTimeTypes().Contains(type);
 
-                iteratingType = iteratingType.BaseType;
-            }
-
-            return false;
+            return result;
         }
 
         /// <inheritdoc />
@@ -184,7 +179,9 @@ namespace OBeautifulCode.AccountingTime
                 return 1;
             }
 
-            return this.CompareTo((object)other);
+            var result = this.CompareTo((object)other);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -209,10 +206,12 @@ namespace OBeautifulCode.AccountingTime
             var returnType = typeof(T);
             if (!returnType.IsAssignableFrom(cloneType))
             {
-                throw new InvalidOperationException("The cloned object cannot be casted to the specified generic type.");
+                throw new InvalidOperationException("The cloned object cannot be cast to the specified generic type.");
             }
 
-            return clone as T;
+            var result = clone as T;
+
+            return result;
         }
 
         /// <summary>

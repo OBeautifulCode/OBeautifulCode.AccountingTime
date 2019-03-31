@@ -50,7 +50,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_monthOfYear_is_Invalid()
+        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_monthOfYear_is_Invalid()
         {
             // Arrange
             var validMonth = A.Dummy<CalendarMonth>();
@@ -59,7 +59,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => new CalendarMonth(validMonth.Year, MonthOfYear.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

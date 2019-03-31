@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
     using FakeItEasy;
@@ -61,7 +62,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_monthOfYear_is_Invalid()
+        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_monthOfYear_is_Invalid()
         {
             // Arrange
             var validDay = A.Dummy<CalendarDay>();
@@ -70,11 +71,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => new CalendarDay(validDay.Year, MonthOfYear.Invalid, validDay.DayOfMonth));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_dayOfMonth_is_Invalid()
+        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_dayOfMonth_is_Invalid()
         {
             // Arrange
             var validDay = A.Dummy<CalendarDay>();
@@ -83,7 +84,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => new CalendarDay(validDay.Year, validDay.MonthOfYear, DayOfMonth.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -1242,7 +1243,7 @@ namespace OBeautifulCode.AccountingTime.Test
             granularity.Should().Be(UnitOfTimeGranularity.Day);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "OBeautifulCode.AccountingTime.CalendarDay", Justification = "In this case we are trying to determine if creating the object will throw.")]
+        [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "OBeautifulCode.AccountingTime.CalendarDay", Justification = "In this case we are trying to determine if creating the object will throw.")]
         private static CalendarDay TweakComponentOfCalendarDay(this CalendarDay calendarDay, CalendarDayComponent componentToTweak)
         {
             if (componentToTweak == CalendarDayComponent.Day)
@@ -1305,7 +1306,7 @@ namespace OBeautifulCode.AccountingTime.Test
             throw new NotSupportedException("this calendar day component is not supported: " + componentToTweak);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The purpose of this method is to determine if any exception has been thrown.")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The purpose of this method is to determine if any exception has been thrown.")]
         private static bool DoesNotThrow(Action action)
         {
             try

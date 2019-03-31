@@ -8,6 +8,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
@@ -20,7 +21,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are a lot of unit-of-time types.")]
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are a lot of unit-of-time types.")]
     public static class ReportingPeriodTest
     {
         [Fact]
@@ -1914,7 +1915,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all units-of-time")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all units-of-time")]
         public static void Clone___Should_return_deep_clone_of_reporting_period___When_called()
         {
             // Arrange
@@ -1951,7 +1952,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
         public static void Clone_with_type_parameter___Should_throw_InvalidOperationException___When_the_cloned_reporting_period_cannot_be_assigned_to_the_return_type()
         {
             // Arrange
@@ -2031,7 +2032,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
         public static void Clone_with_type_parameter___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_cloned_cannot_be_assigned_to_the_return_types_unit_of_time()
         {
             // Arrange
@@ -2071,7 +2072,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarDay()
         {
             // Arrange
@@ -2098,7 +2099,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarMonth()
         {
             // Arrange
@@ -2125,7 +2126,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarQuarter()
         {
             // Arrange
@@ -2152,7 +2153,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarYear()
         {
             // Arrange
@@ -2179,7 +2180,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnbounded()
         {
             // Arrange
@@ -2206,7 +2207,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnitOfTime()
         {
             // Arrange
@@ -2263,7 +2264,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalMonth()
         {
             // Arrange
@@ -2290,7 +2291,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalQuarter()
         {
             // Arrange
@@ -2317,7 +2318,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalYear()
         {
             // Arrange
@@ -2344,7 +2345,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnbounded()
         {
             // Arrange
@@ -2371,7 +2372,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnitOfTime()
         {
             // Arrange
@@ -2428,7 +2429,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericMonth()
         {
             // Arrange
@@ -2455,7 +2456,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericQuarter()
         {
             // Arrange
@@ -2482,7 +2483,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericYear()
         {
             // Arrange
@@ -2509,7 +2510,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnbounded()
         {
             // Arrange
@@ -2536,7 +2537,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
         public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnitOfTime()
         {
             // Arrange

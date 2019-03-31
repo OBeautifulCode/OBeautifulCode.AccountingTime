@@ -24,8 +24,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="CalendarUnbounded" /> are equal.
         /// </summary>
-        /// <param name="left">The first unbounded time to compare.</param>
-        /// <param name="right">The second unbounded time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two unbounded times are equal; false otherwise.</returns>
         public static bool operator ==(
             CalendarUnbounded left,
@@ -47,8 +47,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="CalendarUnbounded" /> are not equal.
         /// </summary>
-        /// <param name="left">The first unbounded time to compare.</param>
-        /// <param name="right">The second unbounded time to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two unbounded times are not equal; false otherwise.</returns>
         public static bool operator !=(
             CalendarUnbounded left,
@@ -58,8 +58,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a unbounded is less than another unbounded.
         /// </summary>
-        /// <param name="left">The left-hand unbounded to compare.</param>
-        /// <param name="right">The right-hand unbounded to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is less than the right-hand unbounded; false otherwise.</returns>
         public static bool operator <(
             CalendarUnbounded left,
@@ -76,14 +76,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a unbounded is greater than another unbounded.
         /// </summary>
-        /// <param name="left">The left-hand unbounded to compare.</param>
-        /// <param name="right">The right-hand unbounded to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is greater than the right-hand unbounded; false otherwise.</returns>
         public static bool operator >(
             CalendarUnbounded left,
@@ -100,14 +101,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a unbounded is less than or equal to than another unbounded.
         /// </summary>
-        /// <param name="left">The left-hand unbounded to compare.</param>
-        /// <param name="right">The right-hand unbounded to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is less than or equal to the right-hand unbounded; false otherwise.</returns>
         public static bool operator <=(
             CalendarUnbounded left,
@@ -117,8 +119,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a unbounded is greater than or equal to than another unbounded.
         /// </summary>
-        /// <param name="left">The left-hand unbounded to compare.</param>
-        /// <param name="right">The right-hand unbounded to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is greater than or equal to the right-hand unbounded; false otherwise.</returns>
         public static bool operator >=(
             CalendarUnbounded left,
@@ -169,14 +171,17 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
-            var clone = new CalendarUnbounded();
-            return clone;
+            var result = new CalendarUnbounded();
+
+            return result;
         }
 
         /// <inheritdoc />
         public override string ToString()
         {
-            return Invariant($"calendar unbounded");
+            var result = Invariant($"calendar unbounded");
+
+            return result;
         }
     }
 }

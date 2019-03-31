@@ -19,7 +19,7 @@ namespace OBeautifulCode.AccountingTime.Test
     public static class UnitOfTimeGranularityExtensionsTest
     {
         [Fact]
-        public static void IsLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
+        public static void IsLessGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
             var granularity1 = UnitOfTimeGranularity.Invalid;
@@ -29,11 +29,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsLessGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void IsLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
+        public static void IsLessGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
             var granularity1 = A.Dummy<UnitOfTimeGranularity>();
@@ -43,7 +43,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsLessGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
+        public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
             var granularity1 = UnitOfTimeGranularity.Invalid;
@@ -111,11 +111,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsAsGranularOrLessGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
+        public static void IsAsGranularOrLessGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
             var granularity1 = A.Dummy<UnitOfTimeGranularity>();
@@ -125,7 +125,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsAsGranularOrLessGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -183,7 +183,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
+        public static void IsMoreGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
             var granularity1 = UnitOfTimeGranularity.Invalid;
@@ -193,11 +193,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsMoreGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void IsMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
+        public static void IsMoreGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
             var granularity1 = A.Dummy<UnitOfTimeGranularity>();
@@ -207,7 +207,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsMoreGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -265,7 +265,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity1_is_Invalid()
+        public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity1_is_Invalid()
         {
             // Arrange
             var granularity1 = UnitOfTimeGranularity.Invalid;
@@ -275,11 +275,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsAsGranularOrMoreGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentException___When_parameter_granularity2_is_Invalid()
+        public static void IsAsGranularOrMoreGranularThan___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity2_is_Invalid()
         {
             // Arrange
             var granularity1 = A.Dummy<UnitOfTimeGranularity>();
@@ -289,7 +289,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity1.IsAsGranularOrMoreGranularThan(granularity2));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsMostGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        public static void IsMostGranular___Should_throw_ArgumentOutOfRangeException__When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Invalid;
@@ -356,7 +356,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity.IsMostGranular());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -386,7 +386,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsLeastGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        public static void IsLeastGranular___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Invalid;
@@ -395,7 +395,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity.IsLeastGranular());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -425,7 +425,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void OneNotchMoreGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        public static void OneNotchMoreGranular___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Invalid;
@@ -434,7 +434,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity.OneNotchMoreGranular());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -470,7 +470,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void OneNotchLessGranular___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        public static void OneNotchLessGranular___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Invalid;
@@ -479,7 +479,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => granularity.OneNotchLessGranular());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

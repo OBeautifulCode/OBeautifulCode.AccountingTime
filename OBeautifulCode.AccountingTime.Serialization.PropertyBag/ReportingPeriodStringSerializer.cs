@@ -7,8 +7,6 @@
 namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     using Naos.Serialization.Domain;
 
@@ -20,13 +18,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class ReportingPeriodStringSerializer : IStringSerializeAndDeserialize
     {
         /// <inheritdoc />
-        public SerializationKind SerializationKind => SerializationKind.Default;
-
-        /// <inheritdoc />
         public Type ConfigurationType => null;
 
         /// <inheritdoc />
-        public string SerializeToString(object objectToSerialize)
+        public string SerializeToString(
+            object objectToSerialize)
         {
             if (objectToSerialize is IReportingPeriod<UnitOfTime> objectAsReportingPeriod)
             {
@@ -34,48 +30,32 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implmenter {nameof(IReportingPeriod<UnitOfTime>)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(IReportingPeriod<UnitOfTime>)}"));
             }
         }
 
         /// <inheritdoc />
-        public T Deserialize<T>(string serializedString)
+        public T Deserialize<T>(
+            string serializedString)
         {
-            return (T)this.Deserialize(serializedString, typeof(T));
+            var result = (T)this.Deserialize(serializedString, typeof(T));
+
+            return result;
         }
 
         /// <inheritdoc />
-        public object Deserialize(string serializedString, Type type)
+        public object Deserialize(
+            string serializedString,
+            Type type)
         {
-            if (!IsReportingPeriod(type))
+            if (!ReportingPeriod<UnitOfTime>.IsReportingPeriodType(type))
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(IReportingPeriod<UnitOfTime>)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(IReportingPeriod<UnitOfTime>)}"));
             }
 
-            return serializedString.DeserializeFromString(type);
-        }
+            var result = serializedString.DeserializeFromString(type);
 
-        private static bool IsReportingPeriod(Type type)
-        {
-            var queue = new Queue<Type>(new[] { type });
-            while (queue.Any())
-            {
-                var item = queue.Dequeue();
-                if (item == null)
-                {
-                    continue;
-                }
-
-                if (item.IsGenericType && item.GetGenericTypeDefinition() == typeof(IReportingPeriod<>))
-                {
-                    return true;
-                }
-
-                item.GetInterfaces().ToList().ForEach(_ => queue.Enqueue(_));
-                queue.Enqueue(item.BaseType);
-            }
-
-            return false;
+            return result;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace OBeautifulCode.AccountingTime
     using System.Collections.Generic;
     using System.Linq;
 
+    using OBeautifulCode.Validation.Recipes;
+
     /// <summary>
     /// Property-related extension methods on <see cref="UnitOfTime"/>.
     /// </summary>
@@ -27,10 +29,10 @@ namespace OBeautifulCode.AccountingTime
         public static CalendarDay GetFirstCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
+            new { unitOfTime }.Must().NotBeNull();
+
             switch (unitOfTime)
             {
-                case null:
-                    throw new ArgumentNullException(nameof(unitOfTime));
                 case CalendarDay unitOfTimeAsCalendarDay:
                     return unitOfTimeAsCalendarDay.GetFirstCalendarDay();
                 case CalendarMonth unitOfTimeAsCalendarMonth:
@@ -58,10 +60,10 @@ namespace OBeautifulCode.AccountingTime
         public static CalendarDay GetLastCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
+            new { unitOfTime }.Must().NotBeNull();
+
             switch (unitOfTime)
             {
-                case null:
-                    throw new ArgumentNullException(nameof(unitOfTime));
                 case CalendarDay unitOfTimeAsCalendarDay:
                     return unitOfTimeAsCalendarDay.GetLastCalendarDay();
                 case CalendarMonth unitOfTimeAsCalendarMonth:
@@ -92,10 +94,7 @@ namespace OBeautifulCode.AccountingTime
             this T lastUnitOfTimeInYear)
             where T : UnitOfTime, IHaveAYear
         {
-            if (lastUnitOfTimeInYear == null)
-            {
-                throw new ArgumentNullException(nameof(lastUnitOfTimeInYear));
-            }
+            new { lastUnitOfTimeInYear }.Must().NotBeNull();
 
             var unitsToDate = new Stack<T>();
             var thisYear = lastUnitOfTimeInYear.Year;
@@ -106,19 +105,23 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = unitsToDate.ToList();
+
             return result;
         }
 
         private static CalendarDay GetFirstCalendarDay(
             this CalendarDay day)
         {
-            return day;
+            var result = day;
+
+            return result;
         }
 
         private static CalendarDay GetFirstCalendarDay(
             this CalendarMonth month)
         {
             var result = new CalendarDay(month.Year, month.MonthOfYear, DayOfMonth.One);
+
             return result;
         }
 
@@ -126,6 +129,7 @@ namespace OBeautifulCode.AccountingTime
             this CalendarQuarter quarter)
         {
             var result = new CalendarDay(quarter.Year, (MonthOfYear)((((int)quarter.QuarterNumber - 1) * 3) + 1), DayOfMonth.One);
+
             return result;
         }
 
@@ -133,20 +137,25 @@ namespace OBeautifulCode.AccountingTime
             this CalendarYear year)
         {
             var result = new CalendarDay(year.Year, MonthOfYear.January, DayOfMonth.One);
+
             return result;
         }
 
         private static CalendarDay GetLastCalendarDay(
             this CalendarDay day)
         {
-            return day;
+            var result = day;
+
+            return result;
         }
 
         private static CalendarDay GetLastCalendarDay(
             this CalendarMonth month)
         {
             var daysInMonth = DateTime.DaysInMonth(month.Year, (int)month.MonthNumber);
+
             var result = new CalendarDay(month.Year, month.MonthOfYear, (DayOfMonth)daysInMonth);
+
             return result;
         }
 
@@ -154,7 +163,9 @@ namespace OBeautifulCode.AccountingTime
             this CalendarQuarter quarter)
         {
             var lastMonthInQuarter = new CalendarMonth(quarter.Year, (MonthOfYear)((int)quarter.QuarterNumber * 3));
+
             var result = lastMonthInQuarter.GetLastCalendarDay();
+
             return result;
         }
 
@@ -162,6 +173,7 @@ namespace OBeautifulCode.AccountingTime
             this CalendarYear year)
         {
             var result = new CalendarDay(year.Year, MonthOfYear.December, DayOfMonth.ThirtyOne);
+
             return result;
         }
     }

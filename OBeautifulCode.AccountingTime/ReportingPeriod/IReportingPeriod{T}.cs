@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Represents a range of time over which to report, inclusive of the endpoints.
@@ -23,7 +24,7 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         ///  Gets the end of the reporting period.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "End", Justification = "This is a succinct and clear identifier for this property.")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "End", Justification = "This is a succinct and clear identifier for this property.")]
         T End { get; }
 
         /// <summary>

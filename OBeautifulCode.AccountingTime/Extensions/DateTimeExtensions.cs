@@ -24,6 +24,7 @@ namespace OBeautifulCode.AccountingTime
             this DateTime value)
         {
             var result = new CalendarDay(value.Year, (MonthOfYear)value.Month, (DayOfMonth)value.Day);
+
             return result;
         }
     }

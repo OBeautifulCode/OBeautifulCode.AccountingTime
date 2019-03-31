@@ -8,6 +8,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
@@ -18,7 +19,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
     public static partial class ReportingPeriodExtensionsTest
     {
         [Fact]
@@ -38,7 +39,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_reportingPeriodComponent_is_Invalid()
+        public static void CloneWithAdjustment___Should_throw_ArgumentOutOfRangeException___When_parameter_reportingPeriodComponent_is_Invalid()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
@@ -49,12 +50,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(ReportingPeriodComponent.Invalid, unitsToAdd, granularityToAdd));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
-        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Invalid()
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
+        public static void CloneWithAdjustment___Should_throw_ArgumentOutOfRangeException___When_parameter_granularityOfUnitsToAdd_is_Invalid()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
@@ -65,12 +66,12 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
-        public static void CloneWithAdjustment___Should_throw_ArgumentException___When_parameter_granularityOfUnitsToAdd_is_Unbounded()
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
+        public static void CloneWithAdjustment___Should_throw_ArgumentOutOfRangeException___When_parameter_granularityOfUnitsToAdd_is_Unbounded()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<UnitOfTime>>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
@@ -81,7 +82,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment<IReportingPeriod<UnitOfTime>>(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Unbounded));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -119,8 +120,8 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "testing all the flavors of unit-of-time")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "Addis", Justification = "this is spelled correctly")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "testing all the flavors of unit-of-time")]
         public static void CloneWithAdjustment___Should_throw_ArgumentException___When_granularityOfUnitsToAdd_is_more_granular_than_component_being_adjusted()
         {
             // Arrange
@@ -944,7 +945,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_throw_ArgumentException___When_parameter_granularity_is_Invalid()
+        public static void Split___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => !_.HasComponentWithUnboundedGranularity());
@@ -953,11 +954,11 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => reportingPeriod.Split(UnitOfTimeGranularity.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public static void Split___Should_throw_ArgumentException___When_parameter_granularity_is_Unbounded()
+        public static void Split___Should_throw_ArgumentOutOfRangeException___When_parameter_granularity_is_Unbounded()
         {
             // Arrange
             var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => !_.HasComponentWithUnboundedGranularity());
@@ -966,7 +967,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => reportingPeriod.Split(UnitOfTimeGranularity.Unbounded));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

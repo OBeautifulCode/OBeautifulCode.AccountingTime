@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
@@ -15,7 +16,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
         [Fact]
@@ -29,13 +30,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void ToCalendarQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
+        public static void ToCalendarQuarter___Should_throw_ArgumentOutOfRangeException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
         {
             // Arrange, Act
             var ex = Record.Exception(() => A.Dummy<FiscalQuarter>().ToCalendarQuarter(QuarterNumber.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -99,13 +100,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void ToFiscalQuarter___Should_throw_ArgumentException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
+        public static void ToFiscalQuarter___Should_throw_ArgumentOutOfRangeException___When_parameter_calendarQuarterThatIsFirstFiscalQuarter_is_Invalid()
         {
             // Arrange, Act
             var ex = Record.Exception(() => A.Dummy<CalendarQuarter>().ToFiscalQuarter(QuarterNumber.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

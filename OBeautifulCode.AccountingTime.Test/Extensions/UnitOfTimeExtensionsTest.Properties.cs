@@ -8,6 +8,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
@@ -15,7 +16,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using Xunit;
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
+    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
         [Fact]

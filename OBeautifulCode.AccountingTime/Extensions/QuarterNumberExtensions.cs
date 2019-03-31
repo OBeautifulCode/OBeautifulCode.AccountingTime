@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using static System.FormattableString;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Extension methods on type <see cref="UnitOfTimeGranularity"/>.
@@ -28,12 +28,10 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            if (quarterNumber == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(quarterNumber)} is {nameof(QuarterNumber.Invalid)}"));
-            }
+            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new CalendarQuarter(year, quarterNumber);
+
             return result;
         }
 
@@ -50,12 +48,10 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            if (quarterNumber == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(quarterNumber)} is {nameof(QuarterNumber.Invalid)}"));
-            }
+            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new FiscalQuarter(year, quarterNumber);
+
             return result;
         }
 
@@ -72,12 +68,10 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            if (quarterNumber == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(quarterNumber)} is {nameof(QuarterNumber.Invalid)}"));
-            }
+            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new GenericQuarter(year, quarterNumber);
+
             return result;
         }
     }

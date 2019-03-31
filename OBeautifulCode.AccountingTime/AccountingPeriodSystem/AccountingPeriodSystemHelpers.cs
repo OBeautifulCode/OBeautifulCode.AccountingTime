@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <summary>
-    /// Heplper methods for objects of type <see cref="AccountingPeriodSystem"/>.
+    /// Helper methods for objects of type <see cref="AccountingPeriodSystem"/>.
     /// </summary>
     internal static class AccountingPeriodSystemHelpers
     {
@@ -25,13 +25,15 @@ namespace OBeautifulCode.AccountingTime
             this DateTime value,
             DayOfWeek dayOfWeek)
         {
-            int daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
+            var daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
             if (value.DayOfWeek >= dayOfWeek)
             {
                 daysToAdd += 7;
             }
 
-            return value.AddDays(daysToAdd);
+            var result = value.AddDays(daysToAdd);
+
+            return result;
         }
 
         /// <summary>
@@ -46,13 +48,15 @@ namespace OBeautifulCode.AccountingTime
             this DateTime value,
             DayOfWeek dayOfWeek)
         {
-            int daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
+            var daysToAdd = (int)dayOfWeek - (int)value.DayOfWeek;
             if (value.DayOfWeek <= dayOfWeek)
             {
                 daysToAdd -= 7;
             }
 
-            return value.AddDays(daysToAdd);
+            var result = value.AddDays(daysToAdd);
+
+            return result;
         }
     }
 }

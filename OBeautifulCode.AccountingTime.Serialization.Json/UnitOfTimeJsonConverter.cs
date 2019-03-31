@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     /// <summary>
     /// Converts a <see cref="UnitOfTime"/> to and from JSON.
     /// </summary>
-    // ReSharper disable once InheritdocConsiderUsage
     public class UnitOfTimeJsonConverter : JsonConverter
     {
         /// <inheritdoc />

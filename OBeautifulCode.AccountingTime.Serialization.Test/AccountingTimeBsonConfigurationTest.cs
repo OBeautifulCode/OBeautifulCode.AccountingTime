@@ -6,18 +6,13 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using FakeItEasy;
 
     using FluentAssertions;
 
     using MongoDB.Bson;
-    using MongoDB.Driver;
-
     using Naos.Serialization.Bson;
+    using Naos.Serialization.Domain;
 
     using OBeautifulCode.AccountingTime.Serialization.Bson;
 
@@ -25,21 +20,17 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     public class AccountingTimeBsonConfigurationTest
     {
-        private const string DatabaseName = "test";
-
-        private static readonly IMongoDatabase Database = new MongoClient().GetDatabase(DatabaseName);
-
         public AccountingTimeBsonConfigurationTest()
         {
-            BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>();
+            SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>();
         }
 
         [Fact]
         public static void Register___Should_not_throw___When_called_multiple_times()
         {
             // Arrange, Act
-            var ex1 = Record.Exception(() => BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
-            var ex2 = Record.Exception(() => BsonConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
+            var ex1 = Record.Exception(() => SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
+            var ex2 = Record.Exception(() => SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
 
             // Assert
             ex1.Should().BeNull();
@@ -47,65 +38,123 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public async Task UnitOfTimeModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
+        public void Deserialize___Should_roundtrip_a_serialized_AccountingPeriodSystemModel___When_model_contains_only_null_values()
         {
             // Arrange
-            var collection = Database.GetCollection<UnitOfTimeModel>(nameof(UnitOfTimeModel));
-            var expectedModel = A.Dummy<UnitOfTimeModel>();
+            var expected = new AccountingPeriodSystemModel();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
 
             // Act
-            collection.InsertOne(expectedModel);
-            var actualModel = (await collection.Find(_ => _.Id == expectedModel.Id).ToListAsync()).Single();
+            var actual = serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
 
             // Assert
-            actualModel.UnitOfTime.Should().Be(expectedModel.UnitOfTime);
-            actualModel.CalendarUnitOfTime.Should().Be(expectedModel.CalendarUnitOfTime);
-            actualModel.CalendarDay.Should().Be(expectedModel.CalendarDay);
-            actualModel.CalendarMonth.Should().Be(expectedModel.CalendarMonth);
-            actualModel.CalendarQuarter.Should().Be(expectedModel.CalendarQuarter);
-            actualModel.CalendarYear.Should().Be(expectedModel.CalendarYear);
-            actualModel.CalendarUnbounded.Should().Be(expectedModel.CalendarUnbounded);
-            actualModel.FiscalUnitOfTime.Should().Be(expectedModel.FiscalUnitOfTime);
-            actualModel.FiscalMonth.Should().Be(expectedModel.FiscalMonth);
-            actualModel.FiscalQuarter.Should().Be(expectedModel.FiscalQuarter);
-            actualModel.FiscalYear.Should().Be(expectedModel.FiscalYear);
-            actualModel.FiscalUnbounded.Should().Be(expectedModel.FiscalUnbounded);
-            actualModel.GenericUnitOfTime.Should().Be(expectedModel.GenericUnitOfTime);
-            actualModel.GenericMonth.Should().Be(expectedModel.GenericMonth);
-            actualModel.GenericQuarter.Should().Be(expectedModel.GenericQuarter);
-            actualModel.GenericYear.Should().Be(expectedModel.GenericYear);
-            actualModel.GenericUnbounded.Should().Be(expectedModel.GenericUnbounded);
+            actual.Should().Be(expected);
         }
 
         [Fact]
-        public async Task UnitOfTimeModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_UnitOfTime_serializers()
+        public void Deserialize___Should_roundtrip_a_serialized_AccountingPeriodSystemModel___When_model_contains_non_null_values()
         {
             // Arrange
-            var collection = Database.GetCollection<UnitOfTimeModel>(nameof(UnitOfTimeModel));
-            var expectedModel = new UnitOfTimeModel();
+            var expected = A.Dummy<AccountingPeriodSystemModel>();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
 
             // Act
-            collection.InsertOne(expectedModel);
-            var actualModel = (await collection.Find(_ => _.Id == expectedModel.Id).ToListAsync()).Single();
+            var actual = serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
 
             // Assert
-            actualModel.UnitOfTime.Should().BeNull();
-            actualModel.CalendarUnitOfTime.Should().BeNull();
-            actualModel.CalendarDay.Should().BeNull();
-            actualModel.CalendarMonth.Should().BeNull();
-            actualModel.CalendarQuarter.Should().BeNull();
-            actualModel.CalendarYear.Should().BeNull();
-            actualModel.CalendarUnbounded.Should().BeNull();
-            actualModel.FiscalUnitOfTime.Should().BeNull();
-            actualModel.FiscalMonth.Should().BeNull();
-            actualModel.FiscalQuarter.Should().BeNull();
-            actualModel.FiscalYear.Should().BeNull();
-            actualModel.FiscalUnbounded.Should().BeNull();
-            actualModel.GenericUnitOfTime.Should().BeNull();
-            actualModel.GenericMonth.Should().BeNull();
-            actualModel.GenericQuarter.Should().BeNull();
-            actualModel.GenericYear.Should().BeNull();
-            actualModel.GenericUnbounded.Should().BeNull();
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_UnitOfTimeModel___When_model_contains_only_null_values()
+        {
+            // Arrange
+            var expected = new UnitOfTimeModel();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_UnitOfTimeModel___When_model_contains_non_null_values()
+        {
+            // Arrange
+            var expected = A.Dummy<UnitOfTimeModel>();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_ReportingPeriodModel___When_model_contains_only_null_values()
+        {
+            // Arrange
+            var expected = new ReportingPeriodModel();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_ReportingPeriodModel___When_model_contains_non_null_values()
+        {
+            // Arrange
+            var expected = A.Dummy<ReportingPeriodModel>();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_IReportingPeriodModel___When_model_contains_only_null_values()
+        {
+            // Arrange
+            var expected = new IReportingPeriodModel();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Deserialize___Should_roundtrip_a_serialized_IReportingPeriodModel___When_model_contains_non_null_values()
+        {
+            // Arrange
+            var expected = A.Dummy<IReportingPeriodModel>();
+            var serializer = new NaosBsonSerializer();
+            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            // Act
+            var actual = serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
+
+            // Assert
+            actual.Should().Be(expected);
         }
 
         [Fact]
@@ -137,116 +186,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
             // Assert
             actualJson.Should().Contain(expectedJson);
-        }
-
-        [Fact]
-        public async Task ReportingPeriodModel_without_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
-        {
-            // Arrange
-            var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
-            var collection2 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
-
-            var expectedModel1 = A.Dummy<ReportingPeriodModel>();
-            var expectedModel2 = A.Dummy<IReportingPeriodModel>();
-
-            // Act
-            collection1.InsertOne(expectedModel1);
-            collection2.InsertOne(expectedModel2);
-
-            var actualModel1 = (await collection1.Find(_ => _.Id == expectedModel1.Id).ToListAsync()).Single();
-            var actualModel2 = (await collection2.Find(_ => _.Id == expectedModel2.Id).ToListAsync()).Single();
-
-            // Assert
-            actualModel1.UnitOfTime.Should().Be(expectedModel1.UnitOfTime);
-            actualModel1.CalendarUnitOfTime.Should().Be(expectedModel1.CalendarUnitOfTime);
-            actualModel1.CalendarDay.Should().Be(expectedModel1.CalendarDay);
-            actualModel1.CalendarMonth.Should().Be(expectedModel1.CalendarMonth);
-            actualModel1.CalendarQuarter.Should().Be(expectedModel1.CalendarQuarter);
-            actualModel1.CalendarYear.Should().Be(expectedModel1.CalendarYear);
-            actualModel1.CalendarUnbounded.Should().Be(expectedModel1.CalendarUnbounded);
-            actualModel1.FiscalUnitOfTime.Should().Be(expectedModel1.FiscalUnitOfTime);
-            actualModel1.FiscalMonth.Should().Be(expectedModel1.FiscalMonth);
-            actualModel1.FiscalQuarter.Should().Be(expectedModel1.FiscalQuarter);
-            actualModel1.FiscalYear.Should().Be(expectedModel1.FiscalYear);
-            actualModel1.FiscalUnbounded.Should().Be(expectedModel1.FiscalUnbounded);
-            actualModel1.GenericUnitOfTime.Should().Be(expectedModel1.GenericUnitOfTime);
-            actualModel1.GenericMonth.Should().Be(expectedModel1.GenericMonth);
-            actualModel1.GenericQuarter.Should().Be(expectedModel1.GenericQuarter);
-            actualModel1.GenericYear.Should().Be(expectedModel1.GenericYear);
-            actualModel1.GenericUnbounded.Should().Be(expectedModel1.GenericUnbounded);
-
-            actualModel2.UnitOfTime.Should().Be(expectedModel2.UnitOfTime);
-            actualModel2.CalendarUnitOfTime.Should().Be(expectedModel2.CalendarUnitOfTime);
-            actualModel2.CalendarDay.Should().Be(expectedModel2.CalendarDay);
-            actualModel2.CalendarMonth.Should().Be(expectedModel2.CalendarMonth);
-            actualModel2.CalendarQuarter.Should().Be(expectedModel2.CalendarQuarter);
-            actualModel2.CalendarYear.Should().Be(expectedModel2.CalendarYear);
-            actualModel2.CalendarUnbounded.Should().Be(expectedModel2.CalendarUnbounded);
-            actualModel2.FiscalUnitOfTime.Should().Be(expectedModel2.FiscalUnitOfTime);
-            actualModel2.FiscalMonth.Should().Be(expectedModel2.FiscalMonth);
-            actualModel2.FiscalQuarter.Should().Be(expectedModel2.FiscalQuarter);
-            actualModel2.FiscalYear.Should().Be(expectedModel2.FiscalYear);
-            actualModel2.FiscalUnbounded.Should().Be(expectedModel2.FiscalUnbounded);
-            actualModel2.GenericUnitOfTime.Should().Be(expectedModel2.GenericUnitOfTime);
-            actualModel2.GenericMonth.Should().Be(expectedModel2.GenericMonth);
-            actualModel2.GenericQuarter.Should().Be(expectedModel2.GenericQuarter);
-            actualModel2.GenericYear.Should().Be(expectedModel2.GenericYear);
-            actualModel2.GenericUnbounded.Should().Be(expectedModel2.GenericUnbounded);
-        }
-
-        [Fact]
-        public async Task ReportingPeriodModel_with_nulls___Should_roundtrip_to_Mongo_and_back___When_using_custom_IReportingPeriod_serializers()
-        {
-            // Arrange
-            var collection1 = Database.GetCollection<ReportingPeriodModel>(nameof(ReportingPeriodModel));
-            var collection2 = Database.GetCollection<IReportingPeriodModel>(nameof(IReportingPeriodModel));
-
-            var expectedModel1 = new ReportingPeriodModel();
-            var expectedModel2 = new IReportingPeriodModel();
-
-            // Act
-            collection1.InsertOne(expectedModel1);
-            collection2.InsertOne(expectedModel2);
-
-            var actualModel1 = (await collection1.Find(_ => _.Id == expectedModel1.Id).ToListAsync()).Single();
-            var actualModel2 = (await collection2.Find(_ => _.Id == expectedModel2.Id).ToListAsync()).Single();
-
-            // Assert
-            actualModel1.UnitOfTime.Should().BeNull();
-            actualModel1.CalendarUnitOfTime.Should().BeNull();
-            actualModel1.CalendarDay.Should().BeNull();
-            actualModel1.CalendarMonth.Should().BeNull();
-            actualModel1.CalendarQuarter.Should().BeNull();
-            actualModel1.CalendarYear.Should().BeNull();
-            actualModel1.CalendarUnbounded.Should().BeNull();
-            actualModel1.FiscalUnitOfTime.Should().BeNull();
-            actualModel1.FiscalMonth.Should().BeNull();
-            actualModel1.FiscalQuarter.Should().BeNull();
-            actualModel1.FiscalYear.Should().BeNull();
-            actualModel1.FiscalUnbounded.Should().BeNull();
-            actualModel1.GenericUnitOfTime.Should().BeNull();
-            actualModel1.GenericMonth.Should().BeNull();
-            actualModel1.GenericQuarter.Should().BeNull();
-            actualModel1.GenericYear.Should().BeNull();
-            actualModel1.GenericUnbounded.Should().BeNull();
-
-            actualModel2.UnitOfTime.Should().BeNull();
-            actualModel2.CalendarUnitOfTime.Should().BeNull();
-            actualModel2.CalendarDay.Should().BeNull();
-            actualModel2.CalendarMonth.Should().BeNull();
-            actualModel2.CalendarQuarter.Should().BeNull();
-            actualModel2.CalendarYear.Should().BeNull();
-            actualModel2.CalendarUnbounded.Should().BeNull();
-            actualModel2.FiscalUnitOfTime.Should().BeNull();
-            actualModel2.FiscalMonth.Should().BeNull();
-            actualModel2.FiscalQuarter.Should().BeNull();
-            actualModel2.FiscalYear.Should().BeNull();
-            actualModel2.FiscalUnbounded.Should().BeNull();
-            actualModel2.GenericUnitOfTime.Should().BeNull();
-            actualModel2.GenericMonth.Should().BeNull();
-            actualModel2.GenericQuarter.Should().BeNull();
-            actualModel2.GenericYear.Should().BeNull();
-            actualModel2.GenericUnbounded.Should().BeNull();
         }
 
         [Fact]
@@ -301,123 +240,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             // Assert
             actualJson1.Should().Contain(expectedJson1);
             actualJson2.Should().Contain(expectedJson2);
-        }
-
-        private class UnitOfTimeModel
-        {
-            public Guid Id { get; set; }
-
-            public UnitOfTime UnitOfTime { get; set; }
-
-            public CalendarUnitOfTime CalendarUnitOfTime { get; set; }
-
-            public CalendarDay CalendarDay { get; set; }
-
-            public CalendarMonth CalendarMonth { get; set; }
-
-            public CalendarQuarter CalendarQuarter { get; set; }
-
-            public CalendarYear CalendarYear { get; set; }
-
-            public CalendarUnbounded CalendarUnbounded { get; set; }
-
-            public FiscalUnitOfTime FiscalUnitOfTime { get; set; }
-
-            public FiscalMonth FiscalMonth { get; set; }
-
-            public FiscalQuarter FiscalQuarter { get; set; }
-
-            public FiscalYear FiscalYear { get; set; }
-
-            public FiscalUnbounded FiscalUnbounded { get; set; }
-
-            public GenericUnitOfTime GenericUnitOfTime { get; set; }
-
-            public GenericMonth GenericMonth { get; set; }
-
-            public GenericQuarter GenericQuarter { get; set; }
-
-            public GenericYear GenericYear { get; set; }
-
-            public GenericUnbounded GenericUnbounded { get; set; }
-        }
-
-        private class ReportingPeriodModel
-        {
-            public Guid Id { get; set; }
-
-            public ReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
-
-            public ReportingPeriod<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
-
-            public ReportingPeriod<CalendarDay> CalendarDay { get; set; }
-
-            public ReportingPeriod<CalendarMonth> CalendarMonth { get; set; }
-
-            public ReportingPeriod<CalendarQuarter> CalendarQuarter { get; set; }
-
-            public ReportingPeriod<CalendarYear> CalendarYear { get; set; }
-
-            public ReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
-
-            public ReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
-
-            public ReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
-
-            public ReportingPeriod<FiscalQuarter> FiscalQuarter { get; set; }
-
-            public ReportingPeriod<FiscalYear> FiscalYear { get; set; }
-
-            public ReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
-
-            public ReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
-
-            public ReportingPeriod<GenericMonth> GenericMonth { get; set; }
-
-            public ReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
-
-            public ReportingPeriod<GenericYear> GenericYear { get; set; }
-
-            public ReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
-        }
-
-        private class IReportingPeriodModel
-        {
-            public Guid Id { get; set; }
-
-            public IReportingPeriod<UnitOfTime> UnitOfTime { get; set; }
-
-            public IReportingPeriod<CalendarUnitOfTime> CalendarUnitOfTime { get; set; }
-
-            public IReportingPeriod<CalendarDay> CalendarDay { get; set; }
-
-            public IReportingPeriod<CalendarMonth> CalendarMonth { get; set; }
-
-            public IReportingPeriod<CalendarQuarter> CalendarQuarter { get; set; }
-
-            public IReportingPeriod<CalendarYear> CalendarYear { get; set; }
-
-            public IReportingPeriod<CalendarUnbounded> CalendarUnbounded { get; set; }
-
-            public IReportingPeriod<FiscalUnitOfTime> FiscalUnitOfTime { get; set; }
-
-            public IReportingPeriod<FiscalMonth> FiscalMonth { get; set; }
-
-            public IReportingPeriod<FiscalQuarter> FiscalQuarter { get; set; }
-
-            public IReportingPeriod<FiscalYear> FiscalYear { get; set; }
-
-            public IReportingPeriod<FiscalUnbounded> FiscalUnbounded { get; set; }
-
-            public IReportingPeriod<GenericUnitOfTime> GenericUnitOfTime { get; set; }
-
-            public IReportingPeriod<GenericMonth> GenericMonth { get; set; }
-
-            public IReportingPeriod<GenericQuarter> GenericQuarter { get; set; }
-
-            public IReportingPeriod<GenericYear> GenericYear { get; set; }
-
-            public IReportingPeriod<GenericUnbounded> GenericUnbounded { get; set; }
         }
     }
 }

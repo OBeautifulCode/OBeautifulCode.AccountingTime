@@ -50,7 +50,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Constructor___Should_throw_ArgumentException___When_parameter_quarterNumber_is_Invalid()
+        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange
             var validQuarter = A.Dummy<FiscalQuarter>();
@@ -59,7 +59,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => new FiscalQuarter(validQuarter.Year, QuarterNumber.Invalid));
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
         }
 
         [Fact]

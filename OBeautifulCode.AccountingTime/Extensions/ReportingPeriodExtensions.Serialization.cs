@@ -7,8 +7,11 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
+
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -28,23 +31,17 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
+        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
         public static TReportingPeriod DeserializeFromString<TReportingPeriod>(
             this string reportingPeriod)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
-            if (string.IsNullOrWhiteSpace(reportingPeriod))
-            {
-                throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNullNorWhiteSpace();
 
             var requestedType = typeof(TReportingPeriod);
+
             var result = reportingPeriod.DeserializeFromString(requestedType) as TReportingPeriod;
+
             return result;
         }
 
@@ -65,24 +62,11 @@ namespace OBeautifulCode.AccountingTime
             this string reportingPeriod,
             Type requestedType)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
-            if (string.IsNullOrWhiteSpace(reportingPeriod))
-            {
-                throw new ArgumentException("reporting period string is whitespace", nameof(reportingPeriod));
-            }
-
-            if (requestedType == null)
-            {
-                throw new ArgumentNullException(nameof(requestedType));
-            }
-
+            new { reportingPeriod }.Must().NotBeNullNorWhiteSpace();
+            new { requestedType }.Must().NotBeNull();
             if (!typeof(IReportingPeriod<UnitOfTime>).IsAssignableFrom(requestedType))
             {
-                throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}"), nameof(requestedType));
+                throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}."), nameof(requestedType));
             }
 
             Type unboundGenericType = typeof(ReportingPeriod<>);
@@ -138,6 +122,7 @@ namespace OBeautifulCode.AccountingTime
             try
             {
                 var result = Activator.CreateInstance(genericTypeToCreate, start, end);
+
                 return result;
             }
             catch (TargetInvocationException ex)
@@ -158,12 +143,10 @@ namespace OBeautifulCode.AccountingTime
         public static string SerializeToString(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             var result = Invariant($"{reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()}");
+
             return result;
         }
     }

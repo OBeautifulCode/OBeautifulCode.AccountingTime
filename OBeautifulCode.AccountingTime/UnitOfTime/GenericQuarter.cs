@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -29,15 +30,8 @@ namespace OBeautifulCode.AccountingTime
             int year,
             QuarterNumber quarterNumber)
         {
-            if ((year < 1) || (year > 9999))
-            {
-                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
-            }
-
-            if (quarterNumber == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException("quarter is invalid", nameof(quarterNumber));
-            }
+            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
+            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             this.Year = year;
             this.QuarterNumber = quarterNumber;
@@ -55,8 +49,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericQuarter" /> are equal.
         /// </summary>
-        /// <param name="left">The first quarter to compare.</param>
-        /// <param name="right">The second quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two quarters are equal; false otherwise.</returns>
         public static bool operator ==(
             GenericQuarter left,
@@ -73,14 +67,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = (left.QuarterNumber == right.QuarterNumber) && (left.Year == right.Year);
+
             return result;
         }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericQuarter" /> are not equal.
         /// </summary>
-        /// <param name="left">The first quarter to compare.</param>
-        /// <param name="right">The second quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two quarters are not equal; false otherwise.</returns>
         public static bool operator !=(
             GenericQuarter left,
@@ -90,8 +85,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a quarter is less than another quarter.
         /// </summary>
-        /// <param name="left">The left-hand quarter to compare.</param>
-        /// <param name="right">The right-hand quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand quarter is less than the right-hand quarter; false otherwise.</returns>
         public static bool operator <(
             GenericQuarter left,
@@ -108,14 +103,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a quarter is greater than another quarter.
         /// </summary>
-        /// <param name="left">The left-hand quarter to compare.</param>
-        /// <param name="right">The right-hand quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand quarter is greater than the right-hand quarter; false otherwise.</returns>
         public static bool operator >(
             GenericQuarter left,
@@ -132,14 +128,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a quarter is less than or equal to than another quarter.
         /// </summary>
-        /// <param name="left">The left-hand quarter to compare.</param>
-        /// <param name="right">The right-hand quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand quarter is less than or equal to the right-hand quarter; false otherwise.</returns>
         public static bool operator <=(
             GenericQuarter left,
@@ -149,8 +146,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a quarter is greater than or equal to than another quarter.
         /// </summary>
-        /// <param name="left">The left-hand quarter to compare.</param>
-        /// <param name="right">The right-hand quarter to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand quarter is greater than or equal to the right-hand quarter; false otherwise.</returns>
         public static bool operator >=(
             GenericQuarter left,
@@ -177,7 +174,10 @@ namespace OBeautifulCode.AccountingTime
 
             var thisDay = new DateTime(this.Year, (int)this.QuarterNumber, 1);
             var otherDay = new DateTime(other.Year, (int)other.QuarterNumber, 1);
-            return thisDay.CompareTo(otherDay);
+
+            var result = thisDay.CompareTo(otherDay);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -190,7 +190,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("object is not a generic quarter");
             }
 
-            return this.CompareTo(other);
+            var result = this.CompareTo(other);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -205,14 +207,17 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
-            var clone = new GenericQuarter(this.Year, this.QuarterNumber);
-            return clone;
+            var result = new GenericQuarter(this.Year, this.QuarterNumber);
+
+            return result;
         }
 
         /// <inheritdoc />
         public override string ToString()
         {
-            return Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
+            var result = Invariant($"{(int)this.QuarterNumber}Q{this.Year:D4}");
+
+            return result;
         }
     }
 }

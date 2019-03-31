@@ -16,7 +16,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
     /// </summary>
-    // ReSharper disable once InheritdocConsiderUsage
     public class ReportingPeriodJsonConverter : JsonConverter
     {
         /// <inheritdoc />
@@ -60,8 +59,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
             if (objectType.IsGenericType)
             {
-                var genericType = objectType.MakeGenericType();
-                var result = genericType == typeof(IReportingPeriod<>);
+                var genericType = objectType.GetGenericTypeDefinition();
+
+                var result = (genericType == typeof(IReportingPeriod<>)) || (genericType == typeof(ReportingPeriod<>));
+
                 return result;
             }
 

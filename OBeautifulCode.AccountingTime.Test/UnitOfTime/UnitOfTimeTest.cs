@@ -8,6 +8,7 @@ namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
@@ -90,7 +91,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
         public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
         {
             // Arrange
@@ -188,7 +189,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
         public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
         {
             // Arrange
@@ -267,7 +268,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "need to cast for this specific test")]
         public static void Equals___Should_return_true___When_calling_typed_overload_and_objects_being_compared_have_same_property_values()
         {
             // Arrange
@@ -757,8 +758,8 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
         public static void Clone___Should_throw_InvalidOperationException___When_cloned_object_cannot_be_casted_to_generic_type_parameter()
         {
             // Arrange
@@ -797,7 +798,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
         public static void Clone___Should_return_cloned_object___When_cloned_object_can_be_casted_to_generic_type_parameter()
         {
             // Arrange

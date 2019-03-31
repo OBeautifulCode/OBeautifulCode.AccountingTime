@@ -9,6 +9,8 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
 
+    using OBeautifulCode.Validation.Recipes;
+
     using static System.FormattableString;
 
     /// <summary>
@@ -28,10 +30,7 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
             {
@@ -39,6 +38,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = reportingPeriod.Start.UnitOfTimeGranularity;
+
             return result;
         }
 
@@ -53,12 +53,10 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeKind GetUnitOfTimeKind(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             var result = reportingPeriod.Start.UnitOfTimeKind;
+
             return result;
         }
 
@@ -80,14 +78,11 @@ namespace OBeautifulCode.AccountingTime
             this IReportingPeriod<T> reportingPeriod)
             where T : UnitOfTime
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded."));
             }
 
             var allUnits = new List<T>();
@@ -112,13 +107,11 @@ namespace OBeautifulCode.AccountingTime
         public static bool HasComponentWithUnboundedGranularity(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             var result = (reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) ||
                          (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+
             return result;
         }
     }

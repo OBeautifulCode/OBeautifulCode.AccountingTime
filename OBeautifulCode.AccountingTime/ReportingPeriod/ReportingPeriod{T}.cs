@@ -7,15 +7,15 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-    using System.ComponentModel;
+    using System.Linq;
 
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
     /// <inheritdoc cref="IReportingPeriod{T}" />
     [Serializable]
-    [Bindable(true, BindingDirection.TwoWay)]
     public class ReportingPeriod<T> : IReportingPeriod<T>, IEquatable<ReportingPeriod<T>>, IEquatable<IReportingPeriod<UnitOfTime>>
         where T : UnitOfTime
     {
@@ -32,33 +32,26 @@ namespace OBeautifulCode.AccountingTime
             T start,
             T end)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
-
-            if (end == null)
-            {
-                throw new ArgumentNullException(nameof(end));
-            }
+            new { start }.Must().NotBeNull();
+            new { end }.Must().NotBeNull();
 
             if ((start is IAmUnboundedTime) || (end is IAmUnboundedTime))
             {
                 if (start.UnitOfTimeKind != end.UnitOfTimeKind)
                 {
-                    throw new ArgumentException("start and/or end is unbounded and are different kinds of units-of-time");
+                    throw new ArgumentException(Invariant($"{nameof(start)} and/or {nameof(end)} is unbounded and are different kinds of units-of-time."));
                 }
             }
             else
             {
                 if (start.GetType() != end.GetType())
                 {
-                    throw new ArgumentException("start and end are bounded and are different concrete types of units-of-time");
+                    throw new ArgumentException(Invariant($"{nameof(start)} and {nameof(end)} are bounded and are different concrete types of units-of-time."));
                 }
 
                 if (start.CompareTo(end) == 1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(start), "start is greater than end");
+                    throw new ArgumentOutOfRangeException(nameof(start), Invariant($"{nameof(start)} is greater than {nameof(end)}."));
                 }
             }
 
@@ -78,8 +71,8 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are equal if they have the same start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
         public static bool operator ==(
             ReportingPeriod<T> left,
@@ -92,8 +85,8 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are equal if they have the same start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
         public static bool operator ==(
             ReportingPeriod<T> left,
@@ -106,8 +99,8 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are equal if they have the same start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are equal; false otherwise.</returns>
         public static bool operator ==(
             IReportingPeriod<UnitOfTime> left,
@@ -120,8 +113,8 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are not equal if they have different start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
         public static bool operator !=(
             ReportingPeriod<T> left,
@@ -134,8 +127,8 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are not equal if they have different start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
         public static bool operator !=(
             IReportingPeriod<UnitOfTime> left,
@@ -148,13 +141,25 @@ namespace OBeautifulCode.AccountingTime
         /// <remarks>
         /// Reporting periods are not equal if they have different start and end unit-of-time.
         /// </remarks>
-        /// <param name="left">The first reporting period to compare.</param>
-        /// <param name="right">The second reporting period to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two reporting periods are not equal; false otherwise.</returns>
         public static bool operator !=(
             ReportingPeriod<T> left,
             IReportingPeriod<UnitOfTime> right)
             => !(left == right);
+
+        /// <summary>
+        /// Checks to see if the type provided is a <see cref="ReportingPeriod{T}" /> type.
+        /// </summary>
+        /// <param name="type">Type to check.</param>
+        /// <returns>A value indicating whether or not it's a valid type.</returns>
+        public static bool IsReportingPeriodType(Type type)
+        {
+            var result = TypeHelper.GetAllBoundReportingPeriodTypes().Contains(type);
+
+            return result;
+        }
 
         /// <inheritdoc />
         public bool Equals(
@@ -203,7 +208,7 @@ namespace OBeautifulCode.AccountingTime
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             var requestedType = typeof(TReportingPeriod);
-            Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
+            var requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
 
             var thisUnboundGenericType = this.GetType().GetGenericTypeDefinition();
             var typeArgs = new[] { requestedUnitOfTimeType };
@@ -211,7 +216,7 @@ namespace OBeautifulCode.AccountingTime
             // ReSharper disable once PossibleNullReferenceException
             var genericTypeToCreate = thisUnboundGenericType.MakeGenericType(typeArgs);
 
-            string errorMessage = "A clone of this reporting-period is not assignable to the type of reporting period requested.";
+            var errorMessage = "A clone of this reporting-period is not assignable to the type of reporting period requested.";
             if (!requestedType.IsAssignableFrom(genericTypeToCreate))
             {
                 throw new InvalidOperationException(errorMessage);
@@ -230,6 +235,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = Activator.CreateInstance(genericTypeToCreate, this.Start.Clone(), this.End.Clone());
+
             return result as TReportingPeriod;
         }
 
@@ -238,7 +244,9 @@ namespace OBeautifulCode.AccountingTime
         {
             var startClone = this.Start.Clone<T>();
             var endClone = this.End.Clone<T>();
+
             var result = new ReportingPeriod<T>(startClone, endClone);
+
             return result;
         }
 
@@ -264,6 +272,7 @@ namespace OBeautifulCode.AccountingTime
             try
             {
                 var result = (left.Start.CompareTo(right.Start) == 0) && (left.End.CompareTo(right.End) == 0);
+
                 return result;
             }
             catch (ArgumentException)

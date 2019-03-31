@@ -8,6 +8,9 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -40,15 +43,8 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTimeGranularity granularityOfUnitsToAdd)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
-            if (component == ReportingPeriodComponent.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(component)} is {nameof(ReportingPeriodComponent.Invalid)}"));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
+            new { component }.Must().NotBeEqualTo(ReportingPeriodComponent.Invalid);
 
             var start = reportingPeriod.Start;
             var end = reportingPeriod.End;
@@ -65,6 +61,7 @@ namespace OBeautifulCode.AccountingTime
             try
             {
                 var result = new ReportingPeriod<UnitOfTime>(start, end).Clone<TReportingPeriod>();
+
                 return result;
             }
             catch (ArgumentOutOfRangeException ex)
@@ -86,29 +83,25 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has an <see cref="UnitOfTimeGranularity.Unbounded"/> component.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
+        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
         public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(
             this IReportingPeriod<T> reportingPeriod,
             int maxUnitsInAnyReportingPeriod)
             where T : UnitOfTime
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (maxUnitsInAnyReportingPeriod < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(maxUnitsInAnyReportingPeriod), "max units in any reporting period is <= 0");
-            }
+            new { maxUnitsInAnyReportingPeriod }.Must().BeGreaterThanOrEqualTo(1);
 
             var allUnits = reportingPeriod.GetUnitsWithin();
-            var allReportingPeriods = new List<IReportingPeriod<T>>();
+
+            var result = new List<IReportingPeriod<T>>();
+
             for (int unitOfTimeIndex = 0; unitOfTimeIndex < allUnits.Count; unitOfTimeIndex++)
             {
                 for (int numberOfUnits = 1; numberOfUnits <= maxUnitsInAnyReportingPeriod; numberOfUnits++)
@@ -116,12 +109,12 @@ namespace OBeautifulCode.AccountingTime
                     if (unitOfTimeIndex + numberOfUnits - 1 < allUnits.Count)
                     {
                         var subReportingPeriod = new ReportingPeriod<T>(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
-                        allReportingPeriods.Add(subReportingPeriod);
+                        result.Add(subReportingPeriod);
                     }
                 }
             }
 
-            return allReportingPeriods;
+            return result;
         }
 
         /// <summary>
@@ -154,30 +147,15 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTimeGranularity granularity,
             OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
-            }
-
-            if (overflowStrategy != OverflowStrategy.ThrowOnOverflow)
-            {
-                throw new ArgumentException(Invariant($"{nameof(overflowStrategy)} is not {nameof(OverflowStrategy.ThrowOnOverflow)}"));
-            }
+            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            new { overflowStrategy }.Must().BeEqualTo(OverflowStrategy.ThrowOnOverflow);
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
 
@@ -211,14 +189,13 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToMostGranular(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             var mostGranularStart = reportingPeriod.Start.ToMostGranular();
             var mostGranularEnd = reportingPeriod.End.ToMostGranular();
+
             var result = new ReportingPeriod<UnitOfTime>(mostGranularStart.Start, mostGranularEnd.End);
+
             return result;
         }
 
@@ -237,10 +214,7 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToLeastGranular(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             IReportingPeriod<UnitOfTime> result;
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
@@ -274,34 +248,25 @@ namespace OBeautifulCode.AccountingTime
             this IReportingPeriod<UnitOfTime> reportingPeriod,
             UnitOfTimeGranularity granularity)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
-            }
+            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
 
             if (reportingPeriod.GetUnitOfTimeGranularity().IsAsGranularOrMoreGranularThan(granularity))
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or more granular than {nameof(granularity)}"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or more granular than {nameof(granularity)}."));
             }
 
             var moreGranularStart = reportingPeriod.Start.MakeMoreGranular(granularity);
             var moreGranularEnd = reportingPeriod.End.MakeMoreGranular(granularity);
+
             var result = new ReportingPeriod<UnitOfTime>(moreGranularStart.Start, moreGranularEnd.End);
+
             return result;
         }
 
@@ -309,29 +274,18 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             UnitOfTimeGranularity granularity)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
+            new { unitOfTime }.Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
-                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} granularity is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
-            }
+            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
 
             if (unitOfTime.UnitOfTimeGranularity.IsAsGranularOrMoreGranularThan(granularity))
             {
-                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is as granular or more granular than {nameof(granularity)}"));
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is as granular or more granular than {nameof(granularity)}."));
             }
 
             IReportingPeriod<UnitOfTime> moreGranularReportingPeriod;
@@ -417,6 +371,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
+
             return result;
         }
 
@@ -424,30 +379,19 @@ namespace OBeautifulCode.AccountingTime
             this IReportingPeriod<UnitOfTime> reportingPeriod,
             UnitOfTimeGranularity granularity)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
+            new { reportingPeriod }.Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity.Unbounded)}"));
-            }
+            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
             if (reportingPeriodGranularity.IsAsGranularOrLessGranularThan(granularity))
             {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or less granular than {nameof(granularity)}"));
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or less granular than {nameof(granularity)}."));
             }
 
             IReportingPeriod<UnitOfTime> lessGranularReportingPeriod;
@@ -590,6 +534,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = MakeLessGranular(lessGranularReportingPeriod, granularity);
+
             return result;
         }
     }

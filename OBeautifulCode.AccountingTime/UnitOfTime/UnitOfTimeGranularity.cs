@@ -7,7 +7,7 @@
 namespace OBeautifulCode.AccountingTime
 {
     /// <summary>
-    /// The granuarlity of a unit-of-time.
+    /// The granularity of a unit-of-time.
     /// </summary>
     public enum UnitOfTimeGranularity
     {

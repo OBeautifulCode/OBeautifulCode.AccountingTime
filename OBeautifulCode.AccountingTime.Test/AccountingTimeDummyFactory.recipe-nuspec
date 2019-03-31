@@ -12,6 +12,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src=".recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
+    <file src="AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
   </files>
 </package>

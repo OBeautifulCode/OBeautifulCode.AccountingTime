@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -29,15 +30,8 @@ namespace OBeautifulCode.AccountingTime
             int year,
             MonthNumber monthNumber)
         {
-            if ((year < 1) || (year > 9999))
-            {
-                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
-            }
-
-            if (monthNumber == MonthNumber.Invalid)
-            {
-                throw new ArgumentException("month is invalid", nameof(monthNumber));
-            }
+            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
+            new { monthNumber }.Must().NotBeEqualTo(MonthNumber.Invalid);
 
             this.Year = year;
             this.MonthNumber = monthNumber;
@@ -55,8 +49,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericMonth" /> are equal.
         /// </summary>
-        /// <param name="left">The first month to compare.</param>
-        /// <param name="right">The second month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two months are equal; false otherwise.</returns>
         public static bool operator ==(
             GenericMonth left,
@@ -73,14 +67,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = (left.MonthNumber == right.MonthNumber) && (left.Year == right.Year);
+
             return result;
         }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="GenericMonth" /> are not equal.
         /// </summary>
-        /// <param name="left">The first month to compare.</param>
-        /// <param name="right">The second month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two months are not equal; false otherwise.</returns>
         public static bool operator !=(
             GenericMonth left,
@@ -90,8 +85,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a month is less than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is less than the right-hand month; false otherwise.</returns>
         public static bool operator <(
             GenericMonth left,
@@ -108,14 +103,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a month is greater than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is greater than the right-hand month; false otherwise.</returns>
         public static bool operator >(
             GenericMonth left,
@@ -132,14 +128,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a month is less than or equal to than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is less than or equal to the right-hand month; false otherwise.</returns>
         public static bool operator <=(
             GenericMonth left,
@@ -149,8 +146,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a month is greater than or equal to than another month.
         /// </summary>
-        /// <param name="left">The left-hand month to compare.</param>
-        /// <param name="right">The right-hand month to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand month is greater than or equal to the right-hand month; false otherwise.</returns>
         public static bool operator >=(
             GenericMonth left,
@@ -176,7 +173,10 @@ namespace OBeautifulCode.AccountingTime
 
             var thisDay = new DateTime(this.Year, (int)this.MonthNumber, 1);
             var otherDay = new DateTime(other.Year, (int)other.MonthNumber, 1);
-            return thisDay.CompareTo(otherDay);
+
+            var result = thisDay.CompareTo(otherDay);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -189,7 +189,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("object is not a generic month");
             }
 
-            return this.CompareTo(other);
+            var result = this.CompareTo(other);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -204,8 +206,9 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
-            var clone = new GenericMonth(this.Year, this.MonthNumber);
-            return clone;
+            var result = new GenericMonth(this.Year, this.MonthNumber);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -228,7 +231,9 @@ namespace OBeautifulCode.AccountingTime
                     break;
             }
 
-            return Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
+            var result = Invariant($"{(int)this.MonthNumber}{monthNumberSuffix} month of {this.Year:D4}");
+
+            return result;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
+    using OBeautifulCode.Validation.Recipes;
+
     /// <summary>
     /// Conversion-related extension methods on <see cref="UnitOfTime"/>.
     /// </summary>
@@ -27,15 +29,8 @@ namespace OBeautifulCode.AccountingTime
             this FiscalQuarter fiscalQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            if (fiscalQuarter == null)
-            {
-                throw new ArgumentNullException(nameof(fiscalQuarter));
-            }
-
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
-            }
+            new { fiscalQuarter }.Must().NotBeNull();
+            new { calendarQuarterThatIsFirstFiscalQuarter }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -59,9 +54,11 @@ namespace OBeautifulCode.AccountingTime
                 throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
             }
 
-            var calendarQuarter = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
-            calendarQuarter = calendarQuarter.Plus(offset);
-            return calendarQuarter;
+            var result = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
+
+            result = result.Plus(offset);
+
+            return result;
         }
 
         /// <summary>
@@ -78,15 +75,8 @@ namespace OBeautifulCode.AccountingTime
             this CalendarQuarter calendarQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            if (calendarQuarter == null)
-            {
-                throw new ArgumentNullException(nameof(calendarQuarter));
-            }
-
-            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
-            {
-                throw new ArgumentException("calendar quarter that is first fiscal quarter is Invalid.", nameof(calendarQuarterThatIsFirstFiscalQuarter));
-            }
+            new { calendarQuarter }.Must().NotBeNull();
+            new { calendarQuarterThatIsFirstFiscalQuarter }.Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -110,9 +100,11 @@ namespace OBeautifulCode.AccountingTime
                 throw new NotSupportedException("This quarter number is not supported: " + calendarQuarterThatIsFirstFiscalQuarter);
             }
 
-            var fiscalQuarter = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
-            fiscalQuarter = fiscalQuarter.Plus(offset);
-            return fiscalQuarter;
+            var result = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
+
+            result = result.Plus(offset);
+
+            return result;
         }
 
         /// <summary>
@@ -126,12 +118,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericMonth ToGenericMonth(
             this IHaveAMonth month)
         {
-            if (month == null)
-            {
-                throw new ArgumentNullException(nameof(month));
-            }
+            new { month }.Must().NotBeNull();
 
             var result = new GenericMonth(month.Year, month.MonthNumber);
+
             return result;
         }
 
@@ -146,12 +136,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericQuarter ToGenericQuarter(
             this IHaveAQuarter quarter)
         {
-            if (quarter == null)
-            {
-                throw new ArgumentNullException(nameof(quarter));
-            }
+            new { quarter }.Must().NotBeNull();
 
             var result = new GenericQuarter(quarter.Year, quarter.QuarterNumber);
+
             return result;
         }
 
@@ -166,12 +154,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericYear ToGenericYear(
             this IHaveAYear year)
         {
-            if (year == null)
-            {
-                throw new ArgumentNullException(nameof(year));
-            }
+            new { year }.Must().NotBeNull();
 
             var result = new GenericYear(year.Year);
+
             return result;
         }
 
@@ -188,14 +174,12 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToMostGranular(
             this UnitOfTime unitOfTime)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
+            new { unitOfTime }.Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
                 var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+
                 return result;
             }
 
@@ -204,7 +188,9 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var calendarYear = unitOfTime as CalendarYear;
+
                     var result = new ReportingPeriod<UnitOfTime>(calendarYear.GetFirstCalendarDay(), calendarYear.GetLastCalendarDay());
+
                     return result;
                 }
 
@@ -213,6 +199,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     // ReSharper disable once PossibleNullReferenceException
                     var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(year.Year, MonthNumber.One), new FiscalMonth(year.Year, MonthNumber.Twelve));
+
                     return result;
                 }
 
@@ -220,6 +207,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     // ReSharper disable once PossibleNullReferenceException
                     var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(year.Year, MonthNumber.One), new GenericMonth(year.Year, MonthNumber.Twelve));
+
                     return result;
                 }
 
@@ -231,7 +219,9 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var calendarQuarter = unitOfTime as CalendarQuarter;
+
                     var result = new ReportingPeriod<UnitOfTime>(calendarQuarter.GetFirstCalendarDay(), calendarQuarter.GetLastCalendarDay());
+
                     return result;
                 }
 
@@ -244,12 +234,14 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(quarter.Year, (MonthNumber)startMonth), new FiscalMonth(quarter.Year, (MonthNumber)endMonth));
+
                     return result;
                 }
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(quarter.Year, (MonthNumber)startMonth), new GenericMonth(quarter.Year, (MonthNumber)endMonth));
+
                     return result;
                 }
 
@@ -261,13 +253,16 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var calendarMonth = unitOfTime as CalendarMonth;
+
                     var result = new ReportingPeriod<UnitOfTime>(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
+
                     return result;
                 }
 
                 if ((unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal) || (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic))
                 {
                     var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+
                     return result;
                 }
 
@@ -279,6 +274,7 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+
                     return result;
                 }
 
@@ -298,12 +294,10 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToReportingPeriod(
             this UnitOfTime unitOfTime)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
+            new { unitOfTime }.Must().NotBeNull();
 
             var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+
             return result;
         }
     }

@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -26,10 +27,7 @@ namespace OBeautifulCode.AccountingTime
         public FiscalYear(
             int year)
         {
-            if ((year < 1) || (year > 9999))
-            {
-                throw new ArgumentOutOfRangeException(nameof(year), Invariant($"year ({year}) is less than 1 or greater than 9999"));
-            }
+            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
 
             this.Year = year;
         }
@@ -43,8 +41,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether two objects of type <see cref="FiscalYear" /> are equal.
         /// </summary>
-        /// <param name="left">The first year to compare.</param>
-        /// <param name="right">The second year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two years are equal; false otherwise.</returns>
         public static bool operator ==(
             FiscalYear left,
@@ -61,14 +59,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.Year == right.Year;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether two objects of type <see cref="FiscalYear" /> are not equal.
         /// </summary>
-        /// <param name="left">The first year to compare.</param>
-        /// <param name="right">The second year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the two years are not equal; false otherwise.</returns>
         public static bool operator !=(
             FiscalYear left,
@@ -78,8 +77,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a year is less than another year.
         /// </summary>
-        /// <param name="left">The left-hand year to compare.</param>
-        /// <param name="right">The right-hand year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is less than the right-hand year; false otherwise.</returns>
         public static bool operator <(
             FiscalYear left,
@@ -96,14 +95,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) < 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a year is greater than another year.
         /// </summary>
-        /// <param name="left">The left-hand year to compare.</param>
-        /// <param name="right">The right-hand year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is greater than the right-hand year; false otherwise.</returns>
         public static bool operator >(
             FiscalYear left,
@@ -120,14 +120,15 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = left.CompareTo(right) > 0;
+
             return result;
         }
 
         /// <summary>
         /// Determines whether a year is less than or equal to than another year.
         /// </summary>
-        /// <param name="left">The left-hand year to compare.</param>
-        /// <param name="right">The right-hand year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is less than or equal to the right-hand year; false otherwise.</returns>
         public static bool operator <=(
             FiscalYear left,
@@ -137,8 +138,8 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Determines whether a year is greater than or equal to than another year.
         /// </summary>
-        /// <param name="left">The left-hand year to compare.</param>
-        /// <param name="right">The right-hand year to compare.</param>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is greater than or equal to the right-hand year; false otherwise.</returns>
         public static bool operator >=(
             FiscalYear left,
@@ -162,7 +163,9 @@ namespace OBeautifulCode.AccountingTime
                 return 1;
             }
 
-            return this.Year.CompareTo(other.Year);
+            var result = this.Year.CompareTo(other.Year);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -175,7 +178,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException("object is not a fiscal year");
             }
 
-            return this.CompareTo(other);
+            var result = this.CompareTo(other);
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -189,14 +194,17 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override UnitOfTime Clone()
         {
-            var clone = new FiscalYear(this.Year);
-            return clone;
+            var result = new FiscalYear(this.Year);
+
+            return result;
         }
 
         /// <inheritdoc />
         public override string ToString()
         {
-            return Invariant($"FY{this.Year:D4}");
+            var result = Invariant($"FY{this.Year:D4}");
+
+            return result;
         }
     }
 }

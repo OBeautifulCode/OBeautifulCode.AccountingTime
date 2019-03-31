@@ -7,6 +7,9 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+
+    using OBeautifulCode.Validation.Recipes;
 
     using static System.FormattableString;
 
@@ -29,10 +32,10 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             int unitsToAdd)
         {
+            new { unitOfTime }.Must().NotBeNull();
+
             switch (unitOfTime)
             {
-                case null:
-                    throw new ArgumentNullException(nameof(unitOfTime));
                 case CalendarDay unitOfTimeAsCalendarDay:
                     return unitOfTimeAsCalendarDay.Plus(unitsToAdd);
                 case CalendarMonth unitOfTimeAsCalendarMonth:
@@ -78,33 +81,22 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the <paramref name="unitOfTime"/>.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "3*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "12*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "4*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "3*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "12*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "4*unitsToAdd", Justification = "The user is doing something very wrong if they are adding very large numbers of units and it's OK for them to get an OverflowException at runtime.")]
         public static UnitOfTime Plus(
             this UnitOfTime unitOfTime,
             int unitsToAdd,
             UnitOfTimeGranularity granularityOfUnitsToAdd)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
+            new { unitOfTime }.Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
-                throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granuarlity is {nameof(UnitOfTimeGranularity.Unbounded)}"));
+                throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
-            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Invalid)}"));
-            }
-
-            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(granularityOfUnitsToAdd)} is {nameof(UnitOfTimeGranularity.Unbounded)}.  Cannot add units of that granularity."));
-            }
+            new { granularityOfUnitsToAdd }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
 
             if (granularityOfUnitsToAdd.IsMoreGranularThan(unitOfTime.UnitOfTimeGranularity))
             {
@@ -114,6 +106,7 @@ namespace OBeautifulCode.AccountingTime
             if (unitOfTime.UnitOfTimeGranularity == granularityOfUnitsToAdd)
             {
                 var result = unitOfTime.Plus(unitsToAdd);
+
                 return result;
             }
 
@@ -122,12 +115,14 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Quarter)
                 {
                     var result = unitOfTime.Plus(4 * unitsToAdd);
+
                     return result;
                 }
 
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
                 {
                     var result = unitOfTime.Plus(12 * unitsToAdd);
+
                     return result;
                 }
 
@@ -144,6 +139,7 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Month)
                 {
                     var result = unitOfTime.Plus(3 * unitsToAdd);
+
                     return result;
                 }
 
@@ -173,7 +169,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var dayAsDateTime = unitOfTime.ToDateTime().AddDays(unitsToAdd);
+
             var result = new CalendarDay(dayAsDateTime.Year, (MonthOfYear)dayAsDateTime.Month, (DayOfMonth)dayAsDateTime.Day);
+
             return result;
         }
 
@@ -182,7 +180,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
+
             var result = new CalendarMonth(genericMonth.Year, (MonthOfYear)genericMonth.MonthNumber);
+
             return result;
         }
 
@@ -191,7 +191,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
+
             var result = new FiscalMonth(genericMonth.Year, genericMonth.MonthNumber);
+
             return result;
         }
 
@@ -201,7 +203,9 @@ namespace OBeautifulCode.AccountingTime
         {
             var monthAsDateTime = new DateTime(unitOfTime.Year, (int)unitOfTime.MonthNumber, 1);
             monthAsDateTime = monthAsDateTime.AddMonths(unitsToAdd);
+
             var result = new GenericMonth(monthAsDateTime.Year, (MonthNumber)monthAsDateTime.Month);
+
             return result;
         }
 
@@ -210,7 +214,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
+
             var result = new CalendarQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
+
             return result;
         }
 
@@ -219,7 +225,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
+
             var result = new FiscalQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
+
             return result;
         }
 
@@ -227,8 +235,8 @@ namespace OBeautifulCode.AccountingTime
             this GenericQuarter unitOfTime,
             int unitsToAdd)
         {
-            int year = unitOfTime.Year;
-            int quarterNumber = (int)unitOfTime.QuarterNumber;
+            var year = unitOfTime.Year;
+            var quarterNumber = (int)unitOfTime.QuarterNumber;
 
             year = year + (unitsToAdd / 4);
             quarterNumber = quarterNumber + (unitsToAdd % 4);
@@ -246,6 +254,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var quarter = new GenericQuarter(year, (QuarterNumber)quarterNumber);
+
             return quarter;
         }
 
@@ -254,7 +263,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
+
             var result = new CalendarYear(genericYear.Year);
+
             return result;
         }
 
@@ -263,7 +274,9 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
+
             var result = new FiscalYear(genericYear.Year);
+
             return result;
         }
 
@@ -272,6 +285,7 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd)
         {
             var result = new GenericYear(unitOfTime.Year + unitsToAdd);
+
             return result;
         }
     }

@@ -10,6 +10,7 @@
 namespace OBeautifulCode.AccountingTime.Recipes
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using AutoFakeItEasy;
 
@@ -34,10 +35,20 @@ namespace OBeautifulCode.AccountingTime.Recipes
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountingTimeDummyFactory"/> class.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This is not excessively complex.  Dummy factories typically wire-up many types.")]
         public AccountingTimeDummyFactory()
         {
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
+            AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<AccountingPeriodSystem>();
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December));
+
+                    return result;
+                });
+
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);
