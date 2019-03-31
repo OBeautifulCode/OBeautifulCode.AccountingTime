@@ -318,24 +318,23 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             }
 
             var result =
-
-                (left.UnitOfTime == right.UnitOfTime) &&
-                (left.CalendarUnitOfTime == right.CalendarUnitOfTime) &&
-                (left.CalendarDay == right.CalendarDay) &&
-                (left.CalendarMonth == right.CalendarMonth) &&
-                (left.CalendarQuarter == right.CalendarQuarter) &&
-                (left.CalendarYear == right.CalendarYear) &&
-                (left.CalendarUnbounded == right.CalendarUnbounded) &&
-                (left.FiscalUnitOfTime == right.FiscalUnitOfTime) &&
-                (left.FiscalMonth == right.FiscalMonth) &&
-                (left.FiscalQuarter == right.FiscalQuarter) &&
-                (left.FiscalYear == right.FiscalYear) &&
-                (left.FiscalUnbounded == right.FiscalUnbounded) &&
-                (left.GenericUnitOfTime == right.GenericUnitOfTime) &&
-                (left.GenericMonth == right.GenericMonth) &&
-                (left.GenericQuarter == right.GenericQuarter) &&
-                (left.GenericYear == right.GenericYear) &&
-                (left.GenericUnbounded == right.GenericUnbounded);
+                AreEqual(left.UnitOfTime, right.UnitOfTime) &&
+                AreEqual(left.CalendarUnitOfTime, right.CalendarUnitOfTime) &&
+                AreEqual(left.CalendarDay, right.CalendarDay) &&
+                AreEqual(left.CalendarMonth, right.CalendarMonth) &&
+                AreEqual(left.CalendarQuarter, right.CalendarQuarter) &&
+                AreEqual(left.CalendarYear, right.CalendarYear) &&
+                AreEqual(left.CalendarUnbounded, right.CalendarUnbounded) &&
+                AreEqual(left.FiscalUnitOfTime, right.FiscalUnitOfTime) &&
+                AreEqual(left.FiscalMonth, right.FiscalMonth) &&
+                AreEqual(left.FiscalQuarter, right.FiscalQuarter) &&
+                AreEqual(left.FiscalYear, right.FiscalYear) &&
+                AreEqual(left.FiscalUnbounded, right.FiscalUnbounded) &&
+                AreEqual(left.GenericUnitOfTime, right.GenericUnitOfTime) &&
+                AreEqual(left.GenericMonth, right.GenericMonth) &&
+                AreEqual(left.GenericQuarter, right.GenericQuarter) &&
+                AreEqual(left.GenericYear, right.GenericYear) &&
+                AreEqual(left.GenericUnbounded, right.GenericUnbounded);
 
             return result;
         }
@@ -369,6 +368,25 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
                 .Hash(this.GenericYear)
                 .Hash(this.GenericUnbounded)
                 .Value;
+
+        private static bool AreEqual(
+            IReportingPeriod<UnitOfTime> first,
+            IReportingPeriod<UnitOfTime> second)
+        {
+            if ((first == null) || (second == null))
+            {
+                if ((first == null) && (second == null))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            var result = first.Equals(second);
+
+            return result;
+        }
     }
 #pragma warning restore SA1649 // File name should match first type name
 }

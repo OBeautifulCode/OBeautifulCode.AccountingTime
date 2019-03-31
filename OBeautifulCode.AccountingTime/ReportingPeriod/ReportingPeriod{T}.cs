@@ -7,7 +7,6 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-    using System.Linq;
 
     using OBeautifulCode.Math.Recipes;
     using OBeautifulCode.Validation.Recipes;
@@ -25,7 +24,7 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="start">The start of the reporting period.</param>
         /// <param name="end">The end of the reporting period.</param>
         /// <exception cref="ArgumentNullException"><paramref name="start"/> or <paramref name="end"/> are null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="start"/> and <paramref name="end"/> are bounded and are diffrent concrete types of units-of-time.</exception>
+        /// <exception cref="ArgumentException"><paramref name="start"/> and <paramref name="end"/> are bounded and are different concrete types of units-of-time.</exception>
         /// <exception cref="ArgumentException"><paramref name="start"/> and/or <paramref name="end"/> is unbounded and are different kinds of units-of-time.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="start"/> is greater than <paramref name="end"/>.</exception>
         public ReportingPeriod(
