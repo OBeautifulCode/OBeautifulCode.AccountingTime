@@ -1018,13 +1018,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Clone___Should_return_a_clone_of_the_object___When_called()
+        public static void DeepClone___Should_return_a_clone_of_the_object___When_called()
         {
             // Arrange
             var systemUnderTest = A.Dummy<FiscalMonth>();
 
             // Act
-            var clone = systemUnderTest.Clone();
+            var clone = systemUnderTest.DeepClone();
 
             // Assert
             clone.Should().Be(systemUnderTest);

@@ -1916,7 +1916,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all units-of-time")]
-        public static void Clone___Should_return_deep_clone_of_reporting_period___When_called()
+        public static void DeepClone___Should_return_deep_clone_of_reporting_period___When_called()
         {
             // Arrange
             var reportingPeriods = new List<IReportingPeriod<UnitOfTime>>
@@ -1941,7 +1941,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var clones = reportingPeriods.Select(_ => new { Original = _, Clone = _.Clone() }).ToList();
+            var clones = reportingPeriods.Select(_ => new { Original = _, Clone = _.DeepClone() }).ToList();
 
             // Assert
             clones.ForEach(_ => _.Clone.Should().Be(_.Original));
@@ -1953,7 +1953,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
-        public static void Clone_with_type_parameter___Should_throw_InvalidOperationException___When_the_cloned_reporting_period_cannot_be_assigned_to_the_return_type()
+        public static void DeepClone_with_type_parameter___Should_throw_InvalidOperationException___When_the_cloned_reporting_period_cannot_be_assigned_to_the_return_type()
         {
             // Arrange
             var allTypes = new[]
@@ -2021,7 +2021,7 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 foreach (var type in allTypes)
                 {
-                    var cloneMethod = reportingPeriod.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
+                    var cloneMethod = reportingPeriod.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.DeepClone)) && _.IsGenericMethod);
                     var genericMethod = cloneMethod.MakeGenericMethod(type.ReportingPeriodType);
                     exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod, null)).InnerException);
                 }
@@ -2033,7 +2033,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Thoroughly checking this test-case requires lots of types.")]
-        public static void Clone_with_type_parameter___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_cloned_cannot_be_assigned_to_the_return_types_unit_of_time()
+        public static void DeepClone_with_type_parameter___Should_throw_InvalidOperationException___When_the_kind_of_unit_of_times_cloned_cannot_be_assigned_to_the_return_types_unit_of_time()
         {
             // Arrange
             var reportingPeriods = new List<Tuple<IReportingPeriod<UnitOfTime>, Type>>
@@ -2062,7 +2062,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var exceptions = new List<Exception>();
             foreach (var reportingPeriod in reportingPeriods)
             {
-                var cloneMethod = reportingPeriod.Item1.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.Clone)) && _.IsGenericMethod);
+                var cloneMethod = reportingPeriod.Item1.GetType().GetMethods().Single(_ => (_.Name == nameof(ReportingPeriod<UnitOfTime>.DeepClone)) && _.IsGenericMethod);
                 var genericMethod = cloneMethod.MakeGenericMethod(reportingPeriod.Item2);
                 exceptions.Add(Record.Exception(() => genericMethod.Invoke(reportingPeriod.Item1, null)).InnerException);
             }
@@ -2073,7 +2073,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarDay()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarDay()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<CalendarDay>>();
@@ -2081,12 +2081,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarDay>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarDay>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarDay>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarDay>>(),
             };
 
             // Assert
@@ -2100,7 +2100,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarMonth()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarMonth()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<CalendarMonth>>();
@@ -2108,12 +2108,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarMonth>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarMonth>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarMonth>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarMonth>>(),
             };
 
             // Assert
@@ -2127,7 +2127,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarQuarter()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarQuarter()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<CalendarQuarter>>();
@@ -2135,12 +2135,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarQuarter>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarQuarter>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarQuarter>>(),
             };
 
             // Assert
@@ -2154,7 +2154,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarYear()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarYear()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<CalendarYear>>();
@@ -2162,12 +2162,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarYear>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarYear>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarYear>>(),
             };
 
             // Assert
@@ -2181,7 +2181,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnbounded()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnbounded()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<CalendarUnbounded>>();
@@ -2189,12 +2189,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<CalendarUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<CalendarUnbounded>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<CalendarUnbounded>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<CalendarUnbounded>>(),
             };
 
             // Assert
@@ -2208,7 +2208,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnitOfTime()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_CalendarUnitOfTime()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), A.Dummy<CalendarQuarter>());
@@ -2218,26 +2218,26 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized1 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<IReportingPeriod<CalendarUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<CalendarUnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<CalendarUnitOfTime>>(),
             };
 
             // Assert
@@ -2265,7 +2265,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalMonth()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalMonth()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<FiscalMonth>>();
@@ -2273,12 +2273,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalMonth>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalMonth>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalMonth>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalMonth>>(),
             };
 
             // Assert
@@ -2292,7 +2292,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalQuarter()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalQuarter()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<FiscalQuarter>>();
@@ -2300,12 +2300,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalQuarter>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalQuarter>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalQuarter>>(),
             };
 
             // Assert
@@ -2319,7 +2319,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalYear()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalYear()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<FiscalYear>>();
@@ -2327,12 +2327,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalYear>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalYear>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalYear>>(),
             };
 
             // Assert
@@ -2346,7 +2346,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnbounded()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnbounded()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<FiscalUnbounded>>();
@@ -2354,12 +2354,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<FiscalUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<FiscalUnbounded>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<FiscalUnbounded>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<FiscalUnbounded>>(),
             };
 
             // Assert
@@ -2373,7 +2373,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnitOfTime()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_FiscalUnitOfTime()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), A.Dummy<FiscalQuarter>());
@@ -2383,26 +2383,26 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized1 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<IReportingPeriod<FiscalUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<FiscalUnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<FiscalUnitOfTime>>(),
             };
 
             // Assert
@@ -2430,7 +2430,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericMonth()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericMonth()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<GenericMonth>>();
@@ -2438,12 +2438,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericMonth>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericMonth>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericMonth>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericMonth>>(),
             };
 
             // Assert
@@ -2457,7 +2457,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericQuarter()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericQuarter()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<GenericQuarter>>();
@@ -2465,12 +2465,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericQuarter>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericQuarter>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericQuarter>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericQuarter>>(),
             };
 
             // Assert
@@ -2484,7 +2484,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericYear()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericYear()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<GenericYear>>();
@@ -2492,12 +2492,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericYear>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericYear>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericYear>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericYear>>(),
             };
 
             // Assert
@@ -2511,7 +2511,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnbounded()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnbounded()
         {
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod<GenericUnbounded>>();
@@ -2519,12 +2519,12 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod.Clone<IReportingPeriod<GenericUnbounded>>(),
-                reportingPeriod.Clone<ReportingPeriod<GenericUnbounded>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod.DeepClone<IReportingPeriod<GenericUnbounded>>(),
+                reportingPeriod.DeepClone<ReportingPeriod<GenericUnbounded>>(),
             };
 
             // Assert
@@ -2538,7 +2538,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Testing this method is inherently complex.")]
-        public static void Clone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnitOfTime()
+        public static void DeepClone_with_type_parameter___Should_deep_clone_into_various_flavors_of_IReportingPeriod___When_reporting_period_is_a_GenericUnitOfTime()
         {
             // Arrange
             var reportingPeriod1 = new ReportingPeriod<GenericUnitOfTime>(new GenericUnbounded(), A.Dummy<GenericQuarter>());
@@ -2548,26 +2548,26 @@ namespace OBeautifulCode.AccountingTime.Test
             // Act
             var deserialized1 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod1.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod1.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod1.Clone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod1.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod1.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             var deserialized2 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod2.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod2.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod2.Clone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod2.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod2.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             var deserialized3 = new List<IReportingPeriod<UnitOfTime>>
             {
-                reportingPeriod3.Clone<IReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<UnitOfTime>>(),
-                reportingPeriod3.Clone<IReportingPeriod<GenericUnitOfTime>>(),
-                reportingPeriod3.Clone<ReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<UnitOfTime>>(),
+                reportingPeriod3.DeepClone<IReportingPeriod<GenericUnitOfTime>>(),
+                reportingPeriod3.DeepClone<ReportingPeriod<GenericUnitOfTime>>(),
             };
 
             // Assert

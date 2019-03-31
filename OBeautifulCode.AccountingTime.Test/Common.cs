@@ -35,13 +35,18 @@ namespace OBeautifulCode.AccountingTime.Test
 
             public T End { get; }
 
-            public TReportingPeriod Clone<TReportingPeriod>()
+            public TReportingPeriod DeepClone<TReportingPeriod>()
                 where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
             {
                 throw new NotImplementedException();
             }
 
-            public IReportingPeriod<T> Clone()
+            public IReportingPeriod<T> DeepClone()
+            {
+                throw new NotImplementedException();
+            }
+
+            public object Clone()
             {
                 throw new NotImplementedException();
             }

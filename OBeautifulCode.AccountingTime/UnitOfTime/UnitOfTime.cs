@@ -9,14 +9,13 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
 
     /// <summary>
     /// Represents a unit of time, such as a month, quarter, or year.
     /// </summary>
     [Serializable]
     [SuppressMessage("Microsoft.Design", "CA1036:OverrideMethodsOnComparableTypes", Justification = "Two abstract units-of-time cannot be compared.")]
-    public abstract class UnitOfTime : IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
+    public abstract class UnitOfTime : ICloneable, IComparable, IEquatable<UnitOfTime>, IComparable<UnitOfTime>
     {
         /// <summary>
         /// Gets the kind of the unit-of-time.
@@ -160,6 +159,9 @@ namespace OBeautifulCode.AccountingTime
         public abstract override int GetHashCode();
 
         /// <inheritdoc />
+        public object Clone() => this.DeepClone();
+
+        /// <inheritdoc />
         public int CompareTo(UnitOfTime other)
         {
             if (other == null)
@@ -185,10 +187,10 @@ namespace OBeautifulCode.AccountingTime
         /// A deep clone of the specified unit-of-time.
         /// </returns>
         /// <exception cref="InvalidOperationException">The cloned object cannot be casted to the specified generic type.</exception>
-        public T Clone<T>()
+        public T DeepClone<T>()
             where T : UnitOfTime
         {
-            var clone = this.Clone();
+            var clone = this.DeepClone();
 
             var cloneType = clone.GetType();
             var returnType = typeof(T);
@@ -208,7 +210,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A deep clone of this unit-of-time.
         /// </returns>
-        public abstract UnitOfTime Clone();
+        public abstract UnitOfTime DeepClone();
 
         /// <summary>
         /// Gets a friendly representation of this unit-of-time.

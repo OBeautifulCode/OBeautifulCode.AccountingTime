@@ -245,7 +245,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override UnitOfTime Clone()
+        public override UnitOfTime DeepClone()
         {
             var clone = new CalendarDay(this.Year, this.MonthOfYear, this.DayOfMonth);
 

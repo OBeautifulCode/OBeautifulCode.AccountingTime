@@ -760,7 +760,7 @@ namespace OBeautifulCode.AccountingTime.Test
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "This test is inherently complex.")]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
-        public static void Clone___Should_throw_InvalidOperationException___When_cloned_object_cannot_be_casted_to_generic_type_parameter()
+        public static void DeepClone___Should_throw_InvalidOperationException___When_cloned_object_cannot_be_casted_to_generic_type_parameter()
         {
             // Arrange
             var unitsOfTime = new Dictionary<UnitOfTime, IEnumerable<Type>>
@@ -780,7 +780,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<GenericUnbounded>(),  Common.AllUnitOfTimeTypesExceptUnitOfTime.Where(_ => (_ != typeof(GenericUnbounded)) && (_ != typeof(GenericUnitOfTime))) },
             };
 
-            var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
+            var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.DeepClone) && _.ContainsGenericParameters);
 
             // Act
             var exceptions = new List<Exception>();
@@ -799,7 +799,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
         [Fact]
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "This test is inherently complex.")]
-        public static void Clone___Should_return_cloned_object___When_cloned_object_can_be_casted_to_generic_type_parameter()
+        public static void DeepClone___Should_return_cloned_object___When_cloned_object_can_be_casted_to_generic_type_parameter()
         {
             // Arrange
             var unitsOfTime = new Dictionary<UnitOfTime, IEnumerable<Type>>
@@ -819,7 +819,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 { A.Dummy<GenericUnbounded>(), new[] { typeof(GenericUnbounded), typeof(GenericUnitOfTime), typeof(UnitOfTime) } },
             };
 
-            var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.Clone) && _.ContainsGenericParameters);
+            var cloneMethod = typeof(UnitOfTime).GetMethods().Single(_ => _.Name == nameof(UnitOfTime.DeepClone) && _.ContainsGenericParameters);
 
             // Act, Assert
             foreach (var unitOfTime in unitsOfTime.Keys)

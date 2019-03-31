@@ -60,7 +60,7 @@ namespace OBeautifulCode.AccountingTime
 
             try
             {
-                var result = new ReportingPeriod<UnitOfTime>(start, end).Clone<TReportingPeriod>();
+                var result = new ReportingPeriod<UnitOfTime>(start, end).DeepClone<TReportingPeriod>();
 
                 return result;
             }
@@ -219,14 +219,14 @@ namespace OBeautifulCode.AccountingTime
             IReportingPeriod<UnitOfTime> result;
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                result = reportingPeriod.Clone();
+                result = reportingPeriod.DeepClone();
             }
             else
             {
                 var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
                 if (targetGranularity == UnitOfTimeGranularity.Unbounded)
                 {
-                    result = reportingPeriod.Clone();
+                    result = reportingPeriod.DeepClone();
                 }
                 else
                 {
@@ -236,7 +236,7 @@ namespace OBeautifulCode.AccountingTime
                     }
                     catch (InvalidOperationException)
                     {
-                        result = reportingPeriod.Clone();
+                        result = reportingPeriod.DeepClone();
                     }
                 }
             }

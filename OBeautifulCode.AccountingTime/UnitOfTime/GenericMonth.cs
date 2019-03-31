@@ -204,7 +204,7 @@ namespace OBeautifulCode.AccountingTime
                 .Value;
 
         /// <inheritdoc />
-        public override UnitOfTime Clone()
+        public override UnitOfTime DeepClone()
         {
             var result = new GenericMonth(this.Year, this.MonthNumber);
 

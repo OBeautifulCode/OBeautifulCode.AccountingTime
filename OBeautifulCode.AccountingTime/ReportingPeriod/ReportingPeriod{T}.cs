@@ -177,6 +177,9 @@ namespace OBeautifulCode.AccountingTime
                 .Hash(this.End)
                 .Value;
 
+        /// <inheritdoc />
+        public object Clone() => this.DeepClone();
+
         /// <summary>
         /// Returns a friendly string representation of this reporting period.
         /// </summary>
@@ -191,7 +194,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public TReportingPeriod Clone<TReportingPeriod>()
+        public TReportingPeriod DeepClone<TReportingPeriod>()
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             var requestedType = typeof(TReportingPeriod);
@@ -221,16 +224,16 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            var result = Activator.CreateInstance(genericTypeToCreate, this.Start.Clone(), this.End.Clone());
+            var result = Activator.CreateInstance(genericTypeToCreate, this.Start.DeepClone(), this.End.DeepClone());
 
             return result as TReportingPeriod;
         }
 
         /// <inheritdoc />
-        public IReportingPeriod<T> Clone()
+        public IReportingPeriod<T> DeepClone()
         {
-            var startClone = this.Start.Clone<T>();
-            var endClone = this.End.Clone<T>();
+            var startClone = this.Start.DeepClone<T>();
+            var endClone = this.End.DeepClone<T>();
 
             var result = new ReportingPeriod<T>(startClone, endClone);
 

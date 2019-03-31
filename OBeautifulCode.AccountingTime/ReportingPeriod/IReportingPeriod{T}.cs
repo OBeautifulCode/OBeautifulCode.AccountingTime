@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a range of time over which to report, inclusive of the endpoints.
     /// </summary>
     /// <typeparam name="T">The unit-of-time used to define the start and end of the reporting period.</typeparam>
-    public interface IReportingPeriod<out T>
+    public interface IReportingPeriod<out T> : ICloneable
         where T : UnitOfTime
     {
         /// <summary>
@@ -35,7 +35,7 @@ namespace OBeautifulCode.AccountingTime
         /// A deep clone of this reporting period.
         /// </returns>
         /// <exception cref="InvalidOperationException">A clone of this reporting-period cannot be assigned to the specified type.</exception>
-        TReportingPeriod Clone<TReportingPeriod>()
+        TReportingPeriod DeepClone<TReportingPeriod>()
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>;
 
         /// <summary>
@@ -44,6 +44,6 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A deep clone of this reporting period.
         /// </returns>
-        IReportingPeriod<T> Clone();
+        IReportingPeriod<T> DeepClone();
     }
 }
