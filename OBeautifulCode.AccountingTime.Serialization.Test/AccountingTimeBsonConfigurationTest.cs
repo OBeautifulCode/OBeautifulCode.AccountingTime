@@ -8,6 +8,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
@@ -23,6 +24,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     public class AccountingTimeBsonConfigurationTest
     {
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "This is not mutable.")]
         public static readonly NaosBsonSerializer Serializer = new NaosBsonSerializer(typeof(AccountingTimeTestBsonConfiguration));
 
         [Fact]
