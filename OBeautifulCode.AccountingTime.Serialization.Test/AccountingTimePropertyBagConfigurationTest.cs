@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
+    using System.Collections.Generic;
 
     using FakeItEasy;
 
@@ -20,7 +21,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     public static class AccountingTimePropertyBagConfigurationTest
     {
-        private static readonly NaosPropertyBagSerializer PropertyBagSerializer = new NaosPropertyBagSerializer(typeof(AccountingTimePropertyBagConfiguration));
+        private static readonly NaosPropertyBagSerializer PropertyBagSerializer = new NaosPropertyBagSerializer(typeof(AccountingTimeTestPropertyBagConfiguration));
 
         [Fact]
         public static void Deserialize___Should_roundtrip_serialized_UnitOfTimeModel___When_model_contains_only_null_values()
@@ -171,6 +172,13 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             // Assert
             actualJson1.Should().Contain(expectedJson1);
             actualJson2.Should().Contain(expectedJson2);
+        }
+
+        private class AccountingTimeTestPropertyBagConfiguration : PropertyBagConfigurationBase
+        {
+            public override IReadOnlyCollection<Type> DependentConfigurationTypes => new[] { typeof(AccountingTimePropertyBagConfiguration) };
+
+            protected override IReadOnlyCollection<Type> TypesToAutoRegister => new[] { typeof(AccountingPeriodSystemModel), typeof(UnitOfTimeModel), typeof(IReportingPeriodModel), typeof(ReportingPeriodModel) };
         }
     }
 }

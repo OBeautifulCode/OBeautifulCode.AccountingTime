@@ -6,13 +6,16 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
+    using System;
+    using System.Collections.Generic;
+
     using FakeItEasy;
 
     using FluentAssertions;
 
     using MongoDB.Bson;
+
     using Naos.Serialization.Bson;
-    using Naos.Serialization.Domain;
 
     using OBeautifulCode.AccountingTime.Serialization.Bson;
 
@@ -20,33 +23,18 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     public class AccountingTimeBsonConfigurationTest
     {
-        public AccountingTimeBsonConfigurationTest()
-        {
-            SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>();
-        }
-
-        [Fact]
-        public static void Register___Should_not_throw___When_called_multiple_times()
-        {
-            // Arrange, Act
-            var ex1 = Record.Exception(() => SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
-            var ex2 = Record.Exception(() => SerializationConfigurationManager.Configure<AccountingTimeBsonConfiguration>());
-
-            // Assert
-            ex1.Should().BeNull();
-            ex2.Should().BeNull();
-        }
+        public static readonly NaosBsonSerializer Serializer = new NaosBsonSerializer(typeof(AccountingTimeTestBsonConfiguration));
 
         [Fact]
         public void Deserialize___Should_roundtrip_a_serialized_AccountingPeriodSystemModel___When_model_contains_only_null_values()
         {
             // Arrange
             var expected = new AccountingPeriodSystemModel();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
+            var actual = Serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -57,11 +45,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = A.Dummy<AccountingPeriodSystemModel>();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
+            var actual = Serializer.Deserialize<AccountingPeriodSystemModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -72,11 +60,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = new UnitOfTimeModel();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
+            var actual = Serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -87,11 +75,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = A.Dummy<UnitOfTimeModel>();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
+            var actual = Serializer.Deserialize<UnitOfTimeModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -102,11 +90,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = new ReportingPeriodModel();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
+            var actual = Serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -117,11 +105,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = A.Dummy<ReportingPeriodModel>();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
+            var actual = Serializer.Deserialize<ReportingPeriodModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -132,11 +120,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = new IReportingPeriodModel();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
+            var actual = Serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -147,11 +135,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         {
             // Arrange
             var expected = A.Dummy<IReportingPeriodModel>();
-            var serializer = new NaosBsonSerializer();
-            var serializedBytes = serializer.SerializeToBytes(expected);
+
+            var serializedBytes = Serializer.SerializeToBytes(expected);
 
             // Act
-            var actual = serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
+            var actual = Serializer.Deserialize<IReportingPeriodModel>(serializedBytes);
 
             // Assert
             actual.Should().Be(expected);
@@ -240,6 +228,13 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             // Assert
             actualJson1.Should().Contain(expectedJson1);
             actualJson2.Should().Contain(expectedJson2);
+        }
+
+        private class AccountingTimeTestBsonConfiguration : BsonConfigurationBase
+        {
+            public override IReadOnlyCollection<Type> DependentConfigurationTypes => new[] { typeof(AccountingTimeBsonConfiguration) };
+
+            protected override IReadOnlyCollection<Type> TypesToAutoRegister => new[] { typeof(AccountingPeriodSystemModel), typeof(UnitOfTimeModel), typeof(IReportingPeriodModel), typeof(ReportingPeriodModel) };
         }
     }
 }

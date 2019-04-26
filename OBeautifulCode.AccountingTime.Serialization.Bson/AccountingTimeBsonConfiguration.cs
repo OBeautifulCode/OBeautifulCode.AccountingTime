@@ -11,6 +11,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using System.Linq;
 
     using MongoDB.Bson.Serialization;
+
     using Naos.Serialization.Bson;
 
     /// <inheritdoc />
@@ -20,29 +21,35 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
         protected override IReadOnlyCollection<Type> TypesToAutoRegisterWithDiscovery => new[] { typeof(AccountingPeriodSystem) };
 
         /// <inheritdoc />
-        protected override void FinalConfiguration()
+        protected override IReadOnlyCollection<RegisteredBsonSerializer> SerializersToRegister => BuildRegisteredBsonSerializers();
+
+        private static IReadOnlyCollection<RegisteredBsonSerializer> BuildRegisteredBsonSerializers()
         {
             // register serializer for various flavors of UnitOfTime
             var unitOfTimeTypesToRegister = TypeHelper.GetAllUnitOfTimeTypes().ToList();
 
-            unitOfTimeTypesToRegister.ForEach(
-                t =>
-                {
-                    this.RegisterCustomSerializer(
-                        t,
-                        Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(t)) as IBsonSerializer);
-                });
+            var result = new List<RegisteredBsonSerializer>();
+
+            var unitOfTimeSerializers = unitOfTimeTypesToRegister
+                .Select(_ => new RegisteredBsonSerializer(
+                    () => Activator.CreateInstance(typeof(UnitOfTimeSerializer<>).MakeGenericType(_)) as IBsonSerializer,
+                    new[] { _ }))
+                .ToList();
+
+            result.AddRange(unitOfTimeSerializers);
 
             // register serializer for various flavors of IReportingPeriod
             var reportingPeriodTypesToRegister = TypeHelper.GetAllBoundReportingPeriodTypes().ToList();
 
-            reportingPeriodTypesToRegister.ForEach(
-                t =>
-                {
-                    this.RegisterCustomSerializer(
-                        t,
-                        Activator.CreateInstance(typeof(ReportingPeriodSerializer<>).MakeGenericType(t)) as IBsonSerializer);
-                });
+            var reportingPeriodSerializers = reportingPeriodTypesToRegister
+                .Select(_ => new RegisteredBsonSerializer(
+                    () => Activator.CreateInstance(typeof(ReportingPeriodSerializer<>).MakeGenericType(_)) as IBsonSerializer,
+                    new[] { _ }))
+                .ToList();
+
+            result.AddRange(reportingPeriodSerializers);
+
+            return result;
         }
     }
 }

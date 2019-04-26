@@ -6,9 +6,7 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using Naos.Serialization.Domain;
     using Naos.Serialization.PropertyBag;
@@ -17,18 +15,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class AccountingTimePropertyBagConfiguration : PropertyBagConfigurationBase
     {
         /// <inheritdoc />
-        protected override IReadOnlyDictionary<Type, IStringSerializeAndDeserialize> CustomTypeToSerializerMappings()
+        protected override IReadOnlyCollection<RegisteredStringSerializer> SerializersToRegister => new[]
         {
-            var reportingPeriodStringSerializer = new ReportingPeriodStringSerializer();
-
-            var unitOfTimeStringSerializer = new UnitOfTimeStringSerializer();
-
-            var unitOfTimeTypeToSerializerMap = TypeHelper.GetAllUnitOfTimeTypes().ToDictionary(_ => _, _ => (IStringSerializeAndDeserialize)unitOfTimeStringSerializer);
-            var reportingPeriodTypeToSerializerMap = TypeHelper.GetAllBoundReportingPeriodTypes().ToDictionary(_ => _, _ => (IStringSerializeAndDeserialize)reportingPeriodStringSerializer);
-
-            var result = new KeyValuePair<Type, IStringSerializeAndDeserialize>[0].Concat(unitOfTimeTypeToSerializerMap).Concat(reportingPeriodTypeToSerializerMap).ToDictionary(_ => _.Key, _ => _.Value);
-
-            return result;
-        }
+            new RegisteredStringSerializer(() => new ReportingPeriodStringSerializer(), TypeHelper.GetAllBoundReportingPeriodTypes()),
+            new RegisteredStringSerializer(() => new UnitOfTimeStringSerializer(), TypeHelper.GetAllUnitOfTimeTypes()),
+        };
     }
 }
