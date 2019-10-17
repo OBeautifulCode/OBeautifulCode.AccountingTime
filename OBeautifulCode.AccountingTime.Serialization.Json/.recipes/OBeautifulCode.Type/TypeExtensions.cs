@@ -16,6 +16,7 @@ namespace OBeautifulCode.Type.Recipes
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Globalization;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.CompilerServices;
@@ -678,7 +679,7 @@ namespace OBeautifulCode.Type.Recipes
                     string[] genericParameters;
                     if (isAnonymous && type.IsGenericTypeDefinition)
                     {
-                        genericParameters = type.GetGenericArguments().Select((_, i) => "T" + (i + 1)).ToArray();
+                        genericParameters = type.GetGenericArguments().Select((_, i) => "T" + (i + 1).ToString(CultureInfo.InvariantCulture)).ToArray();
                     }
                     else
                     {
