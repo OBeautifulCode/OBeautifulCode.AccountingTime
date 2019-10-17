@@ -38,6 +38,9 @@
       <!-- Acronym for Cryptographic Message Syntax -->
       <Word>CMS</Word>
 
+      <!-- The ability be be compiled. -->
+      <Word>compilable</Word>
+
       <!-- Acronym for Certificate Signing Request -->
       <Word>CSR</Word>
 
@@ -47,6 +50,9 @@
 
       <!-- The act of deserializing. -->
       <Word>deserializes</Word>
+
+      <!-- Refers to objects that are IEnumerable. -->
+      <Word>enumerables</Word>
 
       <!-- Acronym for Extract, Transform, Load -->
       <Word>ETL</Word>

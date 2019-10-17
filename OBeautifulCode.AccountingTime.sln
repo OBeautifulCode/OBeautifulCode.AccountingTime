@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime", "OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj", "{FA79388D-2555-42EE-AB7B-55B1EA1E2676}"
 EndProject
@@ -9,8 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E21C26E1-C3B3-448C-8C0B-C207631BD451}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		RepoConfig.state = RepoConfig.state
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBeautifulCode.AccountingTime.Serialization.Test", "OBeautifulCode.AccountingTime.Serialization.Test\OBeautifulCode.AccountingTime.Serialization.Test.csproj", "{0BA40593-40F0-4984-A8AE-98B3C62EEB51}"
