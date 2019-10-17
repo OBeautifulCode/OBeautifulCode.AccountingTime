@@ -375,6 +375,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Somewhat the nature of the problem.")]
         private static IReportingPeriod<UnitOfTime> MakeLessGranular(
             this IReportingPeriod<UnitOfTime> reportingPeriod,
             UnitOfTimeGranularity granularity)
