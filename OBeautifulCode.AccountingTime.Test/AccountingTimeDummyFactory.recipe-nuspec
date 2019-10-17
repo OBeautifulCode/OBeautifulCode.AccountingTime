@@ -6,9 +6,9 @@
     <tags>accounting time fakeiteasy autofixture dummy factory</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="1.0.101" />
-        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.107" />
-        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.62" />
+        <dependency id="OBeautifulCode.AccountingTime" version="1.0.113" />
+        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.118" />
+        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.72" />
     </dependencies>
   </metadata>
   <files>
