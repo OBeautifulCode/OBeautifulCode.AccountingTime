@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using System;
     using System.Collections.Generic;
 
-    using Naos.Serialization.Json;
+    using OBeautifulCode.Serialization.Json;
 
     /// <inheritdoc />
     public class AccountingTimeJsonConfiguration : JsonConfigurationBase

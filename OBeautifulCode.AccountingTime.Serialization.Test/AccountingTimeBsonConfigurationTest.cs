@@ -16,16 +16,15 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using MongoDB.Bson;
 
-    using Naos.Serialization.Bson;
-
     using OBeautifulCode.AccountingTime.Serialization.Bson;
+    using OBeautifulCode.Serialization.Bson;
 
     using Xunit;
 
     public class AccountingTimeBsonConfigurationTest
     {
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "This is not mutable.")]
-        public static readonly NaosBsonSerializer Serializer = new NaosBsonSerializer(typeof(AccountingTimeTestBsonConfiguration));
+        public static readonly ObcBsonSerializer Serializer = new ObcBsonSerializer(typeof(AccountingTimeTestBsonConfiguration));
 
         [Fact]
         public void Deserialize___Should_roundtrip_a_serialized_AccountingPeriodSystemModel___When_model_contains_only_null_values()

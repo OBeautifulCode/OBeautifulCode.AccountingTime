@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
     /// Conversion-related extension methods on <see cref="UnitOfTime"/>.
@@ -29,8 +29,8 @@ namespace OBeautifulCode.AccountingTime
             this FiscalQuarter fiscalQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            new { fiscalQuarter }.Must().NotBeNull();
-            new { calendarQuarterThatIsFirstFiscalQuarter }.Must().NotBeEqualTo(QuarterNumber.Invalid);
+            new { fiscalQuarter }.AsArg().Must().NotBeNull();
+            new { calendarQuarterThatIsFirstFiscalQuarter }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -75,8 +75,8 @@ namespace OBeautifulCode.AccountingTime
             this CalendarQuarter calendarQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            new { calendarQuarter }.Must().NotBeNull();
-            new { calendarQuarterThatIsFirstFiscalQuarter }.Must().NotBeEqualTo(QuarterNumber.Invalid);
+            new { calendarQuarter }.AsArg().Must().NotBeNull();
+            new { calendarQuarterThatIsFirstFiscalQuarter }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -118,7 +118,7 @@ namespace OBeautifulCode.AccountingTime
         public static GenericMonth ToGenericMonth(
             this IHaveAMonth month)
         {
-            new { month }.Must().NotBeNull();
+            new { month }.AsArg().Must().NotBeNull();
 
             var result = new GenericMonth(month.Year, month.MonthNumber);
 
@@ -136,7 +136,7 @@ namespace OBeautifulCode.AccountingTime
         public static GenericQuarter ToGenericQuarter(
             this IHaveAQuarter quarter)
         {
-            new { quarter }.Must().NotBeNull();
+            new { quarter }.AsArg().Must().NotBeNull();
 
             var result = new GenericQuarter(quarter.Year, quarter.QuarterNumber);
 
@@ -154,7 +154,7 @@ namespace OBeautifulCode.AccountingTime
         public static GenericYear ToGenericYear(
             this IHaveAYear year)
         {
-            new { year }.Must().NotBeNull();
+            new { year }.AsArg().Must().NotBeNull();
 
             var result = new GenericYear(year.Year);
 
@@ -174,7 +174,7 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToMostGranular(
             this UnitOfTime unitOfTime)
         {
-            new { unitOfTime }.Must().NotBeNull();
+            new { unitOfTime }.AsArg().Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
@@ -294,7 +294,7 @@ namespace OBeautifulCode.AccountingTime
         public static IReportingPeriod<UnitOfTime> ToReportingPeriod(
             this UnitOfTime unitOfTime)
         {
-            new { unitOfTime }.Must().NotBeNull();
+            new { unitOfTime }.AsArg().Must().NotBeNull();
 
             var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
 

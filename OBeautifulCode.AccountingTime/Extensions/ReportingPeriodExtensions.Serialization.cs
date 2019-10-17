@@ -11,7 +11,7 @@ namespace OBeautifulCode.AccountingTime
     using System.Linq;
     using System.Reflection;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     using static System.FormattableString;
 
@@ -36,7 +36,7 @@ namespace OBeautifulCode.AccountingTime
             this string reportingPeriod)
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
-            new { reportingPeriod }.Must().NotBeNullNorWhiteSpace();
+            new { reportingPeriod }.AsArg().Must().NotBeNullNorWhiteSpace();
 
             var requestedType = typeof(TReportingPeriod);
 
@@ -62,8 +62,8 @@ namespace OBeautifulCode.AccountingTime
             this string reportingPeriod,
             Type requestedType)
         {
-            new { reportingPeriod }.Must().NotBeNullNorWhiteSpace();
-            new { requestedType }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNullNorWhiteSpace();
+            new { requestedType }.AsArg().Must().NotBeNull();
             if (!typeof(IReportingPeriod<UnitOfTime>).IsAssignableFrom(requestedType))
             {
                 throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}."), nameof(requestedType));
@@ -143,7 +143,7 @@ namespace OBeautifulCode.AccountingTime
         public static string SerializeToString(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            new { reportingPeriod }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
 
             var result = Invariant($"{reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()}");
 

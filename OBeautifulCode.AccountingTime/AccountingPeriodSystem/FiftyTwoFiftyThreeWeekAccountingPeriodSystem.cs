@@ -9,8 +9,8 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Math.Recipes;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
@@ -30,8 +30,8 @@ namespace OBeautifulCode.AccountingTime
             MonthOfYear anchorMonth,
             FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
         {
-            new { anchorMonth }.Must().NotBeEqualTo(MonthOfYear.Invalid);
-            new { fiftyTwoFiftyThreeWeekMethodology }.Must().NotBeEqualTo(FiftyTwoFiftyThreeWeekMethodology.Unknown);
+            new { anchorMonth }.AsArg().Must().NotBeEqualTo(MonthOfYear.Invalid);
+            new { fiftyTwoFiftyThreeWeekMethodology }.AsArg().Must().NotBeEqualTo(FiftyTwoFiftyThreeWeekMethodology.Unknown);
 
             this.LastDayOfWeekInAccountingYear = lastDayOfWeekInAccountingYear;
             this.AnchorMonth = anchorMonth;
@@ -102,7 +102,7 @@ namespace OBeautifulCode.AccountingTime
         public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            new { fiscalYear }.Must().NotBeNull();
+            new { fiscalYear }.AsArg().Must().NotBeNull();
 
             var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
             var lastDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year).ToCalendarDay();

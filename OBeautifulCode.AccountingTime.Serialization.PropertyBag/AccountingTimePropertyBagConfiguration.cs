@@ -8,8 +8,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
     using System.Collections.Generic;
 
-    using Naos.Serialization.Domain;
-    using Naos.Serialization.PropertyBag;
+    using OBeautifulCode.Serialization;
+    using OBeautifulCode.Serialization.PropertyBag;
 
     /// <inheritdoc />
     public class AccountingTimePropertyBagConfiguration : PropertyBagConfigurationBase

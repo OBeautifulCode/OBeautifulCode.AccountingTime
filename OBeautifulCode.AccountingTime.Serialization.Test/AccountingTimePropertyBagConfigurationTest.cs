@@ -13,15 +13,14 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using FluentAssertions;
 
-    using Naos.Serialization.PropertyBag;
-
     using OBeautifulCode.AccountingTime.Serialization.PropertyBag;
+    using OBeautifulCode.Serialization.PropertyBag;
 
     using Xunit;
 
     public static class AccountingTimePropertyBagConfigurationTest
     {
-        private static readonly NaosPropertyBagSerializer PropertyBagSerializer = new NaosPropertyBagSerializer(typeof(AccountingTimeTestPropertyBagConfiguration));
+        private static readonly ObcPropertyBagSerializer PropertyBagSerializer = new ObcPropertyBagSerializer(typeof(AccountingTimeTestPropertyBagConfiguration));
 
         [Fact]
         public static void Deserialize___Should_roundtrip_serialized_UnitOfTimeModel___When_model_contains_only_null_values()

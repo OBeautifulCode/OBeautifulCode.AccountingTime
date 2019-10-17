@@ -8,8 +8,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Math.Recipes;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -31,8 +31,8 @@ namespace OBeautifulCode.AccountingTime
             T start,
             T end)
         {
-            new { start }.Must().NotBeNull();
-            new { end }.Must().NotBeNull();
+            new { start }.AsArg().Must().NotBeNull();
+            new { end }.AsArg().Must().NotBeNull();
 
             if ((start is IAmUnboundedTime) || (end is IAmUnboundedTime))
             {

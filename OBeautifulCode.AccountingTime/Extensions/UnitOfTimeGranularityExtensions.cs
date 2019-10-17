@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     using static System.FormattableString;
 
@@ -101,7 +101,7 @@ namespace OBeautifulCode.AccountingTime
         public static bool IsMostGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
 
             var result = granularity == UnitOfTimeGranularity.Day;
 
@@ -119,7 +119,7 @@ namespace OBeautifulCode.AccountingTime
         public static bool IsLeastGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
 
             var result = granularity == UnitOfTimeGranularity.Unbounded;
 
@@ -138,7 +138,7 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity OneNotchMoreGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
 
             if (IsMostGranular(granularity))
             {
@@ -172,7 +172,7 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity OneNotchLessGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
 
             if (IsLeastGranular(granularity))
             {
@@ -197,7 +197,7 @@ namespace OBeautifulCode.AccountingTime
         private static int GetGranularityScore(
             UnitOfTimeGranularity granularity)
         {
-            new { granularity }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
 
             switch (granularity)
             {

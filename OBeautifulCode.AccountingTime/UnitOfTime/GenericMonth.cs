@@ -8,8 +8,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Math.Recipes;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -30,8 +30,8 @@ namespace OBeautifulCode.AccountingTime
             int year,
             MonthNumber monthNumber)
         {
-            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
-            new { monthNumber }.Must().NotBeEqualTo(MonthNumber.Invalid);
+            new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
+            new { monthNumber }.AsArg().Must().NotBeEqualTo(MonthNumber.Invalid);
 
             this.Year = year;
             this.MonthNumber = monthNumber;

@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
     /// Extension methods on type <see cref="UnitOfTimeGranularity"/>.
@@ -28,7 +28,7 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
+            new { quarterNumber }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new CalendarQuarter(year, quarterNumber);
 
@@ -48,7 +48,7 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
+            new { quarterNumber }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new FiscalQuarter(year, quarterNumber);
 
@@ -68,7 +68,7 @@ namespace OBeautifulCode.AccountingTime
             this QuarterNumber quarterNumber,
             int year)
         {
-            new { quarterNumber }.Must().NotBeEqualTo(QuarterNumber.Invalid);
+            new { quarterNumber }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
 
             var result = new GenericQuarter(year, quarterNumber);
 

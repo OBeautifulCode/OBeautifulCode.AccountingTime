@@ -8,8 +8,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Math.Recipes;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -34,9 +34,9 @@ namespace OBeautifulCode.AccountingTime
             MonthOfYear monthOfYear,
             DayOfMonth dayOfMonth)
         {
-            new { year }.Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
-            new { monthOfYear }.Must().NotBeEqualTo(MonthOfYear.Invalid);
-            new { dayOfMonth }.Must().NotBeEqualTo(DayOfMonth.Invalid);
+            new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
+            new { monthOfYear }.AsArg().Must().NotBeEqualTo(MonthOfYear.Invalid);
+            new { dayOfMonth }.AsArg().Must().NotBeEqualTo(DayOfMonth.Invalid);
 
             var totalDaysInMonth = DateTime.DaysInMonth(year, (int)monthOfYear);
             if ((int)dayOfMonth > totalDaysInMonth)

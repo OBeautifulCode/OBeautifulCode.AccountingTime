@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
 
-    using OBeautifulCode.Math.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
 #pragma warning disable SA1649 // File name should match first type name
     public class AccountingPeriodSystemModel : IEquatable<AccountingPeriodSystemModel>

@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     using static System.FormattableString;
 
@@ -32,7 +32,7 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             int unitsToAdd)
         {
-            new { unitOfTime }.Must().NotBeNull();
+            new { unitOfTime }.AsArg().Must().NotBeNull();
 
             switch (unitOfTime)
             {
@@ -89,14 +89,14 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd,
             UnitOfTimeGranularity granularityOfUnitsToAdd)
         {
-            new { unitOfTime }.Must().NotBeNull();
+            new { unitOfTime }.AsArg().Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
                 throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
-            new { granularityOfUnitsToAdd }.Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            new { granularityOfUnitsToAdd }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
 
             if (granularityOfUnitsToAdd.IsMoreGranularThan(unitOfTime.UnitOfTimeGranularity))
             {

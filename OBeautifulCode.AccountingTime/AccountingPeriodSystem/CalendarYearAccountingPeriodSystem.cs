@@ -8,8 +8,8 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Math.Recipes;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     /// <summary>
     /// A calendar year is 12 consecutive months beginning on January 1st and ending on December 31st.
@@ -59,7 +59,7 @@ namespace OBeautifulCode.AccountingTime
         public override ReportingPeriod<CalendarDay> GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            new { fiscalYear }.Must().NotBeNull();
+            new { fiscalYear }.AsArg().Must().NotBeNull();
 
             var januaryFirst = new CalendarDay(fiscalYear.Year, MonthOfYear.January, DayOfMonth.One);
             var decemberThirtyFirst = new CalendarDay(fiscalYear.Year, MonthOfYear.December, DayOfMonth.ThirtyOne);

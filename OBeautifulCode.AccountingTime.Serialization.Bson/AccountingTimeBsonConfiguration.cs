@@ -12,7 +12,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
 
     using MongoDB.Bson.Serialization;
 
-    using Naos.Serialization.Bson;
+    using OBeautifulCode.Serialization.Bson;
 
     /// <inheritdoc />
     public class AccountingTimeBsonConfiguration : BsonConfigurationBase

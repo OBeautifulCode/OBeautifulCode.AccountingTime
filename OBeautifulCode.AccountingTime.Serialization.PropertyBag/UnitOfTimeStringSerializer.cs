@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
     using System;
 
-    using Naos.Serialization.Domain;
+    using OBeautifulCode.Serialization;
 
     using static System.FormattableString;
 

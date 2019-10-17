@@ -11,7 +11,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using Newtonsoft.Json;
 
     using OBeautifulCode.AccountingTime;
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
     /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
@@ -26,7 +26,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         {
             if (value is IReportingPeriod<UnitOfTime> reportingPeriod)
             {
-                new { writer }.Must().NotBeNull();
+                new { writer }.AsArg().Must().NotBeNull();
 
                 var stringToWrite = reportingPeriod.SerializeToString();
                 writer.WriteValue(stringToWrite);
@@ -40,7 +40,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object existingValue,
             JsonSerializer serializer)
         {
-            new { reader }.Must().NotBeNull();
+            new { reader }.AsArg().Must().NotBeNull();
 
             object result = null;
             if (reader.Value != null)

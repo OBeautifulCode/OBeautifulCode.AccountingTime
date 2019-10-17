@@ -13,15 +13,14 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using FluentAssertions;
 
-    using Naos.Serialization.Json;
-
     using OBeautifulCode.AccountingTime.Serialization.Json;
+    using OBeautifulCode.Serialization.Json;
 
     using Xunit;
 
     public class AccountingTimeJsonConfigurationTest
     {
-        private static readonly NaosJsonSerializer Serializer = new NaosJsonSerializer(typeof(AccountingTimeTestJsonConfiguration));
+        private static readonly ObcJsonSerializer Serializer = new ObcJsonSerializer(typeof(AccountingTimeTestJsonConfiguration));
 
         [Fact]
         public void Deserialize___Should_roundtrip_a_serialized_AccountingPeriodSystemModel___When_model_contains_only_null_values()

@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
 
-    using OBeautifulCode.Validation.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
 
     using static System.FormattableString;
 
@@ -30,7 +30,7 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            new { reportingPeriod }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
 
             if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
             {
@@ -53,7 +53,7 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeKind GetUnitOfTimeKind(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            new { reportingPeriod }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
 
             var result = reportingPeriod.Start.UnitOfTimeKind;
 
@@ -78,7 +78,7 @@ namespace OBeautifulCode.AccountingTime
             this IReportingPeriod<T> reportingPeriod)
             where T : UnitOfTime
         {
-            new { reportingPeriod }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
@@ -107,7 +107,7 @@ namespace OBeautifulCode.AccountingTime
         public static bool HasComponentWithUnboundedGranularity(
             this IReportingPeriod<UnitOfTime> reportingPeriod)
         {
-            new { reportingPeriod }.Must().NotBeNull();
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
 
             var result = (reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) ||
                          (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
