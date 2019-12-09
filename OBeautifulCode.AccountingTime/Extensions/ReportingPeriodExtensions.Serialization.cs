@@ -69,9 +69,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}."), nameof(requestedType));
             }
 
-            Type unboundGenericType = typeof(ReportingPeriod<>);
-            string errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
-            Type requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
+            var unboundGenericType = typeof(ReportingPeriod<>);
+            var errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
+            var requestedUnitOfTimeType = requestedType.GenericTypeArguments[0];
             var typeArgs = new[] { requestedUnitOfTimeType };
             var genericTypeToCreate = unboundGenericType.MakeGenericType(typeArgs);
             if (!requestedType.IsAssignableFrom(genericTypeToCreate))

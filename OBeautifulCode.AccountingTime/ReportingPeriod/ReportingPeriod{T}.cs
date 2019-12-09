@@ -198,7 +198,7 @@ namespace OBeautifulCode.AccountingTime
             where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             var requestedType = typeof(TReportingPeriod);
-            var requestedUnitOfTimeType = requestedType.GetGenericArguments()[0];
+            var requestedUnitOfTimeType = requestedType.GenericTypeArguments[0];
 
             var thisUnboundGenericType = this.GetType().GetGenericTypeDefinition();
             var typeArgs = new[] { requestedUnitOfTimeType };

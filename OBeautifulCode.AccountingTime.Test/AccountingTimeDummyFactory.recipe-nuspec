@@ -6,12 +6,13 @@
     <tags>accounting time fakeiteasy autofixture dummy factory</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
-        <dependency id="OBeautifulCode.AccountingTime" version="1.0.114" />
-        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.118" />
-        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.72" />
+        <dependency id="OBeautifulCode.AccountingTime" version="$version$" />
+        <dependency id="OBeautifulCode.AutoFakeItEasy" version ="1.0.126" />
+        <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version ="1.0.73" />
     </dependencies>
   </metadata>
   <files>
+    <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\SuppressBecause.cs" />
     <file src="AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
   </files>
 </package>
