@@ -9,7 +9,6 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -17,7 +16,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar day.
     /// </summary>
     [Serializable]
-    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<CalendarDay>, IComparable<CalendarDay>, IFormattable
+    public class CalendarDay : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IComparable<CalendarDay>, IFormattable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarDay"/> class.
@@ -67,45 +66,6 @@ namespace OBeautifulCode.AccountingTime
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Day;
-
-        /// <summary>
-        /// Determines whether two objects of type <see cref="CalendarDay" /> are equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two days are equal; false otherwise.</returns>
-        public static bool operator ==(
-            CalendarDay left,
-            CalendarDay right)
-        {
-            if (ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
-
-            var result =
-                (left.DayOfMonth == right.DayOfMonth) &&
-                (left.MonthOfYear == right.MonthOfYear) &&
-                (left.Year == right.Year);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines whether two objects of type <see cref="CalendarDay" /> are not equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two days are not equal; false otherwise.</returns>
-        public static bool operator !=(
-            CalendarDay left,
-            CalendarDay right)
-            => !(left == right);
 
         /// <summary>
         /// Determines whether a day is less than another day.
@@ -180,16 +140,6 @@ namespace OBeautifulCode.AccountingTime
             => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public bool Equals(
-            CalendarDay other)
-            => this == other;
-
-        /// <inheritdoc />
-        public override bool Equals(
-            object obj)
-            => this == (obj as CalendarDay);
-
-        /// <inheritdoc />
         public int CompareTo(
             CalendarDay other)
         {
@@ -211,6 +161,7 @@ namespace OBeautifulCode.AccountingTime
             object obj)
         {
             var other = obj as CalendarDay;
+
             if (other == null)
             {
                 throw new ArgumentException("object is not a calendar day", nameof(obj));
@@ -220,16 +171,6 @@ namespace OBeautifulCode.AccountingTime
 
             return result;
         }
-
-        /// <inheritdoc />
-        public override int GetHashCode() =>
-            HashCodeHelper.Initialize()
-                .Hash(this.UnitOfTimeKind)
-                .Hash(this.UnitOfTimeGranularity)
-                .Hash(this.Year)
-                .Hash(this.MonthOfYear)
-                .Hash(this.DayOfMonth)
-                .Value;
 
         /// <summary>
         /// Converts this calendar day to an object of type <see cref="DateTime"/>.
@@ -242,14 +183,6 @@ namespace OBeautifulCode.AccountingTime
             var result = new DateTime(this.Year, (int)this.MonthNumber, (int)this.DayOfMonth, 0, 0, 0, DateTimeKind.Unspecified);
 
             return result;
-        }
-
-        /// <inheritdoc />
-        public override UnitOfTime DeepClone()
-        {
-            var clone = new CalendarDay(this.Year, this.MonthOfYear, this.DayOfMonth);
-
-            return clone;
         }
 
         /// <inheritdoc />

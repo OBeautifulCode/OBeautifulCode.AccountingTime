@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiscalUnbounded.cs" company="OBeautifulCode">
+// <copyright file="CalendarUnbounded.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,52 +8,16 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Equality.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
-    /// Represents an unbounded fiscal unit-of-time.
+    /// Represents an unbounded calendar unit-of-time.
     /// </summary>
     [Serializable]
-    public class FiscalUnbounded : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmUnboundedTime, IEquatable<FiscalUnbounded>, IComparable<FiscalUnbounded>
+    public class CalendarUnbounded : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmUnboundedTime, IComparable<CalendarUnbounded>
     {
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Unbounded;
-
-        /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalUnbounded" /> are equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two unbounded times are equal; false otherwise.</returns>
-        public static bool operator ==(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
-        {
-            if (ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalUnbounded" /> are not equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two unbounded times are not equal; false otherwise.</returns>
-        public static bool operator !=(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
-            => !(left == right);
 
         /// <summary>
         /// Determines whether a unbounded is less than another unbounded.
@@ -62,8 +26,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is less than the right-hand unbounded; false otherwise.</returns>
         public static bool operator <(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
+            CalendarUnbounded left,
+            CalendarUnbounded right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -87,8 +51,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is greater than the right-hand unbounded; false otherwise.</returns>
         public static bool operator >(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
+            CalendarUnbounded left,
+            CalendarUnbounded right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -112,8 +76,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is less than or equal to the right-hand unbounded; false otherwise.</returns>
         public static bool operator <=(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
+            CalendarUnbounded left,
+            CalendarUnbounded right)
             => (left == right) || (left < right);
 
         /// <summary>
@@ -123,21 +87,13 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand unbounded is greater than or equal to the right-hand unbounded; false otherwise.</returns>
         public static bool operator >=(
-            FiscalUnbounded left,
-            FiscalUnbounded right)
+            CalendarUnbounded left,
+            CalendarUnbounded right)
             => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public bool Equals(
-            FiscalUnbounded other) => this == other;
-
-        /// <inheritdoc />
-        public override bool Equals(
-            object obj) => this == (obj as FiscalUnbounded);
-
-        /// <inheritdoc />
         public int CompareTo(
-            FiscalUnbounded other)
+            CalendarUnbounded other)
         {
             if (other == null)
             {
@@ -151,34 +107,20 @@ namespace OBeautifulCode.AccountingTime
         public override int CompareTo(
             object obj)
         {
-            var other = obj as FiscalUnbounded;
+            var other = obj as CalendarUnbounded;
+
             if (other == null)
             {
-                throw new ArgumentException("object is not an unbounded fiscal time");
+                throw new ArgumentException("object is not an unbounded calendar time");
             }
 
             return 0;
         }
 
         /// <inheritdoc />
-        public override int GetHashCode() =>
-            HashCodeHelper.Initialize()
-                .Hash(this.UnitOfTimeKind)
-                .Hash(this.UnitOfTimeGranularity)
-                .Value;
-
-        /// <inheritdoc />
-        public override UnitOfTime DeepClone()
-        {
-            var result = new FiscalUnbounded();
-
-            return result;
-        }
-
-        /// <inheritdoc />
         public override string ToString()
         {
-            var result = Invariant($"fiscal unbounded");
+            var result = Invariant($"calendar unbounded");
 
             return result;
         }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CalendarYear.cs" company="OBeautifulCode">
+// <copyright file="FiscalYear.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,22 +9,21 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
     /// <summary>
-    /// Represents a calendar year.
+    /// Represents a fiscal year.
     /// </summary>
     [Serializable]
-    public class CalendarYear : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IEquatable<CalendarYear>, IComparable<CalendarYear>
+    public class FiscalYear : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAYear, IComparable<FiscalYear>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarYear"/> class.
+        /// Initializes a new instance of the <see cref="FiscalYear"/> class.
         /// </summary>
         /// <param name="year">The year.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="year"/> is less than 1 or greater than 9999.</exception>
-        public CalendarYear(
+        public FiscalYear(
             int year)
         {
             new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
@@ -39,50 +38,14 @@ namespace OBeautifulCode.AccountingTime
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Year;
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="CalendarYear" /> are equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two years are equal; false otherwise.</returns>
-        public static bool operator ==(
-            CalendarYear left,
-            CalendarYear right)
-        {
-            if (ReferenceEquals(left, right))
-            {
-                return true;
-            }
-
-            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
-            {
-                return false;
-            }
-
-            var result = left.Year == right.Year;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Determines whether two objects of type <see cref="CalendarYear" /> are not equal.
-        /// </summary>
-        /// <param name="left">The object to the left of the operator.</param>
-        /// <param name="right">The object to the right of the operator.</param>
-        /// <returns>true if the two years are not equal; false otherwise.</returns>
-        public static bool operator !=(
-            CalendarYear left,
-            CalendarYear right)
-            => !(left == right);
-
-        /// <summary>
         /// Determines whether a year is less than another year.
         /// </summary>
         /// <param name="left">The object to the left of the operator.</param>
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is less than the right-hand year; false otherwise.</returns>
         public static bool operator <(
-            CalendarYear left,
-            CalendarYear right)
+            FiscalYear left,
+            FiscalYear right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -106,8 +69,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is greater than the right-hand year; false otherwise.</returns>
         public static bool operator >(
-            CalendarYear left,
-            CalendarYear right)
+            FiscalYear left,
+            FiscalYear right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -131,8 +94,8 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is less than or equal to the right-hand year; false otherwise.</returns>
         public static bool operator <=(
-            CalendarYear left,
-            CalendarYear right)
+            FiscalYear left,
+            FiscalYear right)
             => (left == right) || (left < right);
 
         /// <summary>
@@ -142,21 +105,13 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="right">The object to the right of the operator.</param>
         /// <returns>true if the the left-hand year is greater than or equal to the right-hand year; false otherwise.</returns>
         public static bool operator >=(
-            CalendarYear left,
-            CalendarYear right)
+            FiscalYear left,
+            FiscalYear right)
             => (left == right) || (left > right);
 
         /// <inheritdoc />
-        public bool Equals(
-            CalendarYear other) => this == other;
-
-        /// <inheritdoc />
-        public override bool Equals(
-            object obj) => this == (obj as CalendarYear);
-
-        /// <inheritdoc />
         public int CompareTo(
-            CalendarYear other)
+            FiscalYear other)
         {
             if (other == null)
             {
@@ -172,10 +127,11 @@ namespace OBeautifulCode.AccountingTime
         public override int CompareTo(
             object obj)
         {
-            var other = obj as CalendarYear;
+            var other = obj as FiscalYear;
+
             if (other == null)
             {
-                throw new ArgumentException("object is not a calendar year");
+                throw new ArgumentException("object is not a fiscal year");
             }
 
             var result = this.CompareTo(other);
@@ -184,25 +140,9 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <inheritdoc />
-        public override int GetHashCode() =>
-            HashCodeHelper.Initialize()
-                .Hash(this.UnitOfTimeKind)
-                .Hash(this.UnitOfTimeGranularity)
-                .Hash(this.Year)
-                .Value;
-
-        /// <inheritdoc />
-        public override UnitOfTime DeepClone()
-        {
-            var result = new CalendarYear(this.Year);
-
-            return result;
-        }
-
-        /// <inheritdoc />
         public override string ToString()
         {
-            var result = Invariant($"CY{this.Year:D4}");
+            var result = Invariant($"FY{this.Year:D4}");
 
             return result;
         }
