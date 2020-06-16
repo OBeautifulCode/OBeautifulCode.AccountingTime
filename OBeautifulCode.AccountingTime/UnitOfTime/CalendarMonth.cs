@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -16,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a calendar month in a specified year.
     /// </summary>
     [Serializable]
-    public class CalendarMonth : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IComparable<CalendarMonth>
+    public class CalendarMonth : CalendarUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<CalendarMonth>, IComparable<CalendarMonth>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarMonth"/> class.
@@ -49,6 +50,42 @@ namespace OBeautifulCode.AccountingTime
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Month;
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="CalendarMonth" /> are equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>true if the two months are equal; false otherwise.</returns>
+        public static bool operator ==(
+            CalendarMonth left,
+            CalendarMonth right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            var result = (left.MonthOfYear == right.MonthOfYear) && (left.Year == right.Year);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="CalendarMonth" /> are not equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>true if the two months are not equal; false otherwise.</returns>
+        public static bool operator !=(
+            CalendarMonth left,
+            CalendarMonth right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a month is less than another month.
@@ -123,6 +160,16 @@ namespace OBeautifulCode.AccountingTime
             => (left == right) || (left > right);
 
         /// <inheritdoc />
+        public bool Equals(
+            CalendarMonth other)
+            => this == other;
+
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj)
+            => this == (obj as CalendarMonth);
+
+        /// <inheritdoc />
         public int CompareTo(
             CalendarMonth other)
         {
@@ -132,7 +179,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var thisDay = new DateTime(this.Year, (int)this.MonthOfYear, 1);
-
             var otherDay = new DateTime(other.Year, (int)other.MonthOfYear, 1);
 
             var result = thisDay.CompareTo(otherDay);
@@ -145,13 +191,29 @@ namespace OBeautifulCode.AccountingTime
             object obj)
         {
             var other = obj as CalendarMonth;
-
             if (other == null)
             {
                 throw new ArgumentException("object is not a calendar month", nameof(obj));
             }
 
             var result = this.CompareTo(other);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode() =>
+            HashCodeHelper.Initialize()
+                .Hash(this.UnitOfTimeKind)
+                .Hash(this.UnitOfTimeGranularity)
+                .Hash(this.MonthOfYear)
+                .Hash(this.Year)
+                .Value;
+
+        /// <inheritdoc />
+        public override UnitOfTime DeepClone()
+        {
+            var result = new CalendarMonth(this.Year, this.MonthOfYear);
 
             return result;
         }

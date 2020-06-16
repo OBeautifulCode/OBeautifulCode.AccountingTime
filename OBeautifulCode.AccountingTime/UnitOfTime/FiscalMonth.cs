@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Equality.Recipes;
 
     using static System.FormattableString;
 
@@ -16,7 +17,7 @@ namespace OBeautifulCode.AccountingTime
     /// Represents a fiscal month in a specified year.
     /// </summary>
     [Serializable]
-    public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IComparable<FiscalMonth>
+    public class FiscalMonth : FiscalUnitOfTime, IAmAConcreteUnitOfTime, IAmBoundedTime, IHaveAMonth, IEquatable<FiscalMonth>, IComparable<FiscalMonth>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FiscalMonth"/> class.
@@ -44,6 +45,42 @@ namespace OBeautifulCode.AccountingTime
 
         /// <inheritdoc />
         public override UnitOfTimeGranularity UnitOfTimeGranularity => UnitOfTimeGranularity.Month;
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="FiscalMonth" /> are equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>true if the two months are equal; false otherwise.</returns>
+        public static bool operator ==(
+            FiscalMonth left,
+            FiscalMonth right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(left, null) || ReferenceEquals(right, null))
+            {
+                return false;
+            }
+
+            var result = (left.MonthNumber == right.MonthNumber) && (left.Year == right.Year);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines whether two objects of type <see cref="FiscalMonth" /> are not equal.
+        /// </summary>
+        /// <param name="left">The object to the left of the operator.</param>
+        /// <param name="right">The object to the right of the operator.</param>
+        /// <returns>true if the two months are not equal; false otherwise.</returns>
+        public static bool operator !=(
+            FiscalMonth left,
+            FiscalMonth right)
+            => !(left == right);
 
         /// <summary>
         /// Determines whether a month is less than another month.
@@ -118,6 +155,14 @@ namespace OBeautifulCode.AccountingTime
             => (left == right) || (left > right);
 
         /// <inheritdoc />
+        public bool Equals(
+            FiscalMonth other) => this == other;
+
+        /// <inheritdoc />
+        public override bool Equals(
+            object obj) => this == (obj as FiscalMonth);
+
+        /// <inheritdoc />
         public int CompareTo(
             FiscalMonth other)
         {
@@ -127,7 +172,6 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var thisDay = new DateTime(this.Year, (int)this.MonthNumber, 1);
-
             var otherDay = new DateTime(other.Year, (int)other.MonthNumber, 1);
 
             var result = thisDay.CompareTo(otherDay);
@@ -140,13 +184,29 @@ namespace OBeautifulCode.AccountingTime
             object obj)
         {
             var other = obj as FiscalMonth;
-
             if (other == null)
             {
                 throw new ArgumentException("object is not a fiscal month");
             }
 
             var result = this.CompareTo(other);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode() =>
+            HashCodeHelper.Initialize()
+                .Hash(this.UnitOfTimeKind)
+                .Hash(this.UnitOfTimeGranularity)
+                .Hash(this.MonthNumber)
+                .Hash(this.Year)
+                .Value;
+
+        /// <inheritdoc />
+        public override UnitOfTime DeepClone()
+        {
+            var result = new FiscalMonth(this.Year, this.MonthNumber);
 
             return result;
         }
