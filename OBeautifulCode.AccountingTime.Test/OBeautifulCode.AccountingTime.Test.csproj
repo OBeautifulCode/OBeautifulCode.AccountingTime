@@ -65,20 +65,20 @@
     <Reference Include="OBeautifulCode.Compression, Version=1.0.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Compression.1.0.14\lib\net462\OBeautifulCode.Compression.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.47.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.47\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
+    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.48.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.48\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.43\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.45.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.45\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.43\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.45.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.45\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.43\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.45.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.45\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.43\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.45.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.45\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Type, Version=1.0.51.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Type.1.0.51\lib\net462\OBeautifulCode.Type.dll</HintPath>
@@ -187,7 +187,6 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystemTest.cs" />
-    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemHelpersTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
     <Compile Include="Common.cs" />
@@ -206,24 +205,22 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
-    <Compile Include="UnitOfTime\CalendarDayTest.cs" />
-    <Compile Include="UnitOfTime\CalendarMonthTest.cs" />
-    <Compile Include="UnitOfTime\CalendarQuarterTest.cs" />
-    <Compile Include="UnitOfTime\CalendarYearTest.cs" />
-    <Compile Include="UnitOfTime\FiscalMonthTest.cs" />
-    <Compile Include="UnitOfTime\FiscalQuarterTest.cs" />
-    <Compile Include="UnitOfTime\FiscalUnboundedTest.cs" />
-    <Compile Include="UnitOfTime\FiscalYearTest.cs" />
-    <Compile Include="UnitOfTime\GenericMonthTest.cs" />
-    <Compile Include="UnitOfTime\GenericQuarterTest.cs" />
-    <Compile Include="UnitOfTime\GenericUnboundedTest.cs" />
-    <Compile Include="UnitOfTime\GenericYearTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarDayTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarMonthTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarQuarterTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarYearTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalMonthTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalQuarterTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalUnboundedTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalYearTest.cs" />
+    <Compile Include="UnitOfTime\Generic\GenericMonthTest.cs" />
+    <Compile Include="UnitOfTime\Generic\GenericQuarterTest.cs" />
+    <Compile Include="UnitOfTime\Generic\GenericUnboundedTest.cs" />
+    <Compile Include="UnitOfTime\Generic\GenericYearTest.cs" />
     <Compile Include="UnitOfTime\UnitOfTimeTest.cs" />
-    <Compile Include="UnitOfTime\CalendarUnboundedTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarUnboundedTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <None Include=".analyzers\test.ruleset" />
     <None Include="app.config" />
     <None Include="Extensions\FiscalQuarterToCalendarQuarter.xlsx" />
     <None Include="AccountingTimeDummyFactory.recipe-nuspec">
@@ -232,6 +229,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.Bson\OBeautifulCode.AccountingTime.Serialization.Bson.csproj">
+      <Project>{1b543b16-26e9-4d17-96c8-99049152e6e3}</Project>
+      <Name>OBeautifulCode.AccountingTime.Serialization.Bson</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.Json\OBeautifulCode.AccountingTime.Serialization.Json.csproj">
+      <Project>{ac6b7d06-fc70-4d20-9390-24ceffc5eb0a}</Project>
+      <Name>OBeautifulCode.AccountingTime.Serialization.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.PropertyBag\OBeautifulCode.AccountingTime.Serialization.PropertyBag.csproj">
+      <Project>{254b09b7-f787-4d0d-ac8b-51500d83d939}</Project>
+      <Name>OBeautifulCode.AccountingTime.Serialization.PropertyBag</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj">
       <Project>{fa79388d-2555-42ee-ab7b-55b1ea1e2676}</Project>
       <Name>OBeautifulCode.AccountingTime</Name>
@@ -255,10 +264,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

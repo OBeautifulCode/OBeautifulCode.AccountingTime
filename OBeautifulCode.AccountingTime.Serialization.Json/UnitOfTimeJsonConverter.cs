@@ -24,12 +24,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object value,
             JsonSerializer serializer)
         {
-            var unitOfTime = value as UnitOfTime;
-            if (unitOfTime != null)
+            if (value is UnitOfTime unitOfTime)
             {
                 new { writer }.AsArg().Must().NotBeNull();
 
                 var stringToWrite = unitOfTime.SerializeToSortableString();
+
                 writer.WriteValue(stringToWrite);
             }
         }
@@ -44,6 +44,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             new { reader }.AsArg().Must().NotBeNull();
 
             UnitOfTime result = null;
+
             if (reader.Value != null)
             {
                 result = reader.Value.ToString().DeserializeFromSortableString<UnitOfTime>();
@@ -57,6 +58,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             Type objectType)
         {
             var result = typeof(UnitOfTime).IsAssignableFrom(objectType);
+
             return result;
         }
     }

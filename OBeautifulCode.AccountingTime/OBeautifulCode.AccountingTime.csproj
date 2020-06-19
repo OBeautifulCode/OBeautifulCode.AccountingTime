@@ -72,6 +72,8 @@
     <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.TypeValidation.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\Verifications.Workflow.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\WorkflowExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.DateTime\DateTimeExtensions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.DateTime\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -85,62 +87,126 @@
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemHelpers.cs" />
+    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystem.designer.cs">
+      <DependentUpon>AccountingPeriodSystem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystem.designer.cs">
+      <DependentUpon>CalendarYearAccountingPeriodSystem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystem.designer.cs">
+      <DependentUpon>FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystem.designer.cs">
+      <DependentUpon>FiscalYearAccountingPeriodSystem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\OverflowStrategy.cs" />
     <Compile Include="Extensions\QuarterNumberExtensions.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensions.Manipulation.cs" />
-    <Compile Include="Extensions\ReportingPeriodExtensions.Properties.cs" />
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <None Include=".analyzers\release.ruleset" />
+    <None Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
+    <None Include="Extensions\ReportingPeriodExtensions.Manipulation.cs" />
+    <None Include="Extensions\ReportingPeriodExtensions.Properties.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensions.Serialization.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Conversion.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Properties.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Math.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Serialization.cs" />
     <Compile Include="Extensions\UnitOfTimeGranularityExtensions.cs" />
-    <Compile Include="ReportingPeriod\IReportingPeriod{T}.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriod.designer.cs">
+      <DependentUpon>ReportingPeriod.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportingPeriod\ReportingPeriodComponent.cs" />
     <Compile Include="TypeHelper.cs" />
-    <Compile Include="UnitOfTime\CalendarDay.cs" />
-    <Compile Include="UnitOfTime\DayOfMonth.cs" />
-    <Compile Include="UnitOfTime\FiscalMonth.cs" />
-    <Compile Include="UnitOfTime\FiscalQuarter.cs" />
-    <Compile Include="UnitOfTime\FiscalUnbounded.cs" />
-    <Compile Include="UnitOfTime\FiscalYear.cs" />
-    <Compile Include="UnitOfTime\GenericMonth.cs" />
-    <Compile Include="UnitOfTime\GenericQuarter.cs" />
-    <Compile Include="UnitOfTime\GenericUnbounded.cs" />
-    <Compile Include="UnitOfTime\GenericYear.cs" />
-    <Compile Include="UnitOfTime\IAmAConcreteUnitOfTime.cs" />
-    <Compile Include="UnitOfTime\IAmBoundedTime.cs" />
-    <Compile Include="UnitOfTime\IAmUnboundedTime.cs" />
-    <Compile Include="UnitOfTime\IHaveAMonth.cs" />
-    <Compile Include="UnitOfTime\IHaveAYear.cs" />
-    <Compile Include="UnitOfTime\IHaveAQuarter.cs" />
-    <Compile Include="UnitOfTime\MonthNumber.cs" />
-    <Compile Include="UnitOfTime\QuarterNumber.cs" />
-    <Compile Include="UnitOfTime\CalendarUnitOfTime.cs" />
-    <Compile Include="UnitOfTime\FiscalUnitOfTime.cs" />
-    <Compile Include="UnitOfTime\GenericUnitOfTime.cs" />
-    <Compile Include="UnitOfTime\CalendarUnbounded.cs" />
-    <Compile Include="UnitOfTime\UnitOfTime.cs" />
-    <Compile Include="UnitOfTime\CalendarMonth.cs" />
-    <Compile Include="UnitOfTime\CalendarYear.cs" />
-    <Compile Include="ReportingPeriod\ReportingPeriod{T}.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarDay.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarDay.designer.cs">
+      <DependentUpon>CalendarDay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarMonth.designer.cs">
+      <DependentUpon>CalendarMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarQuarter.designer.cs">
+      <DependentUpon>CalendarQuarter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarUnbounded.designer.cs">
+      <DependentUpon>CalendarUnbounded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarUnitOfTime.designer.cs">
+      <DependentUpon>CalendarUnitOfTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarYear.designer.cs">
+      <DependentUpon>CalendarYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Calendar\DayOfMonth.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalMonth.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalMonth.designer.cs">
+      <DependentUpon>FiscalMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalQuarter.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalQuarter.designer.cs">
+      <DependentUpon>FiscalQuarter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalUnbounded.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalUnbounded.designer.cs">
+      <DependentUpon>FiscalUnbounded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalUnitOfTime.designer.cs">
+      <DependentUpon>FiscalUnitOfTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalYear.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalYear.designer.cs">
+      <DependentUpon>FiscalYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Generic\GenericMonth.cs" />
+    <Compile Include="UnitOfTime\Classes\Generic\GenericMonth.designer.cs">
+      <DependentUpon>GenericMonth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Generic\GenericQuarter.cs" />
+    <Compile Include="UnitOfTime\Classes\Generic\GenericQuarter.designer.cs">
+      <DependentUpon>GenericQuarter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Generic\GenericUnbounded.cs" />
+    <Compile Include="UnitOfTime\Classes\Generic\GenericUnbounded.designer.cs">
+      <DependentUpon>GenericUnbounded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Generic\GenericUnitOfTime.designer.cs">
+      <DependentUpon>GenericUnitOfTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\Generic\GenericYear.cs" />
+    <Compile Include="UnitOfTime\Classes\Generic\GenericYear.designer.cs">
+      <DependentUpon>GenericYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Classes\UnitOfTime.designer.cs">
+      <DependentUpon>UnitOfTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Interfaces\IAmAConcreteUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\Interfaces\IAmBoundedTime.cs" />
+    <Compile Include="UnitOfTime\Interfaces\IAmUnboundedTime.cs" />
+    <Compile Include="UnitOfTime\Interfaces\IHaveAMonth.cs" />
+    <Compile Include="UnitOfTime\Interfaces\IHaveAYear.cs" />
+    <Compile Include="UnitOfTime\Interfaces\IHaveAQuarter.cs" />
+    <Compile Include="UnitOfTime\Enums\MonthNumber.cs" />
+    <Compile Include="UnitOfTime\Enums\QuarterNumber.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\Classes\Fiscal\FiscalUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\Classes\Generic\GenericUnitOfTime.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarUnbounded.cs" />
+    <Compile Include="UnitOfTime\Classes\UnitOfTime.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarMonth.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarYear.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriod.cs" />
     <Compile Include="AccountingPeriodSystem\AccountingPeriodSystem.cs" />
     <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystem.cs" />
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs" />
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekMethodology.cs" />
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystem.cs" />
-    <Compile Include="UnitOfTime\MonthOfYear.cs" />
+    <Compile Include="UnitOfTime\Enums\MonthOfYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitOfTime\CalendarQuarter.cs" />
-    <Compile Include="UnitOfTime\UnitOfTimeKind.cs" />
-    <Compile Include="UnitOfTime\UnitOfTimeGranularity.cs" />
+    <Compile Include="UnitOfTime\Classes\Calendar\CalendarQuarter.cs" />
+    <Compile Include="UnitOfTime\Enums\UnitOfTimeKind.cs" />
+    <Compile Include="UnitOfTime\Enums\UnitOfTimeGranularity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <None Include=".analyzers\release.ruleset" />
     <None Include="OBeautifulCode.AccountingTime.override-nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -155,12 +221,12 @@
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.119\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.120\build\OBeautifulCode.Build.Analyzers.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

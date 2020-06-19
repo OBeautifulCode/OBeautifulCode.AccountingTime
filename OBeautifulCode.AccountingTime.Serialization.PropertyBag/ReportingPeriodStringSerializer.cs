@@ -18,19 +18,16 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class ReportingPeriodStringSerializer : IStringSerializeAndDeserialize
     {
         /// <inheritdoc />
-        public Type ConfigurationType => null;
-
-        /// <inheritdoc />
         public string SerializeToString(
             object objectToSerialize)
         {
-            if (objectToSerialize is IReportingPeriod<UnitOfTime> objectAsReportingPeriod)
+            if (objectToSerialize is ReportingPeriod objectAsReportingPeriod)
             {
                 return objectAsReportingPeriod.SerializeToString();
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(IReportingPeriod<UnitOfTime>)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(ReportingPeriod)}"));
             }
         }
 
@@ -48,12 +45,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             string serializedString,
             Type type)
         {
-            if (!type.IsReportingPeriodType())
+            if (type != typeof(ReportingPeriod))
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(IReportingPeriod<UnitOfTime>)}"));
+                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(ReportingPeriod)}"));
             }
 
-            var result = serializedString.DeserializeFromString(type);
+            var result = serializedString.DeserializeFromString();
 
             return result;
         }

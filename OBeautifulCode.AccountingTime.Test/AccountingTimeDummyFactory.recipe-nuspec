@@ -2,8 +2,8 @@
 <package >
   <metadata>
     <id>OBeautifulCode.AccountingTime.Recipes.DummyFactory</id>
-    <description>A dummy factory for AccountingTime types.</description>
-    <tags>accounting time fakeiteasy autofixture dummy factory</tags>
+    <description>A Dummy Factory for types in AccountingTime.</description>
+    <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe AccountingTime</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
         <dependency id="OBeautifulCode.AccountingTime" version="$version$" />
@@ -14,5 +14,6 @@
   <files>
     <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\SuppressBecause.cs" />
     <file src="AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
+    <file src="AccountingTimeDummyFactory.designer.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.designer.cs" />
   </files>
 </package>

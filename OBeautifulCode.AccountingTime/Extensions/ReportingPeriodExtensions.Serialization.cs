@@ -7,23 +7,20 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Reflection;
 
     using OBeautifulCode.Assertion.Recipes;
 
     using static System.FormattableString;
 
     /// <summary>
-    /// Serialization-related extension methods on <see cref="IReportingPeriod{T}"/>.
+    /// Serialization-related extension methods on <see cref="ReportingPeriod"/>.
     /// </summary>
     public static partial class ReportingPeriodExtensions
     {
         /// <summary>
-        /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
+        /// Deserializes a <see cref="ReportingPeriod"/> from a string.
         /// </summary>
-        /// <typeparam name="TReportingPeriod">The type of reporting period to deserialize into.</typeparam>
         /// <param name="reportingPeriod">The serialized reporting period string to deserialize.</param>
         /// <returns>
         /// Gets a reporting period deserialized from it's string representation.
@@ -31,55 +28,13 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Not possible to implement this, since we are trying to deserialize a string.")]
-        public static TReportingPeriod DeserializeFromString<TReportingPeriod>(
+        public static ReportingPeriod DeserializeFromString(
             this string reportingPeriod)
-            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             new { reportingPeriod }.AsArg().Must().NotBeNullNorWhiteSpace();
 
-            var requestedType = typeof(TReportingPeriod);
+            var errorMessage = Invariant($"Cannot deserialize reporting period; the specified string is malformed: {reportingPeriod}.");
 
-            var result = reportingPeriod.DeserializeFromString(requestedType) as TReportingPeriod;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deserializes an <see cref="IReportingPeriod{T}"/> from a string.
-        /// </summary>
-        /// <param name="reportingPeriod">The serialized reporting period string to deserialize.</param>
-        /// <param name="requestedType">The type of reporting period to deserialize into.</param>
-        /// <returns>
-        /// Gets a reporting period deserialized from it's string representation.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> is whitespace.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="requestedType"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="requestedType"/> is not an <see cref="IReportingPeriod{UnitOfTime}"/>.</exception>
-        /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid reporting period.</exception>
-        public static object DeserializeFromString(
-            this string reportingPeriod,
-            Type requestedType)
-        {
-            new { reportingPeriod }.AsArg().Must().NotBeNullNorWhiteSpace();
-            new { requestedType }.AsArg().Must().NotBeNull();
-            if (!typeof(IReportingPeriod<UnitOfTime>).IsAssignableFrom(requestedType))
-            {
-                throw new ArgumentException(Invariant($"{nameof(requestedType)} is not an {nameof(IReportingPeriod<UnitOfTime>)}."), nameof(requestedType));
-            }
-
-            var unboundGenericType = typeof(ReportingPeriod<>);
-            var errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is not assignable to type of reporting period requested.");
-            var requestedUnitOfTimeType = requestedType.GenericTypeArguments[0];
-            var typeArgs = new[] { requestedUnitOfTimeType };
-            var genericTypeToCreate = unboundGenericType.MakeGenericType(typeArgs);
-            if (!requestedType.IsAssignableFrom(genericTypeToCreate))
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.");
             var tokens = reportingPeriod.Split(',');
             if (tokens.Length != 2)
             {
@@ -91,8 +46,8 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            UnitOfTime start;
-            UnitOfTime end;
+            UnitOfTime start, end;
+
             try
             {
                 start = tokens[0].DeserializeFromSortableString<UnitOfTime>();
@@ -103,36 +58,22 @@ namespace OBeautifulCode.AccountingTime
                 throw new InvalidOperationException(errorMessage);
             }
 
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but the type of unit-of-time of the start and/or the end of the reporting period is not assignable to unit-of-time of the requested reporting period.");
-
-            // ReSharper disable once UseMethodIsInstanceOfType
-            if (!requestedUnitOfTimeType.IsAssignableFrom(start.GetType()))
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            // ReSharper disable once UseMethodIsInstanceOfType
-            if (!requestedUnitOfTimeType.IsAssignableFrom(end.GetType()))
-            {
-                throw new InvalidOperationException(errorMessage);
-            }
-
-            errorMessage = Invariant($"Cannot deserialize string;  it appears to be a {unboundGenericType.Name} but it is malformed.  The following error occured when attempting to create it: ");
+            ReportingPeriod result;
 
             try
             {
-                var result = Activator.CreateInstance(genericTypeToCreate, start, end);
-
-                return result;
+                result = new ReportingPeriod(start, end);
             }
-            catch (TargetInvocationException ex)
+            catch (ArgumentException ex)
             {
-                throw new InvalidOperationException(errorMessage + ex.InnerException?.Message);
+                throw new InvalidOperationException(errorMessage, ex);
             }
+
+            return result;
         }
 
         /// <summary>
-        /// Serializes a <see cref="IReportingPeriod{UnitOfTime}"/> to a string.
+        /// Serializes a <see cref="ReportingPeriod"/> to a string.
         /// </summary>
         /// <param name="reportingPeriod">The reporting period to serialize.</param>
         /// <returns>
@@ -141,7 +82,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static string SerializeToString(
-            this IReportingPeriod<UnitOfTime> reportingPeriod)
+            this ReportingPeriod reportingPeriod)
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
 

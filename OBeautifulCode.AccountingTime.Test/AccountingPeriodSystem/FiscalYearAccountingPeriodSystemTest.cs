@@ -7,7 +7,6 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
-    using System.Linq;
 
     using FakeItEasy;
 
@@ -15,55 +14,32 @@ namespace OBeautifulCode.AccountingTime.Test
     using FluentAssertions.Extensions;
 
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
     using Xunit;
 
-    public static class FiscalYearAccountingPeriodSystemTest
+    public static partial class FiscalYearAccountingPeriodSystemTest
     {
-        private static readonly FiscalYearAccountingPeriodSystem ObjectForEquatableTests = A.Dummy<FiscalYearAccountingPeriodSystem>();
-
-        private static readonly FiscalYearAccountingPeriodSystem ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests =
-            new FiscalYearAccountingPeriodSystem(ObjectForEquatableTests.LastMonthInFiscalYear);
-
-        private static readonly FiscalYearAccountingPeriodSystem[] ObjectsThatAreNotEqualToObjectForEquatableTests =
+        static FiscalYearAccountingPeriodSystemTest()
         {
-            new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>().Whose(_ => (_ != ObjectForEquatableTests.LastMonthInFiscalYear) && (_ != MonthOfYear.December))),
-        };
-
-        private static readonly AccountingPeriodSystem ObjectThatIsNotTheSameTypeAsObjectForEquatableTests = A.Dummy<CalendarYearAccountingPeriodSystem>();
-
-        [Fact]
-        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_lastMonthInFiscalYear_is_Invalid()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => new FiscalYearAccountingPeriodSystem(MonthOfYear.Invalid));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public static void Constructor___Should_throw_ArgumentOutOfRangeException___When_parameter_lastMonthInFiscalYear_is_December()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => new FiscalYearAccountingPeriodSystem(MonthOfYear.December));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public static void LastMonthInFiscalYear___Should_return_same_lastMonthInFiscalYear_passed_to_constructor___When_getting()
-        {
-            // Arrange
-            var expectedMonth = A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December);
-            var systemUnderTest = new FiscalYearAccountingPeriodSystem(expectedMonth);
-
-            // Act
-            var actualMonth = systemUnderTest.LastMonthInFiscalYear;
-
-            // Assert
-            actualMonth.Should().Be(expectedMonth);
+            ConstructorArgumentValidationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FiscalYearAccountingPeriodSystem>
+                    {
+                        Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'lastMonthInFiscalYear' is MonthOfYear.Invalid",
+                        ConstructionFunc = () => new FiscalYearAccountingPeriodSystem(MonthOfYear.Invalid),
+                        ExpectedExceptionMessageContains = new[] { "lastMonthInFiscalYear", "Invalid" },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                    })
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<FiscalYearAccountingPeriodSystem>
+                    {
+                        Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'lastMonthInFiscalYear' is MonthOfYear.December",
+                        ConstructionFunc = () => new FiscalYearAccountingPeriodSystem(MonthOfYear.December),
+                        ExpectedExceptionMessageContains = new[] { "lastMonthInFiscalYear", "December" },
+                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                    });
         }
 
         [Fact]
@@ -85,29 +61,29 @@ namespace OBeautifulCode.AccountingTime.Test
             var systemUnderTest10 = new FiscalYearAccountingPeriodSystem(MonthOfYear.October);
             var systemUnderTest11 = new FiscalYearAccountingPeriodSystem(MonthOfYear.November);
 
-            var expectedReportingPeriod1NonLeapYear = new ReportingPeriod<CalendarDay>(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod2NonLeapYear = new ReportingPeriod<CalendarDay>(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod3NonLeapYear = new ReportingPeriod<CalendarDay>(1.April(nonLeapYear - 1).ToCalendarDay(), 31.March(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod4NonLeapYear = new ReportingPeriod<CalendarDay>(1.May(nonLeapYear - 1).ToCalendarDay(), 30.April(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod5NonLeapYear = new ReportingPeriod<CalendarDay>(1.June(nonLeapYear - 1).ToCalendarDay(), 31.May(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod6NonLeapYear = new ReportingPeriod<CalendarDay>(1.July(nonLeapYear - 1).ToCalendarDay(), 30.June(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod7NonLeapYear = new ReportingPeriod<CalendarDay>(1.August(nonLeapYear - 1).ToCalendarDay(), 31.July(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod8NonLeapYear = new ReportingPeriod<CalendarDay>(1.September(nonLeapYear - 1).ToCalendarDay(), 31.August(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod9NonLeapYear = new ReportingPeriod<CalendarDay>(1.October(nonLeapYear - 1).ToCalendarDay(), 30.September(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod10NonLeapYear = new ReportingPeriod<CalendarDay>(1.November(nonLeapYear - 1).ToCalendarDay(), 31.October(nonLeapYear).ToCalendarDay());
-            var expectedReportingPeriod11NonLeapYear = new ReportingPeriod<CalendarDay>(1.December(nonLeapYear - 1).ToCalendarDay(), 30.November(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod1NonLeapYear = new ReportingPeriod(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod2NonLeapYear = new ReportingPeriod(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod3NonLeapYear = new ReportingPeriod(1.April(nonLeapYear - 1).ToCalendarDay(), 31.March(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod4NonLeapYear = new ReportingPeriod(1.May(nonLeapYear - 1).ToCalendarDay(), 30.April(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod5NonLeapYear = new ReportingPeriod(1.June(nonLeapYear - 1).ToCalendarDay(), 31.May(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod6NonLeapYear = new ReportingPeriod(1.July(nonLeapYear - 1).ToCalendarDay(), 30.June(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod7NonLeapYear = new ReportingPeriod(1.August(nonLeapYear - 1).ToCalendarDay(), 31.July(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod8NonLeapYear = new ReportingPeriod(1.September(nonLeapYear - 1).ToCalendarDay(), 31.August(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod9NonLeapYear = new ReportingPeriod(1.October(nonLeapYear - 1).ToCalendarDay(), 30.September(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod10NonLeapYear = new ReportingPeriod(1.November(nonLeapYear - 1).ToCalendarDay(), 31.October(nonLeapYear).ToCalendarDay());
+            var expectedReportingPeriod11NonLeapYear = new ReportingPeriod(1.December(nonLeapYear - 1).ToCalendarDay(), 30.November(nonLeapYear).ToCalendarDay());
 
-            var expectedReportingPeriod1LeapYear = new ReportingPeriod<CalendarDay>(1.February(leapYear - 1).ToCalendarDay(), 31.January(leapYear).ToCalendarDay());
-            var expectedReportingPeriod2LeapYear = new ReportingPeriod<CalendarDay>(1.March(leapYear - 1).ToCalendarDay(), 29.February(leapYear).ToCalendarDay());
-            var expectedReportingPeriod3LeapYear = new ReportingPeriod<CalendarDay>(1.April(leapYear - 1).ToCalendarDay(), 31.March(leapYear).ToCalendarDay());
-            var expectedReportingPeriod4LeapYear = new ReportingPeriod<CalendarDay>(1.May(leapYear - 1).ToCalendarDay(), 30.April(leapYear).ToCalendarDay());
-            var expectedReportingPeriod5LeapYear = new ReportingPeriod<CalendarDay>(1.June(leapYear - 1).ToCalendarDay(), 31.May(leapYear).ToCalendarDay());
-            var expectedReportingPeriod6LeapYear = new ReportingPeriod<CalendarDay>(1.July(leapYear - 1).ToCalendarDay(), 30.June(leapYear).ToCalendarDay());
-            var expectedReportingPeriod7LeapYear = new ReportingPeriod<CalendarDay>(1.August(leapYear - 1).ToCalendarDay(), 31.July(leapYear).ToCalendarDay());
-            var expectedReportingPeriod8LeapYear = new ReportingPeriod<CalendarDay>(1.September(leapYear - 1).ToCalendarDay(), 31.August(leapYear).ToCalendarDay());
-            var expectedReportingPeriod9LeapYear = new ReportingPeriod<CalendarDay>(1.October(leapYear - 1).ToCalendarDay(), 30.September(leapYear).ToCalendarDay());
-            var expectedReportingPeriod10LeapYear = new ReportingPeriod<CalendarDay>(1.November(leapYear - 1).ToCalendarDay(), 31.October(leapYear).ToCalendarDay());
-            var expectedReportingPeriod11LeapYear = new ReportingPeriod<CalendarDay>(1.December(leapYear - 1).ToCalendarDay(), 30.November(leapYear).ToCalendarDay());
+            var expectedReportingPeriod1LeapYear = new ReportingPeriod(1.February(leapYear - 1).ToCalendarDay(), 31.January(leapYear).ToCalendarDay());
+            var expectedReportingPeriod2LeapYear = new ReportingPeriod(1.March(leapYear - 1).ToCalendarDay(), 29.February(leapYear).ToCalendarDay());
+            var expectedReportingPeriod3LeapYear = new ReportingPeriod(1.April(leapYear - 1).ToCalendarDay(), 31.March(leapYear).ToCalendarDay());
+            var expectedReportingPeriod4LeapYear = new ReportingPeriod(1.May(leapYear - 1).ToCalendarDay(), 30.April(leapYear).ToCalendarDay());
+            var expectedReportingPeriod5LeapYear = new ReportingPeriod(1.June(leapYear - 1).ToCalendarDay(), 31.May(leapYear).ToCalendarDay());
+            var expectedReportingPeriod6LeapYear = new ReportingPeriod(1.July(leapYear - 1).ToCalendarDay(), 30.June(leapYear).ToCalendarDay());
+            var expectedReportingPeriod7LeapYear = new ReportingPeriod(1.August(leapYear - 1).ToCalendarDay(), 31.July(leapYear).ToCalendarDay());
+            var expectedReportingPeriod8LeapYear = new ReportingPeriod(1.September(leapYear - 1).ToCalendarDay(), 31.August(leapYear).ToCalendarDay());
+            var expectedReportingPeriod9LeapYear = new ReportingPeriod(1.October(leapYear - 1).ToCalendarDay(), 30.September(leapYear).ToCalendarDay());
+            var expectedReportingPeriod10LeapYear = new ReportingPeriod(1.November(leapYear - 1).ToCalendarDay(), 31.October(leapYear).ToCalendarDay());
+            var expectedReportingPeriod11LeapYear = new ReportingPeriod(1.December(leapYear - 1).ToCalendarDay(), 30.November(leapYear).ToCalendarDay());
 
             // Act
             var actualReportingPeriod1NonLeapYear = systemUnderTest1.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
@@ -158,257 +134,6 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod9LeapYear.Should().Be(expectedReportingPeriod9LeapYear);
             actualReportingPeriod10LeapYear.Should().Be(expectedReportingPeriod10LeapYear);
             actualReportingPeriod11LeapYear.Should().Be(expectedReportingPeriod11LeapYear);
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
-        {
-            // Arrange
-            FiscalYearAccountingPeriodSystem systemUnderTest1 = null;
-            FiscalYearAccountingPeriodSystem systemUnderTest2 = null;
-
-            // Act
-            var result = systemUnderTest1 == systemUnderTest2;
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_false___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
-        {
-            // Arrange
-            FiscalYearAccountingPeriodSystem systemUnderTest = null;
-
-            // Act
-            var result1 = systemUnderTest == ObjectForEquatableTests;
-            var result2 = ObjectForEquatableTests == systemUnderTest;
-
-            // Assert
-            result1.Should().BeFalse();
-            result2.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_same_object_is_on_both_sides_of_operator()
-        {
-            // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
-            var result = ObjectForEquatableTests == ObjectForEquatableTests;
-#pragma warning restore CS1718 // Comparison made to same variable
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests == _).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void EqualsOperator___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests == ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests;
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
-        {
-            // Arrange
-            FiscalYearAccountingPeriodSystem systemUnderTest1 = null;
-            FiscalYearAccountingPeriodSystem systemUnderTest2 = null;
-
-            // Act
-            var result = systemUnderTest1 != systemUnderTest2;
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_one_side_of_operator_is_null_and_the_other_side_is_not_null()
-        {
-            // Arrange
-            FiscalYearAccountingPeriodSystem systemUnderTest = null;
-
-            // Act
-            var result1 = systemUnderTest != ObjectForEquatableTests;
-            var result2 = ObjectForEquatableTests != systemUnderTest;
-
-            // Assert
-            result1.Should().BeTrue();
-            result2.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_same_object_is_on_both_sides_of_operator()
-        {
-            // Arrange, Act
-#pragma warning disable CS1718 // Comparison made to same variable
-            var result = ObjectForEquatableTests != ObjectForEquatableTests;
-#pragma warning restore CS1718 // Comparison made to same variable
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_true___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests != _).ToList();
-
-            // sAssert
-            results.ForEach(_ => _.Should().BeTrue());
-        }
-
-        [Fact]
-        public static void NotEqualsOperator___Should_return_false___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests != ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests;
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_FiscalYearAccountingPeriodSystem___Should_return_false___When_parameter_other_is_null()
-        {
-            // Arrange
-            FiscalYearAccountingPeriodSystem systemUnderTest = null;
-
-            // Act
-            var result = ObjectForEquatableTests.Equals(systemUnderTest);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_FiscalYearAccountingPeriodSystem___Should_return_true___When_parameter_other_is_same_object()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(ObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_FiscalYearAccountingPeriodSystem___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests.Equals(_)).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void Equals_with_FiscalYearAccountingPeriodSystem___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_parameter_other_is_null()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals(null);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_parameter_other_is_not_of_the_same_type()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectThatIsNotTheSameTypeAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_true___When_parameter_other_is_same_object()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_false___When_objects_being_compared_have_different_property_values()
-        {
-            // Arrange, Act
-            var results = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => ObjectForEquatableTests.Equals((object)_)).ToList();
-
-            // Assert
-            results.ForEach(_ => _.Should().BeFalse());
-        }
-
-        [Fact]
-        public static void Equals_with_Object___Should_return_true___When_objects_being_compared_have_same_property_values()
-        {
-            // Arrange, Act
-            var result = ObjectForEquatableTests.Equals((object)ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests);
-
-            // Assert
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public static void GetHashCode___Should_not_be_equal_for_two_objects___When_objects_have_different_property_values()
-        {
-            // Arrange, Act
-            var hashCode1 = ObjectForEquatableTests.GetHashCode();
-            var hashCode2 = ObjectsThatAreNotEqualToObjectForEquatableTests.Select(_ => _.GetHashCode()).ToList();
-
-            // Assert
-            hashCode2.ForEach(_ => _.Should().NotBe(hashCode1));
-        }
-
-        [Fact]
-        public static void GetHashCode___Should_be_equal_for_two_objects___When_objects_have_the_same_property_values()
-        {
-            // Arrange, Act
-            var hash1 = ObjectForEquatableTests.GetHashCode();
-            var hash2 = ObjectThatIsEqualButNotTheSameAsObjectForEquatableTests.GetHashCode();
-
-            // Assert
-            hash1.Should().Be(hash2);
-        }
-
-        [Fact]
-        public static void DeepClone___Should_deep_clone_object___When_called()
-        {
-            // Arrange
-            var systemUnderTest = A.Dummy<FiscalYearAccountingPeriodSystem>();
-
-            // Act
-            var actual = (FiscalYearAccountingPeriodSystem)systemUnderTest.DeepClone();
-
-            // Assert
-            actual.Should().Be(systemUnderTest);
-            actual.Should().NotBeSameAs(systemUnderTest);
         }
     }
 }

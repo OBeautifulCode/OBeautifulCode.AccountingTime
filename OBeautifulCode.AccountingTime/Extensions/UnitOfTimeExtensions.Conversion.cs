@@ -171,14 +171,14 @@ namespace OBeautifulCode.AccountingTime
         /// but is the most granular version possible of that unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        public static IReportingPeriod<UnitOfTime> ToMostGranular(
+        public static ReportingPeriod ToMostGranular(
             this UnitOfTime unitOfTime)
         {
             new { unitOfTime }.AsArg().Must().NotBeNull();
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
-                var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                var result = new ReportingPeriod(unitOfTime, unitOfTime);
 
                 return result;
             }
@@ -189,7 +189,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarYear = unitOfTime as CalendarYear;
 
-                    var result = new ReportingPeriod<UnitOfTime>(calendarYear.GetFirstCalendarDay(), calendarYear.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarYear.GetFirstCalendarDay(), calendarYear.GetLastCalendarDay());
 
                     return result;
                 }
@@ -198,7 +198,7 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     // ReSharper disable once PossibleNullReferenceException
-                    var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(year.Year, MonthNumber.One), new FiscalMonth(year.Year, MonthNumber.Twelve));
+                    var result = new ReportingPeriod(new FiscalMonth(year.Year, MonthNumber.One), new FiscalMonth(year.Year, MonthNumber.Twelve));
 
                     return result;
                 }
@@ -206,7 +206,7 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     // ReSharper disable once PossibleNullReferenceException
-                    var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(year.Year, MonthNumber.One), new GenericMonth(year.Year, MonthNumber.Twelve));
+                    var result = new ReportingPeriod(new GenericMonth(year.Year, MonthNumber.One), new GenericMonth(year.Year, MonthNumber.Twelve));
 
                     return result;
                 }
@@ -220,7 +220,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarQuarter = unitOfTime as CalendarQuarter;
 
-                    var result = new ReportingPeriod<UnitOfTime>(calendarQuarter.GetFirstCalendarDay(), calendarQuarter.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarQuarter.GetFirstCalendarDay(), calendarQuarter.GetLastCalendarDay());
 
                     return result;
                 }
@@ -233,14 +233,14 @@ namespace OBeautifulCode.AccountingTime
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
-                    var result = new ReportingPeriod<UnitOfTime>(new FiscalMonth(quarter.Year, (MonthNumber)startMonth), new FiscalMonth(quarter.Year, (MonthNumber)endMonth));
+                    var result = new ReportingPeriod(new FiscalMonth(quarter.Year, (MonthNumber)startMonth), new FiscalMonth(quarter.Year, (MonthNumber)endMonth));
 
                     return result;
                 }
 
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
                 {
-                    var result = new ReportingPeriod<UnitOfTime>(new GenericMonth(quarter.Year, (MonthNumber)startMonth), new GenericMonth(quarter.Year, (MonthNumber)endMonth));
+                    var result = new ReportingPeriod(new GenericMonth(quarter.Year, (MonthNumber)startMonth), new GenericMonth(quarter.Year, (MonthNumber)endMonth));
 
                     return result;
                 }
@@ -254,14 +254,14 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarMonth = unitOfTime as CalendarMonth;
 
-                    var result = new ReportingPeriod<UnitOfTime>(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
 
                     return result;
                 }
 
                 if ((unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal) || (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic))
                 {
-                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                    var result = new ReportingPeriod(unitOfTime, unitOfTime);
 
                     return result;
                 }
@@ -273,7 +273,7 @@ namespace OBeautifulCode.AccountingTime
             {
                 if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
-                    var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+                    var result = new ReportingPeriod(unitOfTime, unitOfTime);
 
                     return result;
                 }
@@ -291,12 +291,12 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A reporting period where the Start and End components are equal to the specified unit-of-time.
         /// </returns>
-        public static IReportingPeriod<UnitOfTime> ToReportingPeriod(
+        public static ReportingPeriod ToReportingPeriod(
             this UnitOfTime unitOfTime)
         {
             new { unitOfTime }.AsArg().Must().NotBeNull();
 
-            var result = new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime);
+            var result = new ReportingPeriod(unitOfTime, unitOfTime);
 
             return result;
         }

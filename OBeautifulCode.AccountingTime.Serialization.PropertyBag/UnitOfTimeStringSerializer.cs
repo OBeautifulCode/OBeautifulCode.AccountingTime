@@ -18,9 +18,6 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class UnitOfTimeStringSerializer : IStringSerializeAndDeserialize
     {
         /// <inheritdoc />
-        public Type ConfigurationType => null;
-
-        /// <inheritdoc />
         public string SerializeToString(
             object objectToSerialize)
         {
@@ -44,7 +41,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
         }
 
         /// <inheritdoc />
-        public object Deserialize(string serializedString, Type type)
+        public object Deserialize(
+            string serializedString,
+            Type type)
         {
             if (!type.IsUnitOfTimeType())
             {

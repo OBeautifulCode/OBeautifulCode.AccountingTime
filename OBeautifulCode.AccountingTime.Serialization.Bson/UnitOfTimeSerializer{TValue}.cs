@@ -28,16 +28,23 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             new { context }.AsArg().Must().NotBeNull();
 
             var type = context.Reader.GetCurrentBsonType();
+
+            TValue result;
+
             switch (type)
             {
                 case BsonType.String:
-                    return context.Reader.ReadString().DeserializeFromSortableString<TValue>();
+                    result = context.Reader.ReadString().DeserializeFromSortableString<TValue>();
+                    break;
                 case BsonType.Null:
                     context.Reader.ReadNull();
-                    return default(TValue);
+                    result = default;
+                    break;
                 default:
                     throw new NotSupportedException(Invariant($"Cannot convert a {type} to a {typeof(TValue).Name}."));
             }
+
+            return result;
         }
 
         /// <inheritdoc />

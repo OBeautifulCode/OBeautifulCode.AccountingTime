@@ -28,7 +28,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod{T}.Start"/> and <see cref="ReportingPeriod{T}.End"/> has different granularity.</exception>
         public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
-            this IReportingPeriod<UnitOfTime> reportingPeriod)
+            this ReportingPeriod reportingPeriod)
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
 
@@ -51,7 +51,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static UnitOfTimeKind GetUnitOfTimeKind(
-            this IReportingPeriod<UnitOfTime> reportingPeriod)
+            this ReportingPeriod reportingPeriod)
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
 
@@ -105,7 +105,7 @@ namespace OBeautifulCode.AccountingTime
         /// true if one or both components of the reporting period has unbounded granularity; otherwise false.
         /// </returns>
         public static bool HasComponentWithUnboundedGranularity(
-            this IReportingPeriod<UnitOfTime> reportingPeriod)
+            this ReportingPeriod reportingPeriod)
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
 

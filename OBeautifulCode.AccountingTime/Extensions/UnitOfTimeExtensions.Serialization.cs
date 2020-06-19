@@ -78,7 +78,9 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="InvalidOperationException">Cannot deserialize string; it is not valid unit-of-time.</exception>
         [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Keeping previous layout, is easy to read.")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Keeping previous layout, is easy to read.")]
-        public static UnitOfTime DeserializeFromSortableString(this string unitOfTime, Type type)
+        public static UnitOfTime DeserializeFromSortableString(
+            this string unitOfTime,
+            Type type)
         {
             if (!type.IsUnitOfTimeType())
             {

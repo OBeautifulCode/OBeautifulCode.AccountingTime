@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using MongoDB.Bson.Serialization;
 
     /// <summary>
-    /// The persistence model for an <see cref="IReportingPeriod{UnitOfTime}"/>.
+    /// The persistence model for an <see cref="ReportingPeriod"/>.
     /// </summary>
     internal class ReportingPeriodPersistenceModel
     {

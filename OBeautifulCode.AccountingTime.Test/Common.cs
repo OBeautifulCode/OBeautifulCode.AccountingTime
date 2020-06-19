@@ -7,49 +7,20 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using OBeautifulCode.AutoFakeItEasy;
 
     internal static class Common
     {
-        public static readonly Type[] AllUnitOfTimeTypesExceptUnitOfTime =
+        public static readonly Type[] AllUnitOfTimeTypesExceptUnitOfTime = TypeHelper.GetAllUnitOfTimeTypes().Except(new[] { typeof(UnitOfTime) }).ToArray();
+
+        public static IReadOnlyCollection<UnitOfTime> GetDummyOfEachUnitOfTimeKind()
         {
-            typeof(CalendarUnitOfTime), typeof(CalendarDay), typeof(CalendarMonth), typeof(CalendarQuarter), typeof(CalendarYear), typeof(CalendarUnbounded),
-            typeof(FiscalUnitOfTime), typeof(FiscalMonth), typeof(FiscalQuarter), typeof(FiscalYear), typeof(FiscalUnbounded),
-            typeof(GenericUnitOfTime), typeof(GenericQuarter), typeof(GenericQuarter), typeof(GenericYear), typeof(GenericUnbounded),
-        };
+            var result = TypeHelper.GetAllUnitOfTimeTypes().Where(_ => !_.IsAbstract).Select(_ => (UnitOfTime)AD.ummy(_)).ToList();
 
-        public interface IReportingPeriodTest<out T> : IReportingPeriod<T>
-            where T : UnitOfTime
-        {
-        }
-
-        internal class ReportingPeriodTest<T> : IReportingPeriod<T>
-            where T : UnitOfTime
-        {
-            public ReportingPeriodTest(T start, T end)
-            {
-                this.Start = start;
-                this.End = end;
-            }
-
-            public T Start { get; }
-
-            public T End { get; }
-
-            public TReportingPeriod DeepClone<TReportingPeriod>()
-                where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
-            {
-                throw new NotImplementedException();
-            }
-
-            public IReportingPeriod<T> DeepClone()
-            {
-                throw new NotImplementedException();
-            }
-
-            public object Clone()
-            {
-                throw new NotImplementedException();
-            }
+            return result;
         }
     }
 }

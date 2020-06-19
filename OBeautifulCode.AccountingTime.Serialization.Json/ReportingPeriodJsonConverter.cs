@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
-    /// Converts an <see cref="IReportingPeriod{T}"/> to and from JSON.
+    /// Converts an <see cref="ReportingPeriod"/> to and from JSON.
     /// </summary>
     public class ReportingPeriodJsonConverter : JsonConverter
     {
@@ -24,11 +24,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             object value,
             JsonSerializer serializer)
         {
-            if (value is IReportingPeriod<UnitOfTime> reportingPeriod)
+            if (value is ReportingPeriod reportingPeriod)
             {
                 new { writer }.AsArg().Must().NotBeNull();
 
                 var stringToWrite = reportingPeriod.SerializeToString();
+
                 writer.WriteValue(stringToWrite);
             }
         }
@@ -43,9 +44,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             new { reader }.AsArg().Must().NotBeNull();
 
             object result = null;
+
             if (reader.Value != null)
             {
-                result = reader.Value.ToString().DeserializeFromString(objectType);
+                result = reader.Value.ToString().DeserializeFromString();
             }
 
             return result;
@@ -57,16 +59,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
         {
             new { objectType }.Must().NotBeNull();
 
-            if (objectType.IsGenericType)
-            {
-                var genericType = objectType.GetGenericTypeDefinition();
+            var result = objectType == typeof(ReportingPeriod);
 
-                var result = (genericType == typeof(IReportingPeriod<>)) || (genericType == typeof(ReportingPeriod<>));
-
-                return result;
-            }
-
-            return false;
+            return result;
         }
     }
 }

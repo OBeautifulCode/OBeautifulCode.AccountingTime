@@ -34,7 +34,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> cannot be compared against <paramref name="reportingPeriod"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool Contains(
-            this IReportingPeriod<UnitOfTime> reportingPeriod,
+            this ReportingPeriod reportingPeriod,
             UnitOfTime unitOfTime)
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
@@ -67,8 +67,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool Contains(
-            this IReportingPeriod<UnitOfTime> reportingPeriod1,
-            IReportingPeriod<UnitOfTime> reportingPeriod2)
+            this ReportingPeriod reportingPeriod1,
+            ReportingPeriod reportingPeriod2)
         {
             new { reportingPeriod1 }.AsArg().Must().NotBeNull();
             new { reportingPeriod2 }.AsArg().Must().NotBeNull();
@@ -136,8 +136,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool HasOverlapWith(
-            this IReportingPeriod<UnitOfTime> reportingPeriod1,
-            IReportingPeriod<UnitOfTime> reportingPeriod2)
+            this ReportingPeriod reportingPeriod1,
+            ReportingPeriod reportingPeriod2)
         {
             new { reportingPeriod1 }.AsArg().Must().NotBeNull();
             new { reportingPeriod2 }.AsArg().Must().NotBeNull();
@@ -175,8 +175,8 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod2"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod1"/> cannot be compared against <paramref name="reportingPeriod2"/> because they represent different <see cref="UnitOfTime.UnitOfTimeKind"/>.</exception>
         public static bool IsGreaterThanAndAdjacentTo(
-            this IReportingPeriod<UnitOfTime> reportingPeriod1,
-            IReportingPeriod<UnitOfTime> reportingPeriod2)
+            this ReportingPeriod reportingPeriod1,
+            ReportingPeriod reportingPeriod2)
         {
             new { reportingPeriod1 }.AsArg().Must().NotBeNull();
             new { reportingPeriod2 }.AsArg().Must().NotBeNull();
