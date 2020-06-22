@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="UnitOfTimeSerializer{TValue}.cs" company="OBeautifulCode">
+// <copyright file="UnitOfTimeBsonSerializer{TValue}.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using static System.FormattableString;
 
     /// <inheritdoc />
-    internal class UnitOfTimeSerializer<TValue> : SerializerBase<TValue>
+    public class UnitOfTimeBsonSerializer<TValue> : SerializerBase<TValue>
         where TValue : UnitOfTime
     {
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
 
             foreach (var unitOfTimeType in unitOfTimeTypes)
             {
-                var unitOfTimeSerializerType = typeof(UnitOfTimeSerializer<>).MakeGenericType(unitOfTimeType);
+                var unitOfTimeSerializerType = typeof(UnitOfTimeBsonSerializer<>).MakeGenericType(unitOfTimeType);
 
                 var unitOfTimeSerializer = (IBsonSerializer)Activator.CreateInstance(unitOfTimeSerializerType);
 
@@ -53,7 +53,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
                 result.Add(unitOfTimeTypeToRegister);
             }
 
-            var reportingPeriodSerializer = new ReportingPeriodSerializer();
+            var reportingPeriodSerializer = new ReportingPeriodBsonSerializer();
 
             var reportingPeriodTypeToRegister = new TypeToRegisterForBson(
                 typeof(ReportingPeriod),

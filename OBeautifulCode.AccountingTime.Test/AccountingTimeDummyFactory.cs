@@ -10,6 +10,7 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.CodeDom.Compiler;
     using System.Diagnostics.CodeAnalysis;
 
     using AutoFakeItEasy;
@@ -35,8 +36,6 @@ namespace OBeautifulCode.AccountingTime.Test
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountingTimeDummyFactory"/> class.
         /// </summary>
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = ObcSuppressBecause.CA1502_AvoidExcessiveComplexity_DisagreeWithAssessment)]
         public AccountingTimeDummyFactory()
         {
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);

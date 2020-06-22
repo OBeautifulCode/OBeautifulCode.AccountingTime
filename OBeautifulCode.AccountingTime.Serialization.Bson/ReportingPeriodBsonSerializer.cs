@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ReportingPeriodSerializer.cs" company="OBeautifulCode">
+// <copyright file="ReportingPeriodBsonSerializer.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using static System.FormattableString;
 
     /// <inheritdoc />
-    internal class ReportingPeriodSerializer : SerializerBase<ReportingPeriod>
+    public class ReportingPeriodBsonSerializer : SerializerBase<ReportingPeriod>
     {
         /// <inheritdoc />
         public override ReportingPeriod Deserialize(

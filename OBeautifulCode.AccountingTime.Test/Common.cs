@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using OBeautifulCode.AutoFakeItEasy;
 
-    internal static class Common
+    public static class Common
     {
         public static readonly Type[] AllUnitOfTimeTypesExceptUnitOfTime = TypeHelper.GetAllUnitOfTimeTypes().Except(new[] { typeof(UnitOfTime) }).ToArray();
 
