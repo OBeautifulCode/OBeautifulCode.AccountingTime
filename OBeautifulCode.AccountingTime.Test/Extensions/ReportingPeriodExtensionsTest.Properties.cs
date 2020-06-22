@@ -15,8 +15,8 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FluentAssertions;
 
-    using Naos.Recipes.TupleInitializers;
     using OBeautifulCode.AutoFakeItEasy;
+
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
@@ -59,7 +59,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitOfTimeGranularity___Should_return_the_granularity_of_unit_of_time_used_in_the_reporting_period___When_called()
         {
             // Arrange
-            var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeGranularity>>
+            var reportingPeriods = new Dictionary<ReportingPeriod, UnitOfTimeGranularity>
             {
                 { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
                 { TestCommon.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
@@ -77,7 +77,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var unitOfTimeGranularity = reportingPeriods.Select(_ => new { Actual = _.Item1.GetUnitOfTimeGranularity(), Expected = _.Item2 }).ToList();
+            var unitOfTimeGranularity = reportingPeriods.Select(_ => new { Actual = _.Key.GetUnitOfTimeGranularity(), Expected = _.Value }).ToList();
 
             // Assert
             unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
@@ -98,7 +98,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitOfTimeKind___Should_return_the_kind_of_unit_of_time_used_in_the_reporting_period___When_called()
         {
             // Arrange
-            var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeKind>>
+            var reportingPeriods = new Dictionary<ReportingPeriod, UnitOfTimeKind>
             {
                 { TestCommon.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
                 { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
@@ -119,7 +119,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var unitOfTimeKinds = reportingPeriods.Select(_ => new { Actual = _.Item1.GetUnitOfTimeKind(), Expected = _.Item2 }).ToList();
+            var unitOfTimeKinds = reportingPeriods.Select(_ => new { Actual = _.Key.GetUnitOfTimeKind(), Expected = _.Value }).ToList();
 
             // Assert
             unitOfTimeKinds.ForEach(_ => _.Actual.Should().Be(_.Expected));
