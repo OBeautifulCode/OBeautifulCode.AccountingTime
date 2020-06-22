@@ -186,13 +186,82 @@
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemTest.cs" />
+    <Compile Include="AccountingPeriodSystem\AccountingPeriodSystemTest.designer.cs">
+      <DependentUpon>AccountingPeriodSystemTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystemTest.cs" />
+    <Compile Include="AccountingPeriodSystem\CalendarYearAccountingPeriodSystemTest.designer.cs">
+      <DependentUpon>CalendarYearAccountingPeriodSystemTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" />
+    <Compile Include="AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.designer.cs">
+      <DependentUpon>FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.cs" />
+    <Compile Include="AccountingPeriodSystem\FiscalYearAccountingPeriodSystemTest.designer.cs">
+      <DependentUpon>FiscalYearAccountingPeriodSystemTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingTimeDummyFactory.designer.cs">
+      <DependentUpon>AccountingTimeDummyFactory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AccountingTimeDummyFactoryTest.cs" />
+    <Compile Include="AccountingTimeDummyFactoryTest.designer.cs">
+      <DependentUpon>AccountingTimeDummyFactoryTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SerializationConfigurationTypes.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.designer.cs">
+      <DependentUpon>CalendarUnitOfTimeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="AccountingTimeDummyFactory.cs" />
     <Compile Include="Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />
+    <Compile Include="UnitOfTime\Calendar\CalendarDayTest.designer.cs">
+      <DependentUpon>CalendarDayTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Calendar\CalendarMonthTest.designer.cs">
+      <DependentUpon>CalendarMonthTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Calendar\CalendarQuarterTest.designer.cs">
+      <DependentUpon>CalendarQuarterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Calendar\CalendarUnboundedTest.designer.cs">
+      <DependentUpon>CalendarUnboundedTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Calendar\CalendarYearTest.designer.cs">
+      <DependentUpon>CalendarYearTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Fiscal\FiscalMonthTest.designer.cs">
+      <DependentUpon>FiscalMonthTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Fiscal\FiscalQuarterTest.designer.cs">
+      <DependentUpon>FiscalQuarterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Fiscal\FiscalUnboundedTest.designer.cs">
+      <DependentUpon>FiscalUnboundedTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Fiscal\FiscalYearTest.designer.cs">
+      <DependentUpon>FiscalYearTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Generic\GenericMonthTest.designer.cs">
+      <DependentUpon>GenericMonthTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Generic\GenericQuarterTest.designer.cs">
+      <DependentUpon>GenericQuarterTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Generic\GenericUnboundedTest.designer.cs">
+      <DependentUpon>GenericUnboundedTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Generic\GenericYearTest.designer.cs">
+      <DependentUpon>GenericYearTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\UnitOfTimeTest.designer.cs">
+      <DependentUpon>UnitOfTimeTest.cs</DependentUpon>
+    </Compile>
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
+    <None Include=".analyzers\test.ruleset" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Comparison.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Manipulation.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensionsTest.Serialization.cs" />
@@ -202,9 +271,20 @@
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.Properties.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensionsTest.Serialization.cs" />
     <Compile Include="Extensions\UnitOfTimeGranularityExtensionsTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalUnitOfTimeTest.cs" />
+    <Compile Include="UnitOfTime\Fiscal\FiscalUnitOfTimeTest.designer.cs">
+      <DependentUpon>FiscalUnitOfTimeTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfTime\Generic\GenericUnitOfTimeTest.cs" />
+    <Compile Include="UnitOfTime\Generic\GenericUnitOfTimeTest.designer.cs">
+      <DependentUpon>GenericUnitOfTimeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportingPeriod\ReportingPeriodTest.cs" />
+    <Compile Include="ReportingPeriod\ReportingPeriodTest.designer.cs">
+      <DependentUpon>ReportingPeriodTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UnitOfTime\Calendar\CalendarDayTest.cs" />
     <Compile Include="UnitOfTime\Calendar\CalendarMonthTest.cs" />
     <Compile Include="UnitOfTime\Calendar\CalendarQuarterTest.cs" />

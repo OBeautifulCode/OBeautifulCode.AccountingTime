@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime
     using static System.FormattableString;
 
     /// <summary>
-    /// Comparison-related extension methods on <see cref="IReportingPeriod{T}"/>.
+    /// Comparison-related extension methods on <see cref="ReportingPeriod"/>.
     /// </summary>
     public static partial class ReportingPeriodExtensions
     {
@@ -44,13 +44,13 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(unitOfTime)} cannot be compared against {nameof(reportingPeriod)} because they represent different {nameof(UnitOfTimeKind)}."));
             }
 
-            var result = reportingPeriod.Contains(new ReportingPeriod<UnitOfTime>(unitOfTime, unitOfTime));
+            var result = reportingPeriod.Contains(new ReportingPeriod(unitOfTime, unitOfTime));
 
             return result;
         }
 
         /// <summary>
-        /// Determines if an <see cref="IReportingPeriod{T}"/> is contained within another <see cref="IReportingPeriod{T}"/>
+        /// Determines if a reporting period is contained within another reporting period.
         /// For example, 1Q2017-3Q2017 contains 2Q2017-3Q2017.
         /// </summary>
         /// <remarks>
@@ -120,7 +120,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines if two objects of type <see cref="IReportingPeriod{T}"/>, overlap.
+        /// Determines if two reporting periods overlap.
         /// For example, the following reporting periods have an overlap: 1Q2017-3Q2017 and 3Q2017-4Q2017.
         /// </summary>
         /// <remarks>

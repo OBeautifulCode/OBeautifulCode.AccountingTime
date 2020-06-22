@@ -104,9 +104,9 @@
     <Compile Include="Extensions\QuarterNumberExtensions.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\release.ruleset" />
-    <None Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
-    <None Include="Extensions\ReportingPeriodExtensions.Manipulation.cs" />
-    <None Include="Extensions\ReportingPeriodExtensions.Properties.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Comparison.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Manipulation.cs" />
+    <Compile Include="Extensions\ReportingPeriodExtensions.Properties.cs" />
     <Compile Include="Extensions\ReportingPeriodExtensions.Serialization.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Conversion.cs" />
     <Compile Include="Extensions\UnitOfTimeExtensions.Properties.cs" />

@@ -15,14 +15,13 @@ namespace OBeautifulCode.AccountingTime
     using static System.FormattableString;
 
     /// <summary>
-    /// Extension methods to shape and manipulate a <see cref="ReportingPeriod{T}"/>.
+    /// Extension methods to shape and manipulate a <see cref="ReportingPeriod"/>.
     /// </summary>
     public static partial class ReportingPeriodExtensions
     {
         /// <summary>
         /// Clones a reporting period while adjusting the start or end of the reporting period, or both.
         /// </summary>
-        /// <typeparam name="TReportingPeriod">The type of reporting period to return.</typeparam>
         /// <param name="reportingPeriod">The reporting period to clone.</param>
         /// <param name="component">The component(s) of the reporting period to adjust.</param>
         /// <param name="unitsToAdd">The number of units to add when adjusting the reporting period component.  Use negative numbers to subtract units.</param>
@@ -34,14 +33,12 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.  Cannot add units of that granularity.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularityOfUnitsToAdd"/> is more granular than the reporting period component.  Only units that are as granular or less granular than a unit-of-time can be added to that unit-of-time.</exception>
-        /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod{T}.Start"/> to be greater than <see cref="ReportingPeriod{T}.End"/>.</exception>
-        /// <exception cref="InvalidOperationException">The adjusted reporting period cannot be converted into a <typeparamref name="TReportingPeriod"/>.</exception>
-        public static TReportingPeriod CloneWithAdjustment<TReportingPeriod>(
-            this IReportingPeriod<UnitOfTime> reportingPeriod,
+        /// <exception cref="InvalidOperationException">The adjustment has caused the <see cref="ReportingPeriod.Start"/> to be greater than <see cref="ReportingPeriod.End"/>.</exception>
+        public static ReportingPeriod CloneWithAdjustment(
+            this ReportingPeriod reportingPeriod,
             ReportingPeriodComponent component,
             int unitsToAdd,
             UnitOfTimeGranularity granularityOfUnitsToAdd)
-            where TReportingPeriod : class, IReportingPeriod<UnitOfTime>
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
             new { component }.AsArg().Must().NotBeEqualTo(ReportingPeriodComponent.Invalid);
@@ -60,7 +57,7 @@ namespace OBeautifulCode.AccountingTime
 
             try
             {
-                var result = new ReportingPeriod<UnitOfTime>(start, end).DeepClone<TReportingPeriod>();
+                var result = new ReportingPeriod(start, end);
 
                 return result;
             }
@@ -76,7 +73,6 @@ namespace OBeautifulCode.AccountingTime
         /// to the specified number of maximum number of units that a
         /// reporting period can contain.
         /// </summary>
-        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
         /// <param name="reportingPeriod">The reporting period to permute.</param>
         /// <param name="maxUnitsInAnyReportingPeriod">Maximum number of units-of-time in each reporting period.</param>
         /// <returns>All possible reporting periods containing between 1 and <paramref name="maxUnitsInAnyReportingPeriod"/> units-of-time, contained within <paramref name="reportingPeriod"/>.</returns>
@@ -84,10 +80,9 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> has an <see cref="UnitOfTimeGranularity.Unbounded"/> component.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxUnitsInAnyReportingPeriod"/> is less than or equal to 0.</exception>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "This is a perfectly fine usage of nesting generic types.")]
-        public static ICollection<IReportingPeriod<T>> CreatePermutations<T>(
-            this IReportingPeriod<T> reportingPeriod,
+        public static IReadOnlyCollection<ReportingPeriod> CreatePermutations(
+            this ReportingPeriod reportingPeriod,
             int maxUnitsInAnyReportingPeriod)
-            where T : UnitOfTime
         {
             new { reportingPeriod }.AsArg().Must().NotBeNull();
 
@@ -100,7 +95,7 @@ namespace OBeautifulCode.AccountingTime
 
             var allUnits = reportingPeriod.GetUnitsWithin();
 
-            var result = new List<IReportingPeriod<T>>();
+            var result = new List<ReportingPeriod>();
 
             for (int unitOfTimeIndex = 0; unitOfTimeIndex < allUnits.Count; unitOfTimeIndex++)
             {
@@ -108,7 +103,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     if (unitOfTimeIndex + numberOfUnits - 1 < allUnits.Count)
                     {
-                        var subReportingPeriod = new ReportingPeriod<T>(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
+                        var subReportingPeriod = new ReportingPeriod(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
                         result.Add(subReportingPeriod);
                     }
                 }
@@ -142,7 +137,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="overflowStrategy"/> is not <see cref="OverflowStrategy.ThrowOnOverflow"/>.</exception>
         /// <exception cref="InvalidOperationException">There was some overflow when splitting.</exception>
-        public static IList<UnitOfTime> Split(
+        public static IReadOnlyList<UnitOfTime> Split(
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity,
             OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
@@ -159,7 +154,7 @@ namespace OBeautifulCode.AccountingTime
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
 
-            IList<UnitOfTime> result;
+            IReadOnlyList<UnitOfTime> result;
             if (reportingPeriodGranularity == granularity)
             {
                 result = reportingPeriod.GetUnitsWithin();
@@ -419,7 +414,7 @@ namespace OBeautifulCode.AccountingTime
                         throw new InvalidOperationException("Cannot convert a calendar day reporting period to a calendar month reporting period when the reporting period end time is not the last day of a month.");
                     }
 
-                    lessGranularReportingPeriod = new ReportingPeriod<CalendarMonth>(startMonth, endMonth);
+                    lessGranularReportingPeriod = new ReportingPeriod(startMonth, endMonth);
                 }
                 else
                 {
@@ -462,20 +457,26 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var startQuarter = new CalendarQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
+
                     var endQuarter = new CalendarQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    lessGranularReportingPeriod = new ReportingPeriod<CalendarQuarter>(startQuarter, endQuarter);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startQuarter, endQuarter);
                 }
                 else if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     var startQuarter = new FiscalQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
+
                     var endQuarter = new FiscalQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    lessGranularReportingPeriod = new ReportingPeriod<FiscalQuarter>(startQuarter, endQuarter);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startQuarter, endQuarter);
                 }
                 else if (unitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     var startQuarter = new GenericQuarter(startAsMonth.Year, quarterByStartMonth[(int)startAsMonth.MonthNumber]);
+
                     var endQuarter = new GenericQuarter(endAsMonth.Year, quarterByEndMonth[(int)endAsMonth.MonthNumber]);
-                    lessGranularReportingPeriod = new ReportingPeriod<GenericQuarter>(startQuarter, endQuarter);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startQuarter, endQuarter);
                 }
                 else
                 {
@@ -504,20 +505,26 @@ namespace OBeautifulCode.AccountingTime
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
                 {
                     var startYear = new CalendarYear(startAsQuarter.Year);
+
                     var endYear = new CalendarYear(endAsQuarter.Year);
-                    lessGranularReportingPeriod = new ReportingPeriod<CalendarYear>(startYear, endYear);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startYear, endYear);
                 }
                 else if (unitOfTimeKind == UnitOfTimeKind.Fiscal)
                 {
                     var startYear = new FiscalYear(startAsQuarter.Year);
+
                     var endYear = new FiscalYear(endAsQuarter.Year);
-                    lessGranularReportingPeriod = new ReportingPeriod<FiscalYear>(startYear, endYear);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startYear, endYear);
                 }
                 else if (unitOfTimeKind == UnitOfTimeKind.Generic)
                 {
                     var startYear = new GenericYear(startAsQuarter.Year);
+
                     var endYear = new GenericYear(endAsQuarter.Year);
-                    lessGranularReportingPeriod = new ReportingPeriod<GenericYear>(startYear, endYear);
+
+                    lessGranularReportingPeriod = new ReportingPeriod(startYear, endYear);
                 }
                 else
                 {

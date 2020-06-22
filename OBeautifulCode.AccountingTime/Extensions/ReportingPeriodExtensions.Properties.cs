@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime
     using static System.FormattableString;
 
     /// <summary>
-    /// Property-related extension methods on <see cref="IReportingPeriod{T}"/>.
+    /// Property-related extension methods on <see cref="ReportingPeriod"/>.
     /// </summary>
     public static partial class ReportingPeriodExtensions
     {
@@ -26,7 +26,7 @@ namespace OBeautifulCode.AccountingTime
         /// The granularity of the unit-of-time used in the specified reporting period.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod{T}.Start"/> and <see cref="ReportingPeriod{T}.End"/> has different granularity.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> has different granularity.</exception>
         public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
             this ReportingPeriod reportingPeriod)
         {
@@ -61,43 +61,6 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Gets the distinct <typeparamref name="T"/> contained within a specified reporting period.
-        /// For example, a reporting period of 2Q2017-4Q2017, contains 2Q2017, 3Q2017, and 4Q2017.
-        /// </summary>
-        /// <remarks>
-        /// The endpoints are considered units within the reporting period.
-        /// </remarks>
-        /// <typeparam name="T">The unit-of-time of the reporting period.</typeparam>
-        /// <param name="reportingPeriod">The reporting period.</param>
-        /// <returns>
-        /// The units-of-time contained within the specified reporting period.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="IReportingPeriod{T}.Start"/> and/or <see cref="IReportingPeriod{T}.End"/> is unbounded.</exception>
-        public static IList<T> GetUnitsWithin<T>(
-            this IReportingPeriod<T> reportingPeriod)
-            where T : UnitOfTime
-        {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
-
-            if (reportingPeriod.HasComponentWithUnboundedGranularity())
-            {
-                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded."));
-            }
-
-            var allUnits = new List<T>();
-            var currentUnit = reportingPeriod.Start;
-            do
-            {
-                allUnits.Add(currentUnit);
-                currentUnit = (T)currentUnit.Plus(1);
-            }
-            while (currentUnit.CompareTo(reportingPeriod.End) <= 0);
-
-            return allUnits;
-        }
-
-        /// <summary>
         /// Determines if the reporting period has a component with unbounded granularity.
         /// </summary>
         /// <param name="reportingPeriod">The reporting period.</param>
@@ -113,6 +76,42 @@ namespace OBeautifulCode.AccountingTime
                          (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the distinct units-of-time contained within a specified reporting period.
+        /// For example, a reporting period of 2Q2017-4Q2017, contains 2Q2017, 3Q2017, and 4Q2017.
+        /// </summary>
+        /// <remarks>
+        /// The endpoints are considered units within the reporting period.
+        /// </remarks>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The units-of-time contained within the specified reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod.Start"/> and/or <see cref="ReportingPeriod.End"/> is unbounded.</exception>
+        public static IReadOnlyList<UnitOfTime> GetUnitsWithin(
+            this ReportingPeriod reportingPeriod)
+        {
+            new { reportingPeriod }.AsArg().Must().NotBeNull();
+
+            if (reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} {nameof(reportingPeriod.Start)} and/or {nameof(reportingPeriod.End)} is unbounded."));
+            }
+
+            var allUnits = new List<UnitOfTime>();
+            var currentUnit = reportingPeriod.Start;
+            do
+            {
+                allUnits.Add(currentUnit);
+
+                currentUnit = currentUnit.Plus(1);
+            }
+            while (currentUnit <= reportingPeriod.End);
+
+            return allUnits;
         }
     }
 }

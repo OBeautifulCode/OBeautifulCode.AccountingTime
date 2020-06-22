@@ -90,7 +90,7 @@ namespace OBeautifulCode.AccountingTime
         /// up to and including <paramref name="lastUnitOfTimeInYear"/>, in sequential/ascending order.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="lastUnitOfTimeInYear"/> is null.</exception>
-        public static IList<T> GetUnitsToDate<T>(
+        public static IReadOnlyList<T> GetUnitsToDate<T>(
             this T lastUnitOfTimeInYear)
             where T : UnitOfTime, IHaveAYear
         {

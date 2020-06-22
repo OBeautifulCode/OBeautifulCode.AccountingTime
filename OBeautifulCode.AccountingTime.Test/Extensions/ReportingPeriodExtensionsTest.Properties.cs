@@ -16,9 +16,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using FluentAssertions;
 
     using Naos.Recipes.TupleInitializers;
-
     using OBeautifulCode.AutoFakeItEasy;
-
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
@@ -39,14 +37,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitOfTimeGranularity___Should_throw_ArgumentException___When_reportingPeriod_Start_and_End_has_different_granularity()
         {
             // Arrange
-            var reportingPeriods = new IReportingPeriod<UnitOfTime>[]
+            var reportingPeriods = new[]
             {
-                A.Dummy<IReportingPeriod<CalendarUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
-                A.Dummy<IReportingPeriod<CalendarUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
-                A.Dummy<IReportingPeriod<FiscalUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
-                A.Dummy<IReportingPeriod<FiscalUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
-                A.Dummy<IReportingPeriod<GenericUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
-                A.Dummy<IReportingPeriod<GenericUnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
             };
 
             // Act
@@ -61,21 +59,21 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitOfTimeGranularity___Should_return_the_granularity_of_unit_of_time_used_in_the_reporting_period___When_called()
         {
             // Arrange
-            var reportingPeriods = new List<Tuple<IReportingPeriod<UnitOfTime>, UnitOfTimeGranularity>>
+            var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeGranularity>>
             {
-                { A.Dummy<IReportingPeriod<CalendarDay>>(), UnitOfTimeGranularity.Day },
-                { A.Dummy<IReportingPeriod<CalendarMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<CalendarQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<CalendarYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<CalendarUnbounded>>(), UnitOfTimeGranularity.Unbounded },
-                { A.Dummy<IReportingPeriod<FiscalMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<FiscalQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<FiscalYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<FiscalUnbounded>>(), UnitOfTimeGranularity.Unbounded },
-                { A.Dummy<IReportingPeriod<GenericMonth>>(), UnitOfTimeGranularity.Month },
-                { A.Dummy<IReportingPeriod<GenericQuarter>>(), UnitOfTimeGranularity.Quarter },
-                { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeGranularity.Year },
-                { A.Dummy<IReportingPeriod<GenericUnbounded>>(), UnitOfTimeGranularity.Unbounded },
+                { Common.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
+                { Common.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { Common.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { Common.GetDummyCalendarYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { Common.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { Common.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { Common.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { Common.GetDummyFiscalYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { Common.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { Common.GetDummyGenericMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { Common.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { Common.GetDummyGenericYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { Common.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
             };
 
             // Act
@@ -100,24 +98,24 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitOfTimeKind___Should_return_the_kind_of_unit_of_time_used_in_the_reporting_period___When_called()
         {
             // Arrange
-            var reportingPeriods = new List<Tuple<IReportingPeriod<UnitOfTime>, UnitOfTimeKind>>
+            var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeKind>>
             {
-                { A.Dummy<IReportingPeriod<CalendarUnitOfTime>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<CalendarDay>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<CalendarMonth>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<CalendarQuarter>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<CalendarYear>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<CalendarUnbounded>>(), UnitOfTimeKind.Calendar },
-                { A.Dummy<IReportingPeriod<FiscalUnitOfTime>>(), UnitOfTimeKind.Fiscal },
-                { A.Dummy<IReportingPeriod<FiscalMonth>>(), UnitOfTimeKind.Fiscal },
-                { A.Dummy<IReportingPeriod<FiscalQuarter>>(), UnitOfTimeKind.Fiscal },
-                { A.Dummy<IReportingPeriod<FiscalYear>>(), UnitOfTimeKind.Fiscal },
-                { A.Dummy<IReportingPeriod<FiscalUnbounded>>(), UnitOfTimeKind.Fiscal },
-                { A.Dummy<IReportingPeriod<GenericUnitOfTime>>(), UnitOfTimeKind.Generic },
-                { A.Dummy<IReportingPeriod<GenericMonth>>(), UnitOfTimeKind.Generic },
-                { A.Dummy<IReportingPeriod<GenericQuarter>>(), UnitOfTimeKind.Generic },
-                { A.Dummy<IReportingPeriod<GenericYear>>(), UnitOfTimeKind.Generic },
-                { A.Dummy<IReportingPeriod<GenericUnbounded>>(), UnitOfTimeKind.Generic },
+                { Common.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyCalendarYearReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeKind.Calendar },
+                { Common.GetDummyFiscalReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { Common.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { Common.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { Common.GetDummyFiscalYearReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { Common.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { Common.GetDummyGenericReportingPeriod(), UnitOfTimeKind.Generic },
+                { Common.GetDummyGenericMonthReportingPeriod(), UnitOfTimeKind.Generic },
+                { Common.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeKind.Generic },
+                { Common.GetDummyGenericYearReportingPeriod(), UnitOfTimeKind.Generic },
+                { Common.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeKind.Generic },
             };
 
             // Act
@@ -131,7 +129,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.GetUnitsWithin<UnitOfTime>(null));
+            var ex = Record.Exception(() => ReportingPeriodExtensions.GetUnitsWithin(null));
 
             // Assert
             ex.Should().BeOfType<ArgumentNullException>();
@@ -141,9 +139,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_throw_ArgumentException___When_parameter_reportingPeriod_Start_and_or_End_is_unbounded()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<CalendarUnitOfTime>(new CalendarUnbounded(), A.Dummy<CalendarUnitOfTime>());
-            var reportingPeriod2 = new ReportingPeriod<GenericUnitOfTime>(A.Dummy<GenericUnitOfTime>(), new GenericUnbounded());
-            var reportingPeriod3 = new ReportingPeriod<FiscalUnitOfTime>(new FiscalUnbounded(), new FiscalUnbounded());
+            var reportingPeriod1 = new ReportingPeriod(new CalendarUnbounded(), A.Dummy<CalendarUnitOfTime>());
+            var reportingPeriod2 = new ReportingPeriod(A.Dummy<GenericUnitOfTime>(), new GenericUnbounded());
+            var reportingPeriod3 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded());
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod1.GetUnitsWithin());
@@ -160,12 +158,12 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarDay()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
-            var reportingPeriod2 = new ReportingPeriod<CalendarDay>(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
+            var reportingPeriod1 = new ReportingPeriod(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
+            var reportingPeriod2 = new ReportingPeriod(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight), new CalendarDay(2016, MonthOfYear.March, DayOfMonth.Three));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new CalendarDay(2016, MonthOfYear.February, DayOfMonth.TwentyEight));
@@ -176,14 +174,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
-            var reportingPeriod2 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
-            var reportingPeriod3 = new ReportingPeriod<CalendarMonth>(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
+            var reportingPeriod1 = new ReportingPeriod(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.February));
+            var reportingPeriod2 = new ReportingPeriod(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2016, MonthOfYear.April));
+            var reportingPeriod3 = new ReportingPeriod(new CalendarMonth(2016, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.January));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new CalendarMonth(2016, MonthOfYear.February));
@@ -195,14 +193,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriod<FiscalMonth>(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Two), new FiscalMonth(2017, MonthNumber.One));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new FiscalMonth(2016, MonthNumber.Two));
@@ -214,14 +212,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericMonth()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
-            var reportingPeriod2 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
-            var reportingPeriod3 = new ReportingPeriod<GenericMonth>(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
+            var reportingPeriod1 = new ReportingPeriod(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Two));
+            var reportingPeriod2 = new ReportingPeriod(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2016, MonthNumber.Three));
+            var reportingPeriod3 = new ReportingPeriod(new GenericMonth(2016, MonthNumber.Two), new GenericMonth(2017, MonthNumber.One));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new GenericMonth(2016, MonthNumber.Two));
@@ -233,14 +231,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriod<CalendarQuarter>(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod(new CalendarQuarter(2016, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new CalendarQuarter(2016, QuarterNumber.Q2));
@@ -252,14 +250,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriod<FiscalQuarter>(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod(new FiscalQuarter(2016, QuarterNumber.Q2), new FiscalQuarter(2017, QuarterNumber.Q3));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new FiscalQuarter(2016, QuarterNumber.Q2));
@@ -271,14 +269,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericQuarter()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
-            var reportingPeriod2 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
-            var reportingPeriod3 = new ReportingPeriod<GenericQuarter>(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
+            var reportingPeriod1 = new ReportingPeriod(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q2));
+            var reportingPeriod2 = new ReportingPeriod(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2016, QuarterNumber.Q4));
+            var reportingPeriod3 = new ReportingPeriod(new GenericQuarter(2016, QuarterNumber.Q2), new GenericQuarter(2017, QuarterNumber.Q3));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new GenericQuarter(2016, QuarterNumber.Q2));
@@ -290,14 +288,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_CalendarYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2016));
-            var reportingPeriod2 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2017));
-            var reportingPeriod3 = new ReportingPeriod<CalendarYear>(new CalendarYear(2016), new CalendarYear(2018));
+            var reportingPeriod1 = new ReportingPeriod(new CalendarYear(2016), new CalendarYear(2016));
+            var reportingPeriod2 = new ReportingPeriod(new CalendarYear(2016), new CalendarYear(2017));
+            var reportingPeriod3 = new ReportingPeriod(new CalendarYear(2016), new CalendarYear(2018));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new CalendarYear(2016));
@@ -309,14 +307,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_FiscalYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2016));
-            var reportingPeriod2 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2017));
-            var reportingPeriod3 = new ReportingPeriod<FiscalYear>(new FiscalYear(2016), new FiscalYear(2018));
+            var reportingPeriod1 = new ReportingPeriod(new FiscalYear(2016), new FiscalYear(2016));
+            var reportingPeriod2 = new ReportingPeriod(new FiscalYear(2016), new FiscalYear(2017));
+            var reportingPeriod3 = new ReportingPeriod(new FiscalYear(2016), new FiscalYear(2018));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new FiscalYear(2016));
@@ -328,14 +326,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetUnitsWithin___Should_return_number_of_units_contained_within_reportingPeriod___When_called_on_reporting_period_of_GenericYear()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2016));
-            var reportingPeriod2 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2017));
-            var reportingPeriod3 = new ReportingPeriod<GenericYear>(new GenericYear(2016), new GenericYear(2018));
+            var reportingPeriod1 = new ReportingPeriod(new GenericYear(2016), new GenericYear(2016));
+            var reportingPeriod2 = new ReportingPeriod(new GenericYear(2016), new GenericYear(2017));
+            var reportingPeriod3 = new ReportingPeriod(new GenericYear(2016), new GenericYear(2018));
 
             // Act
-            var actualUnits1 = reportingPeriod1.GetUnitsWithin<UnitOfTime>();
-            var actualUnits2 = reportingPeriod2.GetUnitsWithin<UnitOfTime>();
-            var actualUnits3 = reportingPeriod3.GetUnitsWithin<UnitOfTime>();
+            var actualUnits1 = reportingPeriod1.GetUnitsWithin();
+            var actualUnits2 = reportingPeriod2.GetUnitsWithin();
+            var actualUnits3 = reportingPeriod3.GetUnitsWithin();
 
             // Assert
             actualUnits1.Should().Equal(new GenericYear(2016));
@@ -357,7 +355,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasComponentWithUnboundedGranularity___Should_return_false___When_neither_the_Start_nor_End_component_has_an_Unbounded_UnitOfTimeGranularity()
         {
             // Arrange
-            var reportingPeriod = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
 
             // Act
             var result = reportingPeriod.HasComponentWithUnboundedGranularity();
@@ -370,9 +368,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void HasComponentWithUnboundedGranularity___Should_return_true___When_either_the_Start_or_End_or_both_components_has_an_Unbounded_UnitOfTimeGranularity()
         {
             // Arrange
-            var reportingPeriod1 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
-            var reportingPeriod2 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
-            var reportingPeriod3 = A.Dummy<IReportingPeriod<UnitOfTime>>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod1 = A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod2 = A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
+            var reportingPeriod3 = A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
 
             // Act
             var result1 = reportingPeriod1.HasComponentWithUnboundedGranularity();
