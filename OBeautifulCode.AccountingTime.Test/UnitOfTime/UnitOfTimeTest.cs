@@ -7,14 +7,17 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
 
+    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
     public static partial class UnitOfTimeTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static UnitOfTimeTest()
         {
             var referenceUnitOfTime = A.Dummy<FiscalYear>();
@@ -47,7 +50,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             A.Dummy<Guid>(),
                         },
                         ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject =
-                            Common.GetDummyOfEachUnitOfTimeKind().Where(_ => _.GetType() != typeof(FiscalYear)).ToList(),
+                            TestCommon.GetDummyOfEachUnitOfTimeKind().Where(_ => _.GetType() != typeof(FiscalYear)).ToList(),
                     });
         }
     }

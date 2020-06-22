@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
@@ -16,6 +17,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using OBeautifulCode.AccountingTime.Serialization.Bson;
     using OBeautifulCode.AccountingTime.Serialization.Json;
+    using OBeautifulCode.AccountingTime.Serialization.Test.Internal;
     using OBeautifulCode.AccountingTime.Test;
 
     public static class TestModels
@@ -25,22 +27,22 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var result = new ReportingPeriodModelWrapper
             {
                 UnitOfTime = A.Dummy<ReportingPeriod>(),
-                CalendarUnitOfTime = Common.GetDummyCalendarReportingPeriod(),
-                CalendarDay = Common.GetDummyCalendarDayReportingPeriod(),
-                CalendarMonth = Common.GetDummyCalendarMonthReportingPeriod(),
-                CalendarQuarter = Common.GetDummyCalendarQuarterReportingPeriod(),
-                CalendarUnbounded = Common.GetDummyCalendarUnboundedReportingPeriod(),
-                CalendarYear = Common.GetDummyCalendarYearReportingPeriod(),
-                FiscalUnitOfTime = Common.GetDummyFiscalReportingPeriod(),
-                FiscalMonth = Common.GetDummyFiscalMonthReportingPeriod(),
-                FiscalQuarter = Common.GetDummyFiscalQuarterReportingPeriod(),
-                FiscalUnbounded = Common.GetDummyFiscalUnboundedReportingPeriod(),
-                FiscalYear = Common.GetDummyFiscalYearReportingPeriod(),
-                GenericUnitOfTime = Common.GetDummyGenericReportingPeriod(),
-                GenericMonth = Common.GetDummyGenericMonthReportingPeriod(),
-                GenericQuarter = Common.GetDummyGenericQuarterReportingPeriod(),
-                GenericUnbounded = Common.GetDummyGenericUnboundedReportingPeriod(),
-                GenericYear = Common.GetDummyGenericYearReportingPeriod(),
+                CalendarUnitOfTime = TestCommon.GetDummyCalendarReportingPeriod(),
+                CalendarDay = TestCommon.GetDummyCalendarDayReportingPeriod(),
+                CalendarMonth = TestCommon.GetDummyCalendarMonthReportingPeriod(),
+                CalendarQuarter = TestCommon.GetDummyCalendarQuarterReportingPeriod(),
+                CalendarUnbounded = TestCommon.GetDummyCalendarUnboundedReportingPeriod(),
+                CalendarYear = TestCommon.GetDummyCalendarYearReportingPeriod(),
+                FiscalUnitOfTime = TestCommon.GetDummyFiscalReportingPeriod(),
+                FiscalMonth = TestCommon.GetDummyFiscalMonthReportingPeriod(),
+                FiscalQuarter = TestCommon.GetDummyFiscalQuarterReportingPeriod(),
+                FiscalUnbounded = TestCommon.GetDummyFiscalUnboundedReportingPeriod(),
+                FiscalYear = TestCommon.GetDummyFiscalYearReportingPeriod(),
+                GenericUnitOfTime = TestCommon.GetDummyGenericReportingPeriod(),
+                GenericMonth = TestCommon.GetDummyGenericMonthReportingPeriod(),
+                GenericQuarter = TestCommon.GetDummyGenericQuarterReportingPeriod(),
+                GenericUnbounded = TestCommon.GetDummyGenericUnboundedReportingPeriod(),
+                GenericYear = TestCommon.GetDummyGenericYearReportingPeriod(),
             };
 
             return result;
@@ -162,6 +164,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         public override bool Equals(object obj) => this == (obj as ReportingPeriodModelWrapper);
 
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ObcSuppressBecause.CA1065_DoNotRaiseExceptionsInUnexpectedLocations_ThrowNotImplementedExceptionWhenForcedToSpecifyMemberThatWillNeverBeUsedInTesting)]
         public override int GetHashCode() => throw new NotImplementedException();
     }
 
@@ -280,6 +283,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
         public override bool Equals(object obj) => this == (obj as UnitOfTimeModelWrapper);
 
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ObcSuppressBecause.CA1065_DoNotRaiseExceptionsInUnexpectedLocations_ThrowNotImplementedExceptionWhenForcedToSpecifyMemberThatWillNeverBeUsedInTesting)]
         public override int GetHashCode() => throw new NotImplementedException();
     }
 }

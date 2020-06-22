@@ -61,19 +61,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeGranularity>>
             {
-                { Common.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
-                { Common.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { Common.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { Common.GetDummyCalendarYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { Common.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
-                { Common.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { Common.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { Common.GetDummyFiscalYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { Common.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
-                { Common.GetDummyGenericMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { Common.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { Common.GetDummyGenericYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { Common.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
+                { TestCommon.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { TestCommon.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { TestCommon.GetDummyCalendarYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { TestCommon.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { TestCommon.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { TestCommon.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { TestCommon.GetDummyFiscalYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { TestCommon.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { TestCommon.GetDummyGenericMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { TestCommon.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { TestCommon.GetDummyGenericYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { TestCommon.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
             };
 
             // Act
@@ -100,22 +100,22 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new List<Tuple<ReportingPeriod, UnitOfTimeKind>>
             {
-                { Common.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyCalendarYearReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeKind.Calendar },
-                { Common.GetDummyFiscalReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { Common.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { Common.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { Common.GetDummyFiscalYearReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { Common.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { Common.GetDummyGenericReportingPeriod(), UnitOfTimeKind.Generic },
-                { Common.GetDummyGenericMonthReportingPeriod(), UnitOfTimeKind.Generic },
-                { Common.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeKind.Generic },
-                { Common.GetDummyGenericYearReportingPeriod(), UnitOfTimeKind.Generic },
-                { Common.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeKind.Generic },
+                { TestCommon.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyCalendarYearReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeKind.Calendar },
+                { TestCommon.GetDummyFiscalReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { TestCommon.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { TestCommon.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { TestCommon.GetDummyFiscalYearReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { TestCommon.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { TestCommon.GetDummyGenericReportingPeriod(), UnitOfTimeKind.Generic },
+                { TestCommon.GetDummyGenericMonthReportingPeriod(), UnitOfTimeKind.Generic },
+                { TestCommon.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeKind.Generic },
+                { TestCommon.GetDummyGenericYearReportingPeriod(), UnitOfTimeKind.Generic },
+                { TestCommon.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeKind.Generic },
             };
 
             // Act

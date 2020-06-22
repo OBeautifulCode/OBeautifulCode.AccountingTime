@@ -7,12 +7,14 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
     using FluentAssertions;
     using FluentAssertions.Extensions;
 
+    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
@@ -20,6 +22,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static partial class FiscalYearAccountingPeriodSystemTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FiscalYearAccountingPeriodSystemTest()
         {
             ConstructorArgumentValidationTestScenarios

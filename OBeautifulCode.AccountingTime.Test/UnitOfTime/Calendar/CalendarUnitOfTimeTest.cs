@@ -7,10 +7,12 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
 
+    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
@@ -18,6 +20,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static partial class CalendarUnitOfTimeTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static CalendarUnitOfTimeTest()
         {
             var referenceCalendarUnitOfTime = A.Dummy<CalendarYear>();
@@ -49,7 +52,7 @@ namespace OBeautifulCode.AccountingTime.Test
                                 A.Dummy<int?>(),
                                 A.Dummy<Guid>(),
                             }
-                            .Concat(Common.GetDummyOfEachUnitOfTimeKind().Where(_ => _.UnitOfTimeKind != UnitOfTimeKind.Calendar))
+                            .Concat(TestCommon.GetDummyOfEachUnitOfTimeKind().Where(_ => _.UnitOfTimeKind != UnitOfTimeKind.Calendar))
                             .ToList(),
                         ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new CalendarUnitOfTime[]
                         {

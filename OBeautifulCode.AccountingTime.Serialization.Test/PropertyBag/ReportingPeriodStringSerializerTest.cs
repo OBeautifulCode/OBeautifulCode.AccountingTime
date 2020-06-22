@@ -8,8 +8,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using OBeautifulCode.AccountingTime.Serialization.PropertyBag;
+    using OBeautifulCode.AccountingTime.Serialization.Test.Internal;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Serialization.PropertyBag;
 
@@ -81,6 +83,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             actual.AsTest().Must().ContainString(expected);
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = ObcSuppressBecause.CA1812_AvoidUninstantiatedInternalClasses_ClassExistsToUseItsTypeInUnitTests)]
         private class AccountingTimeTestPropertyBagConfiguration : PropertyBagSerializationConfigurationBase
         {
             protected override IReadOnlyCollection<PropertyBagSerializationConfigurationType> DependentPropertyBagSerializationConfigurationTypes => new[] { typeof(AccountingTimePropertyBagSerializationConfiguration).ToPropertyBagSerializationConfigurationType() };

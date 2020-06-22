@@ -7,18 +7,21 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using FakeItEasy;
 
     using FluentAssertions;
     using FluentAssertions.Extensions;
 
+    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
     using Xunit;
 
     public static partial class FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest()
         {
             ConstructorArgumentValidationTestScenarios

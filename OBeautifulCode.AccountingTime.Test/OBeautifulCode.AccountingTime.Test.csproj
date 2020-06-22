@@ -214,7 +214,7 @@
     <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.designer.cs">
       <DependentUpon>CalendarUnitOfTimeTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Common.cs" />
+    <Compile Include="TestCommon.cs" />
     <Compile Include="AccountingTimeDummyFactory.cs" />
     <Compile Include="Extensions\DateTimeExtensionsTest.cs" />
     <Compile Include="Extensions\QuarterNumberExtensionsTest.cs" />

@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using Xunit;
 
-    public class ReportingPeriodBsonSerializerTest
+    public static class ReportingPeriodBsonSerializerTest
     {
         [Fact]
         public static void ReportingPeriodModelWrapper_with_nulls___Should_roundtrip_to_bson_and_back___When_using_ReportingPeriodBsonSerializer()

@@ -15,7 +15,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using Xunit;
 
-    public class UnitOfTimeBsonSerializerTest
+    public static class UnitOfTimeBsonSerializerTest
     {
         [Fact]
         public static void UnitOfTimeModelWrapper_with_nulls___Should_roundtrip_to_bson_and_back___When_using_UnitOfTimeBsonSerializer_of_TValue()

@@ -128,16 +128,16 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
             var tests = new[]
             {
-                new { ReportingPeriod = Common.GetDummyCalendarDayReportingPeriod(), GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
-                new { ReportingPeriod = Common.GetDummyCalendarMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = Common.GetDummyCalendarQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = Common.GetDummyCalendarYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { ReportingPeriod = Common.GetDummyFiscalMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = Common.GetDummyFiscalQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = Common.GetDummyFiscalYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { ReportingPeriod = Common.GetDummyGenericMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = Common.GetDummyGenericQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = Common.GetDummyGenericYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = TestCommon.GetDummyCalendarDayReportingPeriod(), GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
+                new { ReportingPeriod = TestCommon.GetDummyCalendarMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = TestCommon.GetDummyCalendarQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = TestCommon.GetDummyCalendarYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = TestCommon.GetDummyFiscalMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = TestCommon.GetDummyFiscalQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = TestCommon.GetDummyFiscalYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = TestCommon.GetDummyGenericMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = TestCommon.GetDummyGenericQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = TestCommon.GetDummyGenericYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
             };
 
             // Act

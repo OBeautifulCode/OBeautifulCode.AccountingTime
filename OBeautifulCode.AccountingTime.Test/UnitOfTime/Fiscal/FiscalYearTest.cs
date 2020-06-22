@@ -7,9 +7,12 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+
     using FakeItEasy;
 
+    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -18,6 +21,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     public static partial class FiscalYearTest
     {
+        [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FiscalYearTest()
         {
             var referenceFiscalYear = A.Dummy<FiscalYear>();
@@ -85,7 +89,7 @@ namespace OBeautifulCode.AccountingTime.Test
                                 A.Dummy<int?>(),
                                 A.Dummy<Guid>(),
                             }
-                            .Concat(Common.GetDummyOfEachUnitOfTimeKind().Where(_ => _.GetType() != typeof(FiscalYear)))
+                            .Concat(TestCommon.GetDummyOfEachUnitOfTimeKind().Where(_ => _.GetType() != typeof(FiscalYear)))
                             .ToList(),
                         ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new FiscalYear[]
                         {
