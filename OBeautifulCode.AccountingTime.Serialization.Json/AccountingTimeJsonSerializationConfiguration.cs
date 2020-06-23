@@ -34,12 +34,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
             var unitOfTimeTypes = TypeHelper.GetAllUnitOfTimeTypes().ToList();
 
-            var unitOfTimeConverter = new UnitOfTimeJsonConverter();
-
             var unitOfTimeConverterBuilder = new JsonConverterBuilder(
                 "unit-of-time-converter",
-                () => unitOfTimeConverter,
-                () => unitOfTimeConverter,
+                () => new UnitOfTimeJsonConverter(),
+                () => new UnitOfTimeJsonConverter(),
                 JsonConverterOutputKind.String);
 
             foreach (var unitOfTimeType in unitOfTimeTypes)
@@ -53,12 +51,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
                 result.Add(unitOfTimeTypeToRegister);
             }
 
-            var reportingPeriodConverter = new ReportingPeriodJsonConverter();
-
             var reportingPeriodConverterBuilder = new JsonConverterBuilder(
                 "reporting-period-converter",
-                () => reportingPeriodConverter,
-                () => reportingPeriodConverter,
+                () => new ReportingPeriodJsonConverter(),
+                () => new ReportingPeriodJsonConverter(),
                 JsonConverterOutputKind.String);
 
             var reportingPeriodTypeToRegister = new TypeToRegisterForJson(
