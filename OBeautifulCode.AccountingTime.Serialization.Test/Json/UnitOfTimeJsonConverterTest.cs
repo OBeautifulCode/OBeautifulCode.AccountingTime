@@ -17,7 +17,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     public static class UnitOfTimeJsonConverterTest
     {
         [Fact]
-        public static void UnitOfTimeModelWrapper_with_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeJsonConverter()
+        public static void UnitOfTimeModelWrapper_with_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeStringSerializerBackedJsonConverter()
         {
             // Arrange
             var expected = new UnitOfTimeModelWrapper();
@@ -32,7 +32,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeJsonConverter()
+        public static void UnitOfTimeModel_without_nulls___Should_roundtrip_to_json_and_back___When_using_UnitOfTimeStringSerializerBackedJsonConverter()
         {
             // Arrange
             var expected = A.Dummy<UnitOfTimeModelWrapper>();
@@ -47,7 +47,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModel_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_UnitOfTimeJsonConverter()
+        public static void UnitOfTimeModel_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_UnitOfTimeStringSerializerBackedJsonConverter()
         {
             // Arrange
             var model = A.Dummy<UnitOfTimeModelWrapper>();

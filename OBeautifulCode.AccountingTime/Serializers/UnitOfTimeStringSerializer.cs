@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
+namespace OBeautifulCode.AccountingTime
 {
     using System;
 
@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     using static System.FormattableString;
 
     /// <summary>
-    /// Represents the start, end, or both, of a reporting period.
+    /// String serialize for <see cref="UnitOfTime"/>.
     /// </summary>
     public class UnitOfTimeStringSerializer : IStringSerializeAndDeserialize
     {
@@ -21,14 +21,22 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
         public string SerializeToString(
             object objectToSerialize)
         {
-            if (objectToSerialize is UnitOfTime objectAsUnitOfTime)
+            string result;
+
+            if (objectToSerialize == null)
             {
-                return objectAsUnitOfTime.SerializeToSortableString();
+                result = null;
+            }
+            else if (objectToSerialize is UnitOfTime unitOfTime)
+            {
+                result = unitOfTime.SerializeToSortableString();
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(UnitOfTime)}."));
+                throw new ArgumentException(Invariant($"{nameof(objectToSerialize)} is not a {nameof(UnitOfTime)}."));
             }
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -45,12 +53,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             string serializedString,
             Type type)
         {
-            if (!type.IsUnitOfTimeType())
-            {
-                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(UnitOfTime)}."));
-            }
-
-            var result = serializedString.DeserializeFromSortableString(type);
+            var result = serializedString?.DeserializeFromSortableString(type);
 
             return result;
         }

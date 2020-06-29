@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
+namespace OBeautifulCode.AccountingTime
 {
     using System;
 
@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     using static System.FormattableString;
 
     /// <summary>
-    /// Represents the start, end, or both, of a reporting period.
+    /// String serialize for <see cref="ReportingPeriod"/>.
     /// </summary>
     public class ReportingPeriodStringSerializer : IStringSerializeAndDeserialize
     {
@@ -21,14 +21,22 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
         public string SerializeToString(
             object objectToSerialize)
         {
-            if (objectToSerialize is ReportingPeriod objectAsReportingPeriod)
+            string result;
+
+            if (objectToSerialize == null)
             {
-                return objectAsReportingPeriod.SerializeToString();
+                result = null;
+            }
+            else if (objectToSerialize is ReportingPeriod reportingPeriod)
+            {
+                result = reportingPeriod.SerializeToString();
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Unsupported type {objectToSerialize?.GetType().FullName ?? "<NULL OBJECT>"}, expected an implementer {nameof(ReportingPeriod)}"));
+                throw new ArgumentException(Invariant($"{nameof(objectToSerialize)} is not a {nameof(ReportingPeriod)}."));
             }
+
+            return result;
         }
 
         /// <inheritdoc />
@@ -45,12 +53,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             string serializedString,
             Type type)
         {
-            if (type != typeof(ReportingPeriod))
-            {
-                throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implementer {nameof(ReportingPeriod)}"));
-            }
-
-            var result = serializedString.DeserializeFromString();
+            var result = serializedString?.DeserializeFromString();
 
             return result;
         }

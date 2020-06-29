@@ -15,7 +15,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     public static class ReportingPeriodJsonConverterTest
     {
         [Fact]
-        public static void ReportingPeriodModelWrapper_with_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodJsonConverter()
+        public static void ReportingPeriodModelWrapper_with_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodStringSerializerBackedJsonConverter()
         {
             // Arrange
             var expected = new ReportingPeriodModelWrapper();
@@ -30,7 +30,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void ReportingPeriodModelWrapper_without_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodJsonConverter()
+        public static void ReportingPeriodModelWrapper_without_nulls___Should_roundtrip_to_json_and_back___When_using_ReportingPeriodStringSerializerBackedJsonConverter()
         {
             // Arrange
             var expected = TestModels.GetDummyReportingPeriodModelWrapper();
@@ -45,7 +45,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void ReportingPeriodModelWrapper_without_nulls___Should_serialize_to_string_representation_of_ReportingPeriod___When_using_ReportingPeriodJsonConverter()
+        public static void ReportingPeriodModelWrapper_without_nulls___Should_serialize_to_string_representation_of_ReportingPeriod___When_using_ReportingPeriodStringSerializerBackedJsonConverter()
         {
             // Arrange
             var model = TestModels.GetDummyReportingPeriodModelWrapper();

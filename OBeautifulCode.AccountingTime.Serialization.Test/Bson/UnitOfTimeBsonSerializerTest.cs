@@ -18,7 +18,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     public static class UnitOfTimeBsonSerializerTest
     {
         [Fact]
-        public static void UnitOfTimeModelWrapper_with_nulls___Should_roundtrip_to_bson_and_back___When_using_UnitOfTimeBsonSerializer_of_TValue()
+        public static void UnitOfTimeModelWrapper_with_nulls___Should_roundtrip_to_bson_and_back___When_using_UnitOfTimeStringSerializedBackedRegisteredTypeBsonSerializer_of_TValue()
         {
             // Arrange
             var expected = new UnitOfTimeModelWrapper();
@@ -33,7 +33,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModelWrapper_without_nulls___Should_roundtrip_to_bson_and_back___When_using_UnitOfTimeBsonSerializer_of_TValue()
+        public static void UnitOfTimeModelWrapper_without_nulls___Should_roundtrip_to_bson_and_back___When_using_UnitOfTimeStringSerializedBackedRegisteredTypeBsonSerializer_of_TValue()
         {
             // Arrange
             var expected = A.Dummy<UnitOfTimeModelWrapper>();
@@ -48,7 +48,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
         }
 
         [Fact]
-        public static void UnitOfTimeModelWrapper_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_UnitOfTimeBsonSerializer_of_TValue()
+        public static void UnitOfTimeModelWrapper_without_nulls___Should_serialize_to_sortable_string_representation_of_UnitOfTime___When_using_UnitOfTimeStringSerializedBackedRegisteredTypeBsonSerializer_of_TValue()
         {
             // Arrange
             var model = A.Dummy<UnitOfTimeModelWrapper>();

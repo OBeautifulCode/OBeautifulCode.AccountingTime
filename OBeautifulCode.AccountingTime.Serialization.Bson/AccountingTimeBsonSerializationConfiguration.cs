@@ -6,11 +6,7 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.Bson
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-
-    using MongoDB.Bson.Serialization;
 
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
@@ -25,46 +21,10 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
 
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
-            {
-                typeof(AccountingPeriodSystem).ToTypeToRegisterForBson(),
-            }
-            .Concat(BuildTypesToRegisterWithSerializers())
-            .ToList();
-
-        private static IReadOnlyCollection<TypeToRegisterForBson> BuildTypesToRegisterWithSerializers()
         {
-            var result = new List<TypeToRegisterForBson>();
-
-            var unitOfTimeTypes = TypeHelper.GetAllUnitOfTimeTypes().ToList();
-
-            foreach (var unitOfTimeType in unitOfTimeTypes)
-            {
-                var unitOfTimeSerializerType = typeof(UnitOfTimeBsonSerializer<>).MakeGenericType(unitOfTimeType);
-
-                var unitOfTimeSerializer = (IBsonSerializer)Activator.CreateInstance(unitOfTimeSerializerType);
-
-                var unitOfTimeTypeToRegister = new TypeToRegisterForBson(
-                    unitOfTimeType,
-                    MemberTypesToInclude.None,
-                    RelatedTypesToInclude.None,
-                    new BsonSerializerBuilder(() => unitOfTimeSerializer, BsonSerializerOutputKind.String),
-                    null);
-
-                result.Add(unitOfTimeTypeToRegister);
-            }
-
-            var reportingPeriodSerializer = new ReportingPeriodBsonSerializer();
-
-            var reportingPeriodTypeToRegister = new TypeToRegisterForBson(
-                typeof(ReportingPeriod),
-                MemberTypesToInclude.None,
-                RelatedTypesToInclude.None,
-                new BsonSerializerBuilder(() => reportingPeriodSerializer, BsonSerializerOutputKind.Object),
-                null);
-
-            result.Add(reportingPeriodTypeToRegister);
-
-            return result;
-        }
+            typeof(AccountingPeriodSystem).ToTypeToRegisterForBson(),
+            typeof(UnitOfTime).ToTypeToRegisterForBsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
+            new TypeToRegisterForBson(typeof(ReportingPeriod), MemberTypesToInclude.None, RelatedTypesToInclude.None, new BsonSerializerBuilder(() => new ReportingPeriodBsonSerializer(), BsonSerializerOutputKind.Object), null),
+        };
     }
 }
