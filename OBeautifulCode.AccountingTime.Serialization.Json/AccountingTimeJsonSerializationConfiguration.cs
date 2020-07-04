@@ -24,6 +24,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             typeof(AccountingPeriodSystem).ToTypeToRegisterForJson(),
             typeof(UnitOfTime).ToTypeToRegisterForJsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
             typeof(ReportingPeriod).ToTypeToRegisterForJsonUsingStringSerializer(new ReportingPeriodStringSerializer()),
+            typeof(MonthNumber).ToTypeToRegisterForJson(),
+            typeof(MonthOfYear).ToTypeToRegisterForJson(),
+            typeof(QuarterNumber).ToTypeToRegisterForJson(),
+            typeof(UnitOfTimeGranularity).ToTypeToRegisterForJson(),
+            typeof(UnitOfTimeKind).ToTypeToRegisterForJson(),
         };
     }
 }

@@ -25,6 +25,11 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             typeof(AccountingPeriodSystem).ToTypeToRegisterForBson(),
             typeof(UnitOfTime).ToTypeToRegisterForBsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
             new TypeToRegisterForBson(typeof(ReportingPeriod), MemberTypesToInclude.None, RelatedTypesToInclude.None, new BsonSerializerBuilder(() => new ReportingPeriodBsonSerializer(), BsonSerializerOutputKind.Object), null),
+            typeof(MonthNumber).ToTypeToRegisterForBson(),
+            typeof(MonthOfYear).ToTypeToRegisterForBson(),
+            typeof(QuarterNumber).ToTypeToRegisterForBson(),
+            typeof(UnitOfTimeGranularity).ToTypeToRegisterForBson(),
+            typeof(UnitOfTimeKind).ToTypeToRegisterForBson(),
         };
     }
 }
