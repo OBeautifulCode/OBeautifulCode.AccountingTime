@@ -20,14 +20,14 @@ namespace OBeautifulCode.AccountingTime.Test
     /// The default (code generated) Dummy Factory.
     /// Derive from this class to add any overriding or custom registrations.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject", "1.0.85.0")]
+#if !OBeautifulCodeAccountingTimeRecipesProject
     internal
 #else
     public
 #endif 
-        abstract class DefaultAccountingTimeDummyFactory : IDummyFactory
+    abstract class DefaultAccountingTimeDummyFactory : IDummyFactory
     {
         public DefaultAccountingTimeDummyFactory()
         {
