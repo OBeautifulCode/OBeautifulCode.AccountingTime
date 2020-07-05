@@ -10,24 +10,24 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
-    using System.CodeDom.Compiler;
-    using System.Diagnostics.CodeAnalysis;
 
     using AutoFakeItEasy;
 
     using FakeItEasy;
 
-    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.Math.Recipes;
 
     /// <summary>
     /// A Dummy Factory for types in <see cref="AccountingTime"/>.
     /// </summary>
 #if !OBeautifulCodeAccountingTimeRecipesProject
-    [ExcludeFromCodeCoverage]
-    [GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+    internal
+#else
+    public
 #endif
-    public class AccountingTimeDummyFactory : DefaultAccountingTimeDummyFactory
+    class AccountingTimeDummyFactory : DefaultAccountingTimeDummyFactory
     {
         private const int MinYear = 1950;
 

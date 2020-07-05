@@ -7,11 +7,9 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using global::System;
-    using global::System.CodeDom.Compiler;
     using global::System.Collections.Concurrent;
     using global::System.Collections.Generic;
     using global::System.Collections.ObjectModel;
-    using global::System.Diagnostics.CodeAnalysis;
 
     using global::FakeItEasy;
 
@@ -22,9 +20,14 @@ namespace OBeautifulCode.AccountingTime.Test
     /// The default (code generated) Dummy Factory.
     /// Derive from this class to add any overriding or custom registrations.
     /// </summary>
-    [ExcludeFromCodeCoverage]
-    [GeneratedCode("OBeautifulCode.CodeGen.ModelObject", "1.0.85.0")]
-    public abstract class DefaultAccountingTimeDummyFactory : IDummyFactory
+#if !OBeautifulCodeAccountingTimeRecipesProject
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject", "1.0.85.0")]
+    internal
+#else
+    public
+#endif 
+        abstract class DefaultAccountingTimeDummyFactory : IDummyFactory
     {
         public DefaultAccountingTimeDummyFactory()
         {
