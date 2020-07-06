@@ -61,19 +61,19 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new Dictionary<ReportingPeriod, UnitOfTimeGranularity>
             {
-                { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
-                { TestCommon.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { TestCommon.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { TestCommon.GetDummyCalendarYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { TestCommon.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
-                { TestCommon.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { TestCommon.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { TestCommon.GetDummyFiscalYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { TestCommon.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
-                { TestCommon.GetDummyGenericMonthReportingPeriod(), UnitOfTimeGranularity.Month },
-                { TestCommon.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
-                { TestCommon.GetDummyGenericYearReportingPeriod(), UnitOfTimeGranularity.Year },
-                { TestCommon.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { AccountingTimeDummyFactory.GetDummyCalendarDayReportingPeriod(), UnitOfTimeGranularity.Day },
+                { AccountingTimeDummyFactory.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { AccountingTimeDummyFactory.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { AccountingTimeDummyFactory.GetDummyCalendarYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { AccountingTimeDummyFactory.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { AccountingTimeDummyFactory.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { AccountingTimeDummyFactory.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { AccountingTimeDummyFactory.GetDummyFiscalYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { AccountingTimeDummyFactory.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
+                { AccountingTimeDummyFactory.GetDummyGenericMonthReportingPeriod(), UnitOfTimeGranularity.Month },
+                { AccountingTimeDummyFactory.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeGranularity.Quarter },
+                { AccountingTimeDummyFactory.GetDummyGenericYearReportingPeriod(), UnitOfTimeGranularity.Year },
+                { AccountingTimeDummyFactory.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeGranularity.Unbounded },
             };
 
             // Act
@@ -100,22 +100,22 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriods = new Dictionary<ReportingPeriod, UnitOfTimeKind>
             {
-                { TestCommon.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyCalendarYearReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeKind.Calendar },
-                { TestCommon.GetDummyFiscalReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { TestCommon.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { TestCommon.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { TestCommon.GetDummyFiscalYearReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { TestCommon.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeKind.Fiscal },
-                { TestCommon.GetDummyGenericReportingPeriod(), UnitOfTimeKind.Generic },
-                { TestCommon.GetDummyGenericMonthReportingPeriod(), UnitOfTimeKind.Generic },
-                { TestCommon.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeKind.Generic },
-                { TestCommon.GetDummyGenericYearReportingPeriod(), UnitOfTimeKind.Generic },
-                { TestCommon.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeKind.Generic },
+                { AccountingTimeDummyFactory.GetDummyCalendarReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyCalendarDayReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyCalendarMonthReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyCalendarQuarterReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyCalendarYearReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyCalendarUnboundedReportingPeriod(), UnitOfTimeKind.Calendar },
+                { AccountingTimeDummyFactory.GetDummyFiscalReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { AccountingTimeDummyFactory.GetDummyFiscalMonthReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { AccountingTimeDummyFactory.GetDummyFiscalQuarterReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { AccountingTimeDummyFactory.GetDummyFiscalYearReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { AccountingTimeDummyFactory.GetDummyFiscalUnboundedReportingPeriod(), UnitOfTimeKind.Fiscal },
+                { AccountingTimeDummyFactory.GetDummyGenericReportingPeriod(), UnitOfTimeKind.Generic },
+                { AccountingTimeDummyFactory.GetDummyGenericMonthReportingPeriod(), UnitOfTimeKind.Generic },
+                { AccountingTimeDummyFactory.GetDummyGenericQuarterReportingPeriod(), UnitOfTimeKind.Generic },
+                { AccountingTimeDummyFactory.GetDummyGenericYearReportingPeriod(), UnitOfTimeKind.Generic },
+                { AccountingTimeDummyFactory.GetDummyGenericUnboundedReportingPeriod(), UnitOfTimeKind.Generic },
             };
 
             // Act

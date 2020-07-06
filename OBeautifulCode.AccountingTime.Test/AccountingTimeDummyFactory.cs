@@ -184,5 +184,213 @@ namespace OBeautifulCode.AccountingTime.Test
                     }
                 });
         }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarUnitOfTime"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalUnitOfTime"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyFiscalReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericUnitOfTime"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyGenericReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Generic);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarDay"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarDayReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Day));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarMonth"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarMonthReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarQuarter"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarQuarterReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarYear"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarYearReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarUnbounded"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyCalendarUnboundedReportingPeriod()
+        {
+            var result = new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalMonth"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyFiscalMonthReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalQuarter"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyFiscalQuarterReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalYear"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyFiscalYearReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalUnbounded"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyFiscalUnboundedReportingPeriod()
+        {
+            var result = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericMonth"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyGenericMonthReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericQuarter"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyGenericQuarterReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericYear"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyGenericYearReportingPeriod()
+        {
+            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericUnbounded"/>.
+        /// </summary>
+        /// <returns>
+        /// The reporting period.
+        /// </returns>
+        public static ReportingPeriod GetDummyGenericUnboundedReportingPeriod()
+        {
+            var result = new ReportingPeriod(new GenericUnbounded(), new GenericUnbounded());
+
+            return result;
+        }
     }
 }

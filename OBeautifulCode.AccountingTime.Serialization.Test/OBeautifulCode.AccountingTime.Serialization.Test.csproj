@@ -119,6 +119,9 @@
     <Compile Include="..\OBeautifulCode.AccountingTime.Test\AccountingTimeDummyFactory.cs">
       <Link>AccountingTimeDummyFactory.cs</Link>
     </Compile>
+    <Compile Include="..\OBeautifulCode.AccountingTime.Test\AccountingTimeDummyFactory.designer.cs">
+      <Link>AccountingTimeDummyFactory.designer.cs</Link>
+    </Compile>
     <Compile Include=".analyzers\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\Actions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\ApplyBecause.cs" />
@@ -187,10 +190,6 @@
     <ProjectReference Include="..\OBeautifulCode.AccountingTime.Serialization.PropertyBag\OBeautifulCode.AccountingTime.Serialization.PropertyBag.csproj">
       <Project>{254B09B7-F787-4D0D-AC8B-51500D83D939}</Project>
       <Name>OBeautifulCode.AccountingTime.Serialization.PropertyBag</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OBeautifulCode.AccountingTime.Test\OBeautifulCode.AccountingTime.Test.csproj">
-      <Project>{953257be-d695-4374-a6e1-0f60618cf5dd}</Project>
-      <Name>OBeautifulCode.AccountingTime.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\OBeautifulCode.AccountingTime\OBeautifulCode.AccountingTime.csproj">
       <Project>{fa79388d-2555-42ee-ab7b-55b1ea1e2676}</Project>
