@@ -9,11 +9,13 @@
       <dependency id="OBeautifulCode.AccountingTime" version="$version$" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.127" />
       <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version="1.0.75" />
+      <dependency id="OBeautifulCode.Assertion.Recipes.Must" version="1.0.15" />
     </dependencies>
   </metadata>
   <files>
     <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\SuppressBecause.cs" />
     <file src="AccountingTimeDummyFactory.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.cs" />
     <file src="AccountingTimeDummyFactory.designer.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\AccountingTimeDummyFactory.designer.cs" />
+    <file src="ReportingPeriodWrappers.cs" target="content\net462\.recipes\OBeautifulCode.AccountingTime\ReportingPeriodWrappers.cs" />
   </files>
 </package>

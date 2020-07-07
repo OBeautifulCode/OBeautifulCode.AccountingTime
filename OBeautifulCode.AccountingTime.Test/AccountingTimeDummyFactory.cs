@@ -10,11 +10,14 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using AutoFakeItEasy;
 
     using FakeItEasy;
 
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     /// <summary>
@@ -38,6 +41,9 @@ namespace OBeautifulCode.AccountingTime.Test
         /// </summary>
         public AccountingTimeDummyFactory()
         {
+            // ------------------------------------------------------------------------------------
+            // ---------------------------  accounting period system ------------------------------
+            // ------------------------------------------------------------------------------------
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<AccountingPeriodSystem>();
@@ -50,13 +56,15 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
+            // ------------------------------------------------------------------------------------
+            // ---------------------------------  unit of time ------------------------------------
+            // ------------------------------------------------------------------------------------
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(QuarterNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeKind.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeGranularity.Invalid);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodComponent.Invalid);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<CalendarUnitOfTime>();
@@ -73,7 +81,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new GenericMonth(year, A.Dummy<MonthNumber>());
+
                     return result;
                 });
 
@@ -81,7 +91,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new GenericQuarter(year, A.Dummy<QuarterNumber>());
+
                     return result;
                 });
 
@@ -89,7 +101,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new GenericYear(year);
+
                     return result;
                 });
 
@@ -97,7 +111,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new FiscalMonth(year, A.Dummy<MonthNumber>());
+
                     return result;
                 });
 
@@ -105,7 +121,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new FiscalQuarter(year, A.Dummy<QuarterNumber>());
+
                     return result;
                 });
 
@@ -113,7 +131,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new FiscalYear(year);
+
                     return result;
                 });
 
@@ -125,8 +145,11 @@ namespace OBeautifulCode.AccountingTime.Test
                         try
                         {
                             var date = A.Dummy<DateTime>();
+
                             var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                             var result = new CalendarDay(year, (MonthOfYear)date.Month, (DayOfMonth)date.Day);
+
                             return result;
                         }
                         catch (ArgumentException)
@@ -139,7 +162,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new CalendarMonth(year, A.Dummy<MonthOfYear>());
+
                     return result;
                 });
 
@@ -147,7 +172,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new CalendarQuarter(year, A.Dummy<QuarterNumber>());
+
                     return result;
                 });
 
@@ -155,240 +182,301 @@ namespace OBeautifulCode.AccountingTime.Test
                 () =>
                 {
                     var year = ThreadSafeRandom.Next(MinYear, MaxYear + 1);
+
                     var result = new CalendarYear(year);
+
+                    return result;
+                });
+
+            // ------------------------------------------------------------------------------------
+            // ------------------------------  reporting period -----------------------------------
+            // ------------------------------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodComponent.Invalid);
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(GenericReportingPeriod), typeof(FiscalReportingPeriod), typeof(CalendarReportingPeriod) };
+
+                    var result = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    return result;
+                });
+
+            // ------------------------------------------------------------------------------------
+            // --------------------------  reporting period wrappers ------------------------------
+            // ------------------------------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<GenericMonth>();
+                    
+                    var end = A.Dummy<GenericMonth>();
+
+                    var result = end >= start
+                        ? new GenericMonthReportingPeriod(start, end)
+                        : new GenericMonthReportingPeriod(end, start);
+
                     return result;
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var baseComponent = A.Dummy<UnitOfTime>();
+                    var start = A.Dummy<GenericQuarter>();
 
-                    if (baseComponent is IAmUnboundedTime)
-                    {
-                        var otherComponent = A.Dummy<UnitOfTime>().ThatIs(_ => _.UnitOfTimeKind == baseComponent.UnitOfTimeKind);
+                    var end = A.Dummy<GenericQuarter>();
 
-                        return ThreadSafeRandom.Next(0, 2) == 0
-                            ? new ReportingPeriod(baseComponent, otherComponent)
-                            : new ReportingPeriod(otherComponent, baseComponent);
-                    }
-                    else
-                    {
-                        var startComponent = baseComponent;
+                    var result = end >= start
+                        ? new GenericQuarterReportingPeriod(start, end)
+                        : new GenericQuarterReportingPeriod(end, start);
 
-                        var endComponent = (UnitOfTime)AD.ummy(startComponent.GetType());
+                    return result;
+                });
 
-                        return startComponent <= endComponent
-                            ? new ReportingPeriod(startComponent, endComponent)
-                            : new ReportingPeriod(endComponent, startComponent);
-                    }
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<GenericYear>();
+
+                    var end = A.Dummy<GenericYear>();
+
+                    var result = end >= start
+                        ? new GenericYearReportingPeriod(start, end)
+                        : new GenericYearReportingPeriod(end, start);
+
+                    return result;
+                });
+            
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<FiscalMonth>();
+
+                    var end = A.Dummy<FiscalMonth>();
+
+                    var result = end >= start
+                        ? new FiscalMonthReportingPeriod(start, end)
+                        : new FiscalMonthReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<FiscalQuarter>();
+
+                    var end = A.Dummy<FiscalQuarter>();
+
+                    var result = end >= start
+                        ? new FiscalQuarterReportingPeriod(start, end)
+                        : new FiscalQuarterReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<FiscalYear>();
+
+                    var end = A.Dummy<FiscalYear>();
+
+                    var result = end >= start
+                        ? new FiscalYearReportingPeriod(start, end)
+                        : new FiscalYearReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<CalendarDay>();
+
+                    var end = A.Dummy<CalendarDay>();
+
+                    var result = end >= start
+                        ? new CalendarDayReportingPeriod(start, end)
+                        : new CalendarDayReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<CalendarMonth>();
+
+                    var end = A.Dummy<CalendarMonth>();
+
+                    var result = end >= start
+                        ? new CalendarMonthReportingPeriod(start, end)
+                        : new CalendarMonthReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<CalendarQuarter>();
+
+                    var end = A.Dummy<CalendarQuarter>();
+
+                    var result = end >= start
+                        ? new CalendarQuarterReportingPeriod(start, end)
+                        : new CalendarQuarterReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var start = A.Dummy<CalendarYear>();
+
+                    var end = A.Dummy<CalendarYear>();
+
+                    var result = end >= start
+                        ? new CalendarYearReportingPeriod(start, end)
+                        : new CalendarYearReportingPeriod(end, start);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(BoundedGenericReportingPeriod), typeof(BoundedFiscalReportingPeriod), typeof(BoundedCalendarReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new BoundedReportingPeriod(reportingPeriod.Start, reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(GenericMonthReportingPeriod), typeof(GenericQuarterReportingPeriod), typeof(GenericYearReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new BoundedGenericReportingPeriod((GenericUnitOfTime)reportingPeriod.Start, (GenericUnitOfTime)reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(FiscalMonthReportingPeriod), typeof(FiscalQuarterReportingPeriod), typeof(FiscalYearReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new BoundedFiscalReportingPeriod((FiscalUnitOfTime)reportingPeriod.Start, (FiscalUnitOfTime)reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(CalendarDayReportingPeriod), typeof(CalendarMonthReportingPeriod), typeof(CalendarQuarterReportingPeriod), typeof(CalendarYearReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new BoundedCalendarReportingPeriod((CalendarUnitOfTime)reportingPeriod.Start, (CalendarUnitOfTime)reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var boundedReportingPeriod = A.Dummy<BoundedGenericReportingPeriod>().ReportingPeriod;
+
+                    var result = ThreadSafeRandom.Next(0, 2) == 0
+                        ? new SemiBoundedGenericReportingPeriod((GenericUnitOfTime)boundedReportingPeriod.Start, new GenericUnbounded())
+                        : new SemiBoundedGenericReportingPeriod(new GenericUnbounded(), (GenericUnitOfTime)boundedReportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var boundedReportingPeriod = A.Dummy<BoundedFiscalReportingPeriod>().ReportingPeriod;
+
+                    var result = ThreadSafeRandom.Next(0, 2) == 0
+                        ? new SemiBoundedFiscalReportingPeriod((FiscalUnitOfTime)boundedReportingPeriod.Start, new FiscalUnbounded())
+                        : new SemiBoundedFiscalReportingPeriod(new FiscalUnbounded(), (FiscalUnitOfTime)boundedReportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var boundedReportingPeriod = A.Dummy<BoundedCalendarReportingPeriod>().ReportingPeriod;
+
+                    var result = ThreadSafeRandom.Next(0, 2) == 0
+                        ? new SemiBoundedCalendarReportingPeriod((CalendarUnitOfTime)boundedReportingPeriod.Start, new CalendarUnbounded())
+                        : new SemiBoundedCalendarReportingPeriod(new CalendarUnbounded(), (CalendarUnitOfTime)boundedReportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(GenericUnboundedReportingPeriod), typeof(SemiBoundedGenericReportingPeriod), typeof(BoundedGenericReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new GenericReportingPeriod((GenericUnitOfTime)reportingPeriod.Start, (GenericUnitOfTime)reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(FiscalUnboundedReportingPeriod), typeof(SemiBoundedFiscalReportingPeriod), typeof(BoundedFiscalReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new FiscalReportingPeriod((FiscalUnitOfTime)reportingPeriod.Start, (FiscalUnitOfTime)reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(CalendarUnboundedReportingPeriod), typeof(SemiBoundedCalendarReportingPeriod), typeof(BoundedCalendarReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new CalendarReportingPeriod((CalendarUnitOfTime)reportingPeriod.Start, (CalendarUnitOfTime)reportingPeriod.End);
+
+                    return result;
                 });
         }
 
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarUnitOfTime"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarReportingPeriod()
+        private static ReportingPeriodWrapper GetRandomReportingPeriodWrapper(
+            IReadOnlyCollection<Type> potentialTypes)
         {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar);
+            new { potentialTypes }.AsArg().Must().NotBeNullNorEmptyEnumerableNorContainAnyNulls();
 
-            return result;
-        }
+            var randomIndex = ThreadSafeRandom.Next(0, potentialTypes.Count);
 
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalUnitOfTime"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyFiscalReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal);
+            var typeToCreate = potentialTypes.ElementAt(randomIndex);
 
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericUnitOfTime"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyGenericReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == UnitOfTimeKind.Generic);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarDay"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarDayReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Day));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarMonth"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarMonthReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarQuarter"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarQuarterReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarYear"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarYearReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="CalendarUnbounded"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyCalendarUnboundedReportingPeriod()
-        {
-            var result = new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalMonth"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyFiscalMonthReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalQuarter"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyFiscalQuarterReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalYear"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyFiscalYearReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="FiscalUnbounded"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyFiscalUnboundedReportingPeriod()
-        {
-            var result = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericMonth"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyGenericMonthReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Month));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericQuarter"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyGenericQuarterReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Quarter));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericYear"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyGenericYearReportingPeriod()
-        {
-            var result = A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeGranularity() == UnitOfTimeGranularity.Year));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets a dummy reporting period where <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> are both a <see cref="GenericUnbounded"/>.
-        /// </summary>
-        /// <returns>
-        /// The reporting period.
-        /// </returns>
-        public static ReportingPeriod GetDummyGenericUnboundedReportingPeriod()
-        {
-            var result = new ReportingPeriod(new GenericUnbounded(), new GenericUnbounded());
+            var result = (ReportingPeriodWrapper)AD.ummy(typeToCreate);
 
             return result;
         }

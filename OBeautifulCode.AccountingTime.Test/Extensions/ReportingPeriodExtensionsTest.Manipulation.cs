@@ -128,16 +128,16 @@ namespace OBeautifulCode.AccountingTime.Test
             var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
             var tests = new[]
             {
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyCalendarDayReportingPeriod(), GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyCalendarMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyCalendarQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyCalendarYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyFiscalMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyFiscalQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyFiscalYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyGenericMonthReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyGenericQuarterReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
-                new { ReportingPeriod = AccountingTimeDummyFactory.GetDummyGenericYearReportingPeriod(), GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = A.Dummy<CalendarDayReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
+                new { ReportingPeriod = A.Dummy<CalendarMonthReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = A.Dummy<CalendarQuarterReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = A.Dummy<CalendarYearReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = A.Dummy<FiscalMonthReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = A.Dummy<FiscalQuarterReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = A.Dummy<FiscalYearReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
+                new { ReportingPeriod = A.Dummy<GenericMonthReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day } },
+                new { ReportingPeriod = A.Dummy<GenericQuarterReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month } },
+                new { ReportingPeriod = A.Dummy<GenericYearReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new[] { UnitOfTimeGranularity.Day, UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter } },
             };
 
             // Act

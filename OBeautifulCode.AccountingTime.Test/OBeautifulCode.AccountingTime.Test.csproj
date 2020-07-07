@@ -208,6 +208,7 @@
     <Compile Include="AccountingTimeDummyFactoryTest.designer.cs">
       <DependentUpon>AccountingTimeDummyFactoryTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReportingPeriodWrappers.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.cs" />
     <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.designer.cs">

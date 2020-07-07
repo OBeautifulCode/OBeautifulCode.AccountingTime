@@ -122,6 +122,9 @@
     <Compile Include="..\OBeautifulCode.AccountingTime.Test\AccountingTimeDummyFactory.designer.cs">
       <Link>AccountingTimeDummyFactory.designer.cs</Link>
     </Compile>
+    <Compile Include="..\OBeautifulCode.AccountingTime.Test\ReportingPeriodWrappers.cs">
+      <Link>ReportingPeriodWrappers.cs</Link>
+    </Compile>
     <Compile Include=".analyzers\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\Actions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\ApplyBecause.cs" />
