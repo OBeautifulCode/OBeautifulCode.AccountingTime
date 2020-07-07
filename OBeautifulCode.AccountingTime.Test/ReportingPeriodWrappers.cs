@@ -60,6 +60,14 @@ namespace OBeautifulCode.AccountingTime.Test
         public static implicit operator ReportingPeriod(
             ReportingPeriodWrapper from)
         {
+            var result = ToReportingPeriod(from);
+
+            return result;
+        }
+
+        public static ReportingPeriod ToReportingPeriod(
+            ReportingPeriodWrapper from)
+        {
             var result = from?.ReportingPeriod;
 
             return result;
