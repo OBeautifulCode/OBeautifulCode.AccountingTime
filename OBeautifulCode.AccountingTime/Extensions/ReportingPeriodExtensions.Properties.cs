@@ -9,8 +9,6 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -30,7 +28,10 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity GetUnitOfTimeGranularity(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
             {
@@ -53,7 +54,10 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeKind GetUnitOfTimeKind(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             var result = reportingPeriod.Start.UnitOfTimeKind;
 
@@ -70,7 +74,10 @@ namespace OBeautifulCode.AccountingTime
         public static bool HasComponentWithUnboundedGranularity(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             var result = (reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) ||
                          (reportingPeriod.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
@@ -94,7 +101,10 @@ namespace OBeautifulCode.AccountingTime
         public static IReadOnlyList<UnitOfTime> GetUnitsWithin(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {

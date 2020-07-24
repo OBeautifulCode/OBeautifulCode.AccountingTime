@@ -8,8 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -37,8 +35,16 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod,
             UnitOfTime unitOfTime)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
             if (unitOfTime.UnitOfTimeKind != reportingPeriod.GetUnitOfTimeKind())
             {
                 throw new ArgumentException(Invariant($"{nameof(unitOfTime)} cannot be compared against {nameof(reportingPeriod)} because they represent different {nameof(UnitOfTimeKind)}."));
@@ -70,8 +76,16 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod1,
             ReportingPeriod reportingPeriod2)
         {
-            new { reportingPeriod1 }.AsArg().Must().NotBeNull();
-            new { reportingPeriod2 }.AsArg().Must().NotBeNull();
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
             if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}."));
@@ -139,8 +153,16 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod1,
             ReportingPeriod reportingPeriod2)
         {
-            new { reportingPeriod1 }.AsArg().Must().NotBeNull();
-            new { reportingPeriod2 }.AsArg().Must().NotBeNull();
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
             if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}"));
@@ -178,8 +200,16 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod1,
             ReportingPeriod reportingPeriod2)
         {
-            new { reportingPeriod1 }.AsArg().Must().NotBeNull();
-            new { reportingPeriod2 }.AsArg().Must().NotBeNull();
+            if (reportingPeriod1 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod1));
+            }
+
+            if (reportingPeriod2 == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod2));
+            }
+
             if (reportingPeriod1.GetUnitOfTimeKind() != reportingPeriod2.GetUnitOfTimeKind())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}."));

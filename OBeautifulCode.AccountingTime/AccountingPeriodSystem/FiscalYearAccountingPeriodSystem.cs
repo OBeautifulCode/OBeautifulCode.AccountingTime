@@ -8,8 +8,9 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// A fiscal year is 12 consecutive months ending on the last day of any month except December 31st.
@@ -25,7 +26,15 @@ namespace OBeautifulCode.AccountingTime
         public FiscalYearAccountingPeriodSystem(
             MonthOfYear lastMonthInFiscalYear)
         {
-            new { lastMonthInFiscalYear }.AsArg().Must().NotBeEqualTo(MonthOfYear.Invalid).And().NotBeEqualTo(MonthOfYear.December);
+            if (lastMonthInFiscalYear == MonthOfYear.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(lastMonthInFiscalYear)}' == '{MonthOfYear.Invalid}'"), (Exception)null);
+            }
+
+            if (lastMonthInFiscalYear == MonthOfYear.December)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(lastMonthInFiscalYear)}' == '{MonthOfYear.December}'"), (Exception)null);
+            }
 
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
         }
@@ -40,7 +49,10 @@ namespace OBeautifulCode.AccountingTime
         public override ReportingPeriod GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            new { fiscalYear }.AsArg().Must().NotBeNull();
+            if (fiscalYear == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalYear));
+            }
 
             var lastDayInEndingMonth = DateTime.DaysInMonth(fiscalYear.Year, (int)this.LastMonthInFiscalYear);
 

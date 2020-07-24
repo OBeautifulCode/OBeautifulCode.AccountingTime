@@ -10,8 +10,6 @@ namespace OBeautifulCode.AccountingTime
     using System.Collections.Generic;
     using System.Linq;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     /// <summary>
     /// Property-related extension methods on <see cref="UnitOfTime"/>.
     /// </summary>
@@ -29,7 +27,10 @@ namespace OBeautifulCode.AccountingTime
         public static CalendarDay GetFirstCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             switch (unitOfTime)
             {
@@ -60,7 +61,10 @@ namespace OBeautifulCode.AccountingTime
         public static CalendarDay GetLastCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             switch (unitOfTime)
             {
@@ -94,7 +98,10 @@ namespace OBeautifulCode.AccountingTime
             this T lastUnitOfTimeInYear)
             where T : UnitOfTime, IHaveAYear
         {
-            new { lastUnitOfTimeInYear }.AsArg().Must().NotBeNull();
+            if (lastUnitOfTimeInYear == null)
+            {
+                throw new ArgumentNullException(nameof(lastUnitOfTimeInYear));
+            }
 
             var unitsToDate = new Stack<T>();
             var thisYear = lastUnitOfTimeInYear.Year;

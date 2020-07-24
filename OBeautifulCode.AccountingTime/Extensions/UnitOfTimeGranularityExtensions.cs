@@ -8,8 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -101,7 +99,10 @@ namespace OBeautifulCode.AccountingTime
         public static bool IsMostGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
 
             var result = granularity == UnitOfTimeGranularity.Day;
 
@@ -119,7 +120,10 @@ namespace OBeautifulCode.AccountingTime
         public static bool IsLeastGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
 
             var result = granularity == UnitOfTimeGranularity.Unbounded;
 
@@ -138,7 +142,10 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity OneNotchMoreGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
 
             if (IsMostGranular(granularity))
             {
@@ -172,7 +179,10 @@ namespace OBeautifulCode.AccountingTime
         public static UnitOfTimeGranularity OneNotchLessGranular(
             this UnitOfTimeGranularity granularity)
         {
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
 
             if (IsLeastGranular(granularity))
             {
@@ -197,7 +207,10 @@ namespace OBeautifulCode.AccountingTime
         private static int GetGranularityScore(
             UnitOfTimeGranularity granularity)
         {
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
 
             switch (granularity)
             {

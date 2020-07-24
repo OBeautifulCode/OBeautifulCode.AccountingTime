@@ -8,7 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -29,8 +28,20 @@ namespace OBeautifulCode.AccountingTime
             int year,
             MonthNumber monthNumber)
         {
-            new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
-            new { monthNumber }.AsArg().Must().NotBeEqualTo(MonthNumber.Invalid);
+            if (year < 1)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' < '{1}'"), (Exception)null);
+            }
+
+            if (year > 9999)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' > '{9999}'"), (Exception)null);
+            }
+
+            if (monthNumber == MonthNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(monthNumber)}' == '{MonthNumber.Invalid}'"), (Exception)null);
+            }
 
             this.Year = year;
             this.MonthNumber = monthNumber;

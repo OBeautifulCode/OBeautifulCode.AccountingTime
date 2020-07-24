@@ -8,7 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -21,7 +20,10 @@ namespace OBeautifulCode.AccountingTime
         public override ReportingPeriod GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            new { fiscalYear }.AsArg().Must().NotBeNull();
+            if (fiscalYear == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalYear));
+            }
 
             var januaryFirst = new CalendarDay(fiscalYear.Year, MonthOfYear.January, DayOfMonth.One);
 

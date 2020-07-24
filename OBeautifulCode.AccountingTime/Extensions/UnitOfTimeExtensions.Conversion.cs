@@ -8,7 +8,7 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
+    using static System.FormattableString;
 
     /// <summary>
     /// Conversion-related extension methods on <see cref="UnitOfTime"/>.
@@ -29,8 +29,15 @@ namespace OBeautifulCode.AccountingTime
             this FiscalQuarter fiscalQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            new { fiscalQuarter }.AsArg().Must().NotBeNull();
-            new { calendarQuarterThatIsFirstFiscalQuarter }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
+            if (fiscalQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(calendarQuarterThatIsFirstFiscalQuarter)}' == '{QuarterNumber.Invalid}'"), (Exception)null);
+            }
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -75,8 +82,15 @@ namespace OBeautifulCode.AccountingTime
             this CalendarQuarter calendarQuarter,
             QuarterNumber calendarQuarterThatIsFirstFiscalQuarter)
         {
-            new { calendarQuarter }.AsArg().Must().NotBeNull();
-            new { calendarQuarterThatIsFirstFiscalQuarter }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
+            if (calendarQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(calendarQuarter));
+            }
+
+            if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(calendarQuarterThatIsFirstFiscalQuarter)}' == '{QuarterNumber.Invalid}'"), (Exception)null);
+            }
 
             int offset;
             if (calendarQuarterThatIsFirstFiscalQuarter == QuarterNumber.Q4)
@@ -118,7 +132,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericMonth ToGenericMonth(
             this IHaveAMonth month)
         {
-            new { month }.AsArg().Must().NotBeNull();
+            if (month == null)
+            {
+                throw new ArgumentNullException(nameof(month));
+            }
 
             var result = new GenericMonth(month.Year, month.MonthNumber);
 
@@ -136,7 +153,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericQuarter ToGenericQuarter(
             this IHaveAQuarter quarter)
         {
-            new { quarter }.AsArg().Must().NotBeNull();
+            if (quarter == null)
+            {
+                throw new ArgumentNullException(nameof(quarter));
+            }
 
             var result = new GenericQuarter(quarter.Year, quarter.QuarterNumber);
 
@@ -154,7 +174,10 @@ namespace OBeautifulCode.AccountingTime
         public static GenericYear ToGenericYear(
             this IHaveAYear year)
         {
-            new { year }.AsArg().Must().NotBeNull();
+            if (year == null)
+            {
+                throw new ArgumentNullException(nameof(year));
+            }
 
             var result = new GenericYear(year.Year);
 
@@ -174,7 +197,10 @@ namespace OBeautifulCode.AccountingTime
         public static ReportingPeriod ToMostGranular(
             this UnitOfTime unitOfTime)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
@@ -294,7 +320,10 @@ namespace OBeautifulCode.AccountingTime
         public static ReportingPeriod ToReportingPeriod(
             this UnitOfTime unitOfTime)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             var result = new ReportingPeriod(unitOfTime, unitOfTime);
 

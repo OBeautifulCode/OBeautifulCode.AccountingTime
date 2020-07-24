@@ -9,8 +9,6 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Linq;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -31,7 +29,15 @@ namespace OBeautifulCode.AccountingTime
         public static ReportingPeriod DeserializeFromString(
             this string reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (string.IsNullOrWhiteSpace(reportingPeriod))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(reportingPeriod)}' is white space"));
+            }
 
             var errorMessage = Invariant($"Cannot deserialize reporting period; the specified string is malformed: {reportingPeriod}.");
 
@@ -84,7 +90,10 @@ namespace OBeautifulCode.AccountingTime
         public static string SerializeToString(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             var result = Invariant($"{reportingPeriod.Start.SerializeToSortableString()},{reportingPeriod.End.SerializeToSortableString()}");
 

@@ -11,8 +11,6 @@ namespace OBeautifulCode.AccountingTime
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -87,8 +85,20 @@ namespace OBeautifulCode.AccountingTime
                 throw new NotSupportedException(Invariant($"Unsupported type {type?.FullName ?? "<NULL TYPE>"}, expected an implmenter {nameof(UnitOfTime)}"));
             }
 
-            new { type }.AsArg().Must().NotBeNull();
-            new { unitOfTime }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            if (string.IsNullOrWhiteSpace(unitOfTime))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(unitOfTime)}' is white space"));
+            }
 
             var serializationFormatMatch = SerializationFormatByType.Select(_ => new { Match = _.Regex.Match(unitOfTime), SerializationFormat = _ }).SingleOrDefault(_ => _.Match.Success);
             if (serializationFormatMatch == null)
@@ -310,7 +320,10 @@ namespace OBeautifulCode.AccountingTime
         public static string SerializeToSortableString(
             this UnitOfTime unitOfTime)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             var unitOfTimeType = unitOfTime.GetType();
 

@@ -8,7 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -31,8 +30,15 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTime start,
             UnitOfTime end)
         {
-            new { start }.AsArg().Must().NotBeNull();
-            new { end }.AsArg().Must().NotBeNull();
+            if (start == null)
+            {
+                throw new ArgumentNullException(nameof(start));
+            }
+
+            if (end == null)
+            {
+                throw new ArgumentNullException(nameof(end));
+            }
 
             if ((start is IAmUnboundedTime) || (end is IAmUnboundedTime))
             {

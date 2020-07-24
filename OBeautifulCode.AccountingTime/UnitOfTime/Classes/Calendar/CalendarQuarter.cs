@@ -8,7 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -29,8 +28,20 @@ namespace OBeautifulCode.AccountingTime
             int year,
             QuarterNumber quarterNumber)
         {
-            new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
-            new { quarterNumber }.AsArg().Must().NotBeEqualTo(QuarterNumber.Invalid);
+            if (year < 1)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' < '{1}'"), (Exception)null);
+            }
+
+            if (year > 9999)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' > '{9999}'"), (Exception)null);
+            }
+
+            if (quarterNumber == QuarterNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(quarterNumber)}' == '{QuarterNumber.Invalid}'"), (Exception)null);
+            }
 
             this.Year = year;
             this.QuarterNumber = quarterNumber;

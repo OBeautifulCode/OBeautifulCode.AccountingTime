@@ -10,8 +10,6 @@ namespace OBeautifulCode.AccountingTime
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -40,8 +38,15 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd,
             UnitOfTimeGranularity granularityOfUnitsToAdd)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
-            new { component }.AsArg().Must().NotBeEqualTo(ReportingPeriodComponent.Invalid);
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (component == ReportingPeriodComponent.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(component)}' == '{ReportingPeriodComponent.Invalid}'"), (Exception)null);
+            }
 
             var start = reportingPeriod.Start;
             var end = reportingPeriod.End;
@@ -84,14 +89,20 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod,
             int maxUnitsInAnyReportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            new { maxUnitsInAnyReportingPeriod }.AsArg().Must().BeGreaterThanOrEqualTo(1);
+            if (maxUnitsInAnyReportingPeriod < 1)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(maxUnitsInAnyReportingPeriod)}' < '{1}'"), (Exception)null);
+            }
 
             var allUnits = reportingPeriod.GetUnitsWithin();
 
@@ -142,15 +153,30 @@ namespace OBeautifulCode.AccountingTime
             UnitOfTimeGranularity granularity,
             OverflowStrategy overflowStrategy = OverflowStrategy.ThrowOnOverflow)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
-            new { overflowStrategy }.AsArg().Must().BeEqualTo(OverflowStrategy.ThrowOnOverflow);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+            }
+
+            if (overflowStrategy != OverflowStrategy.ThrowOnOverflow)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(overflowStrategy)}' != '{OverflowStrategy.ThrowOnOverflow}'"), (Exception)null);
+            }
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
 
@@ -184,7 +210,10 @@ namespace OBeautifulCode.AccountingTime
         public static ReportingPeriod ToMostGranular(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             var mostGranularStart = reportingPeriod.Start.ToMostGranular();
             var mostGranularEnd = reportingPeriod.End.ToMostGranular();
@@ -209,7 +238,10 @@ namespace OBeautifulCode.AccountingTime
         public static ReportingPeriod ToLeastGranular(
             this ReportingPeriod reportingPeriod)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             ReportingPeriod result;
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
@@ -243,14 +275,25 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+            }
 
             if (reportingPeriod.GetUnitOfTimeGranularity().IsAsGranularOrMoreGranularThan(granularity))
             {
@@ -269,14 +312,25 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             UnitOfTimeGranularity granularity)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
                 throw new ArgumentException(Invariant($"{nameof(unitOfTime)} granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+            }
 
             if (unitOfTime.UnitOfTimeGranularity.IsAsGranularOrMoreGranularThan(granularity))
             {
@@ -375,14 +429,25 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity)
         {
-            new { reportingPeriod }.AsArg().Must().NotBeNull();
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
 
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            new { granularity }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            if (granularity == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
+
+            if (granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+            }
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
             if (reportingPeriodGranularity.IsAsGranularOrLessGranularThan(granularity))

@@ -9,9 +9,10 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.DateTime.Recipes;
     using OBeautifulCode.Type;
+
+    using static System.FormattableString;
 
     /// <summary>
     /// This system is used by companies that want that their accounting year always end on the same day of the week.
@@ -30,8 +31,15 @@ namespace OBeautifulCode.AccountingTime
             MonthOfYear anchorMonth,
             FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
         {
-            new { anchorMonth }.AsArg().Must().NotBeEqualTo(MonthOfYear.Invalid);
-            new { fiftyTwoFiftyThreeWeekMethodology }.AsArg().Must().NotBeEqualTo(FiftyTwoFiftyThreeWeekMethodology.Unknown);
+            if (anchorMonth == MonthOfYear.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(anchorMonth)}' == '{MonthOfYear.Invalid}'"), (Exception)null);
+            }
+
+            if (fiftyTwoFiftyThreeWeekMethodology == FiftyTwoFiftyThreeWeekMethodology.Unknown)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(fiftyTwoFiftyThreeWeekMethodology)}' == '{FiftyTwoFiftyThreeWeekMethodology.Unknown}'"), (Exception)null);
+            }
 
             this.LastDayOfWeekInAccountingYear = lastDayOfWeekInAccountingYear;
             this.AnchorMonth = anchorMonth;
@@ -60,7 +68,10 @@ namespace OBeautifulCode.AccountingTime
         public override ReportingPeriod GetReportingPeriodForFiscalYear(
             FiscalYear fiscalYear)
         {
-            new { fiscalYear }.AsArg().Must().NotBeNull();
+            if (fiscalYear == null)
+            {
+                throw new ArgumentNullException(nameof(fiscalYear));
+            }
 
             var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
 

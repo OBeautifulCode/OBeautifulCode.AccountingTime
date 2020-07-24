@@ -9,8 +9,6 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Diagnostics.CodeAnalysis;
 
-    using OBeautifulCode.Assertion.Recipes;
-
     using static System.FormattableString;
 
     /// <summary>
@@ -32,7 +30,10 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             int unitsToAdd)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             switch (unitOfTime)
             {
@@ -89,14 +90,25 @@ namespace OBeautifulCode.AccountingTime
             int unitsToAdd,
             UnitOfTimeGranularity granularityOfUnitsToAdd)
         {
-            new { unitOfTime }.AsArg().Must().NotBeNull();
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
 
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
             {
                 throw new ArgumentException(Invariant($"Cannot add or subtract from a unit-of-time whose granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
-            new { granularityOfUnitsToAdd }.AsArg().Must().NotBeEqualTo(UnitOfTimeGranularity.Invalid).And().NotBeEqualTo(UnitOfTimeGranularity.Unbounded);
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularityOfUnitsToAdd)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
+            }
+
+            if (granularityOfUnitsToAdd == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularityOfUnitsToAdd)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+            }
 
             if (granularityOfUnitsToAdd.IsMoreGranularThan(unitOfTime.UnitOfTimeGranularity))
             {

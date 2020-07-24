@@ -8,7 +8,6 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -33,9 +32,25 @@ namespace OBeautifulCode.AccountingTime
             MonthOfYear monthOfYear,
             DayOfMonth dayOfMonth)
         {
-            new { year }.AsArg().Must().BeGreaterThanOrEqualTo(1).And().BeLessThanOrEqualTo(9999);
-            new { monthOfYear }.AsArg().Must().NotBeEqualTo(MonthOfYear.Invalid);
-            new { dayOfMonth }.AsArg().Must().NotBeEqualTo(DayOfMonth.Invalid);
+            if (year < 1)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' < '{1}'"), (Exception)null);
+            }
+
+            if (year > 9999)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(year)}' > '{9999}'"), (Exception)null);
+            }
+
+            if (monthOfYear == MonthOfYear.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(monthOfYear)}' == '{MonthOfYear.Invalid}'"), (Exception)null);
+            }
+
+            if (dayOfMonth == DayOfMonth.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(dayOfMonth)}' == '{DayOfMonth.Invalid}'"), (Exception)null);
+            }
 
             var totalDaysInMonth = DateTime.DaysInMonth(year, (int)monthOfYear);
             if ((int)dayOfMonth > totalDaysInMonth)
