@@ -11,14 +11,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
 
-    using static System.FormattableString;
-
     /// <inheritdoc />
     public class AccountingTimeBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
-        /// <inheritdoc />
-        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[] { Invariant($"{nameof(OBeautifulCode)}.{nameof(AccountingTime)}") };
-
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
         {

@@ -10,14 +10,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 
     using OBeautifulCode.Serialization.PropertyBag;
 
-    using static System.FormattableString;
-
     /// <inheritdoc />
     public class AccountingTimePropertyBagSerializationConfiguration : PropertyBagSerializationConfigurationBase
     {
-        /// <inheritdoc />
-        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[] { Invariant($"{nameof(OBeautifulCode)}.{nameof(AccountingTime)}") };
-
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForPropertyBag> TypesToRegisterForPropertyBag => new[]
         {

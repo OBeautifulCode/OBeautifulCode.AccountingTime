@@ -10,14 +10,9 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
 
     using OBeautifulCode.Serialization.Json;
 
-    using static System.FormattableString;
-
     /// <inheritdoc />
     public class AccountingTimeJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
-        /// <inheritdoc />
-        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[] { Invariant($"{nameof(OBeautifulCode)}.{nameof(AccountingTime)}") };
-
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
         {
