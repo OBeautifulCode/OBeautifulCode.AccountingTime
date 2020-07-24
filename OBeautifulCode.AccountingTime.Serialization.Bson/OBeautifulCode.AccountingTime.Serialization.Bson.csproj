@@ -64,19 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparerStrategy.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityComparerHelper.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\EqualityExtensions.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Equality\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="AccountingTimeBsonSerializationConfiguration.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ReportingPeriodBsonSerializer.cs" />
@@ -105,6 +92,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.121\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.121\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
