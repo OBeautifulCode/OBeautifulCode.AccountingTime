@@ -37,7 +37,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'year' is < 0",
                         ConstructionFunc = () => new CalendarDay(A.Dummy<NegativeInteger>(), referenceCalendarDay.MonthOfYear, referenceCalendarDay.DayOfMonth),
-                        ExpectedExceptionMessageContains = new[] { "year", "not greater than or equal to" },
+                        ExpectedExceptionMessageContains = new[] { "'year' < '1'" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
                 .AddScenario(() =>
@@ -45,7 +45,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'year' = 0",
                         ConstructionFunc = () => new CalendarDay(0, referenceCalendarDay.MonthOfYear, referenceCalendarDay.DayOfMonth),
-                        ExpectedExceptionMessageContains = new[] { "year", "not greater than or equal to" },
+                        ExpectedExceptionMessageContains = new[] { "'year' < '1'" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
                 .AddScenario(() =>
@@ -53,7 +53,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'year' = 10000",
                         ConstructionFunc = () => new CalendarDay(10000, referenceCalendarDay.MonthOfYear, referenceCalendarDay.DayOfMonth),
-                        ExpectedExceptionMessageContains = new[] { "year", "not less than or equal to" },
+                        ExpectedExceptionMessageContains = new[] { "'year' > '9999'" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
                 .AddScenario(() =>
@@ -61,7 +61,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'year' > 9999",
                         ConstructionFunc = () => new CalendarDay(A.Dummy<PositiveInteger>().ThatIs(_ => _ > 9999), referenceCalendarDay.MonthOfYear, referenceCalendarDay.DayOfMonth),
-                        ExpectedExceptionMessageContains = new[] { "year", "not less than or equal to" },
+                        ExpectedExceptionMessageContains = new[] { "'year' > '9999'" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
                 .AddScenario(() =>
