@@ -14,8 +14,8 @@ namespace OBeautifulCode.AccountingTime.Test
     using FluentAssertions;
     using FluentAssertions.Extensions;
 
-    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
     using Xunit;

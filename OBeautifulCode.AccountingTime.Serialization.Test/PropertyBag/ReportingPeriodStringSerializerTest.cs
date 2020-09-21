@@ -11,8 +11,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     using System.Diagnostics.CodeAnalysis;
 
     using OBeautifulCode.AccountingTime.Serialization.PropertyBag;
-    using OBeautifulCode.AccountingTime.Serialization.Test.Internal;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Serialization.PropertyBag;
 
     using Xunit;

@@ -22,7 +22,7 @@ namespace OBeautifulCode.AccountingTime.Test
     /// </summary>
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.CodeGen.ModelObject", "1.0.85.0")]
-#if !OBeautifulCodeAccountingTimeRecipesProject
+#if !OBeautifulCodeAccountingTimeSolution
     internal
 #else
     public

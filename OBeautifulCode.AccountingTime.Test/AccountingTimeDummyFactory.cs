@@ -9,9 +9,9 @@
 
 namespace OBeautifulCode.AccountingTime.Test
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using global::System;
+    using global::System.Collections.Generic;
+    using global::System.Linq;
 
     using AutoFakeItEasy;
 
@@ -23,9 +23,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// A Dummy Factory for types in <see cref="AccountingTime"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public

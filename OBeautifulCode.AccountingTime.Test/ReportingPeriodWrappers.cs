@@ -9,7 +9,7 @@
 
 namespace OBeautifulCode.AccountingTime.Test
 {
-    using System;
+    using global::System;
 
     using OBeautifulCode.Assertion.Recipes;
 
@@ -22,9 +22,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// SemiBoundedCalendarMonthReportingPeriod - either start or end is unbounded and the other is a CalendarMonth
     /// SometimesUnboundedCalendarMonthReportingPeriod - CalendarMonthReportingPeriod || SemiBoundedCalendarMonthReportingPeriod.
     /// </remarks>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -77,9 +77,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both bounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -104,9 +104,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericUnitOfTime"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -129,9 +129,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericUnitOfTime"/> and both bounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -156,9 +156,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericUnitOfTime"/> and one, but not both, are unbounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -195,9 +195,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericMonth"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -220,9 +220,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericQuarter"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -245,9 +245,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericYear"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -270,9 +270,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericUnbounded"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -295,9 +295,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalUnitOfTime"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -320,9 +320,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalUnitOfTime"/> and both bounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -347,9 +347,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalUnitOfTime"/> and one, but not both, are unbounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -386,9 +386,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalMonth"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -411,9 +411,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalQuarter"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -436,9 +436,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalYear"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -461,9 +461,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="FiscalUnbounded"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -486,9 +486,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarUnitOfTime"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -511,9 +511,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarUnitOfTime"/> and both bounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -538,9 +538,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarUnitOfTime"/> and one, but not both, are unbounded.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -577,9 +577,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarDay"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -602,9 +602,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarMonth"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -627,9 +627,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarQuarter"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -652,9 +652,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarYear"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public
@@ -677,9 +677,9 @@ namespace OBeautifulCode.AccountingTime.Test
     /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="CalendarUnbounded"/>.
     /// </summary>
-#if !OBeautifulCodeAccountingTimeRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
     internal
 #else
     public

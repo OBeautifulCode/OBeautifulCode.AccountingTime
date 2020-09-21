@@ -9,12 +9,12 @@
 
 namespace OBeautifulCode.DateTime.Recipes
 {
-    using System;
+    using global::System;
 
     /// <summary>
     /// Extension methods on <see cref="DateTime"/>.
     /// </summary>
-#if !OBeautifulCodeDateTimeRecipesProject
+#if !OBeautifulCodeDateTimeSolution
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.DateTime.Recipes", "See package version number")]
     internal

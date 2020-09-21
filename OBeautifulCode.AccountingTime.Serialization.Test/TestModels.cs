@@ -16,8 +16,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
     using Newtonsoft.Json;
 
     using OBeautifulCode.AccountingTime.Serialization.Bson;
-    using OBeautifulCode.AccountingTime.Serialization.Test.Internal;
     using OBeautifulCode.AccountingTime.Test;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Serialization.Json;
 

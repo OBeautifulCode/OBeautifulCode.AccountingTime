@@ -11,10 +11,8 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    using FakeItEasy;
-
-    using OBeautifulCode.AccountingTime.Test.Internal;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.CodeAnalysis.Recipes;
 
     public static class TestCommon
     {

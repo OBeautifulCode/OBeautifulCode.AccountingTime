@@ -12,7 +12,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using FakeItEasy;
 
-    using OBeautifulCode.AccountingTime.Test.Internal;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
 
     public static partial class UnitOfTimeTest
