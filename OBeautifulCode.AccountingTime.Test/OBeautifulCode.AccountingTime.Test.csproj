@@ -62,26 +62,26 @@
     <Reference Include="OBeautifulCode.AutoFakeItEasy, Version=1.0.129.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.AutoFakeItEasy.1.0.129\lib\net462\OBeautifulCode.AutoFakeItEasy.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Compression, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Compression.1.0.17\lib\net462\OBeautifulCode.Compression.dll</HintPath>
+    <Reference Include="OBeautifulCode.Compression, Version=1.0.19.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Compression.1.0.19\lib\net462\OBeautifulCode.Compression.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.53.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.53\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
+    <Reference Include="OBeautifulCode.Representation.System, Version=1.0.55.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.55\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.74\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.90\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.74\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.90\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.74\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.90\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.74\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.90\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.69.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.69\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.73.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.73\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -153,9 +153,11 @@
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\StringRepresentationTestScenario{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\SystemUnderTestExpectedStringRepresentation{T}.cs" />
     <Compile Include=".recipes\OBeautifulCode.CodeGen\StringRepresentation\ValidatedStringRepresentationTestScenario{T}.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Collection\EnumerableExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\CompressorFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\DotNetZipCompressor.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\NullCompressor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -165,8 +167,26 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\HashCodeHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AccessModifier.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\AppDomainHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\BindingFlagsFor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ConstructorsMatchedToPropertiesStrategy.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\DisposableAppDomain.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberAccessModifiers.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberAttributes.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberKinds.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberMutability.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberOwners.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberRelationships.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\OrderMembersBy.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Attribute.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Constructor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Enum.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Field.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.MemberInfo.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\AppDomainScenarios.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\FactoryExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\RoundtripSerializationExtensions.Bson.cs" />
@@ -174,6 +194,7 @@
     <Compile Include=".recipes\OBeautifulCode.Serialization\RoundtripSerializationExtensions.Json.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\RoundtripSerializationExtensions.PropertyBag.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\SerializerFactory.cs" />
+    <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
@@ -201,6 +222,7 @@
     <Compile Include="AccountingTimeDummyFactoryTest.designer.cs">
       <DependentUpon>AccountingTimeDummyFactoryTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="ReportingPeriodWrappers.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="UnitOfTime\Calendar\CalendarUnitOfTimeTest.cs" />
@@ -337,10 +359,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.127\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.127\build\OBeautifulCode.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.127\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.127\build\OBeautifulCode.Build.Analyzers.targets')" />
+  <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.134\build\OBeautifulCode.Build.Analyzers.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
