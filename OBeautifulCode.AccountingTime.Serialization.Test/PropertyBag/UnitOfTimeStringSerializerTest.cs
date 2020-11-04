@@ -60,23 +60,23 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
             var model = A.Dummy<UnitOfTimeModelWrapper>();
 
             var expected =
-                nameof(model.UnitOfTime) + "=" + model.UnitOfTime.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.CalendarUnitOfTime) + "=" + model.CalendarUnitOfTime.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.CalendarDay) + "=" + model.CalendarDay.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.CalendarMonth) + "=" + model.CalendarMonth.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.CalendarQuarter) + "=" + model.CalendarQuarter.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.CalendarYear) + "=" + model.CalendarYear.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.CalendarUnbounded) + "=" + model.CalendarUnbounded.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.FiscalUnitOfTime) + "=" + model.FiscalUnitOfTime.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.CalendarUnitOfTime) + "=" + model.CalendarUnitOfTime.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.CalendarYear) + "=" + model.CalendarYear.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.FiscalMonth) + "=" + model.FiscalMonth.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.FiscalQuarter) + "=" + model.FiscalQuarter.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.FiscalYear) + "=" + model.FiscalYear.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.FiscalUnbounded) + "=" + model.FiscalUnbounded.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.GenericUnitOfTime) + "=" + model.GenericUnitOfTime.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.FiscalUnitOfTime) + "=" + model.FiscalUnitOfTime.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.FiscalYear) + "=" + model.FiscalYear.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.GenericMonth) + "=" + model.GenericMonth.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.GenericQuarter) + "=" + model.GenericQuarter.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.GenericUnbounded) + "=" + model.GenericUnbounded.SerializeToSortableString() + Environment.NewLine +
+                nameof(model.GenericUnitOfTime) + "=" + model.GenericUnitOfTime.SerializeToSortableString() + Environment.NewLine +
                 nameof(model.GenericYear) + "=" + model.GenericYear.SerializeToSortableString() + Environment.NewLine +
-                nameof(model.GenericUnbounded) + "=" + model.GenericUnbounded.SerializeToSortableString() + Environment.NewLine;
+                nameof(model.UnitOfTime) + "=" + model.UnitOfTime.SerializeToSortableString() + Environment.NewLine;
 
             // Act
             var actual = PropertyBagSerializer.SerializeToString(model);
