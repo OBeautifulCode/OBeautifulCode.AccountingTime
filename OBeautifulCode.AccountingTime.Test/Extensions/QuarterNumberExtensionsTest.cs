@@ -7,11 +7,13 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Linq;
 
     using FakeItEasy;
 
     using FluentAssertions;
 
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
@@ -85,6 +87,31 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             actualQuarter.Should().Be(expectedQuarter);
+        }
+
+        [Fact]
+        public static void ToOrdinalIndicator___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => QuarterNumber.Invalid.ToOrdinalIndicator());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public static void ToOrdinalIndicator___Should_return_ordinal_indicator___When_called()
+        {
+            // Arrange
+            var quarterNumbers = new[] { QuarterNumber.Q1, QuarterNumber.Q2, QuarterNumber.Q3, QuarterNumber.Q4 };
+
+            var expected = new[] { "1st", "2nd", "3rd", "4th" };
+
+            // Act
+            var actual = quarterNumbers.Select(_ => _.ToOrdinalIndicator()).ToArray();
+
+            // Assert
+            expected.AsTest().Must().BeEqualTo(actual);
         }
     }
 }

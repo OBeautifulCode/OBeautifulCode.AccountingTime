@@ -83,5 +83,45 @@ namespace OBeautifulCode.AccountingTime
 
             return result;
         }
+
+        /// <summary>
+        /// Converts the specified quarter to a string representation of it's ordinal indicator
+        /// (i.e. "1st", "2nd", "3rd", or "4th").
+        /// </summary>
+        /// <param name="quarterNumber">The quarter number.</param>
+        /// <returns>
+        /// A string representation of the specified quarter number's ordinal indicator.
+        /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
+        public static string ToOrdinalIndicator(
+            this QuarterNumber quarterNumber)
+        {
+            if (quarterNumber == QuarterNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(quarterNumber)}' == '{QuarterNumber.Invalid}'"), (Exception)null);
+            }
+
+            string result;
+
+            switch ((int)quarterNumber)
+            {
+                case 1:
+                    result = "1st";
+                    break;
+                case 2:
+                    result = "2nd";
+                    break;
+                case 3:
+                    result = "3rd";
+                    break;
+                case 4:
+                    result = "4th";
+                    break;
+                default:
+                    throw new NotSupportedException("This quarter is not supported: " + quarterNumber);
+            }
+
+            return result;
+        }
     }
 }
