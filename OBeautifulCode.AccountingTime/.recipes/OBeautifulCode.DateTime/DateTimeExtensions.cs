@@ -11,12 +11,14 @@ namespace OBeautifulCode.DateTime.Recipes
 {
     using global::System;
 
+    using static global::System.FormattableString;
+
     /// <summary>
     /// Extension methods on <see cref="DateTime"/>.
     /// </summary>
 #if !OBeautifulCodeDateTimeSolution
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.DateTime.Recipes", "See package version number")]
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.DateTime.Recipes", "See package version number")]
     internal
 #else
     public
@@ -65,6 +67,104 @@ namespace OBeautifulCode.DateTime.Recipes
             }
 
             var result = value.AddDays(daysToAdd);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the provided time into a UTC time.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="value"/> is <see cref="DateTimeKind.Unspecified"/>, then the method will
+        /// simply change it to <see cref="DateTimeKind.Utc"/>, it will NOT be treated as a local time
+        /// as is the case with <see cref="DateTime.ToUniversalTime"/>
+        /// </remarks>
+        /// <param name="value">The reference time.</param>
+        /// <returns>
+        /// The UTC time.
+        /// </returns>
+        public static DateTime ToUtc(
+            this DateTime value)
+        {
+            DateTime result;
+
+            if (value.Kind == DateTimeKind.Utc)
+            {
+                result = value;
+            }
+            else if (value.Kind == DateTimeKind.Unspecified)
+            {
+                result = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+            }
+            else
+            {
+                result = value.ToUniversalTime();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the provided time into a UTC time.
+        /// </summary>
+        /// <param name="value">The reference time.</param>
+        /// <remarks>
+        /// If <paramref name="value"/> is <see cref="DateTimeKind.Unspecified"/>, then the method will
+        /// simply change it to <see cref="DateTimeKind.Utc"/>, it will NOT be treated as a local time
+        /// as is the case with <see cref="DateTime.ToUniversalTime"/>
+        /// </remarks>
+        /// <returns>
+        /// The UTC time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="value"/> <see cref="DateTimeKind"/> is not supported.</exception>
+        public static DateTime ToUtc(
+            this DateTime? value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            var result = ((DateTime)value).ToUtc();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the provided time into an Unspecified time.
+        /// </summary>
+        /// <param name="value">The reference time.</param>
+        /// <returns>
+        /// The Unspecified time.
+        /// </returns>
+        public static DateTime ToUnspecified(
+            this DateTime value)
+        {
+            var result = value.Kind == DateTimeKind.Unspecified
+                ? value
+                : DateTime.SpecifyKind(value, DateTimeKind.Unspecified);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified time into a Unspecified time.
+        /// </summary>
+        /// <param name="value">The reference time.</param>
+        /// <returns>
+        /// The Unspecified time.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+        public static DateTime ToUnspecified(
+            this DateTime? value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            var result = ((DateTime)value).ToUnspecified();
 
             return result;
         }

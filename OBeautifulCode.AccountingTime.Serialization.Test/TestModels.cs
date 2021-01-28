@@ -13,7 +13,7 @@ namespace OBeautifulCode.AccountingTime.Serialization.Test
 
     using MongoDB.Bson.Serialization.Attributes;
 
-    using Newtonsoft.Json;
+    using NewtonsoftFork.Json;
 
     using OBeautifulCode.AccountingTime.Serialization.Bson;
     using OBeautifulCode.AccountingTime.Test;

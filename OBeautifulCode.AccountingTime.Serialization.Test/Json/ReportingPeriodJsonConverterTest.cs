@@ -6,7 +6,7 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.Test
 {
-    using Newtonsoft.Json;
+    using NewtonsoftFork.Json;
 
     using OBeautifulCode.Assertion.Recipes;
 
