@@ -29,7 +29,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
             var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
             var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex = Record.Exception(() => ReportingPeriodExtensions.CloneWithAdjustment(null, reportingPeriodComponent, unitsToAdd, granularityToAdd));
@@ -44,7 +44,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
             var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment(ReportingPeriodComponent.Invalid, unitsToAdd, granularityToAdd));
@@ -60,7 +60,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
             var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Invalid));
@@ -76,7 +76,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
             var reportingPeriodComponent = A.Dummy<ReportingPeriodComponent>();
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex = Record.Exception(() => reportingPeriod.CloneWithAdjustment(reportingPeriodComponent, unitsToAdd, UnitOfTimeGranularity.Unbounded));
@@ -91,7 +91,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded);
             var granularityToAdd = reportingPeriod.End.UnitOfTimeGranularity;
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod.CloneWithAdjustment(ReportingPeriodComponent.Start, unitsToAdd, granularityToAdd));
@@ -108,7 +108,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(_ => _.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded && _.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
             var granularityToAdd = reportingPeriod.Start.UnitOfTimeGranularity;
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
 
             // Act
             var ex1 = Record.Exception(() => reportingPeriod.CloneWithAdjustment(ReportingPeriodComponent.End, unitsToAdd, granularityToAdd));
@@ -125,7 +125,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void CloneWithAdjustment___Should_throw_ArgumentException___When_granularityOfUnitsToAdd_is_more_granular_than_component_being_adjusted()
         {
             // Arrange
-            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100);
+            var unitsToAdd = A.Dummy<int>().ThatIs(i => i > -100 && i < 100, -1);
             var tests = new[]
             {
                 new { ReportingPeriod = A.Dummy<CalendarDayReportingPeriod>().ReportingPeriod, GranularityOfUnitsToAdd = new UnitOfTimeGranularity[] { } },
