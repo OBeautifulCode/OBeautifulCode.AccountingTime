@@ -10,4 +10,4 @@ Accounting Time
 
 [![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.AccountingTime.Serialization.PropertyBag.svg)](https://www.nuget.org/packages/OBeautifulCode.AccountingTime.Serialization.PropertyBag)  OBeautifulCode.AccountingTime.Serialization.PropertyBag
 
-[![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.AccountingTime.Recipes.DummyFactory.svg)](https://www.nuget.org/packages/OBeautifulCode.AccountingTime.Recipes.DummyFactory.Json)  OBeautifulCode.AccountingTime.Recipes.DummyFactory
+[![Nuget status](https://img.shields.io/nuget/v/OBeautifulCode.AccountingTime.Recipes.DummyFactory.svg)](https://www.nuget.org/packages/OBeautifulCode.AccountingTime.Recipes.DummyFactory)  OBeautifulCode.AccountingTime.Recipes.DummyFactory
