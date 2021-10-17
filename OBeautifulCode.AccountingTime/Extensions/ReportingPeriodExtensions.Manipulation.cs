@@ -129,12 +129,13 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="reportingPeriod">The reporting period to split.</param>
         /// <param name="granularity">The granularity to use when splitting.</param>
         /// <param name="overflowStrategy">
-        /// The strategy to use when <paramref name="granularity"/> is less granular than
+        /// OPTIONAL strategy to use when <paramref name="granularity"/> is less granular than
         /// the <paramref name="reportingPeriod"/> and, when splitting, the resulting units-of-time
-        /// cannot be aligned with the start and end of the reporting period.  For example,
-        /// splitting Mar2015-Feb2017 by year results in 2015,2016,2017, however only 2016 is
-        /// fully contained within the reporting period.  The reporting period is missing Jan2015-Feb2015
-        /// and March2017-Dec2017.
+        /// cannot be aligned with the start and end of the reporting period.
+        /// For example, splitting March 2015 - February 2017 by year results in 2015,2016,2017,
+        /// however only 2016 is fully contained within the reporting period.
+        /// The reporting period is missing January 2015 - February 2015 and March 2017 to December 2017.
+        /// DEFAULT is to throw when this happens.
         /// </param>
         /// <returns>
         /// Returns the units-of-time that split the specified reporting period by the specified granularity.
@@ -181,6 +182,7 @@ namespace OBeautifulCode.AccountingTime
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
 
             IReadOnlyList<UnitOfTime> result;
+
             if (reportingPeriodGranularity == granularity)
             {
                 result = reportingPeriod.GetUnitsWithin();
