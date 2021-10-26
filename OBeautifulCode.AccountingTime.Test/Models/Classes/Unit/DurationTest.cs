@@ -29,24 +29,6 @@ namespace OBeautifulCode.AccountingTime.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static DurationTest()
         {
-            ConstructorArgumentValidationTestScenarios
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Duration>
-                    {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'quantity' is negative",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Duration>();
-
-                            var result = new Duration(
-                                A.Dummy<NegativeInteger>(),
-                                referenceObject.Unit);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "quantity is less than 0" },
-                    });
         }
     }
 }

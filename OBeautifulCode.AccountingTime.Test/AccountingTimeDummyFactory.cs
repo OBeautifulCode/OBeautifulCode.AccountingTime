@@ -217,14 +217,6 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var result = new Duration(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<Unit>());
-
-                    return result;
-                });
-
             // ------------------------------------------------------------------------------------
             // --------------------------  reporting period wrappers ------------------------------
             // ------------------------------------------------------------------------------------

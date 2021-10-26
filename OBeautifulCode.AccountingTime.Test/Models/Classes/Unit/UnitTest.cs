@@ -89,8 +89,6 @@ namespace OBeautifulCode.AccountingTime.Test
                         Name = "constructor should throw ArgumentException when parameter 'granularity' is UnitOfTimeGranularity.Day and parameter 'kind' is not UnitOfTimeKind.Calendar",
                         ConstructionFunc = () =>
                         {
-                            var referenceObject = A.Dummy<Unit>();
-
                             var result = new Unit(
                                 A.Dummy<UnitOfTimeKind>().ThatIsNot(UnitOfTimeKind.Calendar),
                                 UnitOfTimeGranularity.Day);

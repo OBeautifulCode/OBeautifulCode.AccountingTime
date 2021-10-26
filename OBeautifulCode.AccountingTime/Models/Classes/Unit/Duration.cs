@@ -10,8 +10,6 @@ namespace OBeautifulCode.AccountingTime
 
     using OBeautifulCode.Type;
 
-    using static System.FormattableString;
-
     /// <summary>
     /// A specified quantity of a specified unit.
     /// </summary>
@@ -26,11 +24,6 @@ namespace OBeautifulCode.AccountingTime
             int quantity,
             Unit unit)
         {
-            if (quantity < 0)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"{nameof(quantity)} is less than 0: {quantity}."));
-            }
-
             if (unit == null)
             {
                 throw new ArgumentNullException(nameof(unit));
