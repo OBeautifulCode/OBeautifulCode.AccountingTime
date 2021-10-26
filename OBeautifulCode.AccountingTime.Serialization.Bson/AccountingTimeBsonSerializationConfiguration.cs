@@ -25,6 +25,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             typeof(QuarterNumber).ToTypeToRegisterForBson(),
             typeof(UnitOfTimeGranularity).ToTypeToRegisterForBson(),
             typeof(UnitOfTimeKind).ToTypeToRegisterForBson(),
+            typeof(Unit).ToTypeToRegisterForBson(),
+            typeof(Duration).ToTypeToRegisterForBson(),
         };
     }
 }

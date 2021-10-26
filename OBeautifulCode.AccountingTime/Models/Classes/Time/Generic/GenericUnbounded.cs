@@ -6,8 +6,6 @@
 
 namespace OBeautifulCode.AccountingTime
 {
-    using System;
-
     using OBeautifulCode.Type;
 
     using static System.FormattableString;

@@ -23,6 +23,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
             typeof(QuarterNumber).ToTypeToRegisterForPropertyBag(),
             typeof(UnitOfTimeGranularity).ToTypeToRegisterForPropertyBag(),
             typeof(UnitOfTimeKind).ToTypeToRegisterForPropertyBag(),
+            typeof(Unit).ToTypeToRegisterForPropertyBag(),
+            typeof(Duration).ToTypeToRegisterForPropertyBag(),
         };
     }
 }

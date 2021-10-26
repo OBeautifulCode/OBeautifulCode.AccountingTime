@@ -103,6 +103,12 @@
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Math.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Serialization.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeGranularityExtensions.cs" />
+    <Compile Include="Models\Classes\Unit\Duration.designer.cs">
+      <DependentUpon>Duration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Unit\Unit.designer.cs">
+      <DependentUpon>Unit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="Models\Classes\ReportingPeriod.designer.cs">
       <DependentUpon>ReportingPeriod.cs</DependentUpon>

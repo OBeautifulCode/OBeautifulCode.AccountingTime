@@ -24,6 +24,8 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             typeof(QuarterNumber).ToTypeToRegisterForJson(),
             typeof(UnitOfTimeGranularity).ToTypeToRegisterForJson(),
             typeof(UnitOfTimeKind).ToTypeToRegisterForJson(),
+            typeof(Unit).ToTypeToRegisterForJson(),
+            typeof(Duration).ToTypeToRegisterForJson(),
         };
     }
 }

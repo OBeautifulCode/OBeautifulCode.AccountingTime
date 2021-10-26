@@ -57,14 +57,12 @@ namespace OBeautifulCode.AccountingTime.Test
                 });
 
             // ------------------------------------------------------------------------------------
-            // ---------------------------------  unit of time ------------------------------------
+            // -------------------------------------  time ----------------------------------------
             // ------------------------------------------------------------------------------------
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(DayOfMonth.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthNumber.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthOfYear.Invalid);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(QuarterNumber.Invalid);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeKind.Invalid);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeGranularity.Invalid);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<UnitOfTime>();
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<CalendarUnitOfTime>();
@@ -199,6 +197,30 @@ namespace OBeautifulCode.AccountingTime.Test
                     var potentialTypes = new[] { typeof(GenericReportingPeriod), typeof(FiscalReportingPeriod), typeof(CalendarReportingPeriod) };
 
                     var result = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    return result;
+                });
+
+            // ------------------------------------------------------------------------------------
+            // -------------------------------------  unit ----------------------------------------
+            // ------------------------------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeKind.Invalid);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(UnitOfTimeGranularity.Invalid);
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var unitOfTime = A.Dummy<UnitOfTime>().ThatIs(_ => !(_ is IAmUnboundedTime));
+
+                    var result = new Unit(unitOfTime.UnitOfTimeKind, unitOfTime.UnitOfTimeGranularity);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new Duration(A.Dummy<ZeroOrPositiveInteger>(), A.Dummy<Unit>());
 
                     return result;
                 });
