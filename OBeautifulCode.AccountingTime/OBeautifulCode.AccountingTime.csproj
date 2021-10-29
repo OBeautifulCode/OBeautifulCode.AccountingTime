@@ -79,6 +79,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Logic\Extensions\TimeseriesExtensions.cs" />
     <Compile Include="Models\Classes\AccountingPeriodSystem\AccountingPeriodSystem.designer.cs">
       <DependentUpon>AccountingPeriodSystem.cs</DependentUpon>
     </Compile>
@@ -103,6 +104,18 @@
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Math.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Serialization.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeGranularityExtensions.cs" />
+    <Compile Include="Models\Classes\Cutoff\CutoffBase.designer.cs">
+      <DependentUpon>CutoffBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cutoff\FixedCutoff.designer.cs">
+      <DependentUpon>FixedCutoff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cutoff\RelativeCutoff.cs" />
+    <Compile Include="Models\Classes\Cutoff\FixedCutoff.cs" />
+    <Compile Include="Models\Classes\Cutoff\CutoffBase.cs" />
+    <Compile Include="Models\Classes\Cutoff\RelativeCutoff.designer.cs">
+      <DependentUpon>RelativeCutoff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}.designer.cs">
       <DependentUpon>Datapoint{T}.cs</DependentUpon>
     </Compile>
@@ -117,6 +130,7 @@
     <Compile Include="Models\Classes\Unit\Unit.designer.cs">
       <DependentUpon>Unit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Interfaces\ICutoff.cs" />
     <Compile Include="Models\Interfaces\ITimeseries.cs" />
     <Compile Include="Models\Interfaces\IDatapoint.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />

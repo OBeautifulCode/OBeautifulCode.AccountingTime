@@ -33,30 +33,30 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using static global::System.FormattableString;
 
-    public static partial class AccountingPeriodSystemTest
+    public static partial class CutoffBaseTest
     {
-        private static readonly AccountingPeriodSystem ReferenceObjectForEquatableTestScenarios = A.Dummy<AccountingPeriodSystem>();
+        private static readonly CutoffBase ReferenceObjectForEquatableTestScenarios = A.Dummy<CutoffBase>();
 
-        private static readonly EquatableTestScenarios<AccountingPeriodSystem> EquatableTestScenarios = new EquatableTestScenarios<AccountingPeriodSystem>()
+        private static readonly EquatableTestScenarios<CutoffBase> EquatableTestScenarios = new EquatableTestScenarios<CutoffBase>()
             .AddScenario(() =>
-                new EquatableTestScenario<AccountingPeriodSystem>
+                new EquatableTestScenario<CutoffBase>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new AccountingPeriodSystem[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new CutoffBase[]
                     {
                         ReferenceObjectForEquatableTestScenarios.DeepClone(),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new AccountingPeriodSystem[]
+                    ObjectsThatAreNotEqualToReferenceObject = new CutoffBase[]
                     {
                         // DeepCloneWith___() methods implemented in concrete derivates throw NotSupportedException
                         // when the derivative's constructor in-use (by code gen) does not have a parameter that
                         // corresponds with the property who's value is provided in the DeepCloneWith___() method.
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
                     },
-                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new AccountingPeriodSystem[]
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new CutoffBase[]
                     {
-                        A.Dummy<AccountingPeriodSystem>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                        A.Dummy<CutoffBase>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -86,12 +86,12 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void AccountingPeriodSystem___Should_implement_IModel_of_AccountingPeriodSystem___When_reflecting()
+            public static void CutoffBase___Should_implement_IModel_of_CutoffBase___When_reflecting()
             {
                 // Arrange
-                var type = typeof(AccountingPeriodSystem);
+                var type = typeof(CutoffBase);
 
-                var expectedModelMethods = typeof(IModel<AccountingPeriodSystem>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<CutoffBase>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -101,7 +101,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<AccountingPeriodSystem>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<CutoffBase>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -119,10 +119,10 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void AccountingPeriodSystem___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void CutoffBase___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(AccountingPeriodSystem);
+                var type = typeof(CutoffBase);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -153,10 +153,10 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<AccountingPeriodSystem>();
+                var systemUnderTest = A.Dummy<CutoffBase>();
 
                 // Act
-                var actual = (AccountingPeriodSystem)systemUnderTest.Clone();
+                var actual = (CutoffBase)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -180,7 +180,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<AccountingPeriodSystem>();
+                var systemUnderTest = A.Dummy<CutoffBase>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -212,7 +212,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AccountingPeriodSystem>();
+                var expected = A.Dummy<CutoffBase>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -241,7 +241,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AccountingPeriodSystem>();
+                var expected = A.Dummy<CutoffBase>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -270,7 +270,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AccountingPeriodSystem>();
+                var expected = A.Dummy<CutoffBase>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -299,7 +299,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<AccountingPeriodSystem>();
+                var expected = A.Dummy<CutoffBase>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -333,8 +333,8 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                AccountingPeriodSystem systemUnderTest1 = null;
-                AccountingPeriodSystem systemUnderTest2 = null;
+                CutoffBase systemUnderTest1 = null;
+                CutoffBase systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -364,7 +364,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AccountingPeriodSystem systemUnderTest = null;
+                    CutoffBase systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -513,8 +513,8 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                AccountingPeriodSystem systemUnderTest1 = null;
-                AccountingPeriodSystem systemUnderTest2 = null;
+                CutoffBase systemUnderTest1 = null;
+                CutoffBase systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -544,7 +544,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AccountingPeriodSystem systemUnderTest = null;
+                    CutoffBase systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -690,14 +690,14 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AccountingPeriodSystem___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_CutoffBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    AccountingPeriodSystem systemUnderTest = null;
+                    CutoffBase systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -721,7 +721,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AccountingPeriodSystem___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_CutoffBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -749,7 +749,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AccountingPeriodSystem___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_CutoffBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -777,7 +777,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AccountingPeriodSystem___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_CutoffBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -805,7 +805,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_AccountingPeriodSystem___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_CutoffBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

@@ -23,15 +23,15 @@ namespace OBeautifulCode.AccountingTime
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class AccountingPeriodSystem : IModel<AccountingPeriodSystem>
+    public partial class CutoffBase : IModel<CutoffBase>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="AccountingPeriodSystem"/> are equal.
+        /// Determines whether two objects of type <see cref="CutoffBase"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(AccountingPeriodSystem left, AccountingPeriodSystem right)
+        public static bool operator ==(CutoffBase left, CutoffBase right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="AccountingPeriodSystem"/> are not equal.
+        /// Determines whether two objects of type <see cref="CutoffBase"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(AccountingPeriodSystem left, AccountingPeriodSystem right) => !(left == right);
+        public static bool operator !=(CutoffBase left, CutoffBase right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(AccountingPeriodSystem other) => this == other;
+        public bool Equals(CutoffBase other) => this == other;
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
@@ -77,7 +77,7 @@ namespace OBeautifulCode.AccountingTime
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public AccountingPeriodSystem DeepClone() => this.DeepCloneInternal();
+        public CutoffBase DeepClone() => this.DeepCloneInternal();
 
         /// <summary>
         /// Creates a new object that is a deep clone of this instance.
@@ -85,7 +85,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A new object that is a deep clone of this instance.
         /// </returns>
-        protected virtual AccountingPeriodSystem DeepCloneInternal()
+        protected virtual CutoffBase DeepCloneInternal()
         {
             throw new NotImplementedException("This method should be abstract.  It was generated as virtual so that you aren't forced to override it when you create a new model that derives from this model.  It will be overridden in the generated designer file.");
         }

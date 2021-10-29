@@ -206,6 +206,14 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Cutoff\CutoffBaseTest.cs" />
+    <Compile Include="Models\Classes\Cutoff\CutoffBaseTest.designer.cs">
+      <DependentUpon>CutoffBaseTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Cutoff\FixedCutoffTest.cs" />
+    <Compile Include="Models\Classes\Cutoff\FixedCutoffTest.designer.cs">
+      <DependentUpon>FixedCutoffTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.cs" />
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.designer.cs">
       <DependentUpon>Datapoint{T}Test.cs</DependentUpon>
@@ -238,6 +246,10 @@
       <DependentUpon>AccountingTimeDummyFactoryTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Models\Classes\Cutoff\RelativeCutoffTest.cs" />
+    <Compile Include="Models\Classes\Cutoff\RelativeCutoffTest.designer.cs">
+      <DependentUpon>RelativeCutoffTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportingPeriodWrappers.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarUnitOfTimeTest.cs" />

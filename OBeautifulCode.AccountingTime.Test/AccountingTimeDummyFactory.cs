@@ -484,6 +484,17 @@ namespace OBeautifulCode.AccountingTime.Test
                 });
 
             // ------------------------------------------------------------------------------------
+            // ------------------------------------  cutoff ---------------------------------------
+            // ------------------------------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new RelativeCutoff(A.Dummy<Duration>(), A.Dummy<TimeComparison>().ThatIsIn(new[] { TimeComparison.Before, TimeComparison.After }));
+
+                    return result;
+                });
+
+            // ------------------------------------------------------------------------------------
             // ----------------------------------  timeseries -------------------------------------
             // ------------------------------------------------------------------------------------
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -491,9 +502,9 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     // By constraining the year range, we are able to find adjacent
                     // reporting periods later in the heuristic.
-                    var oneFourthYearRange = (int)((MaxYear - MinYear) / 4);
+                    var oneFourthYearRange = (MaxYear - MinYear) / 4;
                     var minYear = MinYear + oneFourthYearRange;
-                    var maxYear = oneFourthYearRange - (int)((MaxYear - MinYear) / 4);
+                    var maxYear = oneFourthYearRange - (MaxYear - MinYear) / 4;
 
                     var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(
                         _ => 

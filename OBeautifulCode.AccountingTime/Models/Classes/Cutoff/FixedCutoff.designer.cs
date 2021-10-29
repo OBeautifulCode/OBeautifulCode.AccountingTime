@@ -23,15 +23,15 @@ namespace OBeautifulCode.AccountingTime
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class FiscalYearAccountingPeriodSystem : IModel<FiscalYearAccountingPeriodSystem>
+    public partial class FixedCutoff : IModel<FixedCutoff>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalYearAccountingPeriodSystem"/> are equal.
+        /// Determines whether two objects of type <see cref="FixedCutoff"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(FiscalYearAccountingPeriodSystem left, FiscalYearAccountingPeriodSystem right)
+        public static bool operator ==(FixedCutoff left, FixedCutoff right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalYearAccountingPeriodSystem"/> are not equal.
+        /// Determines whether two objects of type <see cref="FixedCutoff"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(FiscalYearAccountingPeriodSystem left, FiscalYearAccountingPeriodSystem right) => !(left == right);
+        public static bool operator !=(FixedCutoff left, FixedCutoff right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(FiscalYearAccountingPeriodSystem other)
+        public bool Equals(FixedCutoff other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,27 +69,27 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            var result = this.LastMonthInFiscalYear.IsEqualTo(other.LastMonthInFiscalYear);
+            var result = this.UnitOfTime.IsEqualTo(other.UnitOfTime);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as FiscalYearAccountingPeriodSystem);
+        public override bool Equals(object obj) => this == (obj as FixedCutoff);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.LastMonthInFiscalYear)
+            .Hash(this.UnitOfTime)
             .Value;
 
         /// <inheritdoc />
-        public new FiscalYearAccountingPeriodSystem DeepClone() => (FiscalYearAccountingPeriodSystem)this.DeepCloneInternal();
+        public new FixedCutoff DeepClone() => (FixedCutoff)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="LastMonthInFiscalYear" />.
+        /// Deep clones this object with a new <see cref="UnitOfTime" />.
         /// </summary>
-        /// <param name="lastMonthInFiscalYear">The new <see cref="LastMonthInFiscalYear" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="FiscalYearAccountingPeriodSystem" /> using the specified <paramref name="lastMonthInFiscalYear" /> for <see cref="LastMonthInFiscalYear" /> and a deep clone of every other property.</returns>
+        /// <param name="unitOfTime">The new <see cref="UnitOfTime" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FixedCutoff" /> using the specified <paramref name="unitOfTime" /> for <see cref="UnitOfTime" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,20 +107,20 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public FiscalYearAccountingPeriodSystem DeepCloneWithLastMonthInFiscalYear(MonthOfYear lastMonthInFiscalYear)
+        public FixedCutoff DeepCloneWithUnitOfTime(UnitOfTime unitOfTime)
         {
-            var result = new FiscalYearAccountingPeriodSystem(
-                                 lastMonthInFiscalYear);
+            var result = new FixedCutoff(
+                                 unitOfTime);
 
             return result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override AccountingPeriodSystem DeepCloneInternal()
+        protected override CutoffBase DeepCloneInternal()
         {
-            var result = new FiscalYearAccountingPeriodSystem(
-                                 this.LastMonthInFiscalYear.DeepClone());
+            var result = new FixedCutoff(
+                                 this.UnitOfTime?.DeepClone());
 
             return result;
         }
@@ -129,7 +129,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.AccountingTime.FiscalYearAccountingPeriodSystem: LastMonthInFiscalYear = {this.LastMonthInFiscalYear.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.AccountingTime.FixedCutoff: UnitOfTime = {this.UnitOfTime?.ToString() ?? "<null>"}.");
 
             return result;
         }

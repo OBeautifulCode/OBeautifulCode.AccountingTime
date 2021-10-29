@@ -23,15 +23,15 @@ namespace OBeautifulCode.AccountingTime
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class FiscalYearAccountingPeriodSystem : IModel<FiscalYearAccountingPeriodSystem>
+    public partial class RelativeCutoff : IModel<RelativeCutoff>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalYearAccountingPeriodSystem"/> are equal.
+        /// Determines whether two objects of type <see cref="RelativeCutoff"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(FiscalYearAccountingPeriodSystem left, FiscalYearAccountingPeriodSystem right)
+        public static bool operator ==(RelativeCutoff left, RelativeCutoff right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiscalYearAccountingPeriodSystem"/> are not equal.
+        /// Determines whether two objects of type <see cref="RelativeCutoff"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(FiscalYearAccountingPeriodSystem left, FiscalYearAccountingPeriodSystem right) => !(left == right);
+        public static bool operator !=(RelativeCutoff left, RelativeCutoff right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(FiscalYearAccountingPeriodSystem other)
+        public bool Equals(RelativeCutoff other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,27 +69,29 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            var result = this.LastMonthInFiscalYear.IsEqualTo(other.LastMonthInFiscalYear);
+            var result = this.Duration.IsEqualTo(other.Duration)
+                      && this.BeforeOrAfter.IsEqualTo(other.BeforeOrAfter);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as FiscalYearAccountingPeriodSystem);
+        public override bool Equals(object obj) => this == (obj as RelativeCutoff);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.LastMonthInFiscalYear)
+            .Hash(this.Duration)
+            .Hash(this.BeforeOrAfter)
             .Value;
 
         /// <inheritdoc />
-        public new FiscalYearAccountingPeriodSystem DeepClone() => (FiscalYearAccountingPeriodSystem)this.DeepCloneInternal();
+        public new RelativeCutoff DeepClone() => (RelativeCutoff)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="LastMonthInFiscalYear" />.
+        /// Deep clones this object with a new <see cref="Duration" />.
         /// </summary>
-        /// <param name="lastMonthInFiscalYear">The new <see cref="LastMonthInFiscalYear" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="FiscalYearAccountingPeriodSystem" /> using the specified <paramref name="lastMonthInFiscalYear" /> for <see cref="LastMonthInFiscalYear" /> and a deep clone of every other property.</returns>
+        /// <param name="duration">The new <see cref="Duration" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RelativeCutoff" /> using the specified <paramref name="duration" /> for <see cref="Duration" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -107,20 +109,53 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public FiscalYearAccountingPeriodSystem DeepCloneWithLastMonthInFiscalYear(MonthOfYear lastMonthInFiscalYear)
+        public RelativeCutoff DeepCloneWithDuration(Duration duration)
         {
-            var result = new FiscalYearAccountingPeriodSystem(
-                                 lastMonthInFiscalYear);
+            var result = new RelativeCutoff(
+                                 duration,
+                                 this.BeforeOrAfter.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="BeforeOrAfter" />.
+        /// </summary>
+        /// <param name="beforeOrAfter">The new <see cref="BeforeOrAfter" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RelativeCutoff" /> using the specified <paramref name="beforeOrAfter" /> for <see cref="BeforeOrAfter" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public RelativeCutoff DeepCloneWithBeforeOrAfter(TimeComparison beforeOrAfter)
+        {
+            var result = new RelativeCutoff(
+                                 this.Duration?.DeepClone(),
+                                 beforeOrAfter);
 
             return result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override AccountingPeriodSystem DeepCloneInternal()
+        protected override CutoffBase DeepCloneInternal()
         {
-            var result = new FiscalYearAccountingPeriodSystem(
-                                 this.LastMonthInFiscalYear.DeepClone());
+            var result = new RelativeCutoff(
+                                 this.Duration?.DeepClone(),
+                                 this.BeforeOrAfter.DeepClone());
 
             return result;
         }
@@ -129,7 +164,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.AccountingTime.FiscalYearAccountingPeriodSystem: LastMonthInFiscalYear = {this.LastMonthInFiscalYear.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.AccountingTime.RelativeCutoff: Duration = {this.Duration?.ToString() ?? "<null>"}, BeforeOrAfter = {this.BeforeOrAfter.ToString() ?? "<null>"}.");
 
             return result;
         }
