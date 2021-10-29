@@ -51,6 +51,21 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetMatchingDatapoints___Should_return_empty_collection___When_timeseries_is_empty()
+        {
+            // Arrange
+            var timeseries = new Timeseries<Version>(new Datapoint<Version>[0]);
+
+            // Act
+            var actual1 = timeseries.GetMatchingDatapoints(A.Dummy<ReportingPeriod>(), ReportingPeriodComparison.Contains);
+            var actual2 = timeseries.GetMatchingDatapoints(A.Dummy<ReportingPeriod>(), ReportingPeriodComparison.IsEqualToIgnoringGranularity);
+
+            // Assert
+            actual1.AsTest().Must().BeEmptyEnumerable();
+            actual2.AsTest().Must().BeEmptyEnumerable();
+        }
+
+        [Fact]
         public static void GetMatchingDatapoints___Should_return_empty_collection___When_there_are_no_matching_datapoints_regardless_of_reportingPeriodComparison()
         {
             // Arrange
