@@ -497,6 +497,10 @@ namespace OBeautifulCode.AccountingTime.Test
             // ------------------------------------------------------------------------------------
             // ----------------------------------  timeseries -------------------------------------
             // ------------------------------------------------------------------------------------
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<IDatapoint>();
+
+            AutoFixtureBackedDummyFactory.UseRandomInterfaceImplementationForDummy<ITimeseries>();
+            
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
