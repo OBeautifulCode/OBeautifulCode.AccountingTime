@@ -56,7 +56,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ConstructorArgumentValidationTestScenario<CalendarQuarter>
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'year' > 9999",
-                        ConstructionFunc = () => new CalendarQuarter(A.Dummy<PositiveInteger>().ThatIs(_ => _ > 9999), referenceCalendarQuarter.QuarterNumber),
+                        ConstructionFunc = () => new CalendarQuarter(A.Dummy<PositiveInteger>().ThatIs(_ => _ > 9999, -1), referenceCalendarQuarter.QuarterNumber),
                         ExpectedExceptionMessageContains = new[] { "'year' > '9999'" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })

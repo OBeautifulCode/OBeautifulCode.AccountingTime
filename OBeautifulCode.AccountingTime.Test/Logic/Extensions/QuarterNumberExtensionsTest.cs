@@ -24,7 +24,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void ToCalendar___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => QuarterNumber.Invalid.ToCalendar(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
+            var ex = Record.Exception(() => QuarterNumber.Invalid.ToCalendar(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000, -1)));
 
             // Assert
             ex.Should().BeOfType<ArgumentOutOfRangeException>();
@@ -47,7 +47,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void ToFiscal___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => QuarterNumber.Invalid.ToFiscal(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
+            var ex = Record.Exception(() => QuarterNumber.Invalid.ToFiscal(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000, -1)));
 
             // Assert
             ex.Should().BeOfType<ArgumentOutOfRangeException>();
@@ -70,7 +70,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void ToGeneric___Should_throw_ArgumentOutOfRangeException___When_parameter_quarterNumber_is_Invalid()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => QuarterNumber.Invalid.ToGeneric(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000)));
+            var ex = Record.Exception(() => QuarterNumber.Invalid.ToGeneric(A.Dummy<PositiveInteger>().ThatIs(y => y < 10000, -1)));
 
             // Assert
             ex.Should().BeOfType<ArgumentOutOfRangeException>();

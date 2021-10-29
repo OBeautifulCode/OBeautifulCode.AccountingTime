@@ -877,8 +877,8 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void Plus_with_granularityOfUnitsToAdd___Should_return_same_result_as_Plus_method_without_parameter_granularityOfUnitsToAdd___When_parameter_granularityOfUnitsToAdd_is_as_granular_as_unitOfTime()
         {
             // Arrange
-            int unitsToAdd = A.Dummy<PositiveInteger>().ThatIs(_ => _ < 100);
-            int unitsToSubtract = A.Dummy<NegativeInteger>().ThatIs(_ => _ > -100);
+            int unitsToAdd = A.Dummy<PositiveInteger>().ThatIs(_ => _ < 100, -1);
+            int unitsToSubtract = A.Dummy<NegativeInteger>().ThatIs(_ => _ > -100, -1);
             var unitsOfTime = new List<UnitOfTime>
             {
                 A.Dummy<CalendarDay>(),
