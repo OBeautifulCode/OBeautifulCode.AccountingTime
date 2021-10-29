@@ -23,6 +23,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
             {
                 typeof(UnitOfTime).ToTypeToRegisterForBsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
                 new TypeToRegisterForBson(typeof(ReportingPeriod), MemberTypesToInclude.None, RelatedTypesToInclude.None, new BsonSerializerBuilder(() => new ReportingPeriodBsonSerializer(), BsonSerializerOutputKind.Object), null),
+
+                // This is necessary because ITimeseries is never hit in the traversal of types.
+                // It does not implement IModel.
+                // Further, we don't have a model with an ITimeseries property (which is typically
+                // how we would discover a model interface like ITimeseries).
+                typeof(ITimeseries).ToTypeToRegisterForBson(),
             }
             .Concat(
                 new Type[0]

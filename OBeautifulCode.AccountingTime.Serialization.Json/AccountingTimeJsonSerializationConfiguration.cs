@@ -22,6 +22,12 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
             {
                 typeof(UnitOfTime).ToTypeToRegisterForJsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
                 typeof(ReportingPeriod).ToTypeToRegisterForJsonUsingStringSerializer(new ReportingPeriodStringSerializer()),
+
+                // This is necessary because ITimeseries is never hit in the traversal of types.
+                // It does not implement IModel.
+                // Further, we don't have a model with an ITimeseries property (which is typically
+                // how we would discover a model interface like ITimeseries).
+                typeof(ITimeseries).ToTypeToRegisterForJson(),
             }
             .Concat(
                 new Type[0]
