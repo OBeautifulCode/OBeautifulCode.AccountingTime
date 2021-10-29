@@ -84,7 +84,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetMatchingDatapoints___Should_return_empty_collection___When_reportingPeriodComparison_is_IsEqualToIgnoringGranularity_but_only_containing_or_overlapping_datapoints_exist()
+        public static void GetMatchingDatapoints___Should_return_empty_collection___When_reportingPeriodComparison_is_set_to_IsEqualToIgnoringGranularity_but_only_containing_or_overlapping_datapoints_exist()
         {
             // Arrange
             var datapointReportingPeriods = new[]
@@ -116,7 +116,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetMatchingDatapoints___Should_return_single_matching_datapoint___When_reportingPeriodComparison_is_IsEqualToIgnoringGranularity()
+        public static void GetMatchingDatapoints___Should_return_single_matching_datapoint___When_reportingPeriodComparison_is_set_to_IsEqualToIgnoringGranularity()
         {
             // Arrange
             var datapointReportingPeriods = new[]
@@ -144,7 +144,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetMatchingDatapoints___Should_return_empty_collection___When_reportingPeriodComparison_is_Contains_but_only_contained_or_overlapping_datapoints_exist()
+        public static void GetMatchingDatapoints___Should_return_empty_collection___When_reportingPeriodComparison_is_set_to_Contains_but_only_contained_or_overlapping_datapoints_exist()
         {
             // Arrange
             var datapointReportingPeriods = new[]
@@ -176,7 +176,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetMatchingDatapoints___Should_return_single_matching_datapoint___When_reportingPeriodComparison_is_Contains()
+        public static void GetMatchingDatapoints___Should_return_single_matching_datapoint___When_reportingPeriodComparison_is_set_to_Contains()
         {
             // Arrange
             var datapointReportingPeriods = new[]
