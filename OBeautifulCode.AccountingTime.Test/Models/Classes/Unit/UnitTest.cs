@@ -128,9 +128,9 @@ namespace OBeautifulCode.AccountingTime.Test
                         WithPropertyName = "Granularity",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
-                            var systemUnderTest = A.Dummy<Unit>().Whose(_ => _.Granularity != UnitOfTimeGranularity.Day);
+                            var systemUnderTest = A.Dummy<Unit>();
 
-                            var referenceObject = A.Dummy<Unit>().ThatIs(_ => !systemUnderTest.Granularity.IsEqualTo(_.Granularity));
+                            var referenceObject = A.Dummy<Unit>().ThatIs(_ => (!systemUnderTest.Granularity.IsEqualTo(_.Granularity)) && (_.Granularity != UnitOfTimeGranularity.Day));
 
                             var result = new SystemUnderTestDeepCloneWithValue<Unit>
                             {
