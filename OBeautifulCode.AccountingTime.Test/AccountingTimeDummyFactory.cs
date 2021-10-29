@@ -516,71 +516,85 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    // By constraining the year range, we are able to find adjacent
-                    // reporting periods later in the heuristic.
-                    var oneFourthYearRange = (MaxYear - MinYear) / 4;
-                    var minYear = MinYear + oneFourthYearRange;
-                    var maxYear = oneFourthYearRange - (MaxYear - MinYear) / 4;
-
-                    var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(
-                        _ => 
-                        ((_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.Start).Year > minYear)) &&
-                        ((_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.End).Year < maxYear)));
-
-                    IReadOnlyList<Datapoint<Version>> datapoints = new List<Datapoint<Version>>();
-
-                    // 1/4rd of time it will be an empty timeseries
-                    if (ThreadSafeRandom.Next(0, 4) > 0)
-                    {
-                        if (reportingPeriod.HasComponentWithUnboundedGranularity())
-                        {
-                            datapoints = new List<Datapoint<Version>>
-                            {
-                                new Datapoint<Version>(reportingPeriod, A.Dummy<Version>()),
-                            };
-
-                            // If completely unbounded, then there can only be one datapoint
-                            if ((reportingPeriod.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) ||
-                                (reportingPeriod.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded))
-                            {
-                                // Partially bound.
-                                // 1/2 of the time use just the reporting period itself, otherwise tack on reporting periods to the bounded end
-                                if (ThreadSafeRandom.Next(0, 2) == 0)
-                                {
-                                    // One unbounded component, tack on reporting periods to the bounded end.
-                                    var timeComparison = reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
-                                        ? TimeComparison.After
-                                        : TimeComparison.Before;
-
-                                    datapoints = AddDatapointsWithGapLikely(datapoints, reportingPeriod, timeComparison);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // Completely bounded; get the units within
-                            datapoints = reportingPeriod
-                                .GetUnitsWithin()
-                                .Select(_ => _.ToReportingPeriod())
-                                .Select(_ => new Datapoint<Version>(_, A.Dummy<Version>()))
-                                .ToList();
-
-                            // 1/2 chance of having a hole
-                            if (ThreadSafeRandom.Next(0, 2) == 0)
-                            {
-                                var timeComparison = ThreadSafeRandom.Next(0, 1) == 0
-                                    ? TimeComparison.After
-                                    : TimeComparison.Before;
-
-                                datapoints = AddDatapointsWithGapLikely(datapoints, reportingPeriod, timeComparison);
-                            }
-                        }
-                    }
-
-                    var result = new Timeseries<Version>(datapoints);
+                    var result = GetDummyTimeseries<Version>();
 
                     return result;
                 });
+        }
+
+        /// <summary>
+        /// Gets a dummy <see cref="Timeseries{T}"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the value of the datapoints.</typeparam>
+        /// <returns>
+        /// The dummy timeseries.
+        /// </returns>
+        public static Timeseries<T> GetDummyTimeseries<T>()
+        {
+            // By constraining the year range, we are able to find adjacent
+            // reporting periods later in the heuristic.
+            var oneFourthYearRange = (MaxYear - MinYear) / 4;
+            var minYear = MinYear + oneFourthYearRange;
+            var maxYear = oneFourthYearRange - (MaxYear - MinYear) / 4;
+
+            var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(
+                _ =>
+                ((_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.Start).Year > minYear)) &&
+                ((_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.End).Year < maxYear)));
+
+            IReadOnlyList<Datapoint<T>> datapoints = new List<Datapoint<T>>();
+
+            // 1/4rd of time it will be an empty timeseries
+            if (ThreadSafeRandom.Next(0, 4) > 0)
+            {
+                if (reportingPeriod.HasComponentWithUnboundedGranularity())
+                {
+                    datapoints = new List<Datapoint<T>>
+                    {
+                        new Datapoint<T>(reportingPeriod, A.Dummy<T>()),
+                    };
+
+                    // If completely unbounded, then there can only be one datapoint
+                    if ((reportingPeriod.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) ||
+                        (reportingPeriod.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded))
+                    {
+                        // Partially bound.
+                        // 1/2 of the time use just the reporting period itself, otherwise tack on reporting periods to the bounded end
+                        if (ThreadSafeRandom.Next(0, 2) == 0)
+                        {
+                            // One unbounded component, tack on reporting periods to the bounded end.
+                            var timeComparison = reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                                ? TimeComparison.After
+                                : TimeComparison.Before;
+
+                            datapoints = AddDatapointsWithGapLikely(datapoints, reportingPeriod, timeComparison);
+                        }
+                    }
+                }
+                else
+                {
+                    // Completely bounded; get the units within
+                    datapoints = reportingPeriod
+                        .GetUnitsWithin()
+                        .Select(_ => _.ToReportingPeriod())
+                        .Select(_ => new Datapoint<T>(_, A.Dummy<T>()))
+                        .ToList();
+
+                    // 1/2 chance of having a hole
+                    if (ThreadSafeRandom.Next(0, 2) == 0)
+                    {
+                        var timeComparison = ThreadSafeRandom.Next(0, 1) == 0
+                            ? TimeComparison.After
+                            : TimeComparison.Before;
+
+                        datapoints = AddDatapointsWithGapLikely(datapoints, reportingPeriod, timeComparison);
+                    }
+                }
+            }
+
+            var result = new Timeseries<T>(datapoints);
+
+            return result;
         }
 
         private static ReportingPeriodWrapper GetRandomReportingPeriodWrapper(
@@ -625,12 +639,12 @@ namespace OBeautifulCode.AccountingTime.Test
             return result;
         }
 
-        private static IReadOnlyList<Datapoint<Version>> AddDatapointsWithGapLikely(
-            IReadOnlyList<Datapoint<Version>> datapoints,
+        private static IReadOnlyList<Datapoint<T>> AddDatapointsWithGapLikely<T>(
+            IReadOnlyList<Datapoint<T>> datapoints,
             ReportingPeriod reportingPeriod,
             TimeComparison timeComparison)
         {
-            var result = new List<Datapoint<Version>>();
+            var result = new List<Datapoint<T>>();
 
             var adjacentReportingPeriod = GetAdjacentBoundedReportingPeriod(reportingPeriod, timeComparison);
 
@@ -638,7 +652,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var adjacentDatapoints = adjacentReportingPeriod
                 .GetUnitsWithin()
                 .Select(_ => _.ToReportingPeriod())
-                .Select(_ => new Datapoint<Version>(_, A.Dummy<Version>()))
+                .Select(_ => new Datapoint<T>(_, A.Dummy<T>()))
                 .ToList();
 
             if (timeComparison == TimeComparison.After)
