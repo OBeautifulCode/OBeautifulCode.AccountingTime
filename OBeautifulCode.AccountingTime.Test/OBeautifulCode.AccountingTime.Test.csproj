@@ -77,8 +77,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.115.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.115\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.104.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.104\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.106.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.106\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -206,6 +206,10 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.cs" />
+    <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.designer.cs">
+      <DependentUpon>Datapoint{T}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Unit\DurationTest.cs" />
     <Compile Include="Models\Classes\Unit\DurationTest.designer.cs">
       <DependentUpon>DurationTest.cs</DependentUpon>
@@ -326,6 +330,10 @@
     <Compile Include="Models\Classes\Unit\UnitTest.cs" />
     <Compile Include="Models\Classes\Unit\UnitTest.designer.cs">
       <DependentUpon>UnitTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Timeseries\Timeseries{T}Test.cs" />
+    <Compile Include="Models\Classes\Timeseries\Timeseries{T}Test.designer.cs">
+      <DependentUpon>Timeseries{T}Test.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

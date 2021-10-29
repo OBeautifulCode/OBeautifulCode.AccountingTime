@@ -101,6 +101,11 @@ namespace OBeautifulCode.AccountingTime.Test
                 () => new CalendarYearAccountingPeriodSystem());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Datapoint<Version>(
+                                 A.Dummy<ReportingPeriod>(),
+                                 A.Dummy<Version>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Duration(
                                  A.Dummy<int>(),
                                  A.Dummy<Unit>()));
@@ -193,6 +198,10 @@ namespace OBeautifulCode.AccountingTime.Test
                 () => new ReportingPeriod(
                                  A.Dummy<UnitOfTime>(),
                                  A.Dummy<UnitOfTime>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new Timeseries<Version>(
+                                 A.Dummy<IReadOnlyList<Datapoint<Version>>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Unit(

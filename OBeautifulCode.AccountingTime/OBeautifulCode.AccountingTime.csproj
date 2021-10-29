@@ -48,8 +48,8 @@
     <Reference Include="OBeautifulCode.Serialization, Version=1.0.115.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.1.0.115\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.104.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.104\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.106.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.106\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -103,12 +103,22 @@
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Math.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeExtensions.Serialization.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeGranularityExtensions.cs" />
+    <Compile Include="Models\Classes\Timeseries\Datapoint{T}.designer.cs">
+      <DependentUpon>Datapoint{T}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Timeseries\Timeseries{T}.cs" />
+    <Compile Include="Models\Classes\Timeseries\Datapoint{T}.cs" />
+    <Compile Include="Models\Classes\Timeseries\Timeseries{T}.designer.cs">
+      <DependentUpon>Timeseries{T}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Unit\Duration.designer.cs">
       <DependentUpon>Duration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Unit\Unit.designer.cs">
       <DependentUpon>Unit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Interfaces\ITimeseries.cs" />
+    <Compile Include="Models\Interfaces\IDatapoint.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
     <Compile Include="Models\Classes\ReportingPeriod.designer.cs">
       <DependentUpon>ReportingPeriod.cs</DependentUpon>
@@ -223,7 +233,9 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Enums\Timeseries\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.137\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
