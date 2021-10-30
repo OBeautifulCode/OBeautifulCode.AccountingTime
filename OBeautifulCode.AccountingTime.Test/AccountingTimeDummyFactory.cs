@@ -489,7 +489,7 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new RelativeCutoff(A.Dummy<Duration>(), A.Dummy<TimeComparison>().ThatIsIn(new[] { TimeComparison.Before, TimeComparison.After }));
+                    var result = new RelativeCutoff(A.Dummy<Duration>(), A.Dummy<ReportingPeriodComponent>().ThatIsIn(new[] { ReportingPeriodComponent.Start, ReportingPeriodComponent.End }));
 
                     return result;
                 });

@@ -47,7 +47,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<RelativeCutoff>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.RelativeCutoff: Duration = {systemUnderTest.Duration?.ToString() ?? "<null>"}, BeforeOrAfter = {systemUnderTest.BeforeOrAfter.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.RelativeCutoff: Duration = {systemUnderTest.Duration?.ToString() ?? "<null>"}, StartOrEnd = {systemUnderTest.StartOrEnd.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -65,7 +65,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
                         var result = new RelativeCutoff(
                                              null,
-                                             referenceObject.BeforeOrAfter);
+                                             referenceObject.StartOrEnd);
 
                         return result;
                     },
@@ -86,7 +86,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         {
                             SystemUnderTest = new RelativeCutoff(
                                                       referenceObject.Duration,
-                                                      referenceObject.BeforeOrAfter),
+                                                      referenceObject.StartOrEnd),
                             ExpectedPropertyValue = referenceObject.Duration,
                         };
 
@@ -97,7 +97,7 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<RelativeCutoff>
                 {
-                    Name = "BeforeOrAfter should return same 'beforeOrAfter' parameter passed to constructor when getting",
+                    Name = "StartOrEnd should return same 'startOrEnd' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<RelativeCutoff>();
@@ -106,13 +106,13 @@ namespace OBeautifulCode.AccountingTime.Test
                         {
                             SystemUnderTest = new RelativeCutoff(
                                                       referenceObject.Duration,
-                                                      referenceObject.BeforeOrAfter),
-                            ExpectedPropertyValue = referenceObject.BeforeOrAfter,
+                                                      referenceObject.StartOrEnd),
+                            ExpectedPropertyValue = referenceObject.StartOrEnd,
                         };
 
                         return result;
                     },
-                    PropertyName = "BeforeOrAfter",
+                    PropertyName = "StartOrEnd",
                 });
 
         private static readonly DeepCloneWithTestScenarios<RelativeCutoff> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<RelativeCutoff>()
@@ -139,18 +139,18 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<RelativeCutoff>
                 {
-                    Name = "DeepCloneWithBeforeOrAfter should deep clone object and replace BeforeOrAfter with the provided beforeOrAfter",
-                    WithPropertyName = "BeforeOrAfter",
+                    Name = "DeepCloneWithStartOrEnd should deep clone object and replace StartOrEnd with the provided startOrEnd",
+                    WithPropertyName = "StartOrEnd",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<RelativeCutoff>();
 
-                        var referenceObject = A.Dummy<RelativeCutoff>().ThatIs(_ => !systemUnderTest.BeforeOrAfter.IsEqualTo(_.BeforeOrAfter));
+                        var referenceObject = A.Dummy<RelativeCutoff>().ThatIs(_ => !systemUnderTest.StartOrEnd.IsEqualTo(_.StartOrEnd));
 
                         var result = new SystemUnderTestDeepCloneWithValue<RelativeCutoff>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.BeforeOrAfter,
+                            DeepCloneWithValue = referenceObject.StartOrEnd,
                         };
 
                         return result;
@@ -169,16 +169,16 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         new RelativeCutoff(
                                 ReferenceObjectForEquatableTestScenarios.Duration,
-                                ReferenceObjectForEquatableTestScenarios.BeforeOrAfter),
+                                ReferenceObjectForEquatableTestScenarios.StartOrEnd),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new RelativeCutoff[]
                     {
                         new RelativeCutoff(
                                 A.Dummy<RelativeCutoff>().Whose(_ => !_.Duration.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Duration)).Duration,
-                                ReferenceObjectForEquatableTestScenarios.BeforeOrAfter),
+                                ReferenceObjectForEquatableTestScenarios.StartOrEnd),
                         new RelativeCutoff(
                                 ReferenceObjectForEquatableTestScenarios.Duration,
-                                A.Dummy<RelativeCutoff>().Whose(_ => !_.BeforeOrAfter.IsEqualTo(ReferenceObjectForEquatableTestScenarios.BeforeOrAfter)).BeforeOrAfter),
+                                A.Dummy<RelativeCutoff>().Whose(_ => !_.StartOrEnd.IsEqualTo(ReferenceObjectForEquatableTestScenarios.StartOrEnd)).StartOrEnd),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -490,7 +490,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Duration", "BeforeOrAfter" };
+                var propertyNames = new string[] { "Duration", "StartOrEnd" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

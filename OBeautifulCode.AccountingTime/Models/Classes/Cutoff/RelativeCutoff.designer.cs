@@ -70,7 +70,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = this.Duration.IsEqualTo(other.Duration)
-                      && this.BeforeOrAfter.IsEqualTo(other.BeforeOrAfter);
+                      && this.StartOrEnd.IsEqualTo(other.StartOrEnd);
 
             return result;
         }
@@ -81,7 +81,7 @@ namespace OBeautifulCode.AccountingTime
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Duration)
-            .Hash(this.BeforeOrAfter)
+            .Hash(this.StartOrEnd)
             .Value;
 
         /// <inheritdoc />
@@ -113,16 +113,16 @@ namespace OBeautifulCode.AccountingTime
         {
             var result = new RelativeCutoff(
                                  duration,
-                                 this.BeforeOrAfter.DeepClone());
+                                 this.StartOrEnd.DeepClone());
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="BeforeOrAfter" />.
+        /// Deep clones this object with a new <see cref="StartOrEnd" />.
         /// </summary>
-        /// <param name="beforeOrAfter">The new <see cref="BeforeOrAfter" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RelativeCutoff" /> using the specified <paramref name="beforeOrAfter" /> for <see cref="BeforeOrAfter" /> and a deep clone of every other property.</returns>
+        /// <param name="startOrEnd">The new <see cref="StartOrEnd" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RelativeCutoff" /> using the specified <paramref name="startOrEnd" /> for <see cref="StartOrEnd" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
@@ -140,11 +140,11 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RelativeCutoff DeepCloneWithBeforeOrAfter(TimeComparison beforeOrAfter)
+        public RelativeCutoff DeepCloneWithStartOrEnd(ReportingPeriodComponent startOrEnd)
         {
             var result = new RelativeCutoff(
                                  this.Duration?.DeepClone(),
-                                 beforeOrAfter);
+                                 startOrEnd);
 
             return result;
         }
@@ -155,7 +155,7 @@ namespace OBeautifulCode.AccountingTime
         {
             var result = new RelativeCutoff(
                                  this.Duration?.DeepClone(),
-                                 this.BeforeOrAfter.DeepClone());
+                                 this.StartOrEnd.DeepClone());
 
             return result;
         }
@@ -164,7 +164,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.AccountingTime.RelativeCutoff: Duration = {this.Duration?.ToString() ?? "<null>"}, BeforeOrAfter = {this.BeforeOrAfter.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.AccountingTime.RelativeCutoff: Duration = {this.Duration?.ToString() ?? "<null>"}, StartOrEnd = {this.StartOrEnd.ToString() ?? "<null>"}.");
 
             return result;
         }

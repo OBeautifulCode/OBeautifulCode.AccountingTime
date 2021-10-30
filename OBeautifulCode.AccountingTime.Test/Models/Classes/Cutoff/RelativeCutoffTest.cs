@@ -34,19 +34,19 @@ namespace OBeautifulCode.AccountingTime.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<RelativeCutoff>
                     {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'beforeOrAfter' is neither TimeComparison.Before nor TimeComparison.After",
+                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'startOrEnd' is neither ReportingPeriodComponent.Start nor ReportingPeriodComponent.End",
                         ConstructionFunc = () =>
                         {
                             var referenceObject = A.Dummy<RelativeCutoff>();
 
                             var result = new RelativeCutoff(
                                 referenceObject.Duration,
-                                A.Dummy<TimeComparison>().ThatIsNotIn(new[] { TimeComparison.Before, TimeComparison.After }));
+                                A.Dummy<ReportingPeriodComponent>().ThatIsNotIn(new[] { ReportingPeriodComponent.Start, ReportingPeriodComponent.End }));
 
                             return result;
                         },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "beforeOrAfter is neither TimeComparison.Before nor TimeComparison.After", },
+                        ExpectedExceptionMessageContains = new[] { "startOrEnd is neither ReportingPeriodComponent.Start nor ReportingPeriodComponent.End", },
                     });
         }
     }

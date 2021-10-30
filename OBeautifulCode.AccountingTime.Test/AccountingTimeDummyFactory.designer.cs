@@ -18,7 +18,6 @@ namespace OBeautifulCode.AccountingTime.Test
     using global::OBeautifulCode.AccountingTime;
     using global::OBeautifulCode.AutoFakeItEasy;
     using global::OBeautifulCode.Math.Recipes;
-    using global::OBeautifulCode.Type;
 
     /// <summary>
     /// The default (code generated) Dummy Factory.
@@ -220,7 +219,7 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RelativeCutoff(
                                  A.Dummy<Duration>(),
-                                 A.Dummy<TimeComparison>()));
+                                 A.Dummy<ReportingPeriodComponent>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ReportingPeriod(

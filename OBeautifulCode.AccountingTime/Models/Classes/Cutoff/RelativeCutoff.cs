@@ -22,23 +22,23 @@ namespace OBeautifulCode.AccountingTime
         /// Initializes a new instance of the <see cref="RelativeCutoff"/> class.
         /// </summary>
         /// <param name="duration">The duration relative to the reporting period.</param>
-        /// <param name="beforeOrAfter">Specifies whether the duration is applied before or after the reporting period.</param>
+        /// <param name="startOrEnd">Specifies whether the duration is applied to the start or end of the reporting period.</param>
         public RelativeCutoff(
             Duration duration,
-            TimeComparison beforeOrAfter)
+            ReportingPeriodComponent startOrEnd)
         {
             if (duration == null)
             {
                 throw new ArgumentNullException(nameof(duration));
             }
 
-            if ((beforeOrAfter != TimeComparison.Before) && (beforeOrAfter != TimeComparison.After))
+            if ((startOrEnd != ReportingPeriodComponent.Start) && (startOrEnd != ReportingPeriodComponent.End))
             {
-                throw new ArgumentOutOfRangeException(nameof(beforeOrAfter), Invariant($"{nameof(beforeOrAfter)} is neither {nameof(TimeComparison)}.{nameof(TimeComparison.Before)} nor {nameof(TimeComparison)}.{nameof(TimeComparison.After)}"));
+                throw new ArgumentOutOfRangeException(nameof(startOrEnd), Invariant($"{nameof(startOrEnd)} is neither {nameof(ReportingPeriodComponent)}.{nameof(ReportingPeriodComponent.Start)} nor {nameof(ReportingPeriodComponent)}.{nameof(ReportingPeriodComponent.End)}"));
             }
 
             this.Duration = duration;
-            this.BeforeOrAfter = beforeOrAfter;
+            this.StartOrEnd = startOrEnd;
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace OBeautifulCode.AccountingTime
         public Duration Duration { get; private set; }
 
         /// <summary>
-        /// Gets a value that specifies whether the duration is applied before or after the reporting period.
+        /// Gets a value that specifies whether the duration is applied to the start or end of the reporting period.
         /// </summary>
-        public TimeComparison BeforeOrAfter { get; private set; }
+        public ReportingPeriodComponent StartOrEnd { get; private set; }
     }
 }
