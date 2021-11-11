@@ -8,8 +8,10 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.Type;
 
     using static System.FormattableString;
@@ -67,6 +69,12 @@ namespace OBeautifulCode.AccountingTime
 
             this.Datapoints = datapoints;
         }
+
+        /// <summary>
+        /// Gets an empty timeseries.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1000:DoNotDeclareStaticMembersOnGenericTypes", Justification = ObcSuppressBecause.CA1000_DoNotDeclareStaticMembersOnGenericTypes_StaticPropertyReturnsInstanceOfContainingGenericClassAndIsConvenientAndMostDiscoverableWhereDeclared)]
+        public static Timeseries<T> Empty => new Timeseries<T>(Array.Empty<Datapoint<T>>());
 
         /// <summary>
         /// Gets the datapoints.
