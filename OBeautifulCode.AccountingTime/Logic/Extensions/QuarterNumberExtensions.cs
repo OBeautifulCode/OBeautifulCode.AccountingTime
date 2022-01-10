@@ -11,7 +11,7 @@ namespace OBeautifulCode.AccountingTime
     using static System.FormattableString;
 
     /// <summary>
-    /// Extension methods on type <see cref="UnitOfTimeGranularity"/>.
+    /// Extension methods on type <see cref="QuarterNumber"/>.
     /// </summary>
     public static class QuarterNumberExtensions
     {
