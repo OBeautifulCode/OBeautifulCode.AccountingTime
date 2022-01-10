@@ -16,12 +16,12 @@ namespace OBeautifulCode.AccountingTime
     public static class QuarterNumberExtensions
     {
         /// <summary>
-        /// Constructs a calendar quarter from a <see cref="QuarterNumber"/> and a year.
+        /// Constructs a <see cref="CalendarQuarter"/> from a <see cref="QuarterNumber"/> and a year.
         /// </summary>
         /// <param name="quarterNumber">The quarter number.</param>
         /// <param name="year">The year.</param>
         /// <returns>
-        /// A calendar quarter constructed from the specified <see cref="QuarterNumber"/> and year.
+        /// The <see cref="CalendarQuarter"/>.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
         public static CalendarQuarter ToCalendar(
@@ -39,12 +39,12 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Constructs a fiscal quarter from a <see cref="QuarterNumber"/> and a year.
+        /// Constructs a <see cref="FiscalQuarter"/> from a <see cref="QuarterNumber"/> and a year.
         /// </summary>
         /// <param name="quarterNumber">The quarter number.</param>
         /// <param name="year">The year.</param>
         /// <returns>
-        /// A fiscal quarter constructed from the specified <see cref="QuarterNumber"/> and year.
+        /// The <see cref="FiscalQuarter"/>.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
         public static FiscalQuarter ToFiscal(
@@ -62,12 +62,12 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Constructs a generic quarter from a <see cref="QuarterNumber"/> and a year.
+        /// Constructs a <see cref="GenericQuarter"/> from a <see cref="QuarterNumber"/> and a year.
         /// </summary>
         /// <param name="quarterNumber">The quarter number.</param>
         /// <param name="year">The year.</param>
         /// <returns>
-        /// A generic quarter constructed from the specified <see cref="QuarterNumber"/> and year.
+        /// The <see cref="GenericQuarter"/>.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
         public static GenericQuarter ToGeneric(
@@ -80,6 +80,53 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = new GenericQuarter(year, quarterNumber);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Constructs a <see cref="UnitOfTime"/> whose <see cref="UnitOfTimeGranularity"/> is <see cref="UnitOfTimeGranularity.Quarter"/>
+        /// from a <see cref="QuarterNumber"/>, year, and <see cref="UnitOfTimeKind"/>.
+        /// </summary>
+        /// <param name="quarterNumber">The quarter number.</param>
+        /// <param name="year">The year.</param>
+        /// <param name="unitOfTimeKind">The unit-of-time kind.</param>
+        /// <returns>
+        /// The <see cref="UnitOfTime"/>.
+        /// </returns>
+        /// <exception cref="ArgumentException"><paramref name="quarterNumber"/> is <see cref="QuarterNumber.Invalid"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="unitOfTimeKind"/> is <see cref="UnitOfTimeKind.Invalid"/>.</exception>
+        public static UnitOfTime ToUnitOfTime(
+            this QuarterNumber quarterNumber,
+            int year,
+            UnitOfTimeKind unitOfTimeKind)
+        {
+            if (quarterNumber == QuarterNumber.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(quarterNumber)}' == '{QuarterNumber.Invalid}'"), (Exception)null);
+            }
+
+            if (unitOfTimeKind == UnitOfTimeKind.Invalid)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(unitOfTimeKind)}' == '{UnitOfTimeKind.Invalid}'"), (Exception)null);
+            }
+
+            UnitOfTime result;
+
+            switch (unitOfTimeKind)
+            {
+                case UnitOfTimeKind.Calendar:
+                    result = quarterNumber.ToCalendar(year);
+                    break;
+                case UnitOfTimeKind.Fiscal:
+                    result = quarterNumber.ToFiscal(year);
+                    break;
+                case UnitOfTimeKind.Generic:
+                    result = quarterNumber.ToGeneric(year);
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"This {nameof(UnitOfTimeKind)} is not supported: {unitOfTimeKind}"));
+            }
 
             return result;
         }
