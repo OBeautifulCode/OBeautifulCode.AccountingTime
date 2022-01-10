@@ -7,6 +7,7 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using FakeItEasy;
@@ -110,6 +111,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Easier this way.")]
         public static void ToUnitOfTime___Should_return_UnitOfTime_of_specified_kind_with_specified_quarterNumber_and_year___When_called()
         {
             // Arrange
