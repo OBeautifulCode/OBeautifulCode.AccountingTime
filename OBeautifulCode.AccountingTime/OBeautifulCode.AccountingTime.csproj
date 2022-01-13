@@ -81,6 +81,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="Logic\Enums\ReportingPeriodComparison.cs" />
     <Compile Include="Logic\Extensions\DatapointExtensions.cs" />
+    <Compile Include="Logic\Extensions\UnitOfTimeKindExtensions.cs" />
     <Compile Include="Logic\Extensions\YearNumberExtensions.cs" />
     <Compile Include="Logic\Extensions\TimeseriesExtensions.cs" />
     <Compile Include="Models\Classes\AccountingPeriodSystem\AccountingPeriodSystem.designer.cs">

@@ -206,6 +206,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Logic\Extensions\UnitOfTimeKindExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\YearNumberExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TimeseriesExtensionsTest.cs" />
     <Compile Include="Models\Classes\Cutoff\CutoffBaseTest.cs" />
