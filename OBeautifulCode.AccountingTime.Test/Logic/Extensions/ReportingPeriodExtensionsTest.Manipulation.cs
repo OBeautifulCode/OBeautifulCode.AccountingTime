@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using FakeItEasy;
 
     using FluentAssertions;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
@@ -896,7 +896,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarYear_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -914,14 +914,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarYear_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -939,14 +939,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarYear_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -964,14 +964,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarYear_and_granularity_is_Day()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -993,7 +993,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
             results.ForEach(_ =>
@@ -1005,7 +1005,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1017,14 +1017,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1042,14 +1042,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1067,14 +1067,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1107,14 +1107,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Day()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1136,7 +1136,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
             results.ForEach(_ =>
@@ -1148,7 +1148,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1160,14 +1160,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1185,14 +1185,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1218,14 +1218,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1273,14 +1273,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1293,14 +1293,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Day()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1322,7 +1322,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
             results.ForEach(_ =>
@@ -1334,7 +1334,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1344,14 +1344,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1364,14 +1364,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1388,14 +1388,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1443,14 +1443,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1463,14 +1463,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Month))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1493,14 +1493,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_reportingPeriod_is_in_CalendarDay_and_granularity_is_Day()
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1522,7 +1522,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
 
             // Assert
             results.ForEach(_ =>
@@ -1534,7 +1534,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1552,14 +1552,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1577,14 +1577,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1602,14 +1602,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1619,14 +1619,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1638,14 +1638,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1663,14 +1663,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1688,14 +1688,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1728,14 +1728,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1745,14 +1745,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1764,14 +1764,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1789,14 +1789,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1822,14 +1822,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1877,14 +1877,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_FiscalMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1897,14 +1897,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1913,14 +1913,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericYear_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1938,14 +1938,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericYear_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1963,14 +1963,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericYear_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1988,14 +1988,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericYear_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericYear_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2005,14 +2005,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2024,14 +2024,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2049,14 +2049,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2074,14 +2074,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2114,14 +2114,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2131,14 +2131,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2150,14 +2150,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericYear___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Year()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2175,14 +2175,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_InvalidOperationException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        public static void Split___Should_throw_InvalidOperationException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter_and_there_is_overflow()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2208,14 +2208,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<InvalidOperationException>());
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericQuarter___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Quarter()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2263,14 +2263,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Month()
+        public static void Split___Should_return_reportingPeriod_split_into_GenericMonth___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Month()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2283,14 +2283,14 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month), Expected = _.ExpectedUnitsOfTime }).ToList();
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.ThrowOnOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
 
             // Assert
             results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_reportingPeriod_is_in_GenericMonth_and_granularity_is_Day()
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -2299,7 +2299,940 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day))).ToList();
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2017)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2018)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June), new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September), new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March), new CalendarMonth(2018, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.May), new CalendarMonth(2018, MonthOfYear.June), new CalendarMonth(2018, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.August), new CalendarMonth(2018, MonthOfYear.September), new CalendarMonth(2018, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.December) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarYear_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2017)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                    ExpectedCount = 365,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarYear(2017), new CalendarYear(2018)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                    ExpectedCount = 365 * 2,
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear_discarding_overflow___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2019, QuarterNumber.Q3)),
+                new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2019, QuarterNumber.Q4)),
+                new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2019, QuarterNumber.Q3)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new[]
+                {
+                    new CalendarYear(2017),
+                    new CalendarYear(2018),
+                },
+                new[]
+                {
+                    new CalendarYear(2018),
+                    new CalendarYear(2019),
+                },
+                new CalendarYear[]
+                {
+                },
+                new CalendarYear[]
+                {
+                    new CalendarYear(2018),
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.March) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q2)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.May), new CalendarMonth(2017, MonthOfYear.June) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.August), new CalendarMonth(2017, MonthOfYear.September) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.October, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.December, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Thirty), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                    ExpectedCount = 31 + 30 + 31,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty) },
+                    ExpectedCount = 548,
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear_discarding_overflow___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.March), new CalendarMonth(2018, MonthOfYear.February)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2019, MonthOfYear.July)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2019, MonthOfYear.November)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2019, MonthOfYear.December)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new CalendarYear[]
+                {
+                },
+                new[]
+                {
+                    new CalendarYear(2018),
+                },
+                new CalendarYear[]
+                {
+                    new CalendarYear(2017),
+                    new CalendarYear(2018),
+                },
+                new CalendarYear[]
+                {
+                    new CalendarYear(2018),
+                    new CalendarYear(2019),
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter_discarding_overflow___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.July)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.May)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.March)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.April)),
+                new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.February), new CalendarMonth(2017, MonthOfYear.April)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                    new CalendarQuarter(2018, QuarterNumber.Q2),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q1),
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q1),
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q1),
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new CalendarQuarter[]
+                {
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2017, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2017, MonthOfYear.June)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2017, MonthOfYear.September)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2017, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.April), new CalendarMonth(2018, MonthOfYear.June)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.July), new CalendarMonth(2018, MonthOfYear.September)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.October), new CalendarMonth(2018, MonthOfYear.December)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.March)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February), new CalendarMonth(2018, MonthOfYear.March) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.November)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Thirty) },
+                    ExpectedCount = 30,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2018, MonthOfYear.November)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.November, DayOfMonth.Three) },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyEight), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.TwentyNine), new CalendarDay(2018, MonthOfYear.November, DayOfMonth.Thirty) },
+                    ExpectedCount = 365 + 30,
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.Thirty)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new CalendarYear[]
+                {
+                },
+                new[]
+                {
+                    new CalendarYear(2018),
+                },
+                new[]
+                {
+                    new CalendarYear(2017),
+                },
+                new[]
+                {
+                    new CalendarYear(2017),
+                    new CalendarYear(2018),
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarYear___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Year()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarYear(2017), new CalendarYear(2018) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Year, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter_discarding_overflow___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.Thirty)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.TwentyNine)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.Thirty)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.June, DayOfMonth.TwentyNine)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.August, DayOfMonth.ThirtyOne)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q1),
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q2),
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                },
+                new[]
+                {
+                    new CalendarQuarter(2017, QuarterNumber.Q3),
+                    new CalendarQuarter(2017, QuarterNumber.Q4),
+                    new CalendarQuarter(2018, QuarterNumber.Q1),
+                    new CalendarQuarter(2018, QuarterNumber.Q2),
+                },
+                new CalendarQuarter[]
+                {
+                },
+                new CalendarQuarter[]
+                {
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarQuarter___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Quarter()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.September, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q1), new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.June, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q2), new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.July, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q3), new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.October, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarQuarter(2017, QuarterNumber.Q4), new CalendarQuarter(2018, QuarterNumber.Q1), new CalendarQuarter(2018, QuarterNumber.Q2), new CalendarQuarter(2018, QuarterNumber.Q3), new CalendarQuarter(2018, QuarterNumber.Q4) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Quarter, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth_discarding_overflow___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month_and_there_is_overflow()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.Thirty)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Eight)),
+                new ReportingPeriod(new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.February, DayOfMonth.Eight)),
+            };
+
+            var expected = new IReadOnlyList<UnitOfTime>[]
+            {
+                new[]
+                {
+                    new CalendarMonth(2017, MonthOfYear.January),
+                    new CalendarMonth(2017, MonthOfYear.February),
+                    new CalendarMonth(2017, MonthOfYear.March),
+                    new CalendarMonth(2017, MonthOfYear.April),
+                    new CalendarMonth(2017, MonthOfYear.May),
+                    new CalendarMonth(2017, MonthOfYear.June),
+                    new CalendarMonth(2017, MonthOfYear.July),
+                    new CalendarMonth(2017, MonthOfYear.August),
+                    new CalendarMonth(2017, MonthOfYear.September),
+                    new CalendarMonth(2017, MonthOfYear.October),
+                    new CalendarMonth(2017, MonthOfYear.November),
+                    new CalendarMonth(2017, MonthOfYear.December),
+                },
+                new[]
+                {
+                    new CalendarMonth(2017, MonthOfYear.February),
+                    new CalendarMonth(2017, MonthOfYear.March),
+                    new CalendarMonth(2017, MonthOfYear.April),
+                    new CalendarMonth(2017, MonthOfYear.May),
+                    new CalendarMonth(2017, MonthOfYear.June),
+                    new CalendarMonth(2017, MonthOfYear.July),
+                    new CalendarMonth(2017, MonthOfYear.August),
+                    new CalendarMonth(2017, MonthOfYear.September),
+                    new CalendarMonth(2017, MonthOfYear.October),
+                    new CalendarMonth(2017, MonthOfYear.November),
+                    new CalendarMonth(2017, MonthOfYear.December),
+                    new CalendarMonth(2018, MonthOfYear.January),
+                },
+                new[]
+                {
+                    new CalendarMonth(2017, MonthOfYear.February),
+                    new CalendarMonth(2017, MonthOfYear.March),
+                    new CalendarMonth(2017, MonthOfYear.April),
+                    new CalendarMonth(2017, MonthOfYear.May),
+                    new CalendarMonth(2017, MonthOfYear.June),
+                    new CalendarMonth(2017, MonthOfYear.July),
+                    new CalendarMonth(2017, MonthOfYear.August),
+                    new CalendarMonth(2017, MonthOfYear.September),
+                    new CalendarMonth(2017, MonthOfYear.October),
+                    new CalendarMonth(2017, MonthOfYear.November),
+                    new CalendarMonth(2017, MonthOfYear.December),
+                    new CalendarMonth(2018, MonthOfYear.January),
+                },
+                new CalendarMonth[]
+                {
+                },
+                new CalendarMonth[]
+                {
+                },
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.Split(UnitOfTimeGranularity.Month, OverflowStrategy.DiscardOverflow)).ToArray();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarMonth___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Month()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.January) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.December, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.January, DayOfMonth.ThirtyOne)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January) },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.November, DayOfMonth.One), new CalendarDay(2018, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    ExpectedUnitsOfTime = new[] { new CalendarMonth(2017, MonthOfYear.November), new CalendarMonth(2017, MonthOfYear.December), new CalendarMonth(2018, MonthOfYear.January), new CalendarMonth(2018, MonthOfYear.February) },
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Month, OverflowStrategy.DiscardOverflow), Expected = _.ExpectedUnitsOfTime }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Actual.Should().Equal(_.Expected));
+        }
+
+        [Fact]
+        public static void Split___Should_return_reportingPeriod_split_into_CalendarDay___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_CalendarDay_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),  },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two) },
+                    ExpectedCount = 1,
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten)),
+                    ExpectedUnitsOfTimeBeginning = new[] { new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Four), },
+                    ExpectedUnitsOfTimeEnd = new[] { new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Eight), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Nine), new CalendarDay(2017, MonthOfYear.March, DayOfMonth.Ten) },
+                    ExpectedCount = 30 + 28 + 10,
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Actual = _.ReportingPeriod.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow), ExpectedBeginning = _.ExpectedUnitsOfTimeBeginning, ExpectedEnd = _.ExpectedUnitsOfTimeEnd, _.ExpectedCount }).ToList();
+
+            // Assert
+            results.ForEach(_ =>
+            {
+                _.Actual.Should().StartWith(_.ExpectedBeginning);
+                _.Actual.Should().EndWith(_.ExpectedEnd);
+                _.Actual.Should().HaveCount(_.ExpectedCount);
+            });
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new FiscalYear(2017), new FiscalYear(2017)),
+                new ReportingPeriod(new FiscalYear(2017), new FiscalYear(2018)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_FiscalQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new FiscalQuarter(2017, QuarterNumber.Q1), new FiscalQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod(new FiscalQuarter(2017, QuarterNumber.Q3), new FiscalQuarter(2018, QuarterNumber.Q2)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_FiscalMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new FiscalMonth(2017, MonthNumber.Eleven), new FiscalMonth(2018, MonthNumber.Three)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_GenericYear_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new GenericYear(2017), new GenericYear(2017)),
+                new ReportingPeriod(new GenericYear(2017), new GenericYear(2018)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_GenericQuarter_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new GenericQuarter(2017, QuarterNumber.Q1), new GenericQuarter(2017, QuarterNumber.Q1)),
+                new ReportingPeriod(new GenericQuarter(2017, QuarterNumber.Q3), new GenericQuarter(2018, QuarterNumber.Q2)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
+
+            // Assert
+            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+        }
+
+        [Fact]
+        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_DiscardOverflow_and_reportingPeriod_is_in_GenericMonth_and_granularity_is_Day()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new ReportingPeriod(new GenericMonth(2017, MonthNumber.Eleven), new GenericMonth(2018, MonthNumber.Three)),
+            };
+
+            // Act
+            var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.DiscardOverflow))).ToList();
 
             // Assert
             exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());

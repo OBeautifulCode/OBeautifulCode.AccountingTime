@@ -18,5 +18,10 @@ namespace OBeautifulCode.AccountingTime
         /// Throw on any overflow.
         /// </summary>
         ThrowOnOverflow,
+
+        /// <summary>
+        /// Discard any overflowed units.
+        /// </summary>
+        DiscardOverflow,
     }
 }
