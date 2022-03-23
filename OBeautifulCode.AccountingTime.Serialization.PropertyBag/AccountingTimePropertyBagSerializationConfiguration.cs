@@ -18,6 +18,13 @@ namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
     public class AccountingTimePropertyBagSerializationConfiguration : PropertyBagSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters =>
+            new[]
+            {
+                OBeautifulCode.AccountingTime.ProjectInfo.Namespace,
+            };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForPropertyBag> TypesToRegisterForPropertyBag => new[]
         {
             typeof(UnitOfTime).ToTypeToRegisterForPropertyBagUsingStringSerializer(new UnitOfTimeStringSerializer()),

@@ -19,6 +19,13 @@ namespace OBeautifulCode.AccountingTime.Serialization.Bson
     public class AccountingTimeBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters =>
+            new[]
+            {
+                OBeautifulCode.AccountingTime.ProjectInfo.Namespace,
+            };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
             {
                 typeof(UnitOfTime).ToTypeToRegisterForBsonUsingStringSerializer(new UnitOfTimeStringSerializer()),

@@ -18,6 +18,13 @@ namespace OBeautifulCode.AccountingTime.Serialization.Json
     public class AccountingTimeJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters =>
+            new[]
+            {
+                OBeautifulCode.AccountingTime.ProjectInfo.Namespace,
+            };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
             {
                 typeof(UnitOfTime).ToTypeToRegisterForJsonUsingStringSerializer(new UnitOfTimeStringSerializer()),
