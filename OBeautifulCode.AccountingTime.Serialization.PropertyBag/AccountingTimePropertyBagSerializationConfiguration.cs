@@ -6,13 +6,8 @@
 
 namespace OBeautifulCode.AccountingTime.Serialization.PropertyBag
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-
     using OBeautifulCode.Serialization.PropertyBag;
-    using OBeautifulCode.Type;
-    using OBeautifulCode.Type.Recipes;
 
     /// <inheritdoc />
     public class AccountingTimePropertyBagSerializationConfiguration : PropertyBagSerializationConfigurationBase
