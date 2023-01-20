@@ -135,6 +135,7 @@
       <DependentUpon>Unit.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Interfaces\ICutoff.cs" />
+    <Compile Include="Models\Interfaces\IHaveADay.cs" />
     <Compile Include="Models\Interfaces\ITimeseries.cs" />
     <Compile Include="Models\Interfaces\IDatapoint.cs" />
     <Compile Include="Models\Classes\ReportingPeriod.designer.cs">
