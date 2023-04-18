@@ -29,6 +29,24 @@ namespace OBeautifulCode.AccountingTime.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static DurationTest()
         {
+            ConstructorArgumentValidationTestScenarios
+                .AddScenario(() =>
+                    new ConstructorArgumentValidationTestScenario<Duration>
+                    {
+                        Name = "constructor should throw ArgumentException when parameter 'unit' has Unbounded granularity",
+                        ConstructionFunc = () =>
+                        {
+                            var referenceObject = A.Dummy<Duration>();
+
+                            var result = new Duration(
+                                referenceObject.Quantity,
+                                new Unit(A.Dummy<UnitOfTimeKind>(), UnitOfTimeGranularity.Unbounded));
+
+                            return result;
+                        },
+                        ExpectedExceptionType = typeof(ArgumentException),
+                        ExpectedExceptionMessageContains = new[] { "unit.Granularity is UnitOfTimeGranularity.Unbounded", },
+                    });
         }
     }
 }

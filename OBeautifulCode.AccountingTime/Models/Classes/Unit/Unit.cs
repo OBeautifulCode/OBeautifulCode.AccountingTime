@@ -36,11 +36,6 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(nameof(granularity), Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity)}.{nameof(UnitOfTimeGranularity.Invalid)}."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentOutOfRangeException(nameof(granularity), Invariant($"{nameof(granularity)} is {nameof(UnitOfTimeGranularity)}.{nameof(UnitOfTimeGranularity.Unbounded)}."));
-            }
-
             if ((granularity == UnitOfTimeGranularity.Day) && (kind != UnitOfTimeKind.Calendar))
             {
                 throw new ArgumentException(Invariant($"{nameof(granularity)} of {nameof(UnitOfTimeGranularity)}.{nameof(UnitOfTimeGranularity.Day)} is only applicable when {nameof(kind)} is {nameof(UnitOfTimeKind)}.{nameof(UnitOfTimeKind.Calendar)}; specified value is {kind}."));

@@ -213,9 +213,19 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var unitOfTime = A.Dummy<UnitOfTime>().ThatIs(_ => !(_ is IAmUnboundedTime));
+                    var unitOfTime = A.Dummy<UnitOfTime>();
 
                     var result = new Unit(unitOfTime.UnitOfTimeKind, unitOfTime.UnitOfTimeGranularity);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var unit = A.Dummy<Unit>().Whose(_ => _.Granularity != UnitOfTimeGranularity.Unbounded);
+
+                    var result = new Duration(A.Dummy<PositiveInteger>(), unit);
 
                     return result;
                 });

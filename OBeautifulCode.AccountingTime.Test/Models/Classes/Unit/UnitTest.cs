@@ -69,23 +69,6 @@ namespace OBeautifulCode.AccountingTime.Test
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<Unit>
                     {
-                        Name = "constructor should throw ArgumentOutOfRangeException when parameter 'granularity' is UnitOfTimeGranularity.Unbounded",
-                        ConstructionFunc = () =>
-                        {
-                            var referenceObject = A.Dummy<Unit>();
-
-                            var result = new Unit(
-                                referenceObject.Kind,
-                                UnitOfTimeGranularity.Unbounded);
-
-                            return result;
-                        },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                        ExpectedExceptionMessageContains = new[] { "granularity is UnitOfTimeGranularity.Unbounded" },
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<Unit>
-                    {
                         Name = "constructor should throw ArgumentException when parameter 'granularity' is UnitOfTimeGranularity.Day and parameter 'kind' is not UnitOfTimeKind.Calendar",
                         ConstructionFunc = () =>
                         {

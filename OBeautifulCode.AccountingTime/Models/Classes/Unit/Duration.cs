@@ -7,8 +7,8 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// A specified quantity of a specified unit.
@@ -27,6 +27,11 @@ namespace OBeautifulCode.AccountingTime
             if (unit == null)
             {
                 throw new ArgumentNullException(nameof(unit));
+            }
+
+            if (unit.Granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(unit)}.{nameof(unit.Granularity)} is {nameof(UnitOfTimeGranularity)}.{nameof(UnitOfTimeGranularity.Unbounded)}."));
             }
 
             this.Quantity = quantity;

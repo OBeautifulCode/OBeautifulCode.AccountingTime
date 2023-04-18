@@ -9,7 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Represents a unit of time, such as a month, quarter, or year.
+    /// Represents a unit of time, such as a calendar month, fiscal quarter, or general year.
     /// </summary>
     public abstract partial class UnitOfTime : IModelViaCodeGen, IComparableViaCodeGen
     {
