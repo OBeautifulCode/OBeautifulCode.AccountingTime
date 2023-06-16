@@ -195,13 +195,20 @@ namespace OBeautifulCode.AccountingTime
             {
                 var lessGranularReportingPeriod = reportingPeriod.MakeLessGranular(
                     granularity,
-                    throwOnMisalignment: overflowStrategy == OverflowStrategy.ThrowOnOverflow);
+                    returnNullOnMisalignment: overflowStrategy == OverflowStrategy.ThrowOnOverflow);
 
-                result = lessGranularReportingPeriod.GetUnitsWithin();
-
-                if (overflowStrategy == OverflowStrategy.DiscardOverflow)
+                if (lessGranularReportingPeriod == null)
                 {
-                    result = result.Where(reportingPeriod.Contains).ToList();
+                    throw new InvalidOperationException("There was some overflow when attempting to split.");
+                }
+                else
+                {
+                    result = lessGranularReportingPeriod.GetUnitsWithin();
+
+                    if (overflowStrategy == OverflowStrategy.DiscardOverflow)
+                    {
+                        result = result.Where(reportingPeriod.Contains).ToList();
+                    }
                 }
             }
 
@@ -257,25 +264,18 @@ namespace OBeautifulCode.AccountingTime
             ReportingPeriod result;
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
-                result = reportingPeriod.DeepClone();
+                result = reportingPeriod;
             }
             else
             {
                 var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
                 if (targetGranularity == UnitOfTimeGranularity.Unbounded)
                 {
-                    result = reportingPeriod.DeepClone();
+                    result = reportingPeriod;
                 }
                 else
                 {
-                    try
-                    {
-                        result = reportingPeriod.MakeLessGranular(targetGranularity).ToLeastGranular();
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        result = reportingPeriod.DeepClone();
-                    }
+                    result = reportingPeriod.MakeLessGranular(targetGranularity)?.ToLeastGranular() ?? reportingPeriod;
                 }
             }
 
@@ -439,7 +439,7 @@ namespace OBeautifulCode.AccountingTime
         private static ReportingPeriod MakeLessGranular(
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity,
-            bool throwOnMisalignment = true)
+            bool returnNullOnMisalignment = true)
         {
             if (reportingPeriod == null)
             {
@@ -477,18 +477,18 @@ namespace OBeautifulCode.AccountingTime
 
                     // ReSharper disable once PossibleNullReferenceException
                     var startMonth = new CalendarMonth(startAsCalendarDay.Year, startAsCalendarDay.MonthOfYear);
-                    if ((startMonth.GetFirstCalendarDay() != startAsCalendarDay) && throwOnMisalignment)
+                    if ((startMonth.GetFirstCalendarDay() != startAsCalendarDay) && returnNullOnMisalignment)
                     {
-                        throw new InvalidOperationException("Cannot convert a calendar day reporting period to a calendar month reporting period when the reporting period start time is not the first day of a month.");
+                        return null;
                     }
 
                     var endAsCalendarDay = reportingPeriod.End as CalendarDay;
 
                     // ReSharper disable once PossibleNullReferenceException
                     var endMonth = new CalendarMonth(endAsCalendarDay.Year, endAsCalendarDay.MonthOfYear);
-                    if ((endMonth.GetLastCalendarDay() != endAsCalendarDay) &&  throwOnMisalignment)
+                    if ((endMonth.GetLastCalendarDay() != endAsCalendarDay) &&  returnNullOnMisalignment)
                     {
-                        throw new InvalidOperationException("Cannot convert a calendar day reporting period to a calendar month reporting period when the reporting period end time is not the last day of a month.");
+                        return null;
                     }
 
                     lessGranularReportingPeriod = new ReportingPeriod(startMonth, endMonth);
@@ -506,17 +506,17 @@ namespace OBeautifulCode.AccountingTime
                 var validStartMonths = new HashSet<int> { 1, 4, 7, 10 };
 
                 // ReSharper disable once PossibleNullReferenceException
-                if ((!validStartMonths.Contains((int)startAsMonth.MonthNumber)) && throwOnMisalignment)
+                if ((!validStartMonths.Contains((int)startAsMonth.MonthNumber)) && returnNullOnMisalignment)
                 {
-                    throw new InvalidOperationException("Cannot convert a monthly reporting period to a quarterly reporting period when the reporting period start time is not the first month of a recognized quarter.");
+                    return null;
                 }
 
                 var validEndMonths = new HashSet<int> { 3, 6, 9, 12 };
 
                 // ReSharper disable once PossibleNullReferenceException
-                if ((!validEndMonths.Contains((int)endAsMonth.MonthNumber)) && throwOnMisalignment)
+                if ((!validEndMonths.Contains((int)endAsMonth.MonthNumber)) && returnNullOnMisalignment)
                 {
-                    throw new InvalidOperationException("Cannot convert a monthly reporting period to a quarterly reporting period when the reporting period end time is not the last month of a recognized quarter.");
+                    return null;
                 }
 
                 var monthNumberToQuarterMap = new Dictionary<int, QuarterNumber>
@@ -570,15 +570,15 @@ namespace OBeautifulCode.AccountingTime
                 var endAsQuarter = reportingPeriod.End as IHaveAQuarter;
 
                 // ReSharper disable once PossibleNullReferenceException
-                if ((startAsQuarter.QuarterNumber != QuarterNumber.Q1) && throwOnMisalignment)
+                if ((startAsQuarter.QuarterNumber != QuarterNumber.Q1) && returnNullOnMisalignment)
                 {
-                    throw new InvalidOperationException("Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period start time is not Q1.");
+                    return null;
                 }
 
                 // ReSharper disable once PossibleNullReferenceException
-                if ((endAsQuarter.QuarterNumber != QuarterNumber.Q4) &&  throwOnMisalignment)
+                if ((endAsQuarter.QuarterNumber != QuarterNumber.Q4) &&  returnNullOnMisalignment)
                 {
-                    throw new InvalidOperationException("Cannot convert a quarterly reporting period to a yearly reporting period when the reporting period end is not Q4.");
+                    return null;
                 }
 
                 if (unitOfTimeKind == UnitOfTimeKind.Calendar)
@@ -620,7 +620,7 @@ namespace OBeautifulCode.AccountingTime
                 return lessGranularReportingPeriod;
             }
 
-            var result = MakeLessGranular(lessGranularReportingPeriod, granularity, throwOnMisalignment);
+            var result = MakeLessGranular(lessGranularReportingPeriod, granularity, returnNullOnMisalignment);
 
             return result;
         }

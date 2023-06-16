@@ -3290,7 +3290,6 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             results.ForEach(_ => _.Expected.Should().Be(_.Actual));
-            results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
         }
 
         [Fact]
