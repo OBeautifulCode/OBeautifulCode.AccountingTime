@@ -128,11 +128,15 @@
     <Compile Include="Models\Classes\Timeseries\Timeseries{T}.designer.cs">
       <DependentUpon>Timeseries{T}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Unit\UnitKindAssociation.cs" />
     <Compile Include="Models\Classes\Unit\Duration.designer.cs">
       <DependentUpon>Duration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Unit\Unit.designer.cs">
       <DependentUpon>Unit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\Unit\UnitKindAssociation.designer.cs">
+      <DependentUpon>UnitKindAssociation.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Interfaces\ICutoff.cs" />
     <Compile Include="Models\Interfaces\IHaveADay.cs" />

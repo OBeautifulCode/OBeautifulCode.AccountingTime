@@ -230,6 +230,20 @@ namespace OBeautifulCode.AccountingTime.Test
                     return result;
                 });
 
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var reportingPeriod1 = A.Dummy<ReportingPeriod>()
+                        .Whose(_ => !_.HasComponentWithUnboundedGranularity());
+
+                    var reportingPeriod2 = A.Dummy<ReportingPeriod>()
+                        .Whose(_ => (!_.HasComponentWithUnboundedGranularity()) && (_.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind()));
+
+                    var result = new UnitKindAssociation(reportingPeriod1, reportingPeriod2, A.Dummy<string>());
+
+                    return result;
+                });
+
             // ------------------------------------------------------------------------------------
             // --------------------------  reporting period wrappers ------------------------------
             // ------------------------------------------------------------------------------------

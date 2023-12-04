@@ -23,15 +23,15 @@ namespace OBeautifulCode.AccountingTime
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class FiftyTwoFiftyThreeWeekAccountingPeriodSystem : IModel<FiftyTwoFiftyThreeWeekAccountingPeriodSystem>
+    public partial class UnitKindAssociation : IModel<UnitKindAssociation>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem"/> are equal.
+        /// Determines whether two objects of type <see cref="UnitKindAssociation"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(FiftyTwoFiftyThreeWeekAccountingPeriodSystem left, FiftyTwoFiftyThreeWeekAccountingPeriodSystem right)
+        public static bool operator ==(UnitKindAssociation left, UnitKindAssociation right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -49,15 +49,15 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem"/> are not equal.
+        /// Determines whether two objects of type <see cref="UnitKindAssociation"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(FiftyTwoFiftyThreeWeekAccountingPeriodSystem left, FiftyTwoFiftyThreeWeekAccountingPeriodSystem right) => !(left == right);
+        public static bool operator !=(UnitKindAssociation left, UnitKindAssociation right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(FiftyTwoFiftyThreeWeekAccountingPeriodSystem other)
+        public bool Equals(UnitKindAssociation other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -69,130 +69,129 @@ namespace OBeautifulCode.AccountingTime
                 return false;
             }
 
-            var result = this.LastDayOfWeekInAccountingYear.IsEqualTo(other.LastDayOfWeekInAccountingYear)
-                      && this.AnchorMonth.IsEqualTo(other.AnchorMonth)
-                      && this.FiftyTwoFiftyThreeWeekMethodology.IsEqualTo(other.FiftyTwoFiftyThreeWeekMethodology);
+            var result = this.ReportingPeriod1.IsEqualTo(other.ReportingPeriod1)
+                      && this.ReportingPeriod2.IsEqualTo(other.ReportingPeriod2)
+                      && this.Id.IsEqualTo(other.Id, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as FiftyTwoFiftyThreeWeekAccountingPeriodSystem);
+        public override bool Equals(object obj) => this == (obj as UnitKindAssociation);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.LastDayOfWeekInAccountingYear)
-            .Hash(this.AnchorMonth)
-            .Hash(this.FiftyTwoFiftyThreeWeekMethodology)
+            .Hash(this.ReportingPeriod1)
+            .Hash(this.ReportingPeriod2)
+            .Hash(this.Id)
             .Value;
 
         /// <inheritdoc />
-        public new FiftyTwoFiftyThreeWeekAccountingPeriodSystem DeepClone() => (FiftyTwoFiftyThreeWeekAccountingPeriodSystem)this.DeepCloneInternal();
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="LastDayOfWeekInAccountingYear" />.
-        /// </summary>
-        /// <param name="lastDayOfWeekInAccountingYear">The new <see cref="LastDayOfWeekInAccountingYear" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem" /> using the specified <paramref name="lastDayOfWeekInAccountingYear" /> for <see cref="LastDayOfWeekInAccountingYear" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public FiftyTwoFiftyThreeWeekAccountingPeriodSystem DeepCloneWithLastDayOfWeekInAccountingYear(DayOfWeek lastDayOfWeekInAccountingYear)
-        {
-            var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
-                                 lastDayOfWeekInAccountingYear,
-                                 this.AnchorMonth.DeepClone(),
-                                 this.FiftyTwoFiftyThreeWeekMethodology.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="AnchorMonth" />.
-        /// </summary>
-        /// <param name="anchorMonth">The new <see cref="AnchorMonth" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem" /> using the specified <paramref name="anchorMonth" /> for <see cref="AnchorMonth" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public FiftyTwoFiftyThreeWeekAccountingPeriodSystem DeepCloneWithAnchorMonth(MonthOfYear anchorMonth)
-        {
-            var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
-                                 this.LastDayOfWeekInAccountingYear.DeepClone(),
-                                 anchorMonth,
-                                 this.FiftyTwoFiftyThreeWeekMethodology.DeepClone());
-
-            return result;
-        }
-
-        /// <summary>
-        /// Deep clones this object with a new <see cref="FiftyTwoFiftyThreeWeekMethodology" />.
-        /// </summary>
-        /// <param name="fiftyTwoFiftyThreeWeekMethodology">The new <see cref="FiftyTwoFiftyThreeWeekMethodology" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="FiftyTwoFiftyThreeWeekAccountingPeriodSystem" /> using the specified <paramref name="fiftyTwoFiftyThreeWeekMethodology" /> for <see cref="FiftyTwoFiftyThreeWeekMethodology" /> and a deep clone of every other property.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public FiftyTwoFiftyThreeWeekAccountingPeriodSystem DeepCloneWithFiftyTwoFiftyThreeWeekMethodology(FiftyTwoFiftyThreeWeekMethodology fiftyTwoFiftyThreeWeekMethodology)
-        {
-            var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
-                                 this.LastDayOfWeekInAccountingYear.DeepClone(),
-                                 this.AnchorMonth.DeepClone(),
-                                 fiftyTwoFiftyThreeWeekMethodology);
-
-            return result;
-        }
+        public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        protected override AccountingPeriodSystem DeepCloneInternal()
+        public UnitKindAssociation DeepClone()
         {
-            var result = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
-                                 this.LastDayOfWeekInAccountingYear.DeepClone(),
-                                 this.AnchorMonth.DeepClone(),
-                                 this.FiftyTwoFiftyThreeWeekMethodology.DeepClone());
+            var result = new UnitKindAssociation(
+                                 this.ReportingPeriod1?.DeepClone(),
+                                 this.ReportingPeriod2?.DeepClone(),
+                                 this.Id?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="ReportingPeriod1" />.
+        /// </summary>
+        /// <param name="reportingPeriod1">The new <see cref="ReportingPeriod1" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="UnitKindAssociation" /> using the specified <paramref name="reportingPeriod1" /> for <see cref="ReportingPeriod1" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public UnitKindAssociation DeepCloneWithReportingPeriod1(ReportingPeriod reportingPeriod1)
+        {
+            var result = new UnitKindAssociation(
+                                 reportingPeriod1,
+                                 this.ReportingPeriod2?.DeepClone(),
+                                 this.Id?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="ReportingPeriod2" />.
+        /// </summary>
+        /// <param name="reportingPeriod2">The new <see cref="ReportingPeriod2" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="UnitKindAssociation" /> using the specified <paramref name="reportingPeriod2" /> for <see cref="ReportingPeriod2" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public UnitKindAssociation DeepCloneWithReportingPeriod2(ReportingPeriod reportingPeriod2)
+        {
+            var result = new UnitKindAssociation(
+                                 this.ReportingPeriod1?.DeepClone(),
+                                 reportingPeriod2,
+                                 this.Id?.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="Id" />.
+        /// </summary>
+        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="UnitKindAssociation" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public UnitKindAssociation DeepCloneWithId(string id)
+        {
+            var result = new UnitKindAssociation(
+                                 this.ReportingPeriod1?.DeepClone(),
+                                 this.ReportingPeriod2?.DeepClone(),
+                                 id);
 
             return result;
         }
@@ -201,7 +200,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.AccountingTime.FiftyTwoFiftyThreeWeekAccountingPeriodSystem: LastDayOfWeekInAccountingYear = {this.LastDayOfWeekInAccountingYear.ToString() ?? "<null>"}, AnchorMonth = {this.AnchorMonth.ToString() ?? "<null>"}, FiftyTwoFiftyThreeWeekMethodology = {this.FiftyTwoFiftyThreeWeekMethodology.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.AccountingTime.UnitKindAssociation: ReportingPeriod1 = {this.ReportingPeriod1?.ToString() ?? "<null>"}, ReportingPeriod2 = {this.ReportingPeriod2?.ToString() ?? "<null>"}, Id = {this.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

@@ -351,6 +351,10 @@
     <Compile Include="Models\Classes\Timeseries\Timeseries{T}Test.designer.cs">
       <DependentUpon>Timeseries{T}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\Unit\UnitKindAssociationTest.cs" />
+    <Compile Include="Models\Classes\Unit\UnitKindAssociationTest.designer.cs">
+      <DependentUpon>UnitKindAssociationTest.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />

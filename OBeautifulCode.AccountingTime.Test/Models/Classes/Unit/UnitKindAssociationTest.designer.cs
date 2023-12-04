@@ -33,103 +33,257 @@ namespace OBeautifulCode.AccountingTime.Test
 
     using static global::System.FormattableString;
 
-    public static partial class FixedCutoffTest
+    public static partial class UnitKindAssociationTest
     {
-        private static readonly StringRepresentationTestScenarios<FixedCutoff> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<FixedCutoff>()
+        private static readonly StringRepresentationTestScenarios<UnitKindAssociation> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<UnitKindAssociation>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<FixedCutoff>
+                new StringRepresentationTestScenario<UnitKindAssociation>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<FixedCutoff>();
+                        var systemUnderTest = A.Dummy<UnitKindAssociation>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<FixedCutoff>
+                        var result = new SystemUnderTestExpectedStringRepresentation<UnitKindAssociation>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.FixedCutoff: UnitOfTime = {systemUnderTest.UnitOfTime?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.UnitKindAssociation: ReportingPeriod1 = {systemUnderTest.ReportingPeriod1?.ToString() ?? "<null>"}, ReportingPeriod2 = {systemUnderTest.ReportingPeriod2?.ToString() ?? "<null>"}, Id = {systemUnderTest.Id?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<FixedCutoff> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<FixedCutoff>()
+        private static readonly ConstructorArgumentValidationTestScenarios<UnitKindAssociation> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<UnitKindAssociation>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<FixedCutoff>
+                new ConstructorArgumentValidationTestScenario<UnitKindAssociation>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'unitOfTime' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'reportingPeriod1' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new FixedCutoff(
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new UnitKindAssociation(
+                                             null,
+                                             referenceObject.ReportingPeriod2,
+                                             referenceObject.Id);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "reportingPeriod1", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<UnitKindAssociation>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'reportingPeriod2' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new UnitKindAssociation(
+                                             referenceObject.ReportingPeriod1,
+                                             null,
+                                             referenceObject.Id);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentNullException),
+                    ExpectedExceptionMessageContains = new[] { "reportingPeriod2", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<UnitKindAssociation>
+                {
+                    Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new UnitKindAssociation(
+                                             referenceObject.ReportingPeriod1,
+                                             referenceObject.ReportingPeriod2,
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "unitOfTime", },
+                    ExpectedExceptionMessageContains = new[] { "id", },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<UnitKindAssociation>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'id' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new UnitKindAssociation(
+                                             referenceObject.ReportingPeriod1,
+                                             referenceObject.ReportingPeriod2,
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "id", "white space", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<FixedCutoff> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<FixedCutoff>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<UnitKindAssociation> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<UnitKindAssociation>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<FixedCutoff>
+                new ConstructorPropertyAssignmentTestScenario<UnitKindAssociation>
                 {
-                    Name = "UnitOfTime should return same 'unitOfTime' parameter passed to constructor when getting",
+                    Name = "ReportingPeriod1 should return same 'reportingPeriod1' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<FixedCutoff>();
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<FixedCutoff>
+                        var result = new SystemUnderTestExpectedPropertyValue<UnitKindAssociation>
                         {
-                            SystemUnderTest = new FixedCutoff(
-                                                      referenceObject.UnitOfTime),
-                            ExpectedPropertyValue = referenceObject.UnitOfTime,
+                            SystemUnderTest = new UnitKindAssociation(
+                                                      referenceObject.ReportingPeriod1,
+                                                      referenceObject.ReportingPeriod2,
+                                                      referenceObject.Id),
+                            ExpectedPropertyValue = referenceObject.ReportingPeriod1,
                         };
 
                         return result;
                     },
-                    PropertyName = "UnitOfTime",
+                    PropertyName = "ReportingPeriod1",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<UnitKindAssociation>
+                {
+                    Name = "ReportingPeriod2 should return same 'reportingPeriod2' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<UnitKindAssociation>
+                        {
+                            SystemUnderTest = new UnitKindAssociation(
+                                                      referenceObject.ReportingPeriod1,
+                                                      referenceObject.ReportingPeriod2,
+                                                      referenceObject.Id),
+                            ExpectedPropertyValue = referenceObject.ReportingPeriod2,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "ReportingPeriod2",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<UnitKindAssociation>
+                {
+                    Name = "Id should return same 'id' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<UnitKindAssociation>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<UnitKindAssociation>
+                        {
+                            SystemUnderTest = new UnitKindAssociation(
+                                                      referenceObject.ReportingPeriod1,
+                                                      referenceObject.ReportingPeriod2,
+                                                      referenceObject.Id),
+                            ExpectedPropertyValue = referenceObject.Id,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "Id",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<FixedCutoff> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<FixedCutoff>()
+        private static readonly DeepCloneWithTestScenarios<UnitKindAssociation> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<UnitKindAssociation>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<FixedCutoff>
+                new DeepCloneWithTestScenario<UnitKindAssociation>
                 {
-                    Name = "DeepCloneWithUnitOfTime should deep clone object and replace UnitOfTime with the provided unitOfTime",
-                    WithPropertyName = "UnitOfTime",
+                    Name = "DeepCloneWithReportingPeriod1 should deep clone object and replace ReportingPeriod1 with the provided reportingPeriod1",
+                    WithPropertyName = "ReportingPeriod1",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<FixedCutoff>();
+                        var systemUnderTest = A.Dummy<UnitKindAssociation>();
 
-                        var referenceObject = A.Dummy<FixedCutoff>().ThatIs(_ => !systemUnderTest.UnitOfTime.IsEqualTo(_.UnitOfTime));
+                        var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => !systemUnderTest.ReportingPeriod1.IsEqualTo(_.ReportingPeriod1));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<FixedCutoff>
+                        var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.UnitOfTime,
+                            DeepCloneWithValue = referenceObject.ReportingPeriod1,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<UnitKindAssociation>
+                {
+                    Name = "DeepCloneWithReportingPeriod2 should deep clone object and replace ReportingPeriod2 with the provided reportingPeriod2",
+                    WithPropertyName = "ReportingPeriod2",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<UnitKindAssociation>();
+
+                        var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => !systemUnderTest.ReportingPeriod2.IsEqualTo(_.ReportingPeriod2));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.ReportingPeriod2,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<UnitKindAssociation>
+                {
+                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                    WithPropertyName = "Id",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<UnitKindAssociation>();
+
+                        var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Id,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly FixedCutoff ReferenceObjectForEquatableTestScenarios = A.Dummy<FixedCutoff>();
+        private static readonly UnitKindAssociation ReferenceObjectForEquatableTestScenarios = A.Dummy<UnitKindAssociation>();
 
-        private static readonly EquatableTestScenarios<FixedCutoff> EquatableTestScenarios = new EquatableTestScenarios<FixedCutoff>()
+        private static readonly EquatableTestScenarios<UnitKindAssociation> EquatableTestScenarios = new EquatableTestScenarios<UnitKindAssociation>()
             .AddScenario(() =>
-                new EquatableTestScenario<FixedCutoff>
+                new EquatableTestScenario<UnitKindAssociation>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new FixedCutoff[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UnitKindAssociation[]
                     {
-                        new FixedCutoff(
-                                ReferenceObjectForEquatableTestScenarios.UnitOfTime),
+                        new UnitKindAssociation(
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                ReferenceObjectForEquatableTestScenarios.Id),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new FixedCutoff[]
+                    ObjectsThatAreNotEqualToReferenceObject = new UnitKindAssociation[]
                     {
-                        new FixedCutoff(
-                                A.Dummy<FixedCutoff>().Whose(_ => !_.UnitOfTime.IsEqualTo(ReferenceObjectForEquatableTestScenarios.UnitOfTime)).UnitOfTime),
+                        new UnitKindAssociation(
+                                A.Dummy<UnitKindAssociation>().Whose(_ => !_.ReportingPeriod1.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReportingPeriod1)).ReportingPeriod1,
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                ReferenceObjectForEquatableTestScenarios.Id),
+                        new UnitKindAssociation(
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                A.Dummy<UnitKindAssociation>().Whose(_ => !_.ReportingPeriod2.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReportingPeriod2)).ReportingPeriod2,
+                                ReferenceObjectForEquatableTestScenarios.Id),
+                        new UnitKindAssociation(
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                A.Dummy<UnitKindAssociation>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -138,7 +292,6 @@ namespace OBeautifulCode.AccountingTime.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<RelativeCutoff>(),
                     },
                 });
 
@@ -160,12 +313,12 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void FixedCutoff___Should_implement_IModel_of_FixedCutoff___When_reflecting()
+            public static void UnitKindAssociation___Should_implement_IModel_of_UnitKindAssociation___When_reflecting()
             {
                 // Arrange
-                var type = typeof(FixedCutoff);
+                var type = typeof(UnitKindAssociation);
 
-                var expectedModelMethods = typeof(IModel<FixedCutoff>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<UnitKindAssociation>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -175,7 +328,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<FixedCutoff>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<UnitKindAssociation>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -193,10 +346,10 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void FixedCutoff___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void UnitKindAssociation___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(FixedCutoff);
+                var type = typeof(UnitKindAssociation);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -376,10 +529,10 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<FixedCutoff>();
+                var systemUnderTest = A.Dummy<UnitKindAssociation>();
 
                 // Act
-                var actual = (FixedCutoff)systemUnderTest.Clone();
+                var actual = (UnitKindAssociation)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -403,7 +556,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<FixedCutoff>();
+                var systemUnderTest = A.Dummy<UnitKindAssociation>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -412,16 +565,28 @@ namespace OBeautifulCode.AccountingTime.Test
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
 
-                if (systemUnderTest.UnitOfTime == null)
+                if (systemUnderTest.ReportingPeriod1 == null)
                 {
-                    actual.UnitOfTime.AsTest().Must().BeNull();
+                    actual.ReportingPeriod1.AsTest().Must().BeNull();
                 }
-                else if (!actual.UnitOfTime.GetType().IsValueType)
+                else if (!actual.ReportingPeriod1.GetType().IsValueType)
                 {
                     // When the declared type is a reference type, we still have to check the runtime type.
                     // The object could be a boxed value type, which will fail this asseration because
                     // a deep clone of a value type object is the same object.
-                    actual.UnitOfTime.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.UnitOfTime);
+                    actual.ReportingPeriod1.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ReportingPeriod1);
+                }
+
+                if (systemUnderTest.ReportingPeriod2 == null)
+                {
+                    actual.ReportingPeriod2.AsTest().Must().BeNull();
+                }
+                else if (!actual.ReportingPeriod2.GetType().IsValueType)
+                {
+                    // When the declared type is a reference type, we still have to check the runtime type.
+                    // The object could be a boxed value type, which will fail this asseration because
+                    // a deep clone of a value type object is the same object.
+                    actual.ReportingPeriod2.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ReportingPeriod2);
                 }
             }
 
@@ -441,7 +606,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "UnitOfTime" };
+                var propertyNames = new string[] { "ReportingPeriod1", "ReportingPeriod2", "Id" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -454,12 +619,12 @@ namespace OBeautifulCode.AccountingTime.Test
                     }
 
                     // Act
-                    var actual = (FixedCutoff)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (UnitKindAssociation)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(FixedCutoff).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(UnitKindAssociation).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var actualPropertyValue = propertyInfo.GetValue(actual);
 
@@ -521,7 +686,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<FixedCutoff>();
+                var expected = A.Dummy<UnitKindAssociation>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -550,7 +715,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<FixedCutoff>();
+                var expected = A.Dummy<UnitKindAssociation>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -579,7 +744,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<FixedCutoff>();
+                var expected = A.Dummy<UnitKindAssociation>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -608,7 +773,7 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<FixedCutoff>();
+                var expected = A.Dummy<UnitKindAssociation>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -642,8 +807,8 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                FixedCutoff systemUnderTest1 = null;
-                FixedCutoff systemUnderTest2 = null;
+                UnitKindAssociation systemUnderTest1 = null;
+                UnitKindAssociation systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -673,7 +838,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    FixedCutoff systemUnderTest = null;
+                    UnitKindAssociation systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -822,8 +987,8 @@ namespace OBeautifulCode.AccountingTime.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                FixedCutoff systemUnderTest1 = null;
-                FixedCutoff systemUnderTest2 = null;
+                UnitKindAssociation systemUnderTest1 = null;
+                UnitKindAssociation systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -853,7 +1018,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    FixedCutoff systemUnderTest = null;
+                    UnitKindAssociation systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -999,157 +1164,14 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CutoffBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_UnitKindAssociation___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    CutoffBase systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((CutoffBase)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CutoffBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((CutoffBase)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CutoffBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CutoffBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CutoffBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CutoffBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_CutoffBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((CutoffBase)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_FixedCutoff___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    FixedCutoff systemUnderTest = null;
+                    UnitKindAssociation systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1173,7 +1195,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_FixedCutoff___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_UnitKindAssociation___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1201,7 +1223,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_FixedCutoff___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_UnitKindAssociation___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1229,7 +1251,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_FixedCutoff___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_UnitKindAssociation___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1257,7 +1279,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_FixedCutoff___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_UnitKindAssociation___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
