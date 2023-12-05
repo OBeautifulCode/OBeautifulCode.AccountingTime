@@ -16,6 +16,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Equality.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -120,6 +121,108 @@ namespace OBeautifulCode.AccountingTime.Test
                         },
                         ExpectedExceptionType = typeof(ArgumentException),
                         ExpectedExceptionMessageContains = new[] { "The specified reporting periods have the same UnitOfTimeKind", },
+                    });
+
+            EquatableTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new EquatableTestScenario<UnitKindAssociation>
+                    {
+                        Name = "Fix Default Code Generated Scenario",
+                        ReferenceObject = ReferenceObjectForEquatableTestScenarios,
+                        ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new UnitKindAssociation[]
+                        {
+                                new UnitKindAssociation(
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                        ReferenceObjectForEquatableTestScenarios.Id),
+                        },
+                        ObjectsThatAreNotEqualToReferenceObject = new UnitKindAssociation[]
+                        {
+                                new UnitKindAssociation(
+                                        A.Dummy<UnitKindAssociation>().Whose(_ => !_.ReportingPeriod1.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReportingPeriod1) && (_.ReportingPeriod1.GetUnitOfTimeKind() != ReferenceObjectForEquatableTestScenarios.ReportingPeriod2.GetUnitOfTimeKind())).ReportingPeriod1,
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                        ReferenceObjectForEquatableTestScenarios.Id),
+                                new UnitKindAssociation(
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                        A.Dummy<UnitKindAssociation>().Whose(_ => !_.ReportingPeriod2.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ReportingPeriod2) && (_.ReportingPeriod2.GetUnitOfTimeKind() != ReferenceObjectForEquatableTestScenarios.ReportingPeriod1.GetUnitOfTimeKind())).ReportingPeriod2,
+                                        ReferenceObjectForEquatableTestScenarios.Id),
+                                new UnitKindAssociation(
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod1,
+                                        ReferenceObjectForEquatableTestScenarios.ReportingPeriod2,
+                                        A.Dummy<UnitKindAssociation>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id),
+                        },
+                        ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
+                        {
+                                A.Dummy<object>(),
+                                A.Dummy<string>(),
+                                A.Dummy<int>(),
+                                A.Dummy<int?>(),
+                                A.Dummy<Guid>(),
+                        },
+                    });
+
+            DeepCloneWithTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<UnitKindAssociation>
+                    {
+                        Name = "DeepCloneWithReportingPeriod1 should deep clone object and replace ReportingPeriod1 with the provided reportingPeriod1",
+                        WithPropertyName = "ReportingPeriod1",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<UnitKindAssociation>();
+
+                            var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => (!systemUnderTest.ReportingPeriod1.IsEqualTo(_.ReportingPeriod1)) && (_.ReportingPeriod1.GetUnitOfTimeKind() != systemUnderTest.ReportingPeriod2.GetUnitOfTimeKind()));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.ReportingPeriod1,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<UnitKindAssociation>
+                    {
+                        Name = "DeepCloneWithReportingPeriod2 should deep clone object and replace ReportingPeriod2 with the provided reportingPeriod2",
+                        WithPropertyName = "ReportingPeriod2",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<UnitKindAssociation>();
+
+                            var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => (!systemUnderTest.ReportingPeriod2.IsEqualTo(_.ReportingPeriod2)) && (_.ReportingPeriod2.GetUnitOfTimeKind() != systemUnderTest.ReportingPeriod1.GetUnitOfTimeKind()));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.ReportingPeriod2,
+                            };
+
+                            return result;
+                        },
+                    })
+                .AddScenario(() =>
+                    new DeepCloneWithTestScenario<UnitKindAssociation>
+                    {
+                        Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                        WithPropertyName = "Id",
+                        SystemUnderTestDeepCloneWithValueFunc = () =>
+                        {
+                            var systemUnderTest = A.Dummy<UnitKindAssociation>();
+
+                            var referenceObject = A.Dummy<UnitKindAssociation>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                            var result = new SystemUnderTestDeepCloneWithValue<UnitKindAssociation>
+                            {
+                                SystemUnderTest = systemUnderTest,
+                                DeepCloneWithValue = referenceObject.Id,
+                            };
+
+                            return result;
+                        },
                     });
         }
     }
