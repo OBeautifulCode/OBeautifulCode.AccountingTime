@@ -9,16 +9,52 @@ namespace OBeautifulCode.AccountingTime.Test
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-
+    using System.Linq;
     using FakeItEasy;
-
     using FluentAssertions;
-
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
+        [Fact]
+        public static void GetUnit___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetUnit(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetUnit___Should_return_corresponding_unit___When_called()
+        {
+            // Arrange
+            var unitOfTimeAndExpected = new Dictionary<UnitOfTime, Unit>
+            {
+                { A.Dummy<CalendarDay>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Day) },
+                { A.Dummy<CalendarMonth>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Month) },
+                { A.Dummy<CalendarQuarter>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<CalendarYear>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Year) },
+                { A.Dummy<CalendarUnbounded>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<FiscalMonth>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month) },
+                { A.Dummy<FiscalQuarter>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<FiscalYear>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Year) },
+                { A.Dummy<FiscalUnbounded>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<GenericMonth>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Month) },
+                { A.Dummy<GenericQuarter>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<GenericYear>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Year) },
+                { A.Dummy<GenericUnbounded>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Unbounded) },
+            };
+
+            // Act
+            var unitOfTimeGranularity = unitOfTimeAndExpected.Select(_ => new { Actual = _.Key.GetUnit(), Expected = _.Value }).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
         [Fact]
         public static void GetFirstCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {

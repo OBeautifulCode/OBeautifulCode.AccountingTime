@@ -17,6 +17,33 @@ namespace OBeautifulCode.AccountingTime
     public static partial class ReportingPeriodExtensions
     {
         /// <summary>
+        /// Gets the <see cref="Unit"/> of a <see cref="ReportingPeriod"/>.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The corresponding <see cref="Unit"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod.Start"/> and <see cref="ReportingPeriod.End"/> has different granularity.</exception>
+        public static Unit GetUnit(
+            this ReportingPeriod reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} Start and End has different granularity."));
+            }
+
+            var result = reportingPeriod.Start.GetUnit();
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the granularity of the unit-of-time used in a reporting period.
         /// </summary>
         /// <param name="reportingPeriod">The reporting period.</param>

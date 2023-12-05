@@ -84,6 +84,27 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Gets the <see cref="Unit"/> of a <see cref="UnitOfTime"/>.
+        /// </summary>
+        /// <param name="unitOfTime">The unit of time.</param>
+        /// <returns>
+        /// The corresponding <see cref="Unit"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
+        public static Unit GetUnit(
+            this UnitOfTime unitOfTime)
+        {
+            if (unitOfTime == null)
+            {
+                throw new ArgumentNullException(nameof(unitOfTime));
+            }
+
+            var result = new Unit(unitOfTime.UnitOfTimeKind, unitOfTime.UnitOfTimeGranularity);
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets a list with the first <typeparamref name="T"/> in the same year as <paramref name="lastUnitOfTimeInYear"/>,
         /// up to and including <paramref name="lastUnitOfTimeInYear"/>, in sequential/ascending order.
         /// </summary>

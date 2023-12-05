@@ -23,6 +23,67 @@ namespace OBeautifulCode.AccountingTime.Test
     public static partial class ReportingPeriodExtensionsTest
     {
         [Fact]
+        public static void GetUnit___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.GetUnit(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all flavors of unit-of-time")]
+        public static void GetUnit___Should_throw_ArgumentException___When_reportingPeriod_Start_and_End_has_different_granularity()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Calendar) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Fiscal) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.GetUnitOfTimeKind() == UnitOfTimeKind.Generic) && (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+            };
+
+            // Act
+            var unitOfTimeGranularity = reportingPeriods.Select(_ => Record.Exception(() => _.GetUnit())).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Should().BeOfType<ArgumentException>());
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Need to test all flavors of unit-of-time")]
+        public static void GetUnit___Should_return_the_unit_of_the_reporting_period___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new Dictionary<ReportingPeriod, Unit>
+            {
+                { A.Dummy<CalendarDayReportingPeriod>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Day) },
+                { A.Dummy<CalendarMonthReportingPeriod>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Month) },
+                { A.Dummy<CalendarQuarterReportingPeriod>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<CalendarYearReportingPeriod>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Year) },
+                { A.Dummy<CalendarUnboundedReportingPeriod>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<FiscalMonthReportingPeriod>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month) },
+                { A.Dummy<FiscalQuarterReportingPeriod>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<FiscalYearReportingPeriod>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Year) },
+                { A.Dummy<FiscalUnboundedReportingPeriod>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<GenericMonthReportingPeriod>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Month) },
+                { A.Dummy<GenericQuarterReportingPeriod>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<GenericYearReportingPeriod>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Year) },
+                { A.Dummy<GenericUnboundedReportingPeriod>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Unbounded) },
+            };
+
+            // Act
+            var unitOfTimeGranularity = reportingPeriods.Select(_ => new { Actual = _.Key.GetUnit(), Expected = _.Value }).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
         public static void GetUnitOfTimeGranularity___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act
