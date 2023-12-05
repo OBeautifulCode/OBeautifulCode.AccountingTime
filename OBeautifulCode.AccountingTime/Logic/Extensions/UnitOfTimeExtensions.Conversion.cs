@@ -192,6 +192,7 @@ namespace OBeautifulCode.AccountingTime
         /// <returns>
         /// A reporting period that addresses the same set of time as <paramref name="unitOfTime"/>,
         /// but is the most granular version possible of that unit-of-time.
+        /// An unbounded unit of time is returned as a reporting period with an unbounded start and end.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
         public static ReportingPeriod ToMostGranular(

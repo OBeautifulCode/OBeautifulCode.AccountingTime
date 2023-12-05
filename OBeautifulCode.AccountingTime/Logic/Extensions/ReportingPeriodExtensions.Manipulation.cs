@@ -219,10 +219,13 @@ namespace OBeautifulCode.AccountingTime
         /// Converts the the specified reporting period into the most
         /// granular possible, but equivalent, reporting period.
         /// </summary>
-        /// <param name="reportingPeriod">The reporting period to operate on.</param>
+        /// <param name="reportingPeriod">The reporting period to convert.</param>
         /// <returns>
         /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
         /// but is the most granular version possible of that reporting period.
+        /// A reporting period whose start and end are both unbounded will be returned as-is.
+        /// A reporting period with one unbounded and one bounded component will have it's bounded
+        /// component converted (e.g. Unbounded to CalendarYear 2017 will be converted to Unbounded to 12/31/2017).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static ReportingPeriod ToMostGranular(
@@ -242,15 +245,16 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Converts the the specified reporting period into the least
+        /// Converts the specified reporting period into the least
         /// granular possible, but equivalent, reporting period.
         /// </summary>
-        /// <param name="reportingPeriod">The reporting period to operate on.</param>
+        /// <param name="reportingPeriod">The reporting period to convert.</param>
         /// <returns>
         /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
         /// but is the least granular version possible of that reporting period.
-        /// Any reporting period with one unbounded and one bounded component will be returned
-        /// as-is (e.g. Unbounded to 12/31/2017 will not be converted to Unbounded to CalendarYear 2017).
+        /// A reporting period whose start and end are both unbounded will be returned as-is.
+        /// A reporting period with one unbounded and one bounded component will be returned
+        /// as-is (e.g. Unbounded to 12/31/2017 will NOT be converted to Unbounded to CalendarYear 2017).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static ReportingPeriod ToLeastGranular(
