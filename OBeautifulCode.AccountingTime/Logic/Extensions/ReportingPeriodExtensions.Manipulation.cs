@@ -261,23 +261,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(reportingPeriod));
             }
 
-            ReportingPeriod result;
-            if (reportingPeriod.HasComponentWithUnboundedGranularity())
-            {
-                result = reportingPeriod;
-            }
-            else
-            {
-                var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
-                if (targetGranularity == UnitOfTimeGranularity.Unbounded)
-                {
-                    result = reportingPeriod;
-                }
-                else
-                {
-                    result = reportingPeriod.MakeLessGranular(targetGranularity)?.ToLeastGranular() ?? reportingPeriod;
-                }
-            }
+            var result = reportingPeriod.MakeOneNotchLessGranular();
+
+            result = result == null ? reportingPeriod : result.ToLeastGranular();
 
             return result;
         }
@@ -431,6 +417,23 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = moreGranularReportingPeriod.MakeMoreGranular(granularity);
+
+            return result;
+        }
+
+        private static ReportingPeriod MakeOneNotchLessGranular(
+            this ReportingPeriod reportingPeriod)
+        {
+            ReportingPeriod result = null;
+
+            if (!reportingPeriod.HasComponentWithUnboundedGranularity())
+            {
+                var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
+
+                result = targetGranularity == UnitOfTimeGranularity.Unbounded
+                    ? null
+                    : reportingPeriod.MakeLessGranular(targetGranularity);
+            }
 
             return result;
         }
