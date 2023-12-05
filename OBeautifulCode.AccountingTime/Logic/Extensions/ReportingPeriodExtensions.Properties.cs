@@ -98,7 +98,7 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="ReportingPeriod.Start"/> and/or <see cref="ReportingPeriod.End"/> is unbounded.</exception>
-        public static IReadOnlyList<UnitOfTime> GetUnitsWithin(
+        public static IReadOnlyList<UnitOfTime> GetUnitsOfTimeWithin(
             this ReportingPeriod reportingPeriod)
         {
             if (reportingPeriod == null)

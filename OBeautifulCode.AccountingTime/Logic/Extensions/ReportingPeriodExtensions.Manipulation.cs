@@ -104,7 +104,7 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(Invariant($"'{nameof(maxUnitsInAnyReportingPeriod)}' < '{1}'"), (Exception)null);
             }
 
-            var allUnits = reportingPeriod.GetUnitsWithin();
+            var allUnits = reportingPeriod.GetUnitsOfTimeWithin();
 
             var result = new List<ReportingPeriod>();
 
@@ -185,11 +185,11 @@ namespace OBeautifulCode.AccountingTime
 
             if (reportingPeriodGranularity == granularity)
             {
-                result = reportingPeriod.GetUnitsWithin();
+                result = reportingPeriod.GetUnitsOfTimeWithin();
             }
             else if (reportingPeriodGranularity.IsLessGranularThan(granularity))
             {
-                result = reportingPeriod.MakeMoreGranular(granularity).GetUnitsWithin();
+                result = reportingPeriod.MakeMoreGranular(granularity).GetUnitsOfTimeWithin();
             }
             else
             {
@@ -203,7 +203,7 @@ namespace OBeautifulCode.AccountingTime
                 }
                 else
                 {
-                    result = lessGranularReportingPeriod.GetUnitsWithin();
+                    result = lessGranularReportingPeriod.GetUnitsOfTimeWithin();
 
                     if (overflowStrategy == OverflowStrategy.DiscardOverflow)
                     {

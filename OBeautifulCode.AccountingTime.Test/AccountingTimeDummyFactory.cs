@@ -599,7 +599,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     // Completely bounded; get the units within
                     datapoints = reportingPeriod
-                        .GetUnitsWithin()
+                        .GetUnitsOfTimeWithin()
                         .Select(_ => _.ToReportingPeriod())
                         .Select(_ => new Datapoint<T>(_, A.Dummy<T>()))
                         .ToList();
@@ -674,7 +674,7 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Most likely will result in a gap in the timeseries and also possibly datapoints in different granularity.
             var adjacentDatapoints = adjacentReportingPeriod
-                .GetUnitsWithin()
+                .GetUnitsOfTimeWithin()
                 .Select(_ => _.ToReportingPeriod())
                 .Select(_ => new Datapoint<T>(_, A.Dummy<T>()))
                 .ToList();
