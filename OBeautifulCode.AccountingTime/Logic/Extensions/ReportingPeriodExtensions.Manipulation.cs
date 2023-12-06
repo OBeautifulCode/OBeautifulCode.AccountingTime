@@ -148,6 +148,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Unbounded"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="overflowStrategy"/> is not <see cref="OverflowStrategy.ThrowOnOverflow"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriod"/> <see cref="UnitOfTimeKind"/> cannot be converted into <paramref name="granularity"/>.</exception>
         /// <exception cref="InvalidOperationException">There was some overflow when splitting.</exception>
         public static IReadOnlyList<UnitOfTime> Split(
             this ReportingPeriod reportingPeriod,
@@ -469,6 +470,7 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
+
             if (reportingPeriodGranularity.IsAsGranularOrLessGranularThan(granularity))
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or less granular than {nameof(granularity)}."));
@@ -499,6 +501,10 @@ namespace OBeautifulCode.AccountingTime
                     }
 
                     lessGranularReportingPeriod = new ReportingPeriod(startMonth, endMonth);
+                }
+                else if ((unitOfTimeKind == UnitOfTimeKind.Fiscal) || (unitOfTimeKind == UnitOfTimeKind.Generic))
+                {
+                    throw new ArgumentException(Invariant($"{unitOfTimeKind} time cannot be converted into {UnitOfTimeGranularity.Day} granularity."));
                 }
                 else
                 {

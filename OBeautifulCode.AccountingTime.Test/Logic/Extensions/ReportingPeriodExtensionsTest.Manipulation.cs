@@ -1609,7 +1609,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void Split___Should_throw_NotSupportedException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
+        public static void Split___Should_throw_ArgumentException___When_overflowStrategy_is_ThrowOnOverflow_and_reportingPeriod_is_in_FiscalYear_and_granularity_is_Day()
         {
             // Arrange
             var reportingPeriods = new[]
@@ -1622,7 +1622,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var exceptions = reportingPeriods.Select(_ => Record.Exception(() => _.Split(UnitOfTimeGranularity.Day, OverflowStrategy.ThrowOnOverflow))).ToList();
 
             // Assert
-            exceptions.ForEach(_ => _.Should().BeOfType<NotSupportedException>());
+            exceptions.ForEach(_ => _.Should().BeOfType<ArgumentException>());
         }
 
         [Fact]
