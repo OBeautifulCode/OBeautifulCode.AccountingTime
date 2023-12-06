@@ -9,6 +9,7 @@ namespace OBeautifulCode.AccountingTime
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using static System.FormattableString;
 
     /// <summary>
     /// Property-related extension methods on <see cref="UnitOfTime"/>.
@@ -23,7 +24,7 @@ namespace OBeautifulCode.AccountingTime
         /// The first calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
+        /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetFirstCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
@@ -32,18 +33,23 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(unitOfTime));
             }
 
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is {nameof(UnitOfTimeGranularity.Unbounded)}."));
+            }
+
             switch (unitOfTime)
             {
                 case CalendarDay unitOfTimeAsCalendarDay:
-                    return unitOfTimeAsCalendarDay.GetFirstCalendarDay();
+                    return unitOfTimeAsCalendarDay.InternalGetFirstCalendarDay();
                 case CalendarMonth unitOfTimeAsCalendarMonth:
-                    return unitOfTimeAsCalendarMonth.GetFirstCalendarDay();
+                    return unitOfTimeAsCalendarMonth.InternalGetFirstCalendarDay();
                 case CalendarQuarter unitOfTimeAsCalendarQuarter:
-                    return unitOfTimeAsCalendarQuarter.GetFirstCalendarDay();
+                    return unitOfTimeAsCalendarQuarter.InternalGetFirstCalendarDay();
                 case CalendarYear unitOfTimeAsCalendarYear:
-                    return unitOfTimeAsCalendarYear.GetFirstCalendarDay();
+                    return unitOfTimeAsCalendarYear.InternalGetFirstCalendarDay();
                 case CalendarUnbounded _:
-                    throw new InvalidOperationException("There is no first day in unbounded time.");
+                    throw new NotSupportedException(Invariant($"This unit-of-time is not supported: {unitOfTime}."));
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
@@ -57,7 +63,7 @@ namespace OBeautifulCode.AccountingTime
         /// The last calendar day in the specified calendar-based unit-of-time.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="unitOfTime"/> is null.</exception>
-        /// <exception cref="InvalidOperationException"><paramref name="unitOfTime"/> is unbounded.</exception>
+        /// <exception cref="ArgumentException"><paramref name="unitOfTime"/> is unbounded.</exception>
         public static CalendarDay GetLastCalendarDay(
             this CalendarUnitOfTime unitOfTime)
         {
@@ -66,18 +72,23 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(unitOfTime));
             }
 
+            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is {nameof(UnitOfTimeGranularity.Unbounded)}."));
+            }
+
             switch (unitOfTime)
             {
                 case CalendarDay unitOfTimeAsCalendarDay:
-                    return unitOfTimeAsCalendarDay.GetLastCalendarDay();
+                    return unitOfTimeAsCalendarDay.InternalGetLastCalendarDay();
                 case CalendarMonth unitOfTimeAsCalendarMonth:
-                    return unitOfTimeAsCalendarMonth.GetLastCalendarDay();
+                    return unitOfTimeAsCalendarMonth.InternalGetLastCalendarDay();
                 case CalendarQuarter unitOfTimeAsCalendarQuarter:
-                    return unitOfTimeAsCalendarQuarter.GetLastCalendarDay();
+                    return unitOfTimeAsCalendarQuarter.InternalGetLastCalendarDay();
                 case CalendarYear unitOfTimeAsCalendarYear:
-                    return unitOfTimeAsCalendarYear.GetLastCalendarDay();
+                    return unitOfTimeAsCalendarYear.InternalGetLastCalendarDay();
                 case CalendarUnbounded _:
-                    throw new InvalidOperationException("There is no last day in unbounded time.");
+                    throw new NotSupportedException(Invariant($"This unit-of-time is not supported: {unitOfTime}."));
             }
 
             throw new NotSupportedException("this type of unit-of-time is not supported: " + unitOfTime.GetType());
@@ -137,7 +148,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetFirstCalendarDay(
+        private static CalendarDay InternalGetFirstCalendarDay(
             this CalendarDay day)
         {
             var result = day;
@@ -145,7 +156,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetFirstCalendarDay(
+        private static CalendarDay InternalGetFirstCalendarDay(
             this CalendarMonth month)
         {
             var result = new CalendarDay(month.Year, month.MonthOfYear, DayOfMonth.One);
@@ -153,7 +164,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetFirstCalendarDay(
+        private static CalendarDay InternalGetFirstCalendarDay(
             this CalendarQuarter quarter)
         {
             var result = new CalendarDay(quarter.Year, (MonthOfYear)((((int)quarter.QuarterNumber - 1) * 3) + 1), DayOfMonth.One);
@@ -161,7 +172,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetFirstCalendarDay(
+        private static CalendarDay InternalGetFirstCalendarDay(
             this CalendarYear year)
         {
             var result = new CalendarDay(year.Year, MonthOfYear.January, DayOfMonth.One);
@@ -169,7 +180,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetLastCalendarDay(
+        private static CalendarDay InternalGetLastCalendarDay(
             this CalendarDay day)
         {
             var result = day;
@@ -177,7 +188,7 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetLastCalendarDay(
+        private static CalendarDay InternalGetLastCalendarDay(
             this CalendarMonth month)
         {
             var daysInMonth = DateTime.DaysInMonth(month.Year, (int)month.MonthNumber);
@@ -187,17 +198,17 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarDay GetLastCalendarDay(
+        private static CalendarDay InternalGetLastCalendarDay(
             this CalendarQuarter quarter)
         {
             var lastMonthInQuarter = new CalendarMonth(quarter.Year, (MonthOfYear)((int)quarter.QuarterNumber * 3));
 
-            var result = lastMonthInQuarter.GetLastCalendarDay();
+            var result = lastMonthInQuarter.InternalGetLastCalendarDay();
 
             return result;
         }
 
-        private static CalendarDay GetLastCalendarDay(
+        private static CalendarDay InternalGetLastCalendarDay(
             this CalendarYear year)
         {
             var result = new CalendarDay(year.Year, MonthOfYear.December, DayOfMonth.ThirtyOne);

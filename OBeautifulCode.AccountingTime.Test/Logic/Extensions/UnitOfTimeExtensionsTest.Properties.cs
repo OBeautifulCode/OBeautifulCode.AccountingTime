@@ -139,7 +139,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetFirstCalendarYear___Should_throw_InvalidOperationException___When_parameter_unitOfTime_is_of_type_CalendarUnbounded()
+        public static void GetFirstCalendarYear___Should_throw_ArgumentException___When_parameter_unitOfTime_is_of_type_CalendarUnbounded()
         {
             // Arrange
             var systemUnderTest = A.Dummy<CalendarUnbounded>();
@@ -148,7 +148,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => systemUnderTest.GetFirstCalendarDay());
 
             // Assert
-            ex.Should().BeOfType<InvalidOperationException>();
+            ex.Should().BeOfType<ArgumentException>();
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetLastCalendarYear___Should_throw_InvalidOperationException___When_parameter_unitOfTime_is_of_type_CalendarUnbounded()
+        public static void GetLastCalendarYear___Should_throw_ArgumentException___When_parameter_unitOfTime_is_of_type_CalendarUnbounded()
         {
             // Arrange
             var systemUnderTest = A.Dummy<CalendarUnbounded>();
@@ -253,7 +253,7 @@ namespace OBeautifulCode.AccountingTime.Test
             var ex = Record.Exception(() => systemUnderTest.GetLastCalendarDay());
 
             // Assert
-            ex.Should().BeOfType<InvalidOperationException>();
+            ex.Should().BeOfType<ArgumentException>();
         }
 
         [Fact]

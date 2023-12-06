@@ -63,7 +63,7 @@ namespace OBeautifulCode.AccountingTime
 
             var result = new CalendarQuarter(fiscalQuarter.Year, fiscalQuarter.QuarterNumber);
 
-            result = result.Plus(offset);
+            result = result.InternalPlus(offset);
 
             return result;
         }
@@ -116,7 +116,7 @@ namespace OBeautifulCode.AccountingTime
 
             var result = new FiscalQuarter(calendarQuarter.Year, calendarQuarter.QuarterNumber);
 
-            result = result.Plus(offset);
+            result = result.InternalPlus(offset);
 
             return result;
         }
@@ -216,7 +216,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarYear = unitOfTime as CalendarYear;
 
-                    var result = new ReportingPeriod(calendarYear.GetFirstCalendarDay(), calendarYear.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarYear.InternalGetFirstCalendarDay(), calendarYear.InternalGetLastCalendarDay());
 
                     return result;
                 }
@@ -247,7 +247,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarQuarter = unitOfTime as CalendarQuarter;
 
-                    var result = new ReportingPeriod(calendarQuarter.GetFirstCalendarDay(), calendarQuarter.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarQuarter.InternalGetFirstCalendarDay(), calendarQuarter.InternalGetLastCalendarDay());
 
                     return result;
                 }
@@ -281,7 +281,7 @@ namespace OBeautifulCode.AccountingTime
                 {
                     var calendarMonth = unitOfTime as CalendarMonth;
 
-                    var result = new ReportingPeriod(calendarMonth.GetFirstCalendarDay(), calendarMonth.GetLastCalendarDay());
+                    var result = new ReportingPeriod(calendarMonth.InternalGetFirstCalendarDay(), calendarMonth.InternalGetLastCalendarDay());
 
                     return result;
                 }

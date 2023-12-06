@@ -38,29 +38,29 @@ namespace OBeautifulCode.AccountingTime
             switch (unitOfTime)
             {
                 case CalendarDay unitOfTimeAsCalendarDay:
-                    return unitOfTimeAsCalendarDay.Plus(unitsToAdd);
+                    return unitOfTimeAsCalendarDay.InternalPlus(unitsToAdd);
                 case CalendarMonth unitOfTimeAsCalendarMonth:
-                    return unitOfTimeAsCalendarMonth.Plus(unitsToAdd);
+                    return unitOfTimeAsCalendarMonth.InternalPlus(unitsToAdd);
                 case CalendarQuarter unitOfTimeAsCalendarQuarter:
-                    return unitOfTimeAsCalendarQuarter.Plus(unitsToAdd);
+                    return unitOfTimeAsCalendarQuarter.InternalPlus(unitsToAdd);
                 case CalendarYear unitOfTimeAsCalendarYear:
-                    return unitOfTimeAsCalendarYear.Plus(unitsToAdd);
+                    return unitOfTimeAsCalendarYear.InternalPlus(unitsToAdd);
                 case CalendarUnbounded _:
                     throw new InvalidOperationException("Cannot add to unbounded time.");
                 case FiscalMonth unitOfTimeAsFiscalMonth:
-                    return unitOfTimeAsFiscalMonth.Plus(unitsToAdd);
+                    return unitOfTimeAsFiscalMonth.InternalPlus(unitsToAdd);
                 case FiscalQuarter unitOfTimeAsFiscalQuarter:
-                    return unitOfTimeAsFiscalQuarter.Plus(unitsToAdd);
+                    return unitOfTimeAsFiscalQuarter.InternalPlus(unitsToAdd);
                 case FiscalYear unitOfTimeAsFiscalYear:
-                    return unitOfTimeAsFiscalYear.Plus(unitsToAdd);
+                    return unitOfTimeAsFiscalYear.InternalPlus(unitsToAdd);
                 case FiscalUnbounded _:
                     throw new InvalidOperationException("Cannot add to unbounded time.");
                 case GenericMonth unitOfTimeAsGenericMonth:
-                    return unitOfTimeAsGenericMonth.Plus(unitsToAdd);
+                    return unitOfTimeAsGenericMonth.InternalPlus(unitsToAdd);
                 case GenericQuarter unitOfTimeAsGenericQuarter:
-                    return unitOfTimeAsGenericQuarter.Plus(unitsToAdd);
+                    return unitOfTimeAsGenericQuarter.InternalPlus(unitsToAdd);
                 case GenericYear unitOfTimeAsGenericYear:
-                    return unitOfTimeAsGenericYear.Plus(unitsToAdd);
+                    return unitOfTimeAsGenericYear.InternalPlus(unitsToAdd);
                 case GenericUnbounded _:
                     throw new InvalidOperationException("Cannot add to unbounded time.");
             }
@@ -176,7 +176,7 @@ namespace OBeautifulCode.AccountingTime
             throw new InvalidOperationException("should not get here");
         }
 
-        private static CalendarDay Plus(
+        private static CalendarDay InternalPlus(
             this CalendarDay unitOfTime,
             int unitsToAdd)
         {
@@ -187,29 +187,29 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarMonth Plus(
+        private static CalendarMonth InternalPlus(
             this CalendarMonth unitOfTime,
             int unitsToAdd)
         {
-            var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
+            var genericMonth = unitOfTime.ToGenericMonth().InternalPlus(unitsToAdd);
 
             var result = new CalendarMonth(genericMonth.Year, (MonthOfYear)genericMonth.MonthNumber);
 
             return result;
         }
 
-        private static FiscalMonth Plus(
+        private static FiscalMonth InternalPlus(
             this FiscalMonth unitOfTime,
             int unitsToAdd)
         {
-            var genericMonth = unitOfTime.ToGenericMonth().Plus(unitsToAdd);
+            var genericMonth = unitOfTime.ToGenericMonth().InternalPlus(unitsToAdd);
 
             var result = new FiscalMonth(genericMonth.Year, genericMonth.MonthNumber);
 
             return result;
         }
 
-        private static GenericMonth Plus(
+        private static GenericMonth InternalPlus(
             this GenericMonth unitOfTime,
             int unitsToAdd)
         {
@@ -221,29 +221,29 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
-        private static CalendarQuarter Plus(
+        private static CalendarQuarter InternalPlus(
             this CalendarQuarter unitOfTime,
             int unitsToAdd)
         {
-            var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
+            var genericQuarter = unitOfTime.ToGenericQuarter().InternalPlus(unitsToAdd);
 
             var result = new CalendarQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
 
             return result;
         }
 
-        private static FiscalQuarter Plus(
+        private static FiscalQuarter InternalPlus(
             this FiscalQuarter unitOfTime,
             int unitsToAdd)
         {
-            var genericQuarter = unitOfTime.ToGenericQuarter().Plus(unitsToAdd);
+            var genericQuarter = unitOfTime.ToGenericQuarter().InternalPlus(unitsToAdd);
 
             var result = new FiscalQuarter(genericQuarter.Year, genericQuarter.QuarterNumber);
 
             return result;
         }
 
-        private static GenericQuarter Plus(
+        private static GenericQuarter InternalPlus(
             this GenericQuarter unitOfTime,
             int unitsToAdd)
         {
@@ -270,29 +270,29 @@ namespace OBeautifulCode.AccountingTime
             return quarter;
         }
 
-        private static CalendarYear Plus(
+        private static CalendarYear InternalPlus(
             this CalendarYear unitOfTime,
             int unitsToAdd)
         {
-            var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
+            var genericYear = unitOfTime.ToGenericYear().InternalPlus(unitsToAdd);
 
             var result = new CalendarYear(genericYear.Year);
 
             return result;
         }
 
-        private static FiscalYear Plus(
+        private static FiscalYear InternalPlus(
             this FiscalYear unitOfTime,
             int unitsToAdd)
         {
-            var genericYear = unitOfTime.ToGenericYear().Plus(unitsToAdd);
+            var genericYear = unitOfTime.ToGenericYear().InternalPlus(unitsToAdd);
 
             var result = new FiscalYear(genericYear.Year);
 
             return result;
         }
 
-        private static GenericYear Plus(
+        private static GenericYear InternalPlus(
             this GenericYear unitOfTime,
             int unitsToAdd)
         {
