@@ -10,13 +10,10 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-
     using FakeItEasy;
-
     using FluentAssertions;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
-
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
@@ -456,6 +453,50 @@ namespace OBeautifulCode.AccountingTime.Test
             result1.Should().BeTrue();
             result2.Should().BeTrue();
             result3.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasUniformGranularity___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.HasUniformGranularity(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void HasUniformGranularity___Should_return_false___When_one_of_Start_and_End_is_Unbounded_but_not_both()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.HasUniformGranularity()).ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeFalse();
+        }
+
+        [Fact]
+        public static void HasUniformGranularity___Should_return_true___When_both_Start_and_End_have_the_same_granularity()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)),
+                A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)),
+            };
+
+            // Act
+            var actual = reportingPeriods.Select(_ => _.HasUniformGranularity()).ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeTrue();
         }
     }
 }

@@ -135,7 +135,7 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="granularity">The granularity.</param>
         /// <returns>
-        /// The granularity that is one notch more granular than the specified granuliarty.
+        /// The granularity that is one notch more granular than the specified granularity.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException">No granularity is more granular than <paramref name="granularity"/>.</exception>
@@ -172,7 +172,7 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         /// <param name="granularity">The granularity.</param>
         /// <returns>
-        /// The granularity that is one notch less granular than the specified granuliarty.
+        /// The granularity that is one notch less granular than the specified granularity.
         /// </returns>
         /// <exception cref="ArgumentException"><paramref name="granularity"/> is <see cref="UnitOfTimeGranularity.Invalid"/>.</exception>
         /// <exception cref="ArgumentException">No granularity is less granular than <paramref name="granularity"/>.</exception>
