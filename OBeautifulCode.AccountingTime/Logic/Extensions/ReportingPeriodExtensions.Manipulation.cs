@@ -315,32 +315,8 @@ namespace OBeautifulCode.AccountingTime
             this UnitOfTime unitOfTime,
             UnitOfTimeGranularity granularity)
         {
-            if (unitOfTime == null)
-            {
-                throw new ArgumentNullException(nameof(unitOfTime));
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} granularity is {nameof(UnitOfTimeGranularity.Unbounded)}."));
-            }
-
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
-            }
-
-            if (unitOfTime.UnitOfTimeGranularity.IsAsGranularOrMoreGranularThan(granularity))
-            {
-                throw new ArgumentException(Invariant($"{nameof(unitOfTime)} is as granular or more granular than {nameof(granularity)}."));
-            }
-
             ReportingPeriod moreGranularReportingPeriod;
+
             if (unitOfTime.UnitOfTimeGranularity == UnitOfTimeGranularity.Year)
             {
                 var unitOfTimeAsYear = unitOfTime as IHaveAYear;
@@ -399,13 +375,9 @@ namespace OBeautifulCode.AccountingTime
                     var calendarUnitOfTime = unitOfTime as CalendarUnitOfTime;
                     moreGranularReportingPeriod = new ReportingPeriod(calendarUnitOfTime.GetFirstCalendarDay(), calendarUnitOfTime.GetLastCalendarDay());
                 }
-                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal)
+                else if ((unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Fiscal) || (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic))
                 {
-                    throw new NotSupportedException("The Fiscal kind cannot be made more granular than Month.");
-                }
-                else if (unitOfTime.UnitOfTimeKind == UnitOfTimeKind.Generic)
-                {
-                    throw new NotSupportedException("The Generic kind cannot be made more granular than Month.");
+                    throw new ArgumentException(Invariant($"{unitOfTime.UnitOfTimeKind} time cannot be converted into {granularity} granularity."));
                 }
                 else
                 {
