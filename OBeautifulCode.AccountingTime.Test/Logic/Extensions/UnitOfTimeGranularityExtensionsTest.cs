@@ -347,7 +347,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsMostGranular___Should_throw_ArgumentOutOfRangeException__When_parameter_granularity_is_Invalid()
+        public static void IsMostGranular_UnitOfTimeGranularity___Should_throw_ArgumentOutOfRangeException__When_parameter_granularity_is_Invalid()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Invalid;
@@ -360,7 +360,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsMostGranular___Should_return_false___When_parameter_granularity_is_not_Day()
+        public static void IsMostGranular_UnitOfTimeGranularity___Should_return_false___When_parameter_granularity_is_not_Day()
         {
             // Arrange
             var granularity = new[] { UnitOfTimeGranularity.Month, UnitOfTimeGranularity.Quarter, UnitOfTimeGranularity.Unbounded, UnitOfTimeGranularity.Year };
@@ -373,7 +373,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void IsMostGranular___Should_return_true___When_parameter_granularity_is_Day()
+        public static void IsMostGranular_UnitOfTimeGranularity___Should_return_true___When_parameter_granularity_is_Day()
         {
             // Arrange
             var granularity = UnitOfTimeGranularity.Day;
@@ -383,6 +383,59 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsMostGranular_Unit___Should_throw_ArgumentNullException__When_parameter_unit_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeGranularityExtensions.IsMostGranular(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void IsMostGranular_Unit___Should_return_false___When_unit_is_not_the_most_granular()
+        {
+            // Arrange
+            var units = new[]
+            {
+                new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Month),
+                new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Quarter),
+                new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Year),
+                new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Unbounded),
+                new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Quarter),
+                new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Year),
+                new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Unbounded),
+                new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Quarter),
+                new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Year),
+                new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Unbounded),
+            };
+
+            // Act
+            var results = units.Select(_ => _.IsMostGranular()).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeFalse());
+        }
+
+        [Fact]
+        public static void IsMostGranular_Unit___Should_return_true___When_unit_is_the_most_granular()
+        {
+            // Arrange
+            var units = new[]
+            {
+                new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Day),
+                new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month),
+                new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Month),
+            };
+
+            // Act
+            var results = units.Select(_ => _.IsMostGranular()).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Should().BeTrue());
         }
 
         [Fact]

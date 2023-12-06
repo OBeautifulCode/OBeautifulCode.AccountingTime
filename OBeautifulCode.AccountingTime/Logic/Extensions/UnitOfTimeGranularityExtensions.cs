@@ -110,6 +110,40 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Determines if a specified unit is the most granular one available.
+        /// </summary>
+        /// <param name="unit">The unit.</param>
+        /// <returns>
+        /// true if the specified unit is the most granular one available, false otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="unit"/> is null.</exception>
+        public static bool IsMostGranular(
+            this Unit unit)
+        {
+            if (unit == null)
+            {
+                throw new ArgumentNullException(nameof(unit));
+            }
+
+            bool result;
+
+            switch (unit.Kind)
+            {
+                case UnitOfTimeKind.Calendar:
+                    result = unit.Granularity == UnitOfTimeGranularity.Day;
+                    break;
+                case UnitOfTimeKind.Fiscal:
+                case UnitOfTimeKind.Generic:
+                    result = unit.Granularity == UnitOfTimeGranularity.Month;
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"This {nameof(UnitOfTimeKind)} is not supported: {unit.Kind}."));
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Determines if a specified granularity is the least granular one available.
         /// </summary>
         /// <param name="granularity">The granularity.</param>
