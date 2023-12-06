@@ -12,49 +12,12 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Linq;
     using FakeItEasy;
     using FluentAssertions;
+    using OBeautifulCode.AutoFakeItEasy;
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
-        [Fact]
-        public static void GetUnit___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
-        {
-            // Arrange, Act
-            var ex = Record.Exception(() => UnitOfTimeExtensions.GetUnit(null));
-
-            // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-        }
-
-        [Fact]
-        public static void GetUnit___Should_return_corresponding_unit___When_called()
-        {
-            // Arrange
-            var unitOfTimeAndExpected = new Dictionary<UnitOfTime, Unit>
-            {
-                { A.Dummy<CalendarDay>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Day) },
-                { A.Dummy<CalendarMonth>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Month) },
-                { A.Dummy<CalendarQuarter>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Quarter) },
-                { A.Dummy<CalendarYear>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Year) },
-                { A.Dummy<CalendarUnbounded>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Unbounded) },
-                { A.Dummy<FiscalMonth>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month) },
-                { A.Dummy<FiscalQuarter>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Quarter) },
-                { A.Dummy<FiscalYear>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Year) },
-                { A.Dummy<FiscalUnbounded>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Unbounded) },
-                { A.Dummy<GenericMonth>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Month) },
-                { A.Dummy<GenericQuarter>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Quarter) },
-                { A.Dummy<GenericYear>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Year) },
-                { A.Dummy<GenericUnbounded>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Unbounded) },
-            };
-
-            // Act
-            var unitOfTimeGranularity = unitOfTimeAndExpected.Select(_ => new { Actual = _.Key.GetUnit(), Expected = _.Value }).ToList();
-
-            // Assert
-            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
-        }
-
         [Fact]
         public static void GetFirstCalendarDay___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
         {
@@ -254,6 +217,168 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void GetFirstInSameYear___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetFirstInSameYear(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetFirstInSameYear___Should_throw_ArgumentException___When_parameter_unitOfTime_has_Unbounded_granularity()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+
+            // Act
+            var ex = Record.Exception(() => unitOfTime.GetFirstInSameYear());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void GetFirstInSameYear___Should_return_first_unit_of_time_in_same_year_of_specified_unit_of_time___When_called()
+        {
+            // Arrange
+            var unitOfTimeAndExpected = new Dictionary<UnitOfTime, UnitOfTime>
+            {
+                { new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One) },
+                { new CalendarDay(2023, MonthOfYear.November, DayOfMonth.Twenty), new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One) },
+                { new CalendarDay(2023, MonthOfYear.December, DayOfMonth.ThirtyOne), new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One) },
+                { new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2023, MonthOfYear.January) },
+                { new CalendarMonth(2023, MonthOfYear.May), new CalendarMonth(2023, MonthOfYear.January) },
+                { new CalendarMonth(2023, MonthOfYear.December), new CalendarMonth(2023, MonthOfYear.January) },
+                { new CalendarQuarter(2023, QuarterNumber.Q1), new CalendarQuarter(2023, QuarterNumber.Q1) },
+                { new CalendarQuarter(2023, QuarterNumber.Q2), new CalendarQuarter(2023, QuarterNumber.Q1) },
+                { new CalendarQuarter(2023, QuarterNumber.Q4), new CalendarQuarter(2023, QuarterNumber.Q1) },
+                { new CalendarYear(2023), new CalendarYear(2023) },
+                { new FiscalMonth(2023, MonthNumber.One), new FiscalMonth(2023, MonthNumber.One) },
+                { new FiscalMonth(2023, MonthNumber.Eight), new FiscalMonth(2023, MonthNumber.One) },
+                { new FiscalMonth(2023, MonthNumber.Twelve), new FiscalMonth(2023, MonthNumber.One) },
+                { new FiscalQuarter(2023, QuarterNumber.Q1), new FiscalQuarter(2023, QuarterNumber.Q1) },
+                { new FiscalQuarter(2023, QuarterNumber.Q2), new FiscalQuarter(2023, QuarterNumber.Q1) },
+                { new FiscalQuarter(2023, QuarterNumber.Q4), new FiscalQuarter(2023, QuarterNumber.Q1) },
+                { new FiscalYear(2023), new FiscalYear(2023) },
+                { new GenericMonth(2023, MonthNumber.One), new GenericMonth(2023, MonthNumber.One) },
+                { new GenericMonth(2023, MonthNumber.Eight), new GenericMonth(2023, MonthNumber.One) },
+                { new GenericMonth(2023, MonthNumber.Twelve), new GenericMonth(2023, MonthNumber.One) },
+                { new GenericQuarter(2023, QuarterNumber.Q1), new GenericQuarter(2023, QuarterNumber.Q1) },
+                { new GenericQuarter(2023, QuarterNumber.Q2), new GenericQuarter(2023, QuarterNumber.Q1) },
+                { new GenericQuarter(2023, QuarterNumber.Q4), new GenericQuarter(2023, QuarterNumber.Q1) },
+                { new GenericYear(2023), new GenericYear(2023) },
+            };
+
+            // Act
+            var unitOfTimeGranularity = unitOfTimeAndExpected.Select(_ => new { Actual = _.Key.GetFirstInSameYear(), Expected = _.Value }).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void GetLastInSameYear___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetLastInSameYear(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetLastInSameYear___Should_throw_ArgumentException___When_parameter_unitOfTime_has_Unbounded_granularity()
+        {
+            // Arrange
+            var unitOfTime = A.Dummy<UnitOfTime>().Whose(_ => _.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded);
+
+            // Act
+            var ex = Record.Exception(() => unitOfTime.GetLastInSameYear());
+
+            // Assert
+            ex.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void GetLastInSameYear___Should_return_first_unit_of_time_in_same_year_of_specified_unit_of_time___When_called()
+        {
+            // Arrange
+            var unitOfTimeAndExpected = new Dictionary<UnitOfTime, UnitOfTime>
+            {
+                { new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2023, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                { new CalendarDay(2023, MonthOfYear.November, DayOfMonth.Twenty), new CalendarDay(2023, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                { new CalendarDay(2023, MonthOfYear.December, DayOfMonth.ThirtyOne), new CalendarDay(2023, MonthOfYear.December, DayOfMonth.ThirtyOne) },
+                { new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2023, MonthOfYear.December) },
+                { new CalendarMonth(2023, MonthOfYear.May), new CalendarMonth(2023, MonthOfYear.December) },
+                { new CalendarMonth(2023, MonthOfYear.December), new CalendarMonth(2023, MonthOfYear.December) },
+                { new CalendarQuarter(2023, QuarterNumber.Q1), new CalendarQuarter(2023, QuarterNumber.Q4) },
+                { new CalendarQuarter(2023, QuarterNumber.Q2), new CalendarQuarter(2023, QuarterNumber.Q4) },
+                { new CalendarQuarter(2023, QuarterNumber.Q4), new CalendarQuarter(2023, QuarterNumber.Q4) },
+                { new CalendarYear(2023), new CalendarYear(2023) },
+                { new FiscalMonth(2023, MonthNumber.One), new FiscalMonth(2023, MonthNumber.Twelve) },
+                { new FiscalMonth(2023, MonthNumber.Eight), new FiscalMonth(2023, MonthNumber.Twelve) },
+                { new FiscalMonth(2023, MonthNumber.Twelve), new FiscalMonth(2023, MonthNumber.Twelve) },
+                { new FiscalQuarter(2023, QuarterNumber.Q1), new FiscalQuarter(2023, QuarterNumber.Q4) },
+                { new FiscalQuarter(2023, QuarterNumber.Q2), new FiscalQuarter(2023, QuarterNumber.Q4) },
+                { new FiscalQuarter(2023, QuarterNumber.Q4), new FiscalQuarter(2023, QuarterNumber.Q4) },
+                { new FiscalYear(2023), new FiscalYear(2023) },
+                { new GenericMonth(2023, MonthNumber.One), new GenericMonth(2023, MonthNumber.Twelve) },
+                { new GenericMonth(2023, MonthNumber.Eight), new GenericMonth(2023, MonthNumber.Twelve) },
+                { new GenericMonth(2023, MonthNumber.Twelve), new GenericMonth(2023, MonthNumber.Twelve) },
+                { new GenericQuarter(2023, QuarterNumber.Q1), new GenericQuarter(2023, QuarterNumber.Q4) },
+                { new GenericQuarter(2023, QuarterNumber.Q2), new GenericQuarter(2023, QuarterNumber.Q4) },
+                { new GenericQuarter(2023, QuarterNumber.Q4), new GenericQuarter(2023, QuarterNumber.Q4) },
+                { new GenericYear(2023), new GenericYear(2023) },
+            };
+
+            // Act
+            var unitOfTimeGranularity = unitOfTimeAndExpected.Select(_ => new { Actual = _.Key.GetLastInSameYear(), Expected = _.Value }).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
+        }
+
+        [Fact]
+        public static void GetUnit___Should_throw_ArgumentNullException___When_parameter_unitOfTime_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => UnitOfTimeExtensions.GetUnit(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void GetUnit___Should_return_corresponding_unit___When_called()
+        {
+            // Arrange
+            var unitOfTimeAndExpected = new Dictionary<UnitOfTime, Unit>
+            {
+                { A.Dummy<CalendarDay>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Day) },
+                { A.Dummy<CalendarMonth>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Month) },
+                { A.Dummy<CalendarQuarter>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<CalendarYear>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Year) },
+                { A.Dummy<CalendarUnbounded>(), new Unit(UnitOfTimeKind.Calendar, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<FiscalMonth>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month) },
+                { A.Dummy<FiscalQuarter>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<FiscalYear>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Year) },
+                { A.Dummy<FiscalUnbounded>(), new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Unbounded) },
+                { A.Dummy<GenericMonth>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Month) },
+                { A.Dummy<GenericQuarter>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Quarter) },
+                { A.Dummy<GenericYear>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Year) },
+                { A.Dummy<GenericUnbounded>(), new Unit(UnitOfTimeKind.Generic, UnitOfTimeGranularity.Unbounded) },
+            };
+
+            // Act
+            var unitOfTimeGranularity = unitOfTimeAndExpected.Select(_ => new { Actual = _.Key.GetUnit(), Expected = _.Value }).ToList();
+
+            // Assert
+            unitOfTimeGranularity.ForEach(_ => _.Actual.Should().Be(_.Expected));
         }
 
         [Fact]
