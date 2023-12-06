@@ -278,11 +278,6 @@ namespace OBeautifulCode.AccountingTime
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
