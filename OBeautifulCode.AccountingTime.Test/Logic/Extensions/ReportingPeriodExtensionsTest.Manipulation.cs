@@ -3246,6 +3246,19 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void ToMostGranular___Should_return_clone_of_reportingPeriod___When_both_components_are_Unbounded()
+        {
+            // Arrange
+            var expected = A.Dummy<ReportingPeriod>().Whose(_ => (_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) && (_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded));
+
+            // Act
+            var actual = expected.ToMostGranular();
+
+            // Assert
+            actual.Should().Be(expected);
+        }
+
+        [Fact]
         public static void ToMostGranular___Should_return_a_reporting_period_whose_Start_is_the_most_granular_reportingPeriod_Start_and_whose_End_is_the_most_granular_reportingPeriod_End()
         {
             // Arrange
@@ -3259,6 +3272,391 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Assert
             actualReportingPeriod.Should().Be(expectedReportingPeriod);
+        }
+
+        [Fact]
+        public static void ToMostGranular___Should_return_the_most_granular_possible_but_equivalent_reporting_period___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.Ten)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.Two)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarMonth(2018, MonthOfYear.March)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2017, MonthOfYear.February),
+                        new CalendarUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.February, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2018, MonthOfYear.March)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2018, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2017, MonthOfYear.January),
+                        new CalendarMonth(2017, MonthOfYear.March)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2017, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2017, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.June, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2017, QuarterNumber.Q1),
+                        new CalendarQuarter(2017, QuarterNumber.Q4)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2017, QuarterNumber.Q2),
+                        new CalendarQuarter(2018, QuarterNumber.Q3)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.April, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.September, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2017),
+                        new CalendarYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2017),
+                        new CalendarUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2017, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2017),
+                        new CalendarYear(2018)),
+                    MostGranular = new ReportingPeriod(
+                        new CalendarDay(2017, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2018, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalMonth(2018, MonthNumber.Three)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalMonth(2018, MonthNumber.Three)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Two),
+                        new FiscalUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2018, MonthNumber.Three)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2018, MonthNumber.Three)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Four),
+                        new FiscalMonth(2018, MonthNumber.Six)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Four),
+                        new FiscalMonth(2018, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2017, QuarterNumber.Q2),
+                        new FiscalQuarter(2018, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Four),
+                        new FiscalMonth(2018, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2017, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.Four),
+                        new FiscalUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2017, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2017, QuarterNumber.Q1),
+                        new FiscalQuarter(2017, QuarterNumber.Q4)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2017),
+                        new FiscalYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2017),
+                        new FiscalUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2017),
+                        new FiscalYear(2018)),
+                    MostGranular = new ReportingPeriod(
+                        new FiscalMonth(2017, MonthNumber.One),
+                        new FiscalMonth(2018, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericMonth(2018, MonthNumber.Three)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericMonth(2018, MonthNumber.Three)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Two),
+                        new GenericUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2018, MonthNumber.Three)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2018, MonthNumber.Three)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Four),
+                        new GenericMonth(2018, MonthNumber.Six)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Four),
+                        new GenericMonth(2018, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2017, QuarterNumber.Q2),
+                        new GenericQuarter(2018, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Four),
+                        new GenericMonth(2018, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2017, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.Four),
+                        new GenericUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2017, QuarterNumber.Q2)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Six)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2017, QuarterNumber.Q1),
+                        new GenericQuarter(2017, QuarterNumber.Q4)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2017),
+                        new GenericYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2017),
+                        new GenericUnbounded()),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericYear(2017)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2017, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2017),
+                        new GenericYear(2018)),
+                    MostGranular = new ReportingPeriod(
+                        new GenericMonth(2017, MonthNumber.One),
+                        new GenericMonth(2018, MonthNumber.Twelve)),
+                },
+            };
+
+            // Act
+            var results = reportingPeriods.Select(_ => new { Expected = _.MostGranular, Actual = _.ReportingPeriod.ToMostGranular() }).ToList();
+
+            // Assert
+            results.ForEach(_ => _.Expected.Should().Be(_.Actual));
+            results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
         }
 
         [Fact]

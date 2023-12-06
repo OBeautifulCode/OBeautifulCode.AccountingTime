@@ -288,16 +288,6 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
-            }
-
-            if (granularity == UnitOfTimeGranularity.Unbounded)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
-            }
-
             if (reportingPeriod.GetUnitOfTimeGranularity().IsAsGranularOrMoreGranularThan(granularity))
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} is as granular or more granular than {nameof(granularity)}."));
