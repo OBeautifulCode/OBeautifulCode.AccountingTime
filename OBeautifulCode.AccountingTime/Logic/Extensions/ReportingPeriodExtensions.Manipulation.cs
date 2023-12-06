@@ -10,6 +10,7 @@ namespace OBeautifulCode.AccountingTime
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using OBeautifulCode.CodeAnalysis.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -254,8 +255,8 @@ namespace OBeautifulCode.AccountingTime
         /// A reporting period that addresses the same set of time as <paramref name="reportingPeriod"/>,
         /// but is the least granular version possible of that reporting period.
         /// A reporting period whose start and end are both unbounded will be returned as-is.
-        /// A reporting period with one unbounded and one bounded component will be returned
-        /// as-is (e.g. Unbounded to 12/31/2017 will NOT be converted to Unbounded to CalendarYear 2017).
+        /// A reporting period with one unbounded and one bounded component will have it's bounded
+        /// component converted (e.g. Unbounded to 12/31/2017 will be converted to Unbounded to CalendarYear 2017).
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
         public static ReportingPeriod ToLeastGranular(
@@ -429,44 +430,52 @@ namespace OBeautifulCode.AccountingTime
         private static ReportingPeriod MakeOneNotchLessGranular(
             this ReportingPeriod reportingPeriod)
         {
-            ReportingPeriod result = null;
-
-            if (!reportingPeriod.HasComponentWithUnboundedGranularity())
+            if (!reportingPeriod.HasUniformGranularity())
             {
-                var targetGranularity = reportingPeriod.GetUnitOfTimeGranularity().OneNotchLessGranular();
+                var boundedReportingPeriod =
+                    reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                        ? new ReportingPeriod(reportingPeriod.End.GetFirstInSameYear(), reportingPeriod.End)
+                        : new ReportingPeriod(reportingPeriod.Start, reportingPeriod.Start.GetLastInSameYear());
 
-                result = targetGranularity == UnitOfTimeGranularity.Unbounded
+                var lessGranularBoundedReportingPeriod = boundedReportingPeriod.MakeOneNotchLessGranular();
+
+                var unboundedResult = lessGranularBoundedReportingPeriod == null
                     ? null
-                    : reportingPeriod.MakeLessGranular(targetGranularity);
+                    : reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                        ? new ReportingPeriod(reportingPeriod.Start, lessGranularBoundedReportingPeriod.End)
+                        : new ReportingPeriod(lessGranularBoundedReportingPeriod.Start, reportingPeriod.End);
+
+                return unboundedResult;
             }
+
+            var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
+
+            if (reportingPeriodGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                return null;
+            }
+
+            var targetGranularity = reportingPeriodGranularity.OneNotchLessGranular();
+
+            var result = reportingPeriod.MakeLessGranular(targetGranularity);
 
             return result;
         }
 
-        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Somewhat the nature of the problem.")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = ObcSuppressBecause.CA1506_AvoidExcessiveClassCoupling_DisagreeWithAssessment)]
         private static ReportingPeriod MakeLessGranular(
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity,
             bool returnNullOnMisalignment = true)
         {
-            if (reportingPeriod == null)
-            {
-                throw new ArgumentNullException(nameof(reportingPeriod));
-            }
-
             if (reportingPeriod.HasComponentWithUnboundedGranularity())
             {
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod)} has an {nameof(UnitOfTimeGranularity.Unbounded)} component."));
             }
 
-            if (granularity == UnitOfTimeGranularity.Invalid)
-            {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Invalid}'"), (Exception)null);
-            }
-
             if (granularity == UnitOfTimeGranularity.Unbounded)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(granularity)}' == '{UnitOfTimeGranularity.Unbounded}'"), (Exception)null);
+                return null;
             }
 
             var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
