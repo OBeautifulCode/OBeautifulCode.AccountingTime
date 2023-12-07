@@ -14,6 +14,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using FluentAssertions;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
+    using OBeautifulCode.Equality.Recipes;
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Testing this class requires lots of types because of the number of unit-of-time types intersected with the options for reporting period.")]
@@ -4475,6 +4476,1250 @@ namespace OBeautifulCode.AccountingTime.Test
             // Assert
             results.ForEach(_ => _.Expected.Should().Be(_.Actual));
             results.ForEach(_ => _.Expected.Should().NotBeSameAs(_.Actual));
+        }
+
+        [Fact]
+        public static void ToAllGranularities___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToAllGranularities(null, A.Dummy<bool>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToAllGranularities___Should_return_all_granularities___When_called()
+        {
+            // Arrange
+            var reportingPeriods = Some.ReadOnlyDummies<ReportingPeriod>(100);
+
+            var expected1 = reportingPeriods.Select(_ => _.ToAllLessGranular().Concat(_.ToAllMoreGranular()).ToList()).ToList();
+            var expected2 = reportingPeriods.Select(_ => new[] { _ }.Concat(_.ToAllLessGranular()).Concat(_.ToAllMoreGranular()).ToList()).ToList();
+
+            // Act
+            var actual1 = reportingPeriods.Select(_ => _.ToAllGranularities(includeSpecifiedReportingPeriodInResult: false).ToList()).ToList();
+            var actual2 = reportingPeriods.Select(_ => _.ToAllGranularities(includeSpecifiedReportingPeriodInResult: true).ToList()).ToList();
+
+            // Assert
+            expected1.AsTest().Must().BeEqualTo(actual1);
+            expected2.AsTest().Must().BeEqualTo(actual2);
+        }
+
+        [Fact]
+        public static void ToAllMoreGranular___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToAllMoreGranular(null, A.Dummy<bool>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToAllMoreGranular___Should_return_all_more_granular_but_equivalent_reporting_periods___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Two),
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Five)),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Five)),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarDay(2020, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.December),
+                        new CalendarMonth(2021, MonthOfYear.February)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.December, DayOfMonth.One),
+                            new CalendarDay(2021, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.December),
+                        new CalendarUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.December, DayOfMonth.One),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2021, MonthOfYear.February)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarDay(2021, MonthOfYear.February, DayOfMonth.TwentyEight)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q1),
+                        new CalendarQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarMonth(2020, MonthOfYear.September)),
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                            new CalendarDay(2020, MonthOfYear.September, DayOfMonth.Thirty)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q1),
+                        new CalendarUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2020, MonthOfYear.September)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarDay(2020, MonthOfYear.September, DayOfMonth.Thirty)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2020),
+                        new CalendarYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarMonth(2021, MonthOfYear.December)),
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                            new CalendarDay(2021, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2021, MonthOfYear.December)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarDay(2021, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2020),
+                        new CalendarUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Twelve),
+                        new FiscalMonth(2021, MonthNumber.Two)),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Twelve),
+                        new FiscalUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2021, MonthNumber.Two)),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q1),
+                        new FiscalQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalMonth(2020, MonthNumber.One),
+                            new FiscalMonth(2020, MonthNumber.Nine)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q1),
+                        new FiscalUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalMonth(2020, MonthNumber.One),
+                            new FiscalUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalMonth(2020, MonthNumber.Nine)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2020),
+                        new FiscalYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q1),
+                            new FiscalQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new FiscalMonth(2020, MonthNumber.One),
+                            new FiscalMonth(2021, MonthNumber.Twelve)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalMonth(2021, MonthNumber.Twelve)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2020),
+                        new FiscalUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q1),
+                            new FiscalUnbounded()),
+                        new ReportingPeriod(
+                            new FiscalMonth(2020, MonthNumber.One),
+                            new FiscalUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Twelve),
+                        new GenericMonth(2021, MonthNumber.Two)),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Twelve),
+                        new GenericUnbounded()),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2021, MonthNumber.Two)),
+                    AllMoreGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q1),
+                        new GenericQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericMonth(2020, MonthNumber.One),
+                            new GenericMonth(2020, MonthNumber.Nine)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q1),
+                        new GenericUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericMonth(2020, MonthNumber.One),
+                            new GenericUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2020, QuarterNumber.Q3)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericMonth(2020, MonthNumber.Nine)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2020),
+                        new GenericYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q1),
+                            new GenericQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new GenericMonth(2020, MonthNumber.One),
+                            new GenericMonth(2021, MonthNumber.Twelve)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericYear(2021)),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericMonth(2021, MonthNumber.Twelve)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2020),
+                        new GenericUnbounded()),
+                    AllMoreGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q1),
+                            new GenericUnbounded()),
+                        new ReportingPeriod(
+                            new GenericMonth(2020, MonthNumber.One),
+                            new GenericUnbounded()),
+                    },
+                },
+            };
+
+            // Act
+            var results1 = reportingPeriods.Select(_ => new { Expected = _.AllMoreGranular, Actual = _.ReportingPeriod.ToAllMoreGranular(includeSpecifiedReportingPeriodInResult: false) }).ToList();
+            var results2 = reportingPeriods.Select(_ => new { Expected = _.AllMoreGranular.Concat(new[] { _.ReportingPeriod }).ToList(), Actual = _.ReportingPeriod.ToAllMoreGranular(includeSpecifiedReportingPeriodInResult: true) }).ToList();
+
+            // Assert
+            results1.Select(_ => _.Actual.IsUnorderedEqualTo(_.Expected)).Must().Each().BeTrue();
+            results2.Select(_ => _.Actual.IsUnorderedEqualTo(_.Expected)).Must().Each().BeTrue();
+        }
+
+        [Fact]
+        public static void ToAllLessGranular___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.ToAllLessGranular(null, A.Dummy<bool>()));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void ToAllLessGranular___Should_return_all_less_granular_but_equivalent_reporting_periods___When_called()
+        {
+            // Arrange
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Two),
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Five)),
+                    AllLessGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Two),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Five)),
+                    AllLessGranular = new ReportingPeriod[0],
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.May, DayOfMonth.One),
+                        new CalendarDay(2021, MonthOfYear.May, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.May),
+                            new CalendarMonth(2021, MonthOfYear.May)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2021, MonthOfYear.May, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2021, MonthOfYear.May)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.May, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.May),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarDay(2021, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.March),
+                            new CalendarMonth(2021, MonthOfYear.March)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2021, MonthOfYear.March, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2021, MonthOfYear.March)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q1)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.March, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.March),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarDay(2021, MonthOfYear.June, DayOfMonth.Thirty)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.October),
+                            new CalendarMonth(2021, MonthOfYear.June)),
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q4),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2021, MonthOfYear.June, DayOfMonth.Thirty)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2021, MonthOfYear.June)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.October, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.October),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q4),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarDay(2021, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarMonth(2021, MonthOfYear.December)),
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new CalendarYear(2020),
+                            new CalendarYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarDay(2021, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarMonth(2021, MonthOfYear.December)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q4)),
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarMonth(2020, MonthOfYear.January),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarYear(2020),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.February),
+                        new CalendarMonth(2021, MonthOfYear.February)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2021, MonthOfYear.February)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.February),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.April),
+                        new CalendarMonth(2021, MonthOfYear.June)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q2),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2021, MonthOfYear.June)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.April),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q2),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.January),
+                        new CalendarMonth(2021, MonthOfYear.June)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarMonth(2021, MonthOfYear.June)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarMonth(2020, MonthOfYear.January),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarQuarter(2020, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        new ReportingPeriod(
+                            new CalendarYear(2020),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q2),
+                        new CalendarQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q2),
+                        new CalendarQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q2),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q1),
+                        new CalendarQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarYear(2020),
+                            new CalendarYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarUnbounded(),
+                        new CalendarQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarQuarter(2020, QuarterNumber.Q1),
+                        new CalendarUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new CalendarYear(2020),
+                            new CalendarUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new CalendarYear(2020),
+                        new CalendarYear(2020)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Two),
+                        new FiscalMonth(2021, MonthNumber.Two)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2021, MonthNumber.Two)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Two),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Four),
+                        new FiscalMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q2),
+                            new FiscalQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.Four),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q2),
+                            new FiscalUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.One),
+                        new FiscalMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q1),
+                            new FiscalQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalMonth(2020, MonthNumber.One),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalQuarter(2020, QuarterNumber.Q1),
+                            new FiscalUnbounded()),
+                        new ReportingPeriod(
+                            new FiscalYear(2020),
+                            new FiscalUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q2),
+                        new FiscalQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q2),
+                        new FiscalQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q2),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q1),
+                        new FiscalQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalYear(2020),
+                            new FiscalYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalUnbounded(),
+                        new FiscalQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalUnbounded(),
+                            new FiscalYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalQuarter(2020, QuarterNumber.Q1),
+                        new FiscalUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new FiscalYear(2020),
+                            new FiscalUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new FiscalYear(2020),
+                        new FiscalYear(2020)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Two),
+                        new GenericMonth(2021, MonthNumber.Two)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2021, MonthNumber.Two)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Two),
+                        new GenericUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Four),
+                        new GenericMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q2),
+                            new GenericQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.Four),
+                        new GenericUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q2),
+                            new GenericUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.One),
+                        new GenericMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q1),
+                            new GenericQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericMonth(2021, MonthNumber.Six)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericQuarter(2021, QuarterNumber.Q2)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericMonth(2020, MonthNumber.One),
+                        new GenericUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericQuarter(2020, QuarterNumber.Q1),
+                            new GenericUnbounded()),
+                        new ReportingPeriod(
+                            new GenericYear(2020),
+                            new GenericUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q2),
+                        new GenericQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2021, QuarterNumber.Q3)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q2),
+                        new GenericQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new ReportingPeriod[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q2),
+                        new GenericUnbounded()),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q1),
+                        new GenericQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericYear(2020),
+                            new GenericYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericUnbounded(),
+                        new GenericQuarter(2021, QuarterNumber.Q4)),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericUnbounded(),
+                            new GenericYear(2021)),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericQuarter(2020, QuarterNumber.Q1),
+                        new GenericUnbounded()),
+                    AllLessGranular = new[]
+                    {
+                        new ReportingPeriod(
+                            new GenericYear(2020),
+                            new GenericUnbounded()),
+                    },
+                },
+                new
+                {
+                    ReportingPeriod = new ReportingPeriod(
+                        new GenericYear(2020),
+                        new GenericYear(2020)),
+                    AllLessGranular = new ReportingPeriod[] { },
+                },
+            };
+
+            // Act
+            var results1 = reportingPeriods.Select(_ => new { Expected = _.AllLessGranular, Actual = _.ReportingPeriod.ToAllLessGranular(includeSpecifiedReportingPeriodInResult: false) }).ToList();
+            var results2 = reportingPeriods.Select(_ => new { Expected = _.AllLessGranular.Concat(new[] { _.ReportingPeriod }).ToList(), Actual = _.ReportingPeriod.ToAllLessGranular(includeSpecifiedReportingPeriodInResult: true) }).ToList();
+
+            // Assert
+            results1.Select(_ => _.Actual.IsUnorderedEqualTo(_.Expected)).Must().Each().BeTrue();
+            results2.Select(_ => _.Actual.IsUnorderedEqualTo(_.Expected)).Must().Each().BeTrue();
         }
     }
 }

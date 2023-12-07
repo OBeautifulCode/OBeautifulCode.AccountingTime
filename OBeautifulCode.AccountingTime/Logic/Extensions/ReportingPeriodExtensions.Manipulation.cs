@@ -274,6 +274,154 @@ namespace OBeautifulCode.AccountingTime
             return result;
         }
 
+        /// <summary>
+        /// Converts the specified reporting period into the equivalent reporting
+        /// periods in all granularities, for which the conversion is possible.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to convert.</param>
+        /// <param name="includeSpecifiedReportingPeriodInResult">Determines if the specified reporting period is included in the result set.  DEFAULT is to exclude from the result set.</param>
+        /// <returns>
+        /// A set of reporting periods that address the same set of time
+        /// as <paramref name="reportingPeriod"/>, but in all of the different/possible granularities.
+        /// The set includes <paramref name="reportingPeriod"/> when <paramref name="includeSpecifiedReportingPeriodInResult"/> is true.
+        /// The set may be empty when the reporting period cannot be converted into any other granularity and
+        /// <paramref name="includeSpecifiedReportingPeriodInResult"/> is false.
+        /// A reporting period whose start and end are both unbounded will not be converted.
+        /// A reporting period with one unbounded and one bounded component will have it's bounded component converted (e.g.
+        /// Unbounded to CalendarYear 2017 will be converted to Unbounded to 12/31/2017,
+        /// Unbounded to 12/31/2017 will be converted to Unbounded to CalendarYear 2017).
+        /// </returns>
+        public static IReadOnlyCollection<ReportingPeriod> ToAllGranularities(
+            this ReportingPeriod reportingPeriod,
+            bool includeSpecifiedReportingPeriodInResult)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = reportingPeriod
+                .ToAllLessGranular(includeSpecifiedReportingPeriodInResult)
+                .Concat(reportingPeriod.ToAllMoreGranular()) // Do not chain includeSpecifiedReportingPeriodInResult, set to false so that specified reporting period is only included once.
+                .ToList();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified reporting period into all of the equivalent
+        /// but more granular reporting periods, for which the conversion is possible.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to convert.</param>
+        /// <param name="includeSpecifiedReportingPeriodInResult">OPTIONAL value that determines if the specified reporting period is included in the result set.  DEFAULT is to exclude from the result set.</param>
+        /// <returns>
+        /// A set of reporting periods that address the same set of time
+        /// as <paramref name="reportingPeriod"/>, but are less granular.
+        /// The set includes <paramref name="reportingPeriod"/> when <paramref name="includeSpecifiedReportingPeriodInResult"/> is true.
+        /// The set may be empty when the reporting period cannot be converted into any more granular ones and
+        /// <paramref name="includeSpecifiedReportingPeriodInResult"/> is false.
+        /// A reporting period whose start and end are both unbounded will not be converted.
+        /// A reporting period with one unbounded and one bounded component will have it's bounded
+        /// component converted (e.g. Unbounded to CalendarYear 2017 will be converted to Unbounded to 12/31/2017).
+        /// </returns>
+        public static IReadOnlyCollection<ReportingPeriod> ToAllMoreGranular(
+            this ReportingPeriod reportingPeriod,
+            bool includeSpecifiedReportingPeriodInResult = false)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = new List<ReportingPeriod>();
+
+            if (includeSpecifiedReportingPeriodInResult)
+            {
+                result.Add(reportingPeriod);
+            }
+
+            while (reportingPeriod != null)
+            {
+                reportingPeriod = reportingPeriod.MakeOneNotchMoreGranular();
+
+                if (reportingPeriod != null)
+                {
+                    result.Add(reportingPeriod);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified reporting period into all of the equivalent
+        /// but less granular reporting periods, for which the conversion is possible.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period to convert.</param>
+        /// <param name="includeSpecifiedReportingPeriodInResult">OPTIONAL value that determines if the specified reporting period is included in the result set.  DEFAULT is to exclude from the result set.</param>
+        /// <returns>
+        /// A set of reporting periods that address the same set of time
+        /// as <paramref name="reportingPeriod"/>, but are less granular.
+        /// The set includes <paramref name="reportingPeriod"/> when <paramref name="includeSpecifiedReportingPeriodInResult"/> is true.
+        /// The set may be empty when the reporting period cannot be converted into any less granular ones and
+        /// <paramref name="includeSpecifiedReportingPeriodInResult"/> is false.
+        /// A reporting period whose start and end are both unbounded will not be converted.
+        /// A reporting period with one unbounded and one bounded component will have it's bounded
+        /// component converted (e.g. Unbounded to 12/31/2017 will be converted to Unbounded to CalendarYear 2017).
+        /// </returns>
+        public static IReadOnlyCollection<ReportingPeriod> ToAllLessGranular(
+            this ReportingPeriod reportingPeriod,
+            bool includeSpecifiedReportingPeriodInResult = false)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            var result = new List<ReportingPeriod>();
+
+            if (includeSpecifiedReportingPeriodInResult)
+            {
+                result.Add(reportingPeriod);
+            }
+
+            while (reportingPeriod != null)
+            {
+                reportingPeriod = reportingPeriod.MakeOneNotchLessGranular();
+
+                if (reportingPeriod != null)
+                {
+                    result.Add(reportingPeriod);
+                }
+            }
+
+            return result;
+        }
+
+        private static ReportingPeriod MakeOneNotchMoreGranular(
+            this ReportingPeriod reportingPeriod)
+        {
+            if (!reportingPeriod.HasUniformGranularity())
+            {
+                var unboundedResult = reportingPeriod.MakeUnboundedReportingPeriodOneNotchDifferentGranularity(MakeOneNotchMoreGranular);
+
+                return unboundedResult;
+            }
+
+            var reportingPeriodGranularity = reportingPeriod.GetUnitOfTimeGranularity();
+
+            if ((reportingPeriodGranularity == UnitOfTimeGranularity.Unbounded) || reportingPeriod.GetUnit().IsMostGranular())
+            {
+                return null;
+            }
+
+            var targetGranularity = reportingPeriodGranularity.OneNotchMoreGranular();
+
+            var result = reportingPeriod.MakeMoreGranular(targetGranularity);
+
+            return result;
+        }
+
         private static ReportingPeriod MakeMoreGranular(
             this ReportingPeriod reportingPeriod,
             UnitOfTimeGranularity granularity)
@@ -389,18 +537,7 @@ namespace OBeautifulCode.AccountingTime
         {
             if (!reportingPeriod.HasUniformGranularity())
             {
-                var boundedReportingPeriod =
-                    reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
-                        ? new ReportingPeriod(reportingPeriod.End.GetFirstInSameYear(), reportingPeriod.End)
-                        : new ReportingPeriod(reportingPeriod.Start, reportingPeriod.Start.GetLastInSameYear());
-
-                var lessGranularBoundedReportingPeriod = boundedReportingPeriod.MakeOneNotchLessGranular();
-
-                var unboundedResult = lessGranularBoundedReportingPeriod == null
-                    ? null
-                    : reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
-                        ? new ReportingPeriod(reportingPeriod.Start, lessGranularBoundedReportingPeriod.End)
-                        : new ReportingPeriod(lessGranularBoundedReportingPeriod.Start, reportingPeriod.End);
+                var unboundedResult = reportingPeriod.MakeUnboundedReportingPeriodOneNotchDifferentGranularity(MakeOneNotchLessGranular);
 
                 return unboundedResult;
             }
@@ -600,6 +737,26 @@ namespace OBeautifulCode.AccountingTime
             }
 
             var result = MakeLessGranular(lessGranularReportingPeriod, granularity, returnNullOnMisalignment);
+
+            return result;
+        }
+
+        private static ReportingPeriod MakeUnboundedReportingPeriodOneNotchDifferentGranularity(
+            this ReportingPeriod reportingPeriod,
+            Func<ReportingPeriod, ReportingPeriod> makeOneNotchDifferentGranularityFunc)
+        {
+            var boundedReportingPeriod =
+                reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                    ? new ReportingPeriod(reportingPeriod.End.GetFirstInSameYear(), reportingPeriod.End)
+                    : new ReportingPeriod(reportingPeriod.Start, reportingPeriod.Start.GetLastInSameYear());
+
+            var granularityTweakedBoundedReportingPeriod = makeOneNotchDifferentGranularityFunc(boundedReportingPeriod);
+
+            var result = granularityTweakedBoundedReportingPeriod == null
+                ? null
+                : reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                    ? new ReportingPeriod(reportingPeriod.Start, granularityTweakedBoundedReportingPeriod.End)
+                    : new ReportingPeriod(granularityTweakedBoundedReportingPeriod.Start, reportingPeriod.End);
 
             return result;
         }
