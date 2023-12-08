@@ -15,7 +15,7 @@ namespace OBeautifulCode.AccountingTime
     /// <summary>
     /// Specifies a unit of accounting time.
     /// </summary>
-    public partial class Unit : IModelViaCodeGen
+    public partial class Unit : IModelViaCodeGen, IDeclareToStringMethod
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Unit"/> class.
@@ -54,5 +54,13 @@ namespace OBeautifulCode.AccountingTime
         /// Gets the granularity of the unit.
         /// </summary>
         public UnitOfTimeGranularity Granularity { get; private set; }
+
+        /// <inheritdoc cref="IDeclareToStringMethod" />
+        public override string ToString()
+        {
+            var result = Invariant($"{this.Kind} {this.Granularity}");
+
+            return result;
+        }
     }
 }

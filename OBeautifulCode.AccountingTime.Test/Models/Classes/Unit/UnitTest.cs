@@ -158,6 +158,22 @@ namespace OBeautifulCode.AccountingTime.Test
                             A.Dummy<Guid>(),
                         },
                     });
+
+            StringRepresentationTestScenarios
+                .RemoveAllScenarios()
+                .AddScenario(
+                    new StringRepresentationTestScenario<Unit>
+                    {
+                        Name = "ToString() should return string representation of Unit",
+                        SystemUnderTestExpectedStringRepresentationFunc = () =>
+                        {
+                            return new SystemUnderTestExpectedStringRepresentation<Unit>
+                            {
+                                SystemUnderTest = new Unit(UnitOfTimeKind.Fiscal, UnitOfTimeGranularity.Month),
+                                ExpectedStringRepresentation = "Fiscal Month",
+                            };
+                        },
+                    });
         }
     }
 }

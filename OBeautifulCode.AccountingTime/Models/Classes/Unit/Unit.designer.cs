@@ -158,14 +158,5 @@ namespace OBeautifulCode.AccountingTime
 
             return result;
         }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-        public override string ToString()
-        {
-            var result = Invariant($"OBeautifulCode.AccountingTime.Unit: Kind = {this.Kind.ToString() ?? "<null>"}, Granularity = {this.Granularity.ToString() ?? "<null>"}.");
-
-            return result;
-        }
     }
 }
