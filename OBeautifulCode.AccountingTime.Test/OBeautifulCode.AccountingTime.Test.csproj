@@ -207,6 +207,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="Logic\Classes\UnitKindConverterTest.cs" />
     <Compile Include="Logic\Extensions\UnitOfTimeKindExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\YearNumberExtensionsTest.cs" />
     <Compile Include="Logic\Extensions\TimeseriesExtensionsTest.cs" />
@@ -395,6 +396,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
