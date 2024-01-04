@@ -840,20 +840,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentNullException___When_parameter_reportingPeriods_is_null()
+        public static void MergeIntoBroadestReportingPeriod___Should_throw_ArgumentNullException___When_parameter_reportingPeriods_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoExtremalReportingPeriod(null));
+            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoBroadestReportingPeriod(null));
 
             // Assert
             ex.AsTest().Must().BeOfType<ArgumentNullException>();
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_is_empty()
+        public static void MergeIntoBroadestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_is_empty()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoExtremalReportingPeriod(new ReportingPeriod[0]));
+            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoBroadestReportingPeriod(new ReportingPeriod[0]));
 
             // Assert
             ex.AsTest().Must().BeOfType<ArgumentException>();
@@ -861,13 +861,13 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_a_null_element()
+        public static void MergeIntoBroadestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_a_null_element()
         {
             // Arrange
             var reportingPeriods = new[] { A.Dummy<ReportingPeriod>(), null, A.Dummy<ReportingPeriod>() };
 
             // Act
-            var ex = Record.Exception(() => reportingPeriods.MergeIntoExtremalReportingPeriod());
+            var ex = Record.Exception(() => reportingPeriods.MergeIntoBroadestReportingPeriod());
 
             // Assert
             ex.AsTest().Must().BeOfType<ArgumentException>();
@@ -875,7 +875,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_elements_with_different_UnitOfTimeKind()
+        public static void MergeIntoBroadestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_elements_with_different_UnitOfTimeKind()
         {
             // Arrange
             var reportingPeriod1 = A.Dummy<ReportingPeriod>();
@@ -885,8 +885,8 @@ namespace OBeautifulCode.AccountingTime.Test
             var reportingPeriods2 = new[] { reportingPeriod1, reportingPeriod3, reportingPeriod2 };
 
             // Act
-            var ex1 = Record.Exception(() => reportingPeriods1.MergeIntoExtremalReportingPeriod());
-            var ex2 = Record.Exception(() => reportingPeriods2.MergeIntoExtremalReportingPeriod());
+            var ex1 = Record.Exception(() => reportingPeriods1.MergeIntoBroadestReportingPeriod());
+            var ex2 = Record.Exception(() => reportingPeriods2.MergeIntoBroadestReportingPeriod());
 
             // Assert
             ex1.AsTest().Must().BeOfType<ArgumentException>();
@@ -897,20 +897,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_return_same_reporting_period___When_parameter_reportingPeriods_contains_single_reporting_period()
+        public static void MergeIntoBroadestReportingPeriod___Should_return_same_reporting_period___When_parameter_reportingPeriods_contains_single_reporting_period()
         {
             // Arrange
             var expected = Some.ReadOnlyDummies<ReportingPeriod>().ToList();
 
             // Act
-            var actual = expected.Select(_ => new[] { _ }.MergeIntoExtremalReportingPeriod()).ToList();
+            var actual = expected.Select(_ => new[] { _ }.MergeIntoBroadestReportingPeriod()).ToList();
 
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);
         }
 
         [Fact]
-        public static void MergeIntoExtremalReportingPeriod___Should_return_extremal_reporting_period___When_called()
+        public static void MergeIntoBroadestReportingPeriod___Should_return_merged_broadest_reporting_period___When_called()
         {
             // Arrange
             var tests = new[]
@@ -1390,7 +1390,7 @@ namespace OBeautifulCode.AccountingTime.Test
             };
 
             // Act
-            var actual = tests.Select(_ => _.ReportingPeriods.MergeIntoExtremalReportingPeriod()).ToList();
+            var actual = tests.Select(_ => _.ReportingPeriods.MergeIntoBroadestReportingPeriod()).ToList();
 
             // Assert
             actual.AsTest().Must().BeEqualTo(tests.Select(_ => _.Expected).ToList());

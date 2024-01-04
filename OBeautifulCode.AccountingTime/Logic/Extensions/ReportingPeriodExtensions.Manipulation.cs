@@ -126,20 +126,20 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Merges the specified reporting period into a single extremal reporting period
+        /// Merges the specified reporting period into a single broadest reporting period
         /// (the earliest start of any of the specified reporting periods combined with the latest
         /// end of any of the specified reporting periods.)
         /// </summary>
         /// <param name="reportingPeriods">The reporting periods.</param>
         /// <returns>
-        /// The merged extremal reporting period.  If the specified reporting periods are in the same
+        /// The merged broadest reporting period.  If the specified reporting periods are in the same
         /// granularity then that granularity will be preserved, otherwise the resulting granularity
         /// will be that of the most granular of the specified reporting periods.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriods"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> is empty.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains a null element.</exception>
-        public static ReportingPeriod MergeIntoExtremalReportingPeriod(
+        public static ReportingPeriod MergeIntoBroadestReportingPeriod(
             this IReadOnlyCollection<ReportingPeriod> reportingPeriods)
         {
             if (reportingPeriods == null)
