@@ -139,6 +139,7 @@ namespace OBeautifulCode.AccountingTime
         /// <exception cref="ArgumentNullException"><paramref name="reportingPeriods"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> is empty.</exception>
         /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains a null element.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains elements of different <see cref="UnitOfTimeKind"/>.</exception>
         public static ReportingPeriod MergeIntoBroadestReportingPeriod(
             this IReadOnlyCollection<ReportingPeriod> reportingPeriods)
         {
