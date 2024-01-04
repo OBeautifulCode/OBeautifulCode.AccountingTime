@@ -91,6 +91,21 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// DEPRECATED.  Use <see cref="GetUnitsOfTimeWithin(ReportingPeriod)"/>.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// DEPRECATED: Use <see cref="GetUnitsOfTimeWithin(ReportingPeriod)"/>.
+        /// </returns>
+        public static IReadOnlyList<UnitOfTime> GetUnitsWithin(
+            this ReportingPeriod reportingPeriod)
+        {
+            var result = reportingPeriod.GetUnitsOfTimeWithin();
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the distinct units-of-time contained within a specified reporting period.
         /// For example, a reporting period of 2Q2017-4Q2017, contains 2Q2017, 3Q2017, and 4Q2017.
         /// </summary>
