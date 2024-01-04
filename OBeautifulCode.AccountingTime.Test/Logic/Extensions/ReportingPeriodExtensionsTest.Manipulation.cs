@@ -840,6 +840,563 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentNullException___When_parameter_reportingPeriods_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoExtremalReportingPeriod(null));
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_is_empty()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoExtremalReportingPeriod(new ReportingPeriod[0]));
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentException>();
+            ex.Message.AsTest().Must().ContainString("is empty");
+        }
+
+        [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_a_null_element()
+        {
+            // Arrange
+            var reportingPeriods = new[] { A.Dummy<ReportingPeriod>(), null, A.Dummy<ReportingPeriod>() };
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriods.MergeIntoExtremalReportingPeriod());
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentException>();
+            ex.Message.AsTest().Must().ContainString("contains a null element");
+        }
+
+        [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_elements_with_different_UnitOfTimeKind()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
+            var reportingPeriod3 = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() == reportingPeriod1.GetUnitOfTimeKind());
+            var reportingPeriods1 = new[] { reportingPeriod1, reportingPeriod2 };
+            var reportingPeriods2 = new[] { reportingPeriod1, reportingPeriod3, reportingPeriod2 };
+
+            // Act
+            var ex1 = Record.Exception(() => reportingPeriods1.MergeIntoExtremalReportingPeriod());
+            var ex2 = Record.Exception(() => reportingPeriods2.MergeIntoExtremalReportingPeriod());
+
+            // Assert
+            ex1.AsTest().Must().BeOfType<ArgumentException>();
+            ex1.Message.AsTest().Must().ContainString("contains elements with different UnitOfTimeKind");
+
+            ex2.AsTest().Must().BeOfType<ArgumentException>();
+            ex2.Message.AsTest().Must().ContainString("contains elements with different UnitOfTimeKind");
+        }
+
+        [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_return_same_reporting_period___When_parameter_reportingPeriods_contains_single_reporting_period()
+        {
+            // Arrange
+            var expected = Some.ReadOnlyDummies<ReportingPeriod>().ToList();
+
+            // Act
+            var actual = expected.Select(_ => new[] { _ }.MergeIntoExtremalReportingPeriod()).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void MergeIntoExtremalReportingPeriod___Should_return_extremal_reporting_period___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                        A.Dummy<CalendarDay>().ToReportingPeriod(),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        A.Dummy<CalendarDay>().ToReportingPeriod(),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new CalendarMonth(2020, MonthOfYear.January).ToReportingPeriod(),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                        new CalendarMonth(2020, MonthOfYear.January).ToReportingPeriod(),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new CalendarMonth(2020, MonthOfYear.January).ToReportingPeriod(),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                        new CalendarMonth(2020, MonthOfYear.January).ToReportingPeriod(),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2019, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.February)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.April)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2019, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.January)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.February)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.March)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2020, MonthOfYear.April)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.March), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.March), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarMonth(2020, MonthOfYear.May)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.February)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.February)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarMonth(2020, MonthOfYear.May)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarMonth(2020, MonthOfYear.May)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.July)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.July)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.July)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.April), new CalendarMonth(2020, MonthOfYear.May)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.July)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.March)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.May)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.May)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.March), new CalendarMonth(2020, MonthOfYear.May)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.March), new CalendarMonth(2020, MonthOfYear.May)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.January), new CalendarMonth(2020, MonthOfYear.May)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.June, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Twenty)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Twenty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.June, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Twenty)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.Twenty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Ten)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.June), new CalendarMonth(2020, MonthOfYear.July)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.June), new CalendarMonth(2020, MonthOfYear.July)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Ten)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.Two), new CalendarDay(2020, MonthOfYear.July, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.One)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.One)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Ten), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Five), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.February, DayOfMonth.One), new CalendarDay(2020, MonthOfYear.May, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Four)),
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2020, MonthOfYear.February), new CalendarMonth(2020, MonthOfYear.April)),
+                        new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2020, MonthOfYear.March, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.Three), new CalendarDay(2020, MonthOfYear.April, DayOfMonth.Thirty)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2020), new CalendarYear(2021)),
+                        new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarMonth(2022, MonthOfYear.January)),
+                        new ReportingPeriod(new CalendarDay(2019, MonthOfYear.November, DayOfMonth.Fifteen), new CalendarDay(2022, MonthOfYear.February, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2019, MonthOfYear.November, DayOfMonth.Fifteen), new CalendarDay(2022, MonthOfYear.February, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2019, MonthOfYear.November, DayOfMonth.Fifteen), new CalendarDay(2022, MonthOfYear.February, DayOfMonth.Four)),
+                        new ReportingPeriod(new CalendarMonth(2019, MonthOfYear.December), new CalendarMonth(2022, MonthOfYear.January)),
+                        new ReportingPeriod(new CalendarYear(2020), new CalendarYear(2021)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2019, MonthOfYear.November, DayOfMonth.Fifteen), new CalendarDay(2022, MonthOfYear.February, DayOfMonth.Four)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2020), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2021, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.November)),
+                        new ReportingPeriod(new CalendarDay(2022, MonthOfYear.August, DayOfMonth.Fifteen), new CalendarDay(2023, MonthOfYear.February, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2025, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarDay(2022, MonthOfYear.August, DayOfMonth.Fifteen), new CalendarDay(2023, MonthOfYear.February, DayOfMonth.Four)),
+                        new ReportingPeriod(new CalendarMonth(2021, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.November)),
+                        new ReportingPeriod(new CalendarYear(2020), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2020, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2025, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+            };
+
+            // Act
+            var actual = tests.Select(_ => _.ReportingPeriods.MergeIntoExtremalReportingPeriod()).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(tests.Select(_ => _.Expected).ToList());
+        }
+
+        [Fact]
         public static void Split___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act

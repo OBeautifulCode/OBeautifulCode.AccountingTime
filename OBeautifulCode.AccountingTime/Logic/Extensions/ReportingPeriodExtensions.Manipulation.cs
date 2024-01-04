@@ -11,6 +11,7 @@ namespace OBeautifulCode.AccountingTime
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using OBeautifulCode.CodeAnalysis.Recipes;
+    using OBeautifulCode.Type;
     using static System.FormattableString;
 
     /// <summary>
@@ -118,6 +119,64 @@ namespace OBeautifulCode.AccountingTime
                         var subReportingPeriod = new ReportingPeriod(allUnits[unitOfTimeIndex], allUnits[unitOfTimeIndex + numberOfUnits - 1]);
                         result.Add(subReportingPeriod);
                     }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Merges the specified reporting period into a single extremal reporting period
+        /// (the earliest start of any of the specified reporting periods combined with the latest
+        /// end of any of the specified reporting periods.)
+        /// </summary>
+        /// <param name="reportingPeriods">The reporting periods.</param>
+        /// <returns>
+        /// The merged extremal reporting period.  If the specified reporting periods are in the same
+        /// granularity then that granularity will be preserved, otherwise the resulting granularity
+        /// will be that of the most granular of the specified reporting periods.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriods"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> is empty.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains a null element.</exception>
+        public static ReportingPeriod MergeIntoExtremalReportingPeriod(
+            this IReadOnlyCollection<ReportingPeriod> reportingPeriods)
+        {
+            if (reportingPeriods == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriods));
+            }
+
+            if (!reportingPeriods.Any())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriods)} is empty."));
+            }
+
+            ReportingPeriod result = null;
+
+            foreach (var reportingPeriod in reportingPeriods)
+            {
+                if (reportingPeriod == null)
+                {
+                    throw new ArgumentException(Invariant($"{reportingPeriods} contains a null element."));
+                }
+
+                if (result == null)
+                {
+                    result = reportingPeriod;
+                }
+                else
+                {
+                    if (reportingPeriod.GetUnitOfTimeKind() != result.GetUnitOfTimeKind())
+                    {
+                        throw new ArgumentException(Invariant($"{reportingPeriods} contains elements with different {nameof(UnitOfTimeKind)}."));
+                    }
+
+                    var start = GetExtremalUnit(result, reportingPeriod, _ => _.Start, RelativeSortOrder.ThisInstancePrecedesTheOtherInstance);
+
+                    var end = GetExtremalUnit(result, reportingPeriod, _ => _.End, RelativeSortOrder.ThisInstanceFollowsTheOtherInstance);
+
+                    result = new ReportingPeriod(start, end);
                 }
             }
 
@@ -757,6 +816,56 @@ namespace OBeautifulCode.AccountingTime
                 : reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
                     ? new ReportingPeriod(reportingPeriod.Start, granularityTweakedBoundedReportingPeriod.End)
                     : new ReportingPeriod(granularityTweakedBoundedReportingPeriod.Start, reportingPeriod.End);
+
+            return result;
+        }
+
+        private static UnitOfTime GetExtremalUnit(
+            ReportingPeriod reportingPeriod1,
+            ReportingPeriod reportingPeriod2,
+            Func<ReportingPeriod, UnitOfTime> getComponentFunc,
+            RelativeSortOrder relativeSortOrder)
+        {
+            var unit1 = getComponentFunc(reportingPeriod1);
+            var unit2 = getComponentFunc(reportingPeriod2);
+
+            UnitOfTime result;
+
+            var unit1Granularity = unit1.UnitOfTimeGranularity;
+            var unit2Granularity = unit2.UnitOfTimeGranularity;
+
+            if (unit1Granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                result = unit1;
+            }
+            else if (unit2Granularity == UnitOfTimeGranularity.Unbounded)
+            {
+                result = unit2;
+            }
+            else
+            {
+                if (unit1Granularity == unit2Granularity)
+                {
+                    // no-op
+                }
+                else if (unit1Granularity.IsMoreGranularThan(unit2Granularity))
+                {
+                    unit2 = getComponentFunc(unit2.MakeMoreGranular(unit1Granularity));
+                }
+                else
+                {
+                    unit1 = getComponentFunc(unit1.MakeMoreGranular(unit2Granularity));
+                }
+
+                if (relativeSortOrder == RelativeSortOrder.ThisInstancePrecedesTheOtherInstance)
+                {
+                    result = unit1.CompareToForRelativeSortOrder(unit2) < 0 ? unit1 : unit2;
+                }
+                else
+                {
+                    result = unit1.CompareToForRelativeSortOrder(unit2) >= 0 ? unit1 : unit2;
+                }
+            }
 
             return result;
         }
