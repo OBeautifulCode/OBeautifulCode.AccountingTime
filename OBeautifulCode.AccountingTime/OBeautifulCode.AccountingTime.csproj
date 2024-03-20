@@ -143,7 +143,7 @@
     <Compile Include="Models\Interfaces\IHaveADay.cs" />
     <Compile Include="Models\Interfaces\ITimeseries.cs" />
     <Compile Include="Models\Interfaces\IDatapoint.cs" />
-    <Compile Include="Models\Classes\ReportingPeriod.designer.cs">
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriod.designer.cs">
       <DependentUpon>ReportingPeriod.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Enums\ReportingPeriodComponent.cs" />
@@ -229,7 +229,7 @@
     <Compile Include="Models\Classes\Time\UnitOfTime.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarMonth.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarYear.cs" />
-    <Compile Include="Models\Classes\ReportingPeriod.cs" />
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriod.cs" />
     <Compile Include="Models\Classes\AccountingPeriodSystem\AccountingPeriodSystem.cs" />
     <Compile Include="Models\Classes\AccountingPeriodSystem\CalendarYearAccountingPeriodSystem.cs" />
     <Compile Include="Models\Classes\AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs" />
