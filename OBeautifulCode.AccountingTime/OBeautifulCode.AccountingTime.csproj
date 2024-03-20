@@ -121,6 +121,9 @@
     <Compile Include="Models\Classes\Cutoff\RelativeCutoff.designer.cs">
       <DependentUpon>RelativeCutoff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriodCriteria.designer.cs">
+      <DependentUpon>ReportingPeriodCriteria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}.designer.cs">
       <DependentUpon>Datapoint{T}.cs</DependentUpon>
     </Compile>
@@ -129,6 +132,9 @@
     <Compile Include="Models\Classes\Timeseries\Timeseries{T}.designer.cs">
       <DependentUpon>Timeseries{T}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\ReportingPeriod\ReportingPeriodBoundsConstraint.cs" />
+    <Compile Include="Models\Enums\ReportingPeriod\ReportingPeriodSpanConstraint.cs" />
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriodCriteria.cs" />
     <Compile Include="Models\Classes\Unit\UnitKindAssociation.cs" />
     <Compile Include="Models\Classes\Unit\Duration.designer.cs">
       <DependentUpon>Duration.cs</DependentUpon>

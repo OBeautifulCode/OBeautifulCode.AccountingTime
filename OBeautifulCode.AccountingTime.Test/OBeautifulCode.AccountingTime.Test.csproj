@@ -255,6 +255,10 @@
       <DependentUpon>RelativeCutoffTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\ProjectInfo.cs" />
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriodCriteriaTest.cs" />
+    <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriodCriteriaTest.designer.cs">
+      <DependentUpon>ReportingPeriodCriteriaTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportingPeriodWrappers.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarUnitOfTimeTest.cs" />

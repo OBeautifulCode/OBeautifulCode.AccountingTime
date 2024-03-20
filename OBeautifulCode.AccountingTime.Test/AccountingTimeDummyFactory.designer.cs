@@ -227,6 +227,12 @@ namespace OBeautifulCode.AccountingTime.Test
                                  A.Dummy<UnitOfTime>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ReportingPeriodCriteria(
+                                 A.Dummy<Unit>(),
+                                 A.Dummy<ReportingPeriodBoundsConstraint>(),
+                                 A.Dummy<ReportingPeriodSpanConstraint>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new Timeseries<Version>(
                                  A.Dummy<IReadOnlyList<Datapoint<Version>>>()));
 

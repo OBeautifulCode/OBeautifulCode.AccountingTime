@@ -48,6 +48,8 @@ namespace OBeautifulCode.AccountingTime.Test
             // ---------------------------  accounting period system ------------------------------
             // ------------------------------------------------------------------------------------
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<AccountingPeriodSystem>();
 
@@ -200,6 +202,51 @@ namespace OBeautifulCode.AccountingTime.Test
                     var potentialTypes = new[] { typeof(GenericReportingPeriod), typeof(FiscalReportingPeriod), typeof(CalendarReportingPeriod) };
 
                     var result = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var scenarioNumber = ThreadSafeRandom.Next(0, 8);
+
+                    ReportingPeriodCriteria result;
+
+                    if (scenarioNumber == 0)
+                    {
+                        result = new ReportingPeriodCriteria();
+                    }
+                    else if (scenarioNumber == 1)
+                    {
+                        result = new ReportingPeriodCriteria(A.Dummy<Unit>());
+                    }
+                    else if (scenarioNumber == 2)
+                    {
+                        result = new ReportingPeriodCriteria(boundsConstraint: A.Dummy<ReportingPeriodBoundsConstraint>());
+                    }
+                    else if (scenarioNumber == 3)
+                    {
+                        result = new ReportingPeriodCriteria(spanConstraint: A.Dummy<ReportingPeriodSpanConstraint>());
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            var unit = A.Dummy<Unit>();
+                            var boundsConstraint = A.Dummy<ReportingPeriodBoundsConstraint>();
+                            var spanConstraint = A.Dummy<ReportingPeriodSpanConstraint>();
+
+                            try
+                            {
+                                result = new ReportingPeriodCriteria(unit, boundsConstraint, spanConstraint);
+                                break;
+                            }
+                            catch (ArgumentException)
+                            {
+                            }
+                        }
+                    }
 
                     return result;
                 });
