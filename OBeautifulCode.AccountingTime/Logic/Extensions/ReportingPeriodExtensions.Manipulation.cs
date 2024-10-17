@@ -126,7 +126,7 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
-        /// Merges the specified reporting period into a single broadest reporting period
+        /// Merges the specified reporting periods into a single broadest reporting period
         /// (the earliest start of any of the specified reporting periods combined with the latest
         /// end of any of the specified reporting periods.)
         /// </summary>
@@ -173,9 +173,125 @@ namespace OBeautifulCode.AccountingTime
                         throw new ArgumentException(Invariant($"{reportingPeriods} contains elements with different {nameof(UnitOfTimeKind)}."));
                     }
 
-                    var start = GetExtremalUnit(result, reportingPeriod, _ => _.Start, RelativeSortOrder.ThisInstancePrecedesTheOtherInstance);
+                    var start = GetExtremalUnit(
+                        result,
+                        reportingPeriod,
+                        _ => _.Start,
+                        RelativeSortOrder.ThisInstancePrecedesTheOtherInstance,
+                        treatUnboundedAsExtremal: true);
 
-                    var end = GetExtremalUnit(result, reportingPeriod, _ => _.End, RelativeSortOrder.ThisInstanceFollowsTheOtherInstance);
+                    var end = GetExtremalUnit(
+                        result,
+                        reportingPeriod,
+                        _ => _.End,
+                        RelativeSortOrder.ThisInstanceFollowsTheOtherInstance,
+                        treatUnboundedAsExtremal: true);
+
+                    result = new ReportingPeriod(start, end);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Merges the specified reporting periods into a single narrowest reporting period
+        /// (the latest start of any of the specified reporting periods combined with the earliest
+        /// end of any of the specified reporting periods.)
+        /// </summary>
+        /// <param name="reportingPeriods">The reporting periods.</param>
+        /// <param name="throwIfNoNarrowestReportingPeriod">
+        /// OPTIONAL value that indicates whether the method should throw if no narrowest reporting period exists.
+        /// DEFAULT is to throw.  If false then method will return null.
+        /// </param>
+        /// <returns>
+        /// The merged narrowest reporting period.  If the specified reporting periods are in the same
+        /// granularity then that granularity will be preserved, otherwise the resulting granularity
+        /// will be that of the most granular of the specified reporting periods.
+        /// -OR-
+        /// null if no narrowest reporting period exists and <paramref name="throwIfNoNarrowestReportingPeriod"/> is false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriods"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> is empty.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains a null element.</exception>
+        /// <exception cref="ArgumentException"><paramref name="reportingPeriods"/> contains elements of different <see cref="UnitOfTimeKind"/>.</exception>
+        /// <exception cref="InvalidOperationException">There is no narrowest reporting period and <paramref name="throwIfNoNarrowestReportingPeriod"/> is true.</exception>
+        public static ReportingPeriod MergeIntoNarrowestReportingPeriod(
+            this IReadOnlyCollection<ReportingPeriod> reportingPeriods,
+            bool throwIfNoNarrowestReportingPeriod = true)
+        {
+            if (reportingPeriods == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriods));
+            }
+
+            if (!reportingPeriods.Any())
+            {
+                throw new ArgumentException(Invariant($"{nameof(reportingPeriods)} is empty."));
+            }
+
+            ReportingPeriod result = null;
+
+            foreach (var reportingPeriod in reportingPeriods)
+            {
+                if (reportingPeriod == null)
+                {
+                    throw new ArgumentException(Invariant($"{reportingPeriods} contains a null element."));
+                }
+
+                if (result == null)
+                {
+                    result = reportingPeriod;
+                }
+                else
+                {
+                    if (reportingPeriod.GetUnitOfTimeKind() != result.GetUnitOfTimeKind())
+                    {
+                        throw new ArgumentException(Invariant($"{reportingPeriods} contains elements with different {nameof(UnitOfTimeKind)}."));
+                    }
+
+                    var start = GetExtremalUnit(
+                        result,
+                        reportingPeriod,
+                        _ => _.Start,
+                        RelativeSortOrder.ThisInstanceFollowsTheOtherInstance,
+                        treatUnboundedAsExtremal: false);
+
+                    var end = GetExtremalUnit(
+                        result,
+                        reportingPeriod,
+                        _ => _.End,
+                        RelativeSortOrder.ThisInstancePrecedesTheOtherInstance,
+                        treatUnboundedAsExtremal: false);
+
+                    var startGranularity = start.UnitOfTimeGranularity;
+                    var endGranularity = end.UnitOfTimeGranularity;
+
+                    if ((startGranularity != UnitOfTimeGranularity.Unbounded) && (endGranularity != UnitOfTimeGranularity.Unbounded))
+                    {
+                        if (startGranularity == endGranularity)
+                        {
+                            // no-op
+                        }
+                        else if (start.UnitOfTimeGranularity.IsMoreGranularThan(end.UnitOfTimeGranularity))
+                        {
+                            end = end.MakeMoreGranular(startGranularity).End;
+                        }
+                        else
+                        {
+                            start = start.MakeMoreGranular(endGranularity).Start;
+                        }
+
+                        if (start > end)
+                        {
+                            if (throwIfNoNarrowestReportingPeriod)
+                            {
+                                throw new InvalidOperationException("There is no narrowest reporting period.");
+                            }
+
+                            return null;
+                        }
+                    }
 
                     result = new ReportingPeriod(start, end);
                 }
@@ -825,7 +941,8 @@ namespace OBeautifulCode.AccountingTime
             ReportingPeriod reportingPeriod1,
             ReportingPeriod reportingPeriod2,
             Func<ReportingPeriod, UnitOfTime> getComponentFunc,
-            RelativeSortOrder relativeSortOrder)
+            RelativeSortOrder relativeSortOrder,
+            bool treatUnboundedAsExtremal)
         {
             var unit1 = getComponentFunc(reportingPeriod1);
             var unit2 = getComponentFunc(reportingPeriod2);
@@ -835,9 +952,30 @@ namespace OBeautifulCode.AccountingTime
             var unit1Granularity = unit1.UnitOfTimeGranularity;
             var unit2Granularity = unit2.UnitOfTimeGranularity;
 
-            if (unit1Granularity == UnitOfTimeGranularity.Unbounded)
+            var unit1IsUnbounded = unit1Granularity == UnitOfTimeGranularity.Unbounded;
+            var unit2IsUnbounded = unit2Granularity == UnitOfTimeGranularity.Unbounded;
+
+            if (unit1IsUnbounded || unit2IsUnbounded)
             {
-                result = unit1;
+                if (treatUnboundedAsExtremal)
+                {
+                    result = unit1IsUnbounded ? unit1 : unit2;
+                }
+                else
+                {
+                    if (unit1IsUnbounded && unit2IsUnbounded)
+                    {
+                        result = unit1;
+                    }
+                    else if (unit1IsUnbounded)
+                    {
+                        result = unit2;
+                    }
+                    else
+                    {
+                        result = unit1;
+                    }
+                }
             }
             else if (unit2Granularity == UnitOfTimeGranularity.Unbounded)
             {

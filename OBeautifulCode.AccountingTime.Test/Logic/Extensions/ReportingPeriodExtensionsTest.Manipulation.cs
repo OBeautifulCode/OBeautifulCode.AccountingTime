@@ -1397,6 +1397,721 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_throw_ArgumentNullException___When_parameter_reportingPeriods_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => ReportingPeriodExtensions.MergeIntoNarrowestReportingPeriod(null));
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentNullException>();
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_is_empty()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => new ReportingPeriod[0].MergeIntoNarrowestReportingPeriod());
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentException>();
+            ex.Message.AsTest().Must().ContainString("is empty");
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_a_null_element()
+        {
+            // Arrange
+            var reportingPeriods = new[] { A.Dummy<ReportingPeriod>(), null, A.Dummy<ReportingPeriod>() };
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriods.MergeIntoNarrowestReportingPeriod());
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentException>();
+            ex.Message.AsTest().Must().ContainString("contains a null element");
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_throw_ArgumentException___When_parameter_reportingPeriods_contains_elements_with_different_UnitOfTimeKind()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<ReportingPeriod>();
+            var reportingPeriod2 = A.Dummy<ReportingPeriod>().Whose(_ => _.GetUnitOfTimeKind() != reportingPeriod1.GetUnitOfTimeKind());
+            var reportingPeriods = new[] { reportingPeriod1, reportingPeriod2 };
+
+            // Act
+            var ex = Record.Exception(() => reportingPeriods.MergeIntoNarrowestReportingPeriod());
+
+            // Assert
+            ex.AsTest().Must().BeOfType<ArgumentException>();
+            ex.Message.AsTest().Must().ContainString("contains elements with different UnitOfTimeKind");
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_return_same_reporting_period___When_parameter_reportingPeriods_contains_single_reporting_period()
+        {
+            // Arrange
+            var expected = Some.ReadOnlyDummies<ReportingPeriod>().ToList();
+
+            // Act
+            var actual = expected.Select(_ => new[] { _ }.MergeIntoNarrowestReportingPeriod()).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_return_merged_narrowest_reporting_period___When_called()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                // first set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarUnbounded()),
+                },
+
+                // second set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2023)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2023)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2023)),
+                },
+
+                // third set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2027)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2027)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2024)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2024)),
+                },
+
+                // fourth set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2025, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2026, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+
+                // fifth set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2025, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarUnbounded()),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarUnbounded()),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2023, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2023)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2023, MonthOfYear.December)),
+                },
+
+                // sixth set
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2025)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2027)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2026)),
+                        new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2027, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2027, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2025)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2027)),
+                        new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2025, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2024), new CalendarYear(2024)),
+                        new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+
+                // seventh set:
+                new
+                {
+                    ReportingPeriods = new[]
+                    {
+                        new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2027)),
+                        new ReportingPeriod(new CalendarDay(2024, MonthOfYear.February, DayOfMonth.Fifteen), new CalendarDay(2028, MonthOfYear.July, DayOfMonth.Four)),
+                    },
+                    Expected = new ReportingPeriod(new CalendarDay(2024, MonthOfYear.February, DayOfMonth.Fifteen), new CalendarDay(2027, MonthOfYear.December, DayOfMonth.ThirtyOne)),
+                },
+            };
+
+            // Act
+            var actual = tests
+                .SelectMany(_ =>
+                    new[]
+                    {
+                        _.ReportingPeriods.MergeIntoNarrowestReportingPeriod(),
+                        _.ReportingPeriods.Reverse().ToList().MergeIntoNarrowestReportingPeriod(),
+                    })
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(tests.SelectMany(_ => new[] { _.Expected, _.Expected }).ToList());
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_return_null___When_no_narrowest_reporting_period_and_parameter_throwIfNoNarrowestReportingPeriod_is_false()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2024, MonthOfYear.May, DayOfMonth.Five)),
+                    new ReportingPeriod(new CalendarDay(2024, MonthOfYear.May, DayOfMonth.Six), new CalendarDay(2025, MonthOfYear.May, DayOfMonth.Nine)),
+                },
+            };
+
+            // Act
+            var actual = tests
+                .SelectMany(_ =>
+                    new[]
+                    {
+                        _.MergeIntoNarrowestReportingPeriod(throwIfNoNarrowestReportingPeriod: false),
+                        _.Reverse().ToList().MergeIntoNarrowestReportingPeriod(throwIfNoNarrowestReportingPeriod: false),
+                    })
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeNull();
+        }
+
+        [Fact]
+        public static void MergeIntoNarrowestReportingPeriod___Should_throw_InvalidOperationException___When_no_narrowest_reporting_period_and_parameter_throwIfNoNarrowestReportingPeriod_is_true()
+        {
+            // Arrange
+            var tests = new[]
+            {
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarUnbounded()),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarUnbounded(), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarMonth(2023, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.December)),
+                    new ReportingPeriod(new CalendarYear(2025), new CalendarYear(2026)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarYear(2023), new CalendarYear(2024)),
+                    new ReportingPeriod(new CalendarMonth(2025, MonthOfYear.January), new CalendarMonth(2026, MonthOfYear.December)),
+                },
+                new[]
+                {
+                    new ReportingPeriod(new CalendarDay(2023, MonthOfYear.January, DayOfMonth.One), new CalendarDay(2024, MonthOfYear.May, DayOfMonth.Five)),
+                    new ReportingPeriod(new CalendarDay(2024, MonthOfYear.May, DayOfMonth.Six), new CalendarDay(2025, MonthOfYear.May, DayOfMonth.Nine)),
+                },
+            };
+
+            // Act
+            var actual = tests
+                .SelectMany(_ =>
+                    new[]
+                    {
+                        Record.Exception(() => _.MergeIntoNarrowestReportingPeriod(throwIfNoNarrowestReportingPeriod: true)),
+                        Record.Exception(() => _.Reverse().ToList().MergeIntoNarrowestReportingPeriod(throwIfNoNarrowestReportingPeriod: true)),
+                    })
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeOfType<InvalidOperationException>();
+            actual.Select(_ => _.Message).AsTest().Must().Each().ContainString("There is no narrowest reporting period");
+        }
+
+        [Fact]
         public static void Split___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act
