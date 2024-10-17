@@ -7,9 +7,9 @@
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.AccountingTime/master/OBeautifulCode.AccountingTime.Test/nuget-icon.png</iconUrl>
     <dependencies>
       <dependency id="OBeautifulCode.AccountingTime" version="$version$" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.140" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.141" />
       <dependency id="OBeautifulCode.Math.Recipes.ThreadSafeRandom" version="1.0.82" />
-      <dependency id="OBeautifulCode.Assertion.Recipes.Must" version="1.0.35" />
+      <dependency id="OBeautifulCode.Assertion.Recipes.Must" version="1.0.37" />
       <dependency id="OBeautifulCode.CodeAnalysis.Recipes.SuppressBecause" version="1.0.19" />
     </dependencies>
   </metadata>
