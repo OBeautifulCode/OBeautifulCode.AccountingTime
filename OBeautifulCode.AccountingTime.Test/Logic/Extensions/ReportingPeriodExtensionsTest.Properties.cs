@@ -142,6 +142,59 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetBoundComponentGranularityOrUnbounded___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => ReportingPeriodExtensions.GetBoundedComponentGranularityOrUnbounded(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("reportingPeriod");
+        }
+
+        [Fact]
+        public static void GetBoundComponentGranularityOrUnbounded___Should_return_granularity___When_called()
+        {
+            // Arrange
+            var reportingPeriod1 = A.Dummy<BoundedReportingPeriod>().ReportingPeriod;
+            var reportingPeriod2 = A.Dummy<SemiBoundedReportingPeriod>().Whose(_ => _.ReportingPeriod.Start is IAmUnboundedTime).ReportingPeriod;
+            var reportingPeriod3 = A.Dummy<SemiBoundedReportingPeriod>().Whose(_ => _.ReportingPeriod.End is IAmUnboundedTime).ReportingPeriod;
+            var reportingPeriod4 = A.Dummy<UnboundedReportingPeriod>().ReportingPeriod;
+
+            var reportingPeriodAndExpected = new[]
+            {
+                new
+                {
+                    ReportingPeriod = reportingPeriod1,
+                    Expected = reportingPeriod1.GetUnitOfTimeGranularity(),
+                },
+                new
+                {
+                    ReportingPeriod = reportingPeriod2,
+                    Expected = reportingPeriod2.End.UnitOfTimeGranularity,
+                },
+                new
+                {
+                    ReportingPeriod = reportingPeriod3,
+                    Expected = reportingPeriod3.Start.UnitOfTimeGranularity,
+                },
+                new
+                {
+                    ReportingPeriod = reportingPeriod4,
+                    Expected = UnitOfTimeGranularity.Unbounded,
+                },
+            };
+
+            var expected = reportingPeriodAndExpected.Select(_ => _.Expected).ToList();
+
+            // Act
+            var actual = reportingPeriodAndExpected.Select(_ => _.ReportingPeriod.GetBoundedComponentGranularityOrUnbounded()).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
         public static void GetUnitOfTimeKind___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act

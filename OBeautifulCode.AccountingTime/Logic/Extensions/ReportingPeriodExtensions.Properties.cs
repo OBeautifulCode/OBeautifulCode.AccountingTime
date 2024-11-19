@@ -70,6 +70,40 @@ namespace OBeautifulCode.AccountingTime
         }
 
         /// <summary>
+        /// Gets the granularity of the unit-of-time used in a reporting period
+        /// for the bound component OR if both components are <see cref="UnitOfTimeGranularity.Unbounded"/>
+        /// then return <see cref="UnitOfTimeGranularity.Unbounded"/>.
+        /// </summary>
+        /// <param name="reportingPeriod">The reporting period.</param>
+        /// <returns>
+        /// The granularity of the bounded component unit-of-time used in the specified reporting period.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reportingPeriod"/> is null.</exception>
+        public static UnitOfTimeGranularity GetBoundedComponentGranularityOrUnbounded(
+            this ReportingPeriod reportingPeriod)
+        {
+            if (reportingPeriod == null)
+            {
+                throw new ArgumentNullException(nameof(reportingPeriod));
+            }
+
+            UnitOfTimeGranularity result;
+
+            if (reportingPeriod.Start.UnitOfTimeGranularity != reportingPeriod.End.UnitOfTimeGranularity)
+            {
+                result = reportingPeriod.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded
+                    ? reportingPeriod.End.UnitOfTimeGranularity
+                    : reportingPeriod.Start.UnitOfTimeGranularity;
+            }
+            else
+            {
+                result = reportingPeriod.Start.UnitOfTimeGranularity;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the kind of the unit-of-time used in a reporting period.
         /// </summary>
         /// <param name="reportingPeriod">The reporting period.</param>
