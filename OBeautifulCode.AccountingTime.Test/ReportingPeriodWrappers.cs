@@ -102,6 +102,72 @@ namespace OBeautifulCode.AccountingTime.Test
     }
 
     /// <summary>
+    /// Wraps a reporting period where one component, but not both, are unbounded.
+    /// </summary>
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+    internal
+#else
+    public
+#endif
+        class SemiBoundedReportingPeriod : ReportingPeriodWrapper
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoundedReportingPeriod"/> class.
+        /// </summary>
+        /// <param name="start">The start of the reporting period.</param>
+        /// <param name="end">The end of the reporting period.</param>
+        public SemiBoundedReportingPeriod(
+            UnitOfTime start,
+            UnitOfTime end)
+            : base(start, end)
+        {
+            var startIsUnbounded = start is IAmUnboundedTime;
+            var endIsUnbounded = end is IAmUnboundedTime;
+
+            if (startIsUnbounded || endIsUnbounded)
+            {
+                if (startIsUnbounded && endIsUnbounded)
+                {
+                    throw new ArgumentException("one and only one of start and end must be unbounded");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("one and only one of start and end must be unbounded");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Wraps a reporting period where the start and the end are both unbounded.
+    /// </summary>
+#if !OBeautifulCodeAccountingTimeSolution
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::System.CodeDom.Compiler.GeneratedCode("OBeautifulCode.AccountingTime.Test", "See package version number")]
+    internal
+#else
+    public
+#endif
+        class UnboundedReportingPeriod : ReportingPeriodWrapper
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnboundedReportingPeriod"/> class.
+        /// </summary>
+        /// <param name="start">The start of the reporting period.</param>
+        /// <param name="end">The end of the reporting period.</param>
+        public UnboundedReportingPeriod(
+            UnitOfTime start,
+            UnitOfTime end)
+            : base(start, end)
+        {
+            new { start }.AsArg().Must().BeAssignableToType<IAmUnboundedTime>();
+            new { end }.AsArg().Must().BeAssignableToType<IAmUnboundedTime>();
+        }
+    }
+
+    /// <summary>
     /// Wraps a reporting period where the start and the end of the reporting period are both a <see cref="GenericUnitOfTime"/>.
     /// </summary>
 #if !OBeautifulCodeAccountingTimeSolution

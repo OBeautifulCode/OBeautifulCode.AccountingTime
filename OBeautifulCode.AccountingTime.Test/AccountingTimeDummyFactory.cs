@@ -449,6 +449,30 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
+                    var potentialTypes = new[] { typeof(SemiBoundedGenericReportingPeriod), typeof(SemiBoundedFiscalReportingPeriod), typeof(SemiBoundedCalendarReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new SemiBoundedReportingPeriod(reportingPeriod.Start, reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var potentialTypes = new[] { typeof(GenericUnboundedReportingPeriod), typeof(FiscalUnboundedReportingPeriod), typeof(CalendarUnboundedReportingPeriod) };
+
+                    var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
+
+                    var result = new UnboundedReportingPeriod(reportingPeriod.Start, reportingPeriod.End);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
                     var potentialTypes = new[] { typeof(GenericMonthReportingPeriod), typeof(GenericQuarterReportingPeriod), typeof(GenericYearReportingPeriod) };
 
                     var reportingPeriod = GetRandomReportingPeriodWrapper(potentialTypes).ReportingPeriod;
