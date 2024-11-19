@@ -142,7 +142,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetBoundComponentGranularityOrUnbounded___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
+        public static void GetBoundedComponentGranularityOrUnbounded___Should_throw_ArgumentNullException___When_parameter_reportingPeriod_is_null()
         {
             // Arrange, Act
             var actual = Record.Exception(() => ReportingPeriodExtensions.GetBoundedComponentGranularityOrUnbounded(null));
@@ -153,7 +153,7 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetBoundComponentGranularityOrUnbounded___Should_return_granularity___When_called()
+        public static void GetBoundedComponentGranularityOrUnbounded___Should_return_granularity___When_called()
         {
             // Arrange
             var reportingPeriod1 = A.Dummy<BoundedReportingPeriod>().ReportingPeriod;
