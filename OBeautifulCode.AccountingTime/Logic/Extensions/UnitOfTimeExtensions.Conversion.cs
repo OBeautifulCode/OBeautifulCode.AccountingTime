@@ -16,6 +16,58 @@ namespace OBeautifulCode.AccountingTime
     public static partial class UnitOfTimeExtensions
     {
         /// <summary>
+        /// Converts a <see cref="CalendarQuarter"/> to a <see cref="CalendarMonth"/>-based <see cref="ReportingPeriod"/>.
+        /// </summary>
+        /// <param name="calendarQuarter">The calendar quarter to convert.</param>
+        /// <returns>
+        /// The calendar month reporting period associated with the specified calendar quarter.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="calendarQuarter"/> is null.</exception>
+        public static ReportingPeriod ToCalendarMonthReportingPeriod(
+            this CalendarQuarter calendarQuarter)
+        {
+            if (calendarQuarter == null)
+            {
+                throw new ArgumentNullException(nameof(calendarQuarter));
+            }
+
+            ReportingPeriod result;
+
+            var year = calendarQuarter.Year;
+
+            if (calendarQuarter.QuarterNumber == QuarterNumber.Q1)
+            {
+                result = new ReportingPeriod(
+                    new CalendarMonth(year, MonthOfYear.January),
+                    new CalendarMonth(year, MonthOfYear.March));
+            }
+            else if (calendarQuarter.QuarterNumber == QuarterNumber.Q2)
+            {
+                result = new ReportingPeriod(
+                    new CalendarMonth(year, MonthOfYear.April),
+                    new CalendarMonth(year, MonthOfYear.June));
+            }
+            else if (calendarQuarter.QuarterNumber == QuarterNumber.Q3)
+            {
+                result = new ReportingPeriod(
+                    new CalendarMonth(year, MonthOfYear.July),
+                    new CalendarMonth(year, MonthOfYear.September));
+            }
+            else if (calendarQuarter.QuarterNumber == QuarterNumber.Q4)
+            {
+                result = new ReportingPeriod(
+                    new CalendarMonth(year, MonthOfYear.October),
+                    new CalendarMonth(year, MonthOfYear.December));
+            }
+            else
+            {
+                throw new NotSupportedException(Invariant($"This {nameof(QuarterNumber)} is not supported: {calendarQuarter.QuarterNumber}."));
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Converts a <see cref="CalendarQuarter"/> to a <see cref="FiscalQuarter"/>.
         /// </summary>
         /// <param name="fiscalQuarter">The fiscal quarter to convert.</param>

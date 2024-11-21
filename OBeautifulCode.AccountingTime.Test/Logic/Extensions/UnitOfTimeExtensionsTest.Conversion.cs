@@ -13,12 +13,60 @@ namespace OBeautifulCode.AccountingTime.Test
     using FakeItEasy;
 
     using FluentAssertions;
-
+    using OBeautifulCode.Assertion.Recipes;
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "There are many kinds of units-of-time.")]
     public static partial class UnitOfTimeExtensionsTest
     {
+        [Fact]
+        public static void ToCalendarMonthReportingPeriod___Should_throw_ArgumentNullException___When_parameter_calendarQuarter_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => UnitOfTimeExtensions.ToCalendarMonthReportingPeriod(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("calendarQuarter");
+        }
+
+        [Fact]
+        public static void ToCalendarMonthReportingPeriod___Should_return_expected_reporting_period___When_called()
+        {
+            // Arrange
+            var calendarQuarterAndExpected = new[]
+            {
+                new
+                {
+                    CalendarQuarter = new CalendarQuarter(2024, QuarterNumber.Q1),
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.January), new CalendarMonth(2024, MonthOfYear.March)),
+                },
+                new
+                {
+                    CalendarQuarter = new CalendarQuarter(2024, QuarterNumber.Q2),
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.April), new CalendarMonth(2024, MonthOfYear.June)),
+                },
+                new
+                {
+                    CalendarQuarter = new CalendarQuarter(2024, QuarterNumber.Q3),
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.July), new CalendarMonth(2024, MonthOfYear.September)),
+                },
+                new
+                {
+                    CalendarQuarter = new CalendarQuarter(2024, QuarterNumber.Q4),
+                    Expected = new ReportingPeriod(new CalendarMonth(2024, MonthOfYear.October), new CalendarMonth(2024, MonthOfYear.December)),
+                },
+            };
+
+            var expected = calendarQuarterAndExpected.Select(_ => _.Expected).ToList();
+
+            // Act
+            var actual = calendarQuarterAndExpected.Select(_ => _.CalendarQuarter.ToCalendarMonthReportingPeriod()).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
         [Fact]
         public static void ToCalendarQuarter___Should_throw_ArgumentNullException___When_parameter_fiscalQuarter_is_null()
         {
