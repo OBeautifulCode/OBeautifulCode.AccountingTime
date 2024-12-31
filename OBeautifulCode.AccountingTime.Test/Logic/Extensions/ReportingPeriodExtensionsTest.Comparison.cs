@@ -14,7 +14,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using FakeItEasy;
 
     using FluentAssertions;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
 
     using Xunit;
@@ -5947,84 +5947,385 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_is_less_than_reportingPeriod2()
+        public static void IsGreaterThanAndAdjacentTo___Should_return_false___When_reportingPeriod1_is_less_than_reportingPeriod2()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Five));
-            var reportingPeriod2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve));
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Five)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Five)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Five)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Five)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                },
+            };
 
             // Act
-            var actual = reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2);
+            var actual = reportingPeriods.Select(_ => _.Period1.IsGreaterThanAndAdjacentTo(_.Period2)).ToList();
 
             // Assert
-            actual.Should().BeFalse();
+            actual.AsTest().Must().Each().BeFalse();
         }
 
         [Fact]
-        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_and_reportingPeriod2_overlap()
+        public static void IsGreaterThanAndAdjacentTo___Should_return_false___When_reportingPeriod1_and_reportingPeriod2_overlap()
         {
             // Arrange
-            var reportingPeriod1a = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve));
-            var reportingPeriod1b = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+            var reportingPeriods = new[]
+            {
+                // one month overlap
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Six), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalUnbounded()),
+                },
 
-            var reportingPeriod2a = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
-            var reportingPeriod2b = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+                // same reporting period
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
 
-            var reportingPeriod3a = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten));
-            var reportingPeriod3b = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+                // multi-month overlap
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalUnbounded()),
+                },
 
-            var reportingPeriod4a = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten));
-            var reportingPeriod4b = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six));
+                // multi-month overlap
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Ten)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Five), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Four), new FiscalUnbounded()),
+                },
+            };
 
             // Act
-            var actual1 = reportingPeriod1a.IsGreaterThanAndAdjacentTo(reportingPeriod1b);
-            var actual2 = reportingPeriod2a.IsGreaterThanAndAdjacentTo(reportingPeriod2b);
-            var actual3 = reportingPeriod3a.IsGreaterThanAndAdjacentTo(reportingPeriod3b);
-            var actual4 = reportingPeriod4a.IsGreaterThanAndAdjacentTo(reportingPeriod4b);
+            var actual = reportingPeriods.Select(_ => _.Period1.IsGreaterThanAndAdjacentTo(_.Period2)).ToList();
 
             // Assert
-            actual1.Should().BeFalse();
-            actual2.Should().BeFalse();
-            actual3.Should().BeFalse();
-            actual4.Should().BeFalse();
+            actual.AsTest().Must().Each().BeFalse();
         }
 
         [Fact]
-        public static void HasOverlapWith___Should_return_false___When_reportingPeriod1_is_greater_than_but_not_adjacent_to_reportingPeriod2()
+        public static void IsGreaterThanAndAdjacentTo___Should_return_false___When_reportingPeriod1_is_greater_than_but_not_adjacent_to_reportingPeriod2()
         {
             // Arrange
-            var reportingPeriod1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Eight), new FiscalMonth(2016, MonthNumber.Twelve));
-            var reportingPeriod2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Eight), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Eight), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Eight), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Eight), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+            };
 
             // Act
-            var actual = reportingPeriod1.IsGreaterThanAndAdjacentTo(reportingPeriod2);
+            var actual = reportingPeriods.Select(_ => _.Period1.IsGreaterThanAndAdjacentTo(_.Period2)).ToList();
 
             // Assert
-            actual.Should().BeFalse();
+            actual.AsTest().Must().Each().BeFalse();
         }
 
         [Fact]
-        public static void HasOverlapWith___Should_return_true___When_reportingPeriod1_is_greater_than_and_adjacent_to_reportingPeriod2()
+        public static void IsGreaterThanAndAdjacentTo___Should_return_true___When_reportingPeriod1_is_greater_than_and_adjacent_to_reportingPeriod2()
         {
             // Arrange
-            var reportingPeriod1a = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Seven), new FiscalMonth(2016, MonthNumber.Twelve));
-            var reportingPeriod1b = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six));
-
-            var reportingPeriod2a = new ReportingPeriod(QuarterNumber.Q2.ToFiscal(2015), QuarterNumber.Q3.ToFiscal(2015));
-            var reportingPeriod2b = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2015, MonthNumber.Three));
-
-            var reportingPeriod3a = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.Seven), new FiscalMonth(2015, MonthNumber.Eight));
-            var reportingPeriod3b = new ReportingPeriod(QuarterNumber.Q1.ToFiscal(2015), QuarterNumber.Q2.ToFiscal(2015));
+            var reportingPeriods = new[]
+            {
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Seven), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Seven), new FiscalMonth(2016, MonthNumber.Twelve)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Seven), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.One), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2016, MonthNumber.Seven), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2016, MonthNumber.Six)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(QuarterNumber.Q2.ToFiscal(2015), QuarterNumber.Q3.ToFiscal(2015)),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2015, MonthNumber.Three)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(QuarterNumber.Q2.ToFiscal(2015), QuarterNumber.Q3.ToFiscal(2015)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2015, MonthNumber.Three)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(QuarterNumber.Q2.ToFiscal(2015), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.One), new FiscalMonth(2015, MonthNumber.Three)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(QuarterNumber.Q2.ToFiscal(2015), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), new FiscalMonth(2015, MonthNumber.Three)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.Seven), new FiscalMonth(2015, MonthNumber.Eight)),
+                    Period2 = new ReportingPeriod(QuarterNumber.Q1.ToFiscal(2015), QuarterNumber.Q2.ToFiscal(2015)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.Seven), new FiscalMonth(2015, MonthNumber.Eight)),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), QuarterNumber.Q2.ToFiscal(2015)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.Seven), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(QuarterNumber.Q1.ToFiscal(2015), QuarterNumber.Q2.ToFiscal(2015)),
+                },
+                new
+                {
+                    Period1 = new ReportingPeriod(new FiscalMonth(2015, MonthNumber.Seven), new FiscalUnbounded()),
+                    Period2 = new ReportingPeriod(new FiscalUnbounded(), QuarterNumber.Q2.ToFiscal(2015)),
+                },
+            };
 
             // Act
-            var actual1 = reportingPeriod1a.IsGreaterThanAndAdjacentTo(reportingPeriod1b);
-            var actual2 = reportingPeriod2a.IsGreaterThanAndAdjacentTo(reportingPeriod2b);
-            var actual3 = reportingPeriod3a.IsGreaterThanAndAdjacentTo(reportingPeriod3b);
+            var actual = reportingPeriods.Select(_ => _.Period1.IsGreaterThanAndAdjacentTo(_.Period2)).ToList();
 
             // Assert
-            actual1.Should().BeTrue();
-            actual2.Should().BeTrue();
-            actual3.Should().BeTrue();
+            actual.AsTest().Must().Each().BeTrue();
         }
     }
 }

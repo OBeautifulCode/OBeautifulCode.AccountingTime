@@ -215,6 +215,11 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentException(Invariant($"{nameof(reportingPeriod1)} cannot be compared against {nameof(reportingPeriod2)} because they represent different {nameof(UnitOfTimeKind)}."));
             }
 
+            if (reportingPeriod1.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded)
+            {
+                return false;
+            }
+
             var mostGranularReportingPeriod1 = reportingPeriod1.ToMostGranular();
             var mostGranularReportingPeriod2 = reportingPeriod2.ToMostGranular();
 
