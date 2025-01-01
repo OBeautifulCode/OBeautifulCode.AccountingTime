@@ -66,5 +66,76 @@ namespace OBeautifulCode.AccountingTime
 
             return result;
         }
+
+        /// <summary>
+        /// Determines whether or not the timeseries has a gap.
+        /// </summary>
+        /// <typeparam name="T">The type of value of the datapoints.</typeparam>
+        /// <param name="timeseries">The timeseries.</param>
+        /// <param name="timeseriesGapKind">The kind of gap to check for.</param>
+        /// <param name="emptyTimeseriesHasGap">Specifies whether an empty timeseries is considered to have a gap.</param>
+        /// <returns>
+        /// true if the timeseries has a gap, otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="timeseries"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="timeseriesGapKind"/> is <see cref="TimeseriesGapKind.Unknown"/>.</exception>
+        public static bool HasGap<T>(
+            this Timeseries<T> timeseries,
+            TimeseriesGapKind timeseriesGapKind,
+            bool emptyTimeseriesHasGap)
+        {
+            if (timeseries == null)
+            {
+                throw new ArgumentNullException(nameof(timeseries));
+            }
+
+            if (timeseriesGapKind == TimeseriesGapKind.Unknown)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(timeseriesGapKind)}' == '{TimeseriesGapKind.Unknown}'"), (Exception)null);
+            }
+
+            if (!timeseries.Datapoints.Any())
+            {
+                return emptyTimeseriesHasGap;
+            }
+
+            if ((timeseriesGapKind == TimeseriesGapKind.BetweenUnboundedStartAndLastDatapoint) ||
+                 (timeseriesGapKind == TimeseriesGapKind.BetweenUnboundedStartAndUnboundedEnd))
+            {
+                if (timeseries.Datapoints.First().ReportingPeriod.Start.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)
+                {
+                    return true;
+                }
+            }
+
+            if ((timeseriesGapKind == TimeseriesGapKind.BetweenFirstDatapointAndUnboundedEnd) ||
+                (timeseriesGapKind == TimeseriesGapKind.BetweenUnboundedStartAndUnboundedEnd))
+            {
+                if (timeseries.Datapoints.Last().ReportingPeriod.End.UnitOfTimeGranularity != UnitOfTimeGranularity.Unbounded)
+                {
+                    return true;
+                }
+            }
+
+            bool result;
+
+            if ((timeseriesGapKind == TimeseriesGapKind.BetweenFirstAndLastDatapoint) ||
+                (timeseriesGapKind == TimeseriesGapKind.BetweenFirstDatapointAndUnboundedEnd) ||
+                (timeseriesGapKind == TimeseriesGapKind.BetweenUnboundedStartAndLastDatapoint) ||
+                (timeseriesGapKind == TimeseriesGapKind.BetweenUnboundedStartAndUnboundedEnd))
+            {
+                result = !timeseries.Datapoints
+                    .Zip(
+                        timeseries.Datapoints.Skip(1),
+                        (first, second) => new { First = first.ReportingPeriod, Second = second.ReportingPeriod })
+                    .All(_ => _.Second.IsGreaterThanAndAdjacentTo(_.First));
+            }
+            else
+            {
+                throw new NotSupportedException(Invariant($"This {nameof(TimeseriesGapKind)} is not supported: {timeseriesGapKind}."));
+            }
+
+            return result;
+        }
     }
 }

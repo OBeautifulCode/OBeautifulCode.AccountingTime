@@ -226,5 +226,1272 @@ namespace OBeautifulCode.AccountingTime.Test
             actual1.AsTest().Must().BeEqualTo(datapoints);
             actual2.AsTest().Must().BeEqualTo(datapoints);
         }
+
+        [Fact]
+        public static void HasGap___Should_throw_ArgumentNullException___When_parameter_timeseries_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => TimeseriesExtensions.HasGap<Version>(null, A.Dummy<TimeseriesGapKind>(), A.Dummy<bool>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("timeseries");
+        }
+
+        [Fact]
+        public static void HasGap___Should_throw_ArgumentOutOfRangeException___When_parameter_timeseriesGapKind_is_Unknown()
+        {
+            // Arrange
+            var timeseries = A.Dummy<Timeseries<Version>>();
+
+            // Act
+            var actual = Record.Exception(() => timeseries.HasGap(TimeseriesGapKind.Unknown, A.Dummy<bool>()));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentOutOfRangeException>();
+            actual.Message.AsTest().Must().ContainString("timeseriesGapKind");
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_true___When_timeseries_is_empty_and_emptyTimeseriesHasGap_is_true()
+        {
+            // Arrange
+            var timeseries = Timeseries<Version>.Empty;
+
+            // Act
+            var actual = timeseries.HasGap(A.Dummy<TimeseriesGapKind>(), emptyTimeseriesHasGap: true);
+
+            // Assert
+            actual.AsTest().Must().BeTrue();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_false___When_timeseries_is_empty_and_emptyTimeseriesHasGap_is_false()
+        {
+            // Arrange
+            var timeseries = Timeseries<Version>.Empty;
+
+            // Act
+            var actual = timeseries.HasGap(A.Dummy<TimeseriesGapKind>(), emptyTimeseriesHasGap: false);
+
+            // Assert
+            actual.AsTest().Must().BeFalse();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_true___When_timeseriesGapKind_is_BetweenFirstAndLastDatapoint_and_there_is_a_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q4),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q4),
+                            new CalendarQuarter(2025, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenFirstAndLastDatapoint, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeTrue();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_false___When_timeseriesGapKind_is_BetweenFirstAndLastDatapoint_and_there_is_no_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<UnboundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<BoundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenFirstAndLastDatapoint, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeFalse();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_true___When_timeseriesGapKind_is_BetweenUnboundedStartAndLastDatapoint_and_there_is_a_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q4),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q4),
+                            new CalendarQuarter(2025, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<BoundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenUnboundedStartAndLastDatapoint, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeTrue();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_false___When_timeseriesGapKind_is_BetweenUnboundedStartAndLastDatapoint_and_there_is_no_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<UnboundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenFirstAndLastDatapoint, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeFalse();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_true___When_timeseriesGapKind_is_BetweenFirstDatapointAndUnboundedEnd_and_there_is_a_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q4),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q4),
+                            new CalendarQuarter(2025, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<BoundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenFirstDatapointAndUnboundedEnd, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeTrue();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_false___When_timeseriesGapKind_is_BetweenFirstDatapointAndUnboundedEnd_and_there_is_no_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<UnboundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenFirstDatapointAndUnboundedEnd, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeFalse();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_true___When_timeseriesGapKind_is_BetweenUnboundedStartAndUnboundedEnd_and_there_is_a_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q4),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q4),
+                            new CalendarQuarter(2025, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q2),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<BoundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarQuarter(2025, QuarterNumber.Q1)),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q1),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenUnboundedStartAndUnboundedEnd, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeTrue();
+        }
+
+        [Fact]
+        public static void HasGap___Should_return_false___When_timeseriesGapKind_is_BetweenUnboundedStartAndUnboundedEnd_and_there_is_no_gap()
+        {
+            // Arrange
+            var datapoints = new[]
+            {
+                new[]
+                {
+                    new Datapoint<string>(
+                        A.Dummy<UnboundedReportingPeriod>().ReportingPeriod,
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+                new[]
+                {
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarUnbounded(),
+                            new CalendarQuarter(2024, QuarterNumber.Q2)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2024, QuarterNumber.Q3),
+                            new CalendarQuarter(2024, QuarterNumber.Q4)),
+                        A.Dummy<string>()),
+                    new Datapoint<string>(
+                        new ReportingPeriod(
+                            new CalendarQuarter(2025, QuarterNumber.Q1),
+                            new CalendarUnbounded()),
+                        A.Dummy<string>()),
+                },
+            };
+
+            // Act
+            var actual = datapoints
+                .Select(_ => new Timeseries<string>(_))
+                .Select(_ => _.HasGap(TimeseriesGapKind.BetweenUnboundedStartAndUnboundedEnd, emptyTimeseriesHasGap: A.Dummy<bool>()))
+                .ToList();
+
+            // Assert
+            actual.AsTest().Must().Each().BeFalse();
+        }
     }
 }

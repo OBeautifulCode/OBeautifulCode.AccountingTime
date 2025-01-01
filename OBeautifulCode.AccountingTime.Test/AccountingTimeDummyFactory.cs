@@ -50,6 +50,7 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(TimeseriesGapKind.Unknown);
 
             AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<AccountingPeriodSystem>();
 
