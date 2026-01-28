@@ -627,22 +627,22 @@ namespace OBeautifulCode.AccountingTime.Test
         /// </returns>
         public static Timeseries<T> GetDummyTimeseries<T>()
         {
-            // By constraining the year range, we are able to find adjacent
-            // reporting periods later in the heuristic.
-            var oneFourthYearRange = (MaxYear - MinYear) / 4;
-            var minYear = MinYear + oneFourthYearRange;
-            var maxYear = oneFourthYearRange - (MaxYear - MinYear) / 4;
-
-            var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(
-                _ =>
-                ((_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.Start).Year > minYear)) &&
-                ((_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.End).Year < maxYear)));
-
             IReadOnlyList<Datapoint<T>> datapoints = new List<Datapoint<T>>();
 
             // 1/4rd of time it will be an empty timeseries
             if (ThreadSafeRandom.Next(0, 4) > 0)
             {
+                // By constraining the year range, we are able to find adjacent
+                // reporting periods later in the heuristic.
+                var oneFourthYearRange = (MaxYear - MinYear) / 4;
+                var minYear = MinYear + oneFourthYearRange;
+                var maxYear = MaxYear - oneFourthYearRange;
+
+                var reportingPeriod = A.Dummy<ReportingPeriod>().Whose(
+                    _ =>
+                        ((_.Start.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.Start).Year > minYear)) &&
+                        ((_.End.UnitOfTimeGranularity == UnitOfTimeGranularity.Unbounded) || (((IHaveAYear)_.End).Year < maxYear)));
+
                 if (reportingPeriod.HasComponentWithUnboundedGranularity())
                 {
                     datapoints = new List<Datapoint<T>>
