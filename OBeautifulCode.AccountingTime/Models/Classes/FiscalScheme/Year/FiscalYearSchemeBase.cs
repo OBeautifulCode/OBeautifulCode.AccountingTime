@@ -20,5 +20,13 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public abstract ReportingPeriod GetCalendarDayPeriod(
             FiscalYear fiscalYear);
+
+        /// <inheritdoc />
+        public override UnitOfTimeGranularity GetGranularity()
+        {
+            var result = UnitOfTimeGranularity.Year;
+
+            return result;
+        }
     }
 }

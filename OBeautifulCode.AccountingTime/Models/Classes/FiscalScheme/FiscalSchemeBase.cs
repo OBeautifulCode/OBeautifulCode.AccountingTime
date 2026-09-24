@@ -13,5 +13,12 @@ namespace OBeautifulCode.AccountingTime
     /// </summary>
     public abstract partial class FiscalSchemeBase : IModelViaCodeGen
     {
+        /// <summary>
+        /// Gets the granularity of the scheme.
+        /// </summary>
+        /// <returns>
+        /// The granularity of the scheme.
+        /// </returns>
+        public abstract UnitOfTimeGranularity GetGranularity();
     }
 }

@@ -12,7 +12,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using System.Linq;
 
     using FakeItEasy;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
@@ -29,6 +29,19 @@ namespace OBeautifulCode.AccountingTime.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FiscalYearSchemeBaseTest()
         {
+        }
+
+        [Fact]
+        public static void GetGranularity___Should_return_Year___When_called()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiscalYearSchemeBase>();
+
+            // Act
+            var actual = systemUnderTest.GetGranularity();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(UnitOfTimeGranularity.Year);
         }
     }
 }

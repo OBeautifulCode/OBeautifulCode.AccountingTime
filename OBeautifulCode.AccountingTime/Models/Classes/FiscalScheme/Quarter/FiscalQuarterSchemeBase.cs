@@ -20,5 +20,13 @@ namespace OBeautifulCode.AccountingTime
         /// </returns>
         public abstract ReportingPeriod GetCalendarDayPeriod(
             FiscalQuarter fiscalQuarter);
+
+        /// <inheritdoc />
+        public override UnitOfTimeGranularity GetGranularity()
+        {
+            var result = UnitOfTimeGranularity.Quarter;
+
+            return result;
+        }
     }
 }
