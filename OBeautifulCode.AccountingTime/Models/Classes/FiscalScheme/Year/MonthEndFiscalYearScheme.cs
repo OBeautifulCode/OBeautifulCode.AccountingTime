@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiscalYearAccountingPeriodSystem.cs" company="OBeautifulCode">
+// <copyright file="MonthEndFiscalYearScheme.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,23 +7,21 @@
 namespace OBeautifulCode.AccountingTime
 {
     using System;
-
-    using OBeautifulCode.Type;
-
     using static System.FormattableString;
 
     /// <summary>
-    /// A fiscal year is 12 consecutive months ending on the last day of any month except December 31st.
+    /// A fiscal year scheme in which each fiscal year is 12 consecutive months ending on
+    /// the last day of a specified month (except December - use <see cref="CalendarAlignedFiscalYearScheme"/> for that).
     /// </summary>
-    public partial class FiscalYearAccountingPeriodSystem : AccountingPeriodSystem, IModelViaCodeGen
+    public partial class MonthEndFiscalYearScheme : FiscalYearSchemeBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FiscalYearAccountingPeriodSystem"/> class.
+        /// Initializes a new instance of the <see cref="MonthEndFiscalYearScheme"/> class.
         /// </summary>
         /// <param name="lastMonthInFiscalYear">The last month of the fiscal year.</param>
         /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is invalid.</exception>
         /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is <see cref="MonthOfYear.December"/>.</exception>
-        public FiscalYearAccountingPeriodSystem(
+        public MonthEndFiscalYearScheme(
             MonthOfYear lastMonthInFiscalYear)
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
@@ -46,7 +44,7 @@ namespace OBeautifulCode.AccountingTime
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public override ReportingPeriod GetReportingPeriodForFiscalYear(
+        public override ReportingPeriod GetCalendarDayPeriod(
             FiscalYear fiscalYear)
         {
             if (fiscalYear == null)

@@ -85,18 +85,6 @@
     <Compile Include="Logic\Extensions\UnitOfTimeKindExtensions.cs" />
     <Compile Include="Logic\Extensions\YearNumberExtensions.cs" />
     <Compile Include="Logic\Extensions\TimeseriesExtensions.cs" />
-    <Compile Include="Models\Classes\AccountingPeriodSystem\AccountingPeriodSystem.designer.cs">
-      <DependentUpon>AccountingPeriodSystem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\AccountingPeriodSystem\CalendarYearAccountingPeriodSystem.designer.cs">
-      <DependentUpon>CalendarYearAccountingPeriodSystem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystem.designer.cs">
-      <DependentUpon>FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Classes\AccountingPeriodSystem\FiscalYearAccountingPeriodSystem.designer.cs">
-      <DependentUpon>FiscalYearAccountingPeriodSystem.cs</DependentUpon>
-    </Compile>
     <Compile Include="Logic\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Logic\Enums\OverflowStrategy.cs" />
     <Compile Include="Logic\Extensions\QuarterNumberExtensions.cs" />
@@ -120,6 +108,37 @@
     <Compile Include="Models\Classes\Cutoff\CutoffBase.cs" />
     <Compile Include="Models\Classes\Cutoff\RelativeCutoff.designer.cs">
       <DependentUpon>RelativeCutoff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\FiscalSchemeBase.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\FiscalSchemeBase.designer.cs">
+      <DependentUpon>FiscalSchemeBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\CalendarAlignedFiscalQuarterScheme.designer.cs">
+      <DependentUpon>CalendarAlignedFiscalQuarterScheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FiftyTwoFiftyThreeWeekFiscalQuarterScheme.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FiftyTwoFiftyThreeWeekFiscalQuarterScheme.designer.cs">
+      <DependentUpon>FiftyTwoFiftyThreeWeekFiscalQuarterScheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FiscalQuarterSchemeBase.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\CalendarAlignedFiscalQuarterScheme.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FiscalQuarterSchemeBase.designer.cs">
+      <DependentUpon>FiscalQuarterSchemeBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\MonthEndFiscalQuarterScheme.designer.cs">
+      <DependentUpon>MonthEndFiscalQuarterScheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Year\CalendarAlignedFiscalYearScheme.designer.cs">
+      <DependentUpon>CalendarAlignedFiscalYearScheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Year\FiftyTwoFiftyThreeWeekFiscalYearScheme.designer.cs">
+      <DependentUpon>FiftyTwoFiftyThreeWeekFiscalYearScheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Year\FiscalYearSchemeBase.designer.cs">
+      <DependentUpon>FiscalYearSchemeBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Year\MonthEndFiscalYearScheme.designer.cs">
+      <DependentUpon>MonthEndFiscalYearScheme.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriodCriteria.designer.cs">
       <DependentUpon>ReportingPeriodCriteria.cs</DependentUpon>
@@ -237,11 +256,12 @@
     <Compile Include="Models\Classes\Time\Calendar\CalendarMonth.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarYear.cs" />
     <Compile Include="Models\Classes\ReportingPeriod\ReportingPeriod.cs" />
-    <Compile Include="Models\Classes\AccountingPeriodSystem\AccountingPeriodSystem.cs" />
-    <Compile Include="Models\Classes\AccountingPeriodSystem\CalendarYearAccountingPeriodSystem.cs" />
-    <Compile Include="Models\Classes\AccountingPeriodSystem\FiftyTwoFiftyThreeWeekAccountingPeriodSystem.cs" />
-    <Compile Include="Models\Enums\AccountingPeriodSystem\FiftyTwoFiftyThreeWeekMethodology.cs" />
-    <Compile Include="Models\Classes\AccountingPeriodSystem\FiscalYearAccountingPeriodSystem.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Year\FiscalYearSchemeBase.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Year\CalendarAlignedFiscalYearScheme.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Year\FiftyTwoFiftyThreeWeekFiscalYearScheme.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\MonthEndFiscalQuarterScheme.cs" />
+    <Compile Include="Models\Enums\FiscalScheme\FiftyTwoFiftyThreeWeekMethodology.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Year\MonthEndFiscalYearScheme.cs" />
     <Compile Include="Models\Enums\Time\MonthOfYear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Classes\Time\Calendar\CalendarQuarter.cs" />
@@ -264,6 +284,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets" Condition="Exists('..\packages\OBeautifulCode.Build.Analyzers.1.1.141\build\OBeautifulCode.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

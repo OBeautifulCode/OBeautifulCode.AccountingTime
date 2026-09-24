@@ -44,20 +44,39 @@ namespace OBeautifulCode.AccountingTime.Test
         /// </summary>
         public AccountingTimeDummyFactory()
         {
-            // ------------------------------------------------------------------------------------
-            // ---------------------------  accounting period system ------------------------------
-            // ------------------------------------------------------------------------------------
+            // Enums
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(TimeseriesGapKind.Unknown);
 
-            AutoFixtureBackedDummyFactory.UseRandomConcreteSubclassForDummy<AccountingPeriodSystem>();
+            // Fiscal Schemes
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var result = new MonthEndFiscalYearScheme(A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December));
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
-                    var result = new FiscalYearAccountingPeriodSystem(A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December));
+                    // four positive week counts that sum to 52
+                    var weeksPerQuarterOptions = new[]
+                    {
+                        new[] { 13, 13, 13, 13 },
+                        new[] { 12, 12, 12, 16 },
+                    };
+
+                    var weeksPerQuarter = weeksPerQuarterOptions[ThreadSafeRandom.Next(0, weeksPerQuarterOptions.Length)]
+                        .OrderBy(_ => ThreadSafeRandom.Next(0, 100))
+                        .ToList();
+                    
+                    var result = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
+                        A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>(),
+                        weeksPerQuarter,
+                        A.Dummy<QuarterNumber>());
 
                     return result;
                 });

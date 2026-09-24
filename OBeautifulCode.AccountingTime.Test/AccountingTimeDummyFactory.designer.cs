@@ -35,23 +35,10 @@ namespace OBeautifulCode.AccountingTime.Test
         public DefaultAccountingTimeDummyFactory()
         {
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(CalendarYearAccountingPeriodSystem),
-                        typeof(FiftyTwoFiftyThreeWeekAccountingPeriodSystem),
-                        typeof(FiscalYearAccountingPeriodSystem)
-                    };
+                () => new CalendarAlignedFiscalQuarterScheme());
 
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (AccountingPeriodSystem)AD.ummy(randomType);
-
-                    return result;
-                });
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CalendarAlignedFiscalYearScheme());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CalendarDay(
@@ -98,9 +85,6 @@ namespace OBeautifulCode.AccountingTime.Test
                                  A.Dummy<int>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CalendarYearAccountingPeriodSystem());
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -129,7 +113,13 @@ namespace OBeautifulCode.AccountingTime.Test
                                  A.Dummy<Unit>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(
+                () => new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
+                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>(),
+                                 A.Dummy<IReadOnlyList<int>>(),
+                                 A.Dummy<QuarterNumber>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  A.Dummy<DayOfWeek>(),
                                  A.Dummy<MonthOfYear>(),
                                  A.Dummy<FiftyTwoFiftyThreeWeekMethodology>()));
@@ -143,6 +133,47 @@ namespace OBeautifulCode.AccountingTime.Test
                 () => new FiscalQuarter(
                                  A.Dummy<int>(),
                                  A.Dummy<QuarterNumber>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CalendarAlignedFiscalQuarterScheme),
+                        typeof(FiftyTwoFiftyThreeWeekFiscalQuarterScheme),
+                        typeof(MonthEndFiscalQuarterScheme)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (FiscalQuarterSchemeBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CalendarAlignedFiscalQuarterScheme),
+                        typeof(CalendarAlignedFiscalYearScheme),
+                        typeof(FiftyTwoFiftyThreeWeekFiscalQuarterScheme),
+                        typeof(FiftyTwoFiftyThreeWeekFiscalYearScheme),
+                        typeof(MonthEndFiscalQuarterScheme),
+                        typeof(MonthEndFiscalYearScheme)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (FiscalSchemeBase)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new FiscalUnbounded());
@@ -172,8 +203,23 @@ namespace OBeautifulCode.AccountingTime.Test
                                  A.Dummy<int>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new FiscalYearAccountingPeriodSystem(
-                                 A.Dummy<MonthOfYear>()));
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(CalendarAlignedFiscalYearScheme),
+                        typeof(FiftyTwoFiftyThreeWeekFiscalYearScheme),
+                        typeof(MonthEndFiscalYearScheme)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (FiscalYearSchemeBase)AD.ummy(randomType);
+
+                    return result;
+                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new FixedCutoff(
@@ -215,6 +261,14 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GenericYear(
                                  A.Dummy<int>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new MonthEndFiscalQuarterScheme(
+                                 A.Dummy<MonthEndFiscalYearScheme>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new MonthEndFiscalYearScheme(
+                                 A.Dummy<MonthOfYear>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RelativeCutoff(

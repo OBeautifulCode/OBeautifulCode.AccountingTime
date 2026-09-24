@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CalendarYearAccountingPeriodSystem.cs" company="OBeautifulCode">
+// <copyright file="CalendarAlignedFiscalYearScheme.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,16 +8,14 @@ namespace OBeautifulCode.AccountingTime
 {
     using System;
 
-    using OBeautifulCode.Type;
-
     /// <summary>
-    /// A calendar year is 12 consecutive months beginning on January 1st and ending on December 31st.
+    /// A fiscal year scheme in which each fiscal year mirrors the calendar year;
+    /// 12 consecutive months beginning on January 1st and ending on December 31st.
     /// </summary>
-    public partial class CalendarYearAccountingPeriodSystem : AccountingPeriodSystem, IModelViaCodeGen
+    public partial class CalendarAlignedFiscalYearScheme : FiscalYearSchemeBase
     {
        /// <inheritdoc />
-        /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        public override ReportingPeriod GetReportingPeriodForFiscalYear(
+        public override ReportingPeriod GetCalendarDayPeriod(
             FiscalYear fiscalYear)
         {
             if (fiscalYear == null)

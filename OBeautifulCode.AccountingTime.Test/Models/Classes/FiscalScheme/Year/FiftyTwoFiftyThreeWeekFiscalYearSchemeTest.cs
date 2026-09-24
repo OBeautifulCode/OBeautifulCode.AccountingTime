@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest.cs" company="OBeautifulCode">
+// <copyright file="FiftyTwoFiftyThreeWeekFiscalYearSchemeTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,48 +7,45 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     using FakeItEasy;
-
     using FluentAssertions;
     using FluentAssertions.Extensions;
-
+    using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Math.Recipes;
 
     using Xunit;
 
-    public static partial class FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest
+    using static System.FormattableString;
+
+    [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
+    public static partial class FiftyTwoFiftyThreeWeekFiscalYearSchemeTest
     {
+        [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static FiftyTwoFiftyThreeWeekAccountingPeriodSystemTest()
+        static FiftyTwoFiftyThreeWeekFiscalYearSchemeTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekAccountingPeriodSystem>
+                    new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'anchorMonth' is MonthOfYear.Invalid",
-                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(A.Dummy<DayOfWeek>(), MonthOfYear.Invalid, A.Dummy<FiftyTwoFiftyThreeWeekMethodology>()),
+                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(A.Dummy<DayOfWeek>(), MonthOfYear.Invalid, A.Dummy<FiftyTwoFiftyThreeWeekMethodology>()),
                         ExpectedExceptionMessageContains = new[] { "anchorMonth", "Invalid" },
-                        ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                    })
-                .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekAccountingPeriodSystem>
-                    {
-                        Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'fiftyTwoFiftyThreeWeekMethodology' is FiftyTwoFiftyThreeWeekMethodology.Unknown",
-                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(A.Dummy<DayOfWeek>(), A.Dummy<MonthOfYear>(), FiftyTwoFiftyThreeWeekMethodology.Unknown),
-                        ExpectedExceptionMessageContains = new[] { "fiftyTwoFiftyThreeWeekMethodology", "Unknown" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     });
         }
 
         [Fact]
-        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccurrenceInAnchorMonth()
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccurrenceInAnchorMonth()
         {
             // Arrange
-            var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth);
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth);
 
             var expectedReportingPeriod1 = new ReportingPeriod(27.August(2006).ToCalendarDay(), 25.August(2007).ToCalendarDay());
             var expectedReportingPeriod2 = new ReportingPeriod(26.August(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
@@ -65,19 +62,19 @@ namespace OBeautifulCode.AccountingTime.Test
             var expectedReportingPeriod13 = new ReportingPeriod(26.August(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
 
             // Act
-            var actualReportingPeriod1 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2007));
-            var actualReportingPeriod2 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2008));
-            var actualReportingPeriod3 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2009));
-            var actualReportingPeriod4 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2010));
-            var actualReportingPeriod5 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2011));
-            var actualReportingPeriod6 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2012));
-            var actualReportingPeriod7 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2013));
-            var actualReportingPeriod8 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2014));
-            var actualReportingPeriod9 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2015));
-            var actualReportingPeriod10 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2016));
-            var actualReportingPeriod11 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2017));
-            var actualReportingPeriod12 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2018));
-            var actualReportingPeriod13 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2019));
+            var actualReportingPeriod1 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2007));
+            var actualReportingPeriod2 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2008));
+            var actualReportingPeriod3 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2009));
+            var actualReportingPeriod4 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2010));
+            var actualReportingPeriod5 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2011));
+            var actualReportingPeriod6 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2012));
+            var actualReportingPeriod7 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2013));
+            var actualReportingPeriod8 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2014));
+            var actualReportingPeriod9 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2015));
+            var actualReportingPeriod10 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2016));
+            var actualReportingPeriod11 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2017));
+            var actualReportingPeriod12 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2018));
+            var actualReportingPeriod13 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2019));
 
             // Assert
             actualReportingPeriod1.Should().Be(expectedReportingPeriod1);
@@ -96,10 +93,10 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_ClosestToLastDayOfAnchorMonth()
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_ClosestToLastDayOfAnchorMonth()
         {
             // Arrange
-            var systemUnderTest = new FiftyTwoFiftyThreeWeekAccountingPeriodSystem(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth);
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth);
 
             var expectedReportingPeriod1 = new ReportingPeriod(3.September(2006).ToCalendarDay(), 1.September(2007).ToCalendarDay());
             var expectedReportingPeriod2 = new ReportingPeriod(2.September(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
@@ -116,19 +113,19 @@ namespace OBeautifulCode.AccountingTime.Test
             var expectedReportingPeriod13 = new ReportingPeriod(2.September(2018).ToCalendarDay(), 31.August(2019).ToCalendarDay());
 
             // Act
-            var actualReportingPeriod1 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2007));
-            var actualReportingPeriod2 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2008));
-            var actualReportingPeriod3 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2009));
-            var actualReportingPeriod4 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2010));
-            var actualReportingPeriod5 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2011));
-            var actualReportingPeriod6 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2012));
-            var actualReportingPeriod7 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2013));
-            var actualReportingPeriod8 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2014));
-            var actualReportingPeriod9 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2015));
-            var actualReportingPeriod10 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2016));
-            var actualReportingPeriod11 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2017));
-            var actualReportingPeriod12 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2018));
-            var actualReportingPeriod13 = systemUnderTest.GetReportingPeriodForFiscalYear(new FiscalYear(2019));
+            var actualReportingPeriod1 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2007));
+            var actualReportingPeriod2 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2008));
+            var actualReportingPeriod3 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2009));
+            var actualReportingPeriod4 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2010));
+            var actualReportingPeriod5 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2011));
+            var actualReportingPeriod6 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2012));
+            var actualReportingPeriod7 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2013));
+            var actualReportingPeriod8 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2014));
+            var actualReportingPeriod9 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2015));
+            var actualReportingPeriod10 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2016));
+            var actualReportingPeriod11 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2017));
+            var actualReportingPeriod12 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2018));
+            var actualReportingPeriod13 = systemUnderTest.GetCalendarDayPeriod(new FiscalYear(2019));
 
             // Assert
             actualReportingPeriod1.Should().Be(expectedReportingPeriod1);

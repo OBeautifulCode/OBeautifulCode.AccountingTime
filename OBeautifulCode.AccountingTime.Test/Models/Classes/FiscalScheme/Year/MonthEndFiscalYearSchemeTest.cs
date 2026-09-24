@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiscalYearAccountingPeriodSystemTest.cs" company="OBeautifulCode">
+// <copyright file="MonthEndFiscalYearSchemeTest.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,62 +7,67 @@
 namespace OBeautifulCode.AccountingTime.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     using FakeItEasy;
-
     using FluentAssertions;
     using FluentAssertions.Extensions;
-
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Math.Recipes;
 
     using Xunit;
 
-    public static partial class FiscalYearAccountingPeriodSystemTest
+    using static System.FormattableString;
+
+    [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
+    public static partial class MonthEndFiscalYearSchemeTest
     {
+        [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static FiscalYearAccountingPeriodSystemTest()
+        static MonthEndFiscalYearSchemeTest()
         {
             ConstructorArgumentValidationTestScenarios
                 .RemoveAllScenarios()
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<FiscalYearAccountingPeriodSystem>
+                    new ConstructorArgumentValidationTestScenario<MonthEndFiscalYearScheme>
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'lastMonthInFiscalYear' is MonthOfYear.Invalid",
-                        ConstructionFunc = () => new FiscalYearAccountingPeriodSystem(MonthOfYear.Invalid),
+                        ConstructionFunc = () => new MonthEndFiscalYearScheme(MonthOfYear.Invalid),
                         ExpectedExceptionMessageContains = new[] { "lastMonthInFiscalYear", "Invalid" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
                 .AddScenario(() =>
-                    new ConstructorArgumentValidationTestScenario<FiscalYearAccountingPeriodSystem>
+                    new ConstructorArgumentValidationTestScenario<MonthEndFiscalYearScheme>
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'lastMonthInFiscalYear' is MonthOfYear.December",
-                        ConstructionFunc = () => new FiscalYearAccountingPeriodSystem(MonthOfYear.December),
+                        ConstructionFunc = () => new MonthEndFiscalYearScheme(MonthOfYear.December),
                         ExpectedExceptionMessageContains = new[] { "lastMonthInFiscalYear", "December" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     });
         }
 
         [Fact]
-        public static void GetReportingPeriodForFiscalYear___Should_return_reporting_period_beginning_first_of_the_month_after_LastMonthInFiscalYear_in_the_prior_year_and_ending_last_day_of_LastMonthInFiscalYear___When_called()
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_beginning_first_of_the_month_after_LastMonthInFiscalYear_in_the_prior_year_and_ending_last_day_of_LastMonthInFiscalYear___When_called()
         {
             // Arrange
             var nonLeapYear = A.Dummy<DateTime>().ThatIs(_ => !DateTime.IsLeapYear(_.Year)).Year;
             var leapYear = A.Dummy<DateTime>().ThatIs(_ => DateTime.IsLeapYear(_.Year)).Year;
 
-            var systemUnderTest1 = new FiscalYearAccountingPeriodSystem(MonthOfYear.January);
-            var systemUnderTest2 = new FiscalYearAccountingPeriodSystem(MonthOfYear.February);
-            var systemUnderTest3 = new FiscalYearAccountingPeriodSystem(MonthOfYear.March);
-            var systemUnderTest4 = new FiscalYearAccountingPeriodSystem(MonthOfYear.April);
-            var systemUnderTest5 = new FiscalYearAccountingPeriodSystem(MonthOfYear.May);
-            var systemUnderTest6 = new FiscalYearAccountingPeriodSystem(MonthOfYear.June);
-            var systemUnderTest7 = new FiscalYearAccountingPeriodSystem(MonthOfYear.July);
-            var systemUnderTest8 = new FiscalYearAccountingPeriodSystem(MonthOfYear.August);
-            var systemUnderTest9 = new FiscalYearAccountingPeriodSystem(MonthOfYear.September);
-            var systemUnderTest10 = new FiscalYearAccountingPeriodSystem(MonthOfYear.October);
-            var systemUnderTest11 = new FiscalYearAccountingPeriodSystem(MonthOfYear.November);
+            var systemUnderTest1 = new MonthEndFiscalYearScheme(MonthOfYear.January);
+            var systemUnderTest2 = new MonthEndFiscalYearScheme(MonthOfYear.February);
+            var systemUnderTest3 = new MonthEndFiscalYearScheme(MonthOfYear.March);
+            var systemUnderTest4 = new MonthEndFiscalYearScheme(MonthOfYear.April);
+            var systemUnderTest5 = new MonthEndFiscalYearScheme(MonthOfYear.May);
+            var systemUnderTest6 = new MonthEndFiscalYearScheme(MonthOfYear.June);
+            var systemUnderTest7 = new MonthEndFiscalYearScheme(MonthOfYear.July);
+            var systemUnderTest8 = new MonthEndFiscalYearScheme(MonthOfYear.August);
+            var systemUnderTest9 = new MonthEndFiscalYearScheme(MonthOfYear.September);
+            var systemUnderTest10 = new MonthEndFiscalYearScheme(MonthOfYear.October);
+            var systemUnderTest11 = new MonthEndFiscalYearScheme(MonthOfYear.November);
 
             var expectedReportingPeriod1NonLeapYear = new ReportingPeriod(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
             var expectedReportingPeriod2NonLeapYear = new ReportingPeriod(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());
@@ -89,29 +94,29 @@ namespace OBeautifulCode.AccountingTime.Test
             var expectedReportingPeriod11LeapYear = new ReportingPeriod(1.December(leapYear - 1).ToCalendarDay(), 30.November(leapYear).ToCalendarDay());
 
             // Act
-            var actualReportingPeriod1NonLeapYear = systemUnderTest1.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod2NonLeapYear = systemUnderTest2.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod3NonLeapYear = systemUnderTest3.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod4NonLeapYear = systemUnderTest4.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod5NonLeapYear = systemUnderTest5.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod6NonLeapYear = systemUnderTest6.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod7NonLeapYear = systemUnderTest7.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod8NonLeapYear = systemUnderTest8.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod9NonLeapYear = systemUnderTest9.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod10NonLeapYear = systemUnderTest10.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
-            var actualReportingPeriod11NonLeapYear = systemUnderTest11.GetReportingPeriodForFiscalYear(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod1NonLeapYear = systemUnderTest1.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod2NonLeapYear = systemUnderTest2.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod3NonLeapYear = systemUnderTest3.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod4NonLeapYear = systemUnderTest4.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod5NonLeapYear = systemUnderTest5.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod6NonLeapYear = systemUnderTest6.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod7NonLeapYear = systemUnderTest7.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod8NonLeapYear = systemUnderTest8.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod9NonLeapYear = systemUnderTest9.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod10NonLeapYear = systemUnderTest10.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
+            var actualReportingPeriod11NonLeapYear = systemUnderTest11.GetCalendarDayPeriod(new FiscalYear(nonLeapYear));
 
-            var actualReportingPeriod1LeapYear = systemUnderTest1.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod2LeapYear = systemUnderTest2.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod3LeapYear = systemUnderTest3.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod4LeapYear = systemUnderTest4.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod5LeapYear = systemUnderTest5.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod6LeapYear = systemUnderTest6.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod7LeapYear = systemUnderTest7.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod8LeapYear = systemUnderTest8.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod9LeapYear = systemUnderTest9.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod10LeapYear = systemUnderTest10.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
-            var actualReportingPeriod11LeapYear = systemUnderTest11.GetReportingPeriodForFiscalYear(new FiscalYear(leapYear));
+            var actualReportingPeriod1LeapYear = systemUnderTest1.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod2LeapYear = systemUnderTest2.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod3LeapYear = systemUnderTest3.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod4LeapYear = systemUnderTest4.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod5LeapYear = systemUnderTest5.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod6LeapYear = systemUnderTest6.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod7LeapYear = systemUnderTest7.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod8LeapYear = systemUnderTest8.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod9LeapYear = systemUnderTest9.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod10LeapYear = systemUnderTest10.GetCalendarDayPeriod(new FiscalYear(leapYear));
+            var actualReportingPeriod11LeapYear = systemUnderTest11.GetCalendarDayPeriod(new FiscalYear(leapYear));
 
             // Assert
             actualReportingPeriod1NonLeapYear.Should().Be(expectedReportingPeriod1NonLeapYear);

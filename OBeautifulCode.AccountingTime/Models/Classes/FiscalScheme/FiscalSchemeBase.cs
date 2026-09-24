@@ -1,20 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AccountingPeriodSystemTest.cs" company="OBeautifulCode">
+// <copyright file="FiscalSchemeBase.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.AccountingTime.Test
+namespace OBeautifulCode.AccountingTime
 {
-    using System;
+    using OBeautifulCode.Type;
 
-    using FakeItEasy;
-
-    using OBeautifulCode.AutoFakeItEasy;
-
-    using Xunit;
-
-    public static partial class AccountingPeriodSystemTest
+    /// <summary>
+    /// Represents a scheme/convention for defining an entity's fiscal time.
+    /// </summary>
+    public abstract partial class FiscalSchemeBase : IModelViaCodeGen
     {
     }
 }
