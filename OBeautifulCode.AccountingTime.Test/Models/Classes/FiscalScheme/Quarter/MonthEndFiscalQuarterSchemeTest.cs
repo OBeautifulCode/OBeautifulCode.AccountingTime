@@ -18,6 +18,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -48,7 +49,8 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetCalendarDayPeriod___Should_return_calendar_quarters___When_called()
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
+        public static void GetCalendarDayPeriod___Should_return_calendar_quarters___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearEnds()
         {
             // Arrange
             var systemUnderTestAndExpected = new[]
@@ -443,6 +445,142 @@ namespace OBeautifulCode.AccountingTime.Test
 
             // Act
             var actual = systemUnderTestAndExpected.Select(_ => _.SystemUnderTest.GetCalendarDayPeriod(_.FiscalQuarter)).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void GetCalendarDayPeriod___Should_return_quarters_of_the_fiscal_year_that_begins_in_the_fiscal_quarters_year___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearBegins()
+        {
+            // Arrange
+            var systemUnderTestAndExpected = new[]
+            {
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q1),
+                    Expected = new ReportingPeriod(
+                        1.February(2026).ToCalendarDay(),
+                        30.April(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q2),
+                    Expected = new ReportingPeriod(
+                        1.May(2026).ToCalendarDay(),
+                        31.July(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q3),
+                    Expected = new ReportingPeriod(
+                        1.August(2026).ToCalendarDay(),
+                        31.October(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q4),
+                    Expected = new ReportingPeriod(
+                        1.November(2026).ToCalendarDay(),
+                        31.January(2027).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2023, QuarterNumber.Q4),
+                    Expected = new ReportingPeriod(
+                        1.December(2023).ToCalendarDay(),
+                        29.February(2024).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2024, QuarterNumber.Q4),
+                    Expected = new ReportingPeriod(
+                        1.December(2024).ToCalendarDay(),
+                        28.February(2025).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q1),
+                    Expected = new ReportingPeriod(
+                        1.July(2025).ToCalendarDay(),
+                        30.September(2025).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q3),
+                    Expected = new ReportingPeriod(
+                        1.January(2026).ToCalendarDay(),
+                        31.March(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q1),
+                    Expected = new ReportingPeriod(
+                        1.December(2025).ToCalendarDay(),
+                        28.February(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q4),
+                    Expected = new ReportingPeriod(
+                        1.September(2026).ToCalendarDay(),
+                        30.November(2026).ToCalendarDay()),
+                },
+            };
+
+            var expected = systemUnderTestAndExpected.Select(_ => _.Expected).ToList();
+
+            // Act
+            var actual = systemUnderTestAndExpected.Select(_ => _.SystemUnderTest.GetCalendarDayPeriod(_.FiscalQuarter)).ToList();
+
+            // Assert
+            actual.AsTest().Must().BeEqualTo(expected);
+        }
+
+        [Fact]
+        public static void GetCalendarDayPeriod___Should_return_quarters_that_fall_within_the_fiscal_year___When_called()
+        {
+            // Arrange
+            var fiscalYearSchemes = EnumExtensions.GetDefinedEnumValues<MonthOfYear>()
+                .Where(_ => (_ != MonthOfYear.Invalid) && (_ != MonthOfYear.December))
+                .SelectMany(_ => new[]
+                {
+                    new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds),
+                    new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                })
+                .ToList();
+
+            var year = A.Dummy<DateTime>().ThatIs(_ => (_.Year > 1) && (_.Year < 9999)).Year;
+
+            var expected = fiscalYearSchemes
+                .Select(_ => _.GetCalendarDayPeriod(new FiscalYear(year)))
+                .ToList();
+
+            // Act
+            var actual = fiscalYearSchemes
+                .Select(_ =>
+                {
+                    var systemUnderTest = new MonthEndFiscalQuarterScheme(_);
+
+                    var q1 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(year, QuarterNumber.Q1));
+
+                    var q4 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(year, QuarterNumber.Q4));
+
+                    var result = new ReportingPeriod(q1.Start, q4.End);
+
+                    return result;
+                })
+                .ToList();
 
             // Assert
             actual.AsTest().Must().BeEqualTo(expected);

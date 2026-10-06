@@ -33,6 +33,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetCalendarDayPeriod___Should_throw_ArgumentNullException___When_parameter_fiscalYear_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<CalendarAlignedFiscalYearScheme>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCalendarDayPeriod(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("fiscalYear");
+        }
+
+        [Fact]
         public static void GetCalendarDayPeriod___Should_return_reporting_period_beginning_January_1_and_ending_December_31_of_specified_year___When_called()
         {
             // Arrange

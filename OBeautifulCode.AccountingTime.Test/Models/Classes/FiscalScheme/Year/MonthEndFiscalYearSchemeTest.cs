@@ -17,6 +17,7 @@ namespace OBeautifulCode.AccountingTime.Test
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Enum.Recipes;
     using OBeautifulCode.Math.Recipes;
 
     using Xunit;
@@ -31,7 +32,6 @@ namespace OBeautifulCode.AccountingTime.Test
         static MonthEndFiscalYearSchemeTest()
         {
             ConstructorArgumentValidationTestScenarios
-                .RemoveAllScenarios()
                 .AddScenario(() =>
                     new ConstructorArgumentValidationTestScenario<MonthEndFiscalYearScheme>
                     {
@@ -51,23 +51,109 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetCalendarDayPeriod___Should_return_reporting_period_beginning_first_of_the_month_after_LastMonthInFiscalYear_in_the_prior_year_and_ending_last_day_of_LastMonthInFiscalYear___When_called()
+        public static void GetCalendarDayPeriod___Should_throw_ArgumentNullException___When_parameter_fiscalYear_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<MonthEndFiscalYearScheme>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCalendarDayPeriod(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("fiscalYear");
+        }
+
+        [Fact]
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_in_the_calendar_year_after_the_fiscal_year___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearBegins()
+        {
+            // Arrange
+            var systemUnderTestAndExpected = new[]
+            {
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    FiscalYear = new FiscalYear(2026),
+                    Expected = new ReportingPeriod(1.February(2026).ToCalendarDay(), 31.January(2027).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    FiscalYear = new FiscalYear(2023),
+                    Expected = new ReportingPeriod(1.March(2023).ToCalendarDay(), 29.February(2024).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    FiscalYear = new FiscalYear(2024),
+                    Expected = new ReportingPeriod(1.March(2024).ToCalendarDay(), 28.February(2025).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    FiscalYear = new FiscalYear(2025),
+                    Expected = new ReportingPeriod(1.July(2025).ToCalendarDay(), 30.June(2026).ToCalendarDay()),
+                },
+                new
+                {
+                    SystemUnderTest = new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    FiscalYear = new FiscalYear(2025),
+                    Expected = new ReportingPeriod(1.December(2025).ToCalendarDay(), 30.November(2026).ToCalendarDay()),
+                },
+            };
+
+            var expected = systemUnderTestAndExpected.Select(_ => _.Expected).ToList();
+
+            // Act
+            var actual = systemUnderTestAndExpected.Select(_ => _.SystemUnderTest.GetCalendarDayPeriod(_.FiscalYear)).ToList();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
+        public static void GetCalendarDayPeriod___Should_return_same_reporting_period_as_next_fiscal_year_numbered_by_CalendarYearInWhichFiscalYearEnds___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearBegins()
+        {
+            // Arrange
+            var year = A.Dummy<DateTime>().ThatIs(_ => _.Year < 9999).Year;
+
+            var lastMonthsInFiscalYear = EnumExtensions.GetDefinedEnumValues<MonthOfYear>()
+                .Where(_ => (_ != MonthOfYear.Invalid) && (_ != MonthOfYear.December))
+                .ToList();
+
+            var expected = lastMonthsInFiscalYear
+                .Select(_ => new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds).GetCalendarDayPeriod(new FiscalYear(year + 1)))
+                .ToList();
+
+            // Act
+            var actual = lastMonthsInFiscalYear
+                .Select(_ => new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins).GetCalendarDayPeriod(new FiscalYear(year)))
+                .ToList();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_beginning_first_of_the_month_after_LastMonthInFiscalYear_in_the_prior_year_and_ending_last_day_of_LastMonthInFiscalYear___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearEnds()
         {
             // Arrange
             var nonLeapYear = A.Dummy<DateTime>().ThatIs(_ => !DateTime.IsLeapYear(_.Year)).Year;
             var leapYear = A.Dummy<DateTime>().ThatIs(_ => DateTime.IsLeapYear(_.Year)).Year;
 
-            var systemUnderTest1 = new MonthEndFiscalYearScheme(MonthOfYear.January);
-            var systemUnderTest2 = new MonthEndFiscalYearScheme(MonthOfYear.February);
-            var systemUnderTest3 = new MonthEndFiscalYearScheme(MonthOfYear.March);
-            var systemUnderTest4 = new MonthEndFiscalYearScheme(MonthOfYear.April);
-            var systemUnderTest5 = new MonthEndFiscalYearScheme(MonthOfYear.May);
-            var systemUnderTest6 = new MonthEndFiscalYearScheme(MonthOfYear.June);
-            var systemUnderTest7 = new MonthEndFiscalYearScheme(MonthOfYear.July);
-            var systemUnderTest8 = new MonthEndFiscalYearScheme(MonthOfYear.August);
-            var systemUnderTest9 = new MonthEndFiscalYearScheme(MonthOfYear.September);
-            var systemUnderTest10 = new MonthEndFiscalYearScheme(MonthOfYear.October);
-            var systemUnderTest11 = new MonthEndFiscalYearScheme(MonthOfYear.November);
+            var systemUnderTest1 = new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest2 = new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest3 = new MonthEndFiscalYearScheme(MonthOfYear.March, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest4 = new MonthEndFiscalYearScheme(MonthOfYear.April, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest5 = new MonthEndFiscalYearScheme(MonthOfYear.May, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest6 = new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest7 = new MonthEndFiscalYearScheme(MonthOfYear.July, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest8 = new MonthEndFiscalYearScheme(MonthOfYear.August, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest9 = new MonthEndFiscalYearScheme(MonthOfYear.September, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest10 = new MonthEndFiscalYearScheme(MonthOfYear.October, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
+            var systemUnderTest11 = new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds);
 
             var expectedReportingPeriod1NonLeapYear = new ReportingPeriod(1.February(nonLeapYear - 1).ToCalendarDay(), 31.January(nonLeapYear).ToCalendarDay());
             var expectedReportingPeriod2NonLeapYear = new ReportingPeriod(1.March(nonLeapYear - 1).ToCalendarDay(), 28.February(nonLeapYear).ToCalendarDay());

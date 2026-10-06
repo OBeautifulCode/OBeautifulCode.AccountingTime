@@ -48,14 +48,31 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<MonthEndFiscalYearScheme>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.MonthEndFiscalYearScheme: LastMonthInFiscalYear = {systemUnderTest.LastMonthInFiscalYear.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.MonthEndFiscalYearScheme: LastMonthInFiscalYear = {systemUnderTest.LastMonthInFiscalYear.ToString() ?? "<null>"}, FiscalYearNumberingConvention = {systemUnderTest.FiscalYearNumberingConvention.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<MonthEndFiscalYearScheme> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<MonthEndFiscalYearScheme>();
+        private static readonly ConstructorArgumentValidationTestScenarios<MonthEndFiscalYearScheme> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<MonthEndFiscalYearScheme>()
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<MonthEndFiscalYearScheme>
+                {
+                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'fiscalYearNumberingConvention' is FiscalYearNumberingConvention.Unknown",
+                    ConstructionFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<MonthEndFiscalYearScheme>();
+
+                        var result = new MonthEndFiscalYearScheme(
+                                             referenceObject.LastMonthInFiscalYear,
+                                             FiscalYearNumberingConvention.Unknown);
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
+                    ExpectedExceptionMessageContains = new[] { "fiscalYearNumberingConvention", "Unknown", },
+                });
 
         private static readonly ConstructorPropertyAssignmentTestScenarios<MonthEndFiscalYearScheme> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<MonthEndFiscalYearScheme>()
             .AddScenario(() =>
@@ -69,13 +86,34 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new SystemUnderTestExpectedPropertyValue<MonthEndFiscalYearScheme>
                         {
                             SystemUnderTest = new MonthEndFiscalYearScheme(
-                                                      referenceObject.LastMonthInFiscalYear),
+                                                      referenceObject.LastMonthInFiscalYear,
+                                                      referenceObject.FiscalYearNumberingConvention),
                             ExpectedPropertyValue = referenceObject.LastMonthInFiscalYear,
                         };
 
                         return result;
                     },
                     PropertyName = "LastMonthInFiscalYear",
+                })
+            .AddScenario(() =>
+                new ConstructorPropertyAssignmentTestScenario<MonthEndFiscalYearScheme>
+                {
+                    Name = "FiscalYearNumberingConvention should return same 'fiscalYearNumberingConvention' parameter passed to constructor when getting",
+                    SystemUnderTestExpectedPropertyValueFunc = () =>
+                    {
+                        var referenceObject = A.Dummy<MonthEndFiscalYearScheme>();
+
+                        var result = new SystemUnderTestExpectedPropertyValue<MonthEndFiscalYearScheme>
+                        {
+                            SystemUnderTest = new MonthEndFiscalYearScheme(
+                                                      referenceObject.LastMonthInFiscalYear,
+                                                      referenceObject.FiscalYearNumberingConvention),
+                            ExpectedPropertyValue = referenceObject.FiscalYearNumberingConvention,
+                        };
+
+                        return result;
+                    },
+                    PropertyName = "FiscalYearNumberingConvention",
                 });
 
         private static readonly DeepCloneWithTestScenarios<MonthEndFiscalYearScheme> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<MonthEndFiscalYearScheme>()
@@ -98,6 +136,26 @@ namespace OBeautifulCode.AccountingTime.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<MonthEndFiscalYearScheme>
+                {
+                    Name = "DeepCloneWithFiscalYearNumberingConvention should deep clone object and replace FiscalYearNumberingConvention with the provided fiscalYearNumberingConvention",
+                    WithPropertyName = "FiscalYearNumberingConvention",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<MonthEndFiscalYearScheme>();
+
+                        var referenceObject = A.Dummy<MonthEndFiscalYearScheme>().ThatIs(_ => !systemUnderTest.FiscalYearNumberingConvention.IsEqualTo(_.FiscalYearNumberingConvention));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<MonthEndFiscalYearScheme>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.FiscalYearNumberingConvention,
+                        };
+
+                        return result;
+                    },
                 });
 
         private static readonly MonthEndFiscalYearScheme ReferenceObjectForEquatableTestScenarios = A.Dummy<MonthEndFiscalYearScheme>();
@@ -111,12 +169,17 @@ namespace OBeautifulCode.AccountingTime.Test
                     ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new MonthEndFiscalYearScheme[]
                     {
                         new MonthEndFiscalYearScheme(
-                                ReferenceObjectForEquatableTestScenarios.LastMonthInFiscalYear),
+                                ReferenceObjectForEquatableTestScenarios.LastMonthInFiscalYear,
+                                ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new MonthEndFiscalYearScheme[]
                     {
                         new MonthEndFiscalYearScheme(
-                                A.Dummy<MonthEndFiscalYearScheme>().Whose(_ => !_.LastMonthInFiscalYear.IsEqualTo(ReferenceObjectForEquatableTestScenarios.LastMonthInFiscalYear)).LastMonthInFiscalYear),
+                                A.Dummy<MonthEndFiscalYearScheme>().Whose(_ => !_.LastMonthInFiscalYear.IsEqualTo(ReferenceObjectForEquatableTestScenarios.LastMonthInFiscalYear)).LastMonthInFiscalYear,
+                                ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
+                        new MonthEndFiscalYearScheme(
+                                ReferenceObjectForEquatableTestScenarios.LastMonthInFiscalYear,
+                                A.Dummy<MonthEndFiscalYearScheme>().Whose(_ => !_.FiscalYearNumberingConvention.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention)).FiscalYearNumberingConvention),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -428,7 +491,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "LastMonthInFiscalYear" };
+                var propertyNames = new string[] { "LastMonthInFiscalYear", "FiscalYearNumberingConvention" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

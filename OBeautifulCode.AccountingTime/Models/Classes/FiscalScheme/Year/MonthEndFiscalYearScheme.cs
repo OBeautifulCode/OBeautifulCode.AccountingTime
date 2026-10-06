@@ -19,10 +19,10 @@ namespace OBeautifulCode.AccountingTime
         /// Initializes a new instance of the <see cref="MonthEndFiscalYearScheme"/> class.
         /// </summary>
         /// <param name="lastMonthInFiscalYear">The last month of the fiscal year.</param>
-        /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is invalid.</exception>
-        /// <exception cref="ArgumentException"><paramref name="lastMonthInFiscalYear"/> is <see cref="MonthOfYear.December"/>.</exception>
+        /// <param name="fiscalYearNumberingConvention">OPTIONAL convention that determines which calendar year is used to number the fiscal year.  DEFAULT is to use the calendar year in which the fiscal year ends.</param>
         public MonthEndFiscalYearScheme(
-            MonthOfYear lastMonthInFiscalYear)
+            MonthOfYear lastMonthInFiscalYear,
+            FiscalYearNumberingConvention fiscalYearNumberingConvention = FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
             {
@@ -34,13 +34,24 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(Invariant($"'{nameof(lastMonthInFiscalYear)}' == '{MonthOfYear.December}'"), (Exception)null);
             }
 
+            if (fiscalYearNumberingConvention == FiscalYearNumberingConvention.Unknown)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(fiscalYearNumberingConvention)}' == '{FiscalYearNumberingConvention.Unknown}'"), (Exception)null);
+            }
+
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
+            this.FiscalYearNumberingConvention = fiscalYearNumberingConvention;
         }
 
         /// <summary>
         /// Gets the last month of the fiscal year.
         /// </summary>
         public MonthOfYear LastMonthInFiscalYear { get; private set; }
+
+        /// <summary>
+        /// Gets the convention that determines which calendar year is used to number the fiscal year.
+        /// </summary>
+        public FiscalYearNumberingConvention FiscalYearNumberingConvention { get; private set; }
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
@@ -52,13 +63,47 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(fiscalYear));
             }
 
-            var lastDayInEndingMonth = DateTime.DaysInMonth(fiscalYear.Year, (int)this.LastMonthInFiscalYear);
+            var calendarYearInWhichFiscalYearEnds = this.GetCalendarYearInWhichFiscalYearEnds(fiscalYear.Year);
 
-            var lastDayInFiscalYear = new DateTime(fiscalYear.Year, (int)this.LastMonthInFiscalYear, lastDayInEndingMonth);
+            var lastDayInEndingMonth = DateTime.DaysInMonth(calendarYearInWhichFiscalYearEnds, (int)this.LastMonthInFiscalYear);
+
+            var lastDayInFiscalYear = new DateTime(calendarYearInWhichFiscalYearEnds, (int)this.LastMonthInFiscalYear, lastDayInEndingMonth);
 
             var firstDayInFiscalYear = lastDayInFiscalYear.AddDays(1).AddYears(-1);
 
             var result = new ReportingPeriod(firstDayInFiscalYear.ToCalendarDay(), lastDayInFiscalYear.ToCalendarDay());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the calendar year in which the specified fiscal year ends.
+        /// </summary>
+        /// <remarks>
+        /// Because <see cref="LastMonthInFiscalYear"/> cannot be <see cref="MonthOfYear.December"/>,
+        /// every fiscal year spans two calendar years: it begins in the calendar year prior to the one in which it ends.
+        /// </remarks>
+        /// <param name="fiscalYear">The fiscal year number.</param>
+        /// <returns>
+        /// The calendar year in which the specified fiscal year ends.
+        /// </returns>
+        internal int GetCalendarYearInWhichFiscalYearEnds(
+            int fiscalYear)
+        {
+            int result;
+
+            if (this.FiscalYearNumberingConvention == FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
+            {
+                result = fiscalYear;
+            }
+            else if (this.FiscalYearNumberingConvention == FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)
+            {
+                result = fiscalYear + 1;
+            }
+            else
+            {
+                throw new NotSupportedException(Invariant($"This {nameof(this.FiscalYearNumberingConvention)} is not supported: {this.FiscalYearNumberingConvention}."));
+            }
 
             return result;
         }

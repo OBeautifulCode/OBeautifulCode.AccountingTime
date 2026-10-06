@@ -43,7 +43,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(fiscalQuarter));
             }
 
-            var lastMonth = new CalendarMonth(fiscalQuarter.Year, this.FiscalYearScheme.LastMonthInFiscalYear);
+            var calendarYearInWhichFiscalYearEnds = this.FiscalYearScheme.GetCalendarYearInWhichFiscalYearEnds(fiscalQuarter.Year);
+
+            var lastMonth = new CalendarMonth(calendarYearInWhichFiscalYearEnds, this.FiscalYearScheme.LastMonthInFiscalYear);
 
             var fiscalQuarterStartMonth = (CalendarMonth)lastMonth.Plus((3 * (int)fiscalQuarter.QuarterNumber) - 14);
             var fiscalQuarterEndMonth = (CalendarMonth)lastMonth.Plus((3 * (int)fiscalQuarter.QuarterNumber) - 12);

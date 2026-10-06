@@ -268,7 +268,8 @@ namespace OBeautifulCode.AccountingTime.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new MonthEndFiscalYearScheme(
-                                 A.Dummy<MonthOfYear>()));
+                                 A.Dummy<MonthOfYear>(),
+                                 A.Dummy<FiscalYearNumberingConvention>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RelativeCutoff(

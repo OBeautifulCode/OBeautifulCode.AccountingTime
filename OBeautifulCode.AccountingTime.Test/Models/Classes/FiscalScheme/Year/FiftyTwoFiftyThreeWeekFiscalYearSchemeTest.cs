@@ -42,6 +42,20 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
+        public static void GetCalendarDayPeriod___Should_throw_ArgumentNullException___When_parameter_fiscalYear_is_null()
+        {
+            // Arrange
+            var systemUnderTest = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>();
+
+            // Act
+            var actual = Record.Exception(() => systemUnderTest.GetCalendarDayPeriod(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("fiscalYear");
+        }
+
+        [Fact]
         public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccurrenceInAnchorMonth()
         {
             // Arrange
