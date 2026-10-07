@@ -122,7 +122,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  A.Dummy<DayOfWeek>(),
                                  A.Dummy<MonthOfYear>(),
-                                 A.Dummy<FiftyTwoFiftyThreeWeekMethodology>(),
+                                 A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>(),
                                  A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(

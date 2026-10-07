@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiftyTwoFiftyThreeWeekMethodology.cs" company="OBeautifulCode">
+// <copyright file="FiftyTwoFiftyThreeWeekYearEndMethodology.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,10 +9,10 @@ namespace OBeautifulCode.AccountingTime
     using System;
 
     /// <summary>
-    /// Determines the methodology used to identify the last day of the accounting year, in a 52-53 week accounting period system.
+    /// Determines the methodology used to identify the last day of the fiscal year in a <see cref="FiftyTwoFiftyThreeWeekFiscalYearScheme"/>.
     /// </summary>
     [Serializable]
-    public enum FiftyTwoFiftyThreeWeekMethodology
+    public enum FiftyTwoFiftyThreeWeekYearEndMethodology
     {
         /// <summary>
         /// Unknown (default).

@@ -146,12 +146,12 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest1 = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth),
                 new[] { 13, 13, 13, 13 },
                 QuarterNumber.Q4);
 
             var systemUnderTest2 = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth),
                 new[] { 13, 13, 13, 13 },
                 QuarterNumber.Q4);
 
@@ -211,7 +211,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.September, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.September, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth),
                 new[] { 13, 13, 13, 13 },
                 QuarterNumber.Q1);
 
@@ -255,7 +255,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth),
                 new[] { 16, 12, 12, 12 },
                 QuarterNumber.Q2);
 
@@ -283,7 +283,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.March, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.March, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth),
                 new[] { 13, 13, 13, 13 },
                 QuarterNumber.Q3);
 
@@ -327,7 +327,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.December, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth),
                 new[] { 12, 12, 12, 16 },
                 QuarterNumber.Q4);
 
@@ -371,7 +371,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Arrange
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Sunday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Sunday, MonthOfYear.January, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth),
                 new[] { 12, 12, 16, 12 },
                 QuarterNumber.Q4);
 
@@ -416,7 +416,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Arrange
             // Target: Saturday closest to the end of January; fiscal 2023 is a 53-week year that ends on Feb 3, 2024
             var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
-                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth),
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth),
                 new[] { 13, 13, 13, 13 },
                 QuarterNumber.Q4);
 

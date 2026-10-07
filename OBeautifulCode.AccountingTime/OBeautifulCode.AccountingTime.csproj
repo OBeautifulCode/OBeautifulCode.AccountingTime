@@ -261,7 +261,7 @@
     <Compile Include="Models\Classes\FiscalScheme\Year\FiftyTwoFiftyThreeWeekFiscalYearScheme.cs" />
     <Compile Include="Models\Classes\FiscalScheme\Quarter\MonthEndFiscalQuarterScheme.cs" />
     <Compile Include="Models\Enums\FiscalScheme\FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.cs" />
-    <Compile Include="Models\Enums\FiscalScheme\FiftyTwoFiftyThreeWeekMethodology.cs" />
+    <Compile Include="Models\Enums\FiscalScheme\FiftyTwoFiftyThreeWeekYearEndMethodology.cs" />
     <Compile Include="Models\Enums\FiscalScheme\MonthEndFiscalYearNumberingConvention.cs" />
     <Compile Include="Models\Classes\FiscalScheme\Year\MonthEndFiscalYearScheme.cs" />
     <Compile Include="Models\Enums\Time\MonthOfYear.cs" />

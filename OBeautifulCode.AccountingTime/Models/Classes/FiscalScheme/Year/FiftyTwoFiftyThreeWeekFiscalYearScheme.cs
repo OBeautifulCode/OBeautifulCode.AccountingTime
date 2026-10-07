@@ -21,13 +21,17 @@ namespace OBeautifulCode.AccountingTime
         /// Initializes a new instance of the <see cref="FiftyTwoFiftyThreeWeekFiscalYearScheme"/> class.
         /// </summary>
         /// <param name="lastDayOfWeekInFiscalYear">The day of the week that the fiscal year always ends on.</param>
-        /// <param name="anchorMonth">The month that the fiscal year end is anchored to.  See <see cref="Methodology"/>.</param>
-        /// <param name="methodology">The methodology used to identify the last day of the accounting year.</param>
+        /// <param name="anchorMonth">
+        /// The calendar month that determines the end of the fiscal year: the fiscal year ends on <paramref name="lastDayOfWeekInFiscalYear"/>,
+        /// either where it last occurs in this month or where it falls nearest the last day of this month (see <paramref name="yearEndMethodology"/>).
+        /// So the fiscal year can end a few days into the following month.
+        /// </param>
+        /// <param name="yearEndMethodology">The methodology used to identify the last day of the fiscal year.</param>
         /// <param name="fiscalYearNumberingConvention">OPTIONAL convention that determines which calendar year is used to number the fiscal year.  DEFAULT is to use the calendar year of the anchor month.</param>
         public FiftyTwoFiftyThreeWeekFiscalYearScheme(
             DayOfWeek lastDayOfWeekInFiscalYear,
             MonthOfYear anchorMonth,
-            FiftyTwoFiftyThreeWeekMethodology methodology,
+            FiftyTwoFiftyThreeWeekYearEndMethodology yearEndMethodology,
             FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention fiscalYearNumberingConvention = FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth)
         {
             if (anchorMonth == MonthOfYear.Invalid)
@@ -35,9 +39,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(Invariant($"'{nameof(anchorMonth)}' == '{MonthOfYear.Invalid}'"), (Exception)null);
             }
 
-            if (methodology == FiftyTwoFiftyThreeWeekMethodology.Unknown)
+            if (yearEndMethodology == FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(methodology)}' == '{FiftyTwoFiftyThreeWeekMethodology.Unknown}'"), (Exception)null);
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(yearEndMethodology)}' == '{FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown}'"), (Exception)null);
             }
 
             if (fiscalYearNumberingConvention == FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown)
@@ -52,7 +56,7 @@ namespace OBeautifulCode.AccountingTime
 
             this.LastDayOfWeekInFiscalYear = lastDayOfWeekInFiscalYear;
             this.AnchorMonth = anchorMonth;
-            this.Methodology = methodology;
+            this.YearEndMethodology = yearEndMethodology;
             this.FiscalYearNumberingConvention = fiscalYearNumberingConvention;
         }
 
@@ -62,14 +66,16 @@ namespace OBeautifulCode.AccountingTime
         public DayOfWeek LastDayOfWeekInFiscalYear { get; private set; }
 
         /// <summary>
-        /// Gets the month that the fiscal year end is anchored to.  See <see cref="Methodology"/>.
+        /// Gets the calendar month that determines the end of the fiscal year: the fiscal year ends on <see cref="LastDayOfWeekInFiscalYear"/>,
+        /// either where it last occurs in this month or where it falls nearest the last day of this month (see <see cref="YearEndMethodology"/>).
+        /// So the fiscal year can end a few days into the following month.
         /// </summary>
         public MonthOfYear AnchorMonth { get; private set; }
 
         /// <summary>
-        /// Gets the methodology used to identify the last day of the accounting year.
+        /// Gets the methodology used to identify the last day of the fiscal year.
         /// </summary>
-        public FiftyTwoFiftyThreeWeekMethodology Methodology { get; private set; }
+        public FiftyTwoFiftyThreeWeekYearEndMethodology YearEndMethodology { get; private set; }
 
         /// <summary>
         /// Gets the convention that determines which calendar year is used to number the fiscal year.
@@ -124,14 +130,14 @@ namespace OBeautifulCode.AccountingTime
         {
             var result = new DateTime(year, (int)this.AnchorMonth, DateTime.DaysInMonth(year, (int)this.AnchorMonth));
 
-            if (this.Methodology == FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth)
+            if (this.YearEndMethodology == FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth)
             {
                 if (result.DayOfWeek != this.LastDayOfWeekInFiscalYear)
                 {
                     result = result.Previous(this.LastDayOfWeekInFiscalYear);
                 }
             }
-            else if (this.Methodology == FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth)
+            else if (this.YearEndMethodology == FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth)
             {
                 if (result.DayOfWeek != this.LastDayOfWeekInFiscalYear)
                 {
@@ -144,7 +150,7 @@ namespace OBeautifulCode.AccountingTime
             }
             else
             {
-                throw new NotSupportedException("This methodology is not supported: " + this.Methodology);
+                throw new NotSupportedException("This year-end methodology is not supported: " + this.YearEndMethodology);
             }
 
             return result;

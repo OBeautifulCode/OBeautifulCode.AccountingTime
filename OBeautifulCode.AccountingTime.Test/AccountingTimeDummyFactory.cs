@@ -46,7 +46,7 @@ namespace OBeautifulCode.AccountingTime.Test
         {
             // Enums
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthEndFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
@@ -76,7 +76,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                         A.Dummy<DayOfWeek>(),
                         anchorMonth,
-                        A.Dummy<FiftyTwoFiftyThreeWeekMethodology>(),
+                        A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>(),
                         fiscalYearNumberingConvention);
 
                     return result;

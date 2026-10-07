@@ -36,7 +36,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                     {
                         Name = "Constructor should throw ArgumentOutOfRangeException when parameter 'anchorMonth' is MonthOfYear.Invalid",
-                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(A.Dummy<DayOfWeek>(), MonthOfYear.Invalid, A.Dummy<FiftyTwoFiftyThreeWeekMethodology>()),
+                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(A.Dummy<DayOfWeek>(), MonthOfYear.Invalid, A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>()),
                         ExpectedExceptionMessageContains = new[] { "anchorMonth", "Invalid" },
                         ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
                     })
@@ -44,7 +44,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                     {
                         Name = "Constructor should throw ArgumentException when parameter 'fiscalYearNumberingConvention' is CalendarYearPriorToAnchorMonth and parameter 'anchorMonth' is MonthOfYear.December",
-                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(A.Dummy<DayOfWeek>(), MonthOfYear.December, A.Dummy<FiftyTwoFiftyThreeWeekMethodology>(), FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth),
+                        ConstructionFunc = () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(A.Dummy<DayOfWeek>(), MonthOfYear.December, A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>(), FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth),
                         ExpectedExceptionMessageContains = new[] { "fiscalYearNumberingConvention", "CalendarYearPriorToAnchorMonth", "anchorMonth", "December" },
                         ExpectedExceptionType = typeof(ArgumentException),
                     });
@@ -92,8 +92,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 .AddScenario(() =>
                     new DeepCloneWithTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                     {
-                        Name = "DeepCloneWithMethodology should deep clone object and replace Methodology with the provided methodology",
-                        WithPropertyName = "Methodology",
+                        Name = "DeepCloneWithYearEndMethodology should deep clone object and replace YearEndMethodology with the provided yearEndMethodology",
+                        WithPropertyName = "YearEndMethodology",
                         SystemUnderTestDeepCloneWithValueFunc = () =>
                         {
                             var systemUnderTest = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>();
@@ -101,7 +101,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             var result = new SystemUnderTestDeepCloneWithValue<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                             {
                                 SystemUnderTest = systemUnderTest,
-                                DeepCloneWithValue = A.Dummy<FiftyTwoFiftyThreeWeekMethodology>().ThatIsNot(systemUnderTest.Methodology),
+                                DeepCloneWithValue = A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>().ThatIsNot(systemUnderTest.YearEndMethodology),
                             };
 
                             return result;
@@ -138,17 +138,17 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                             A.Dummy<DayOfWeek>().ThatIsNot(referenceObject.LastDayOfWeekInFiscalYear),
                             referenceObject.AnchorMonth,
-                            referenceObject.Methodology,
+                            referenceObject.YearEndMethodology,
                             referenceObject.FiscalYearNumberingConvention),
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                             referenceObject.LastDayOfWeekInFiscalYear,
                             A.Dummy<MonthOfYear>().ThatIs(_ => (_ != referenceObject.AnchorMonth) && IsValidCombination(_, referenceObject.FiscalYearNumberingConvention)),
-                            referenceObject.Methodology,
+                            referenceObject.YearEndMethodology,
                             referenceObject.FiscalYearNumberingConvention),
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                             referenceObject.LastDayOfWeekInFiscalYear,
                             referenceObject.AnchorMonth,
-                            A.Dummy<FiftyTwoFiftyThreeWeekMethodology>().ThatIsNot(referenceObject.Methodology),
+                            A.Dummy<FiftyTwoFiftyThreeWeekYearEndMethodology>().ThatIsNot(referenceObject.YearEndMethodology),
                             referenceObject.FiscalYearNumberingConvention),
                     };
 
@@ -159,7 +159,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 referenceObject.LastDayOfWeekInFiscalYear,
                                 referenceObject.AnchorMonth,
-                                referenceObject.Methodology,
+                                referenceObject.YearEndMethodology,
                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention>().ThatIsNot(referenceObject.FiscalYearNumberingConvention)));
                     }
 
@@ -172,7 +172,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 referenceObject.LastDayOfWeekInFiscalYear,
                                 referenceObject.AnchorMonth,
-                                referenceObject.Methodology,
+                                referenceObject.YearEndMethodology,
                                 referenceObject.FiscalYearNumberingConvention),
                         },
                         ObjectsThatAreNotEqualToReferenceObject = objectsThatAreNotEqualToReferenceObject,
@@ -210,10 +210,10 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_LastOccurrenceInAnchorMonth_and_FiscalYearNumberingConvention_is_CalendarYearOfAnchorMonth()
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_last_occurs_in_anchor_month_and_starts_on_day_after_last_years_ending_date___When_YearEndMethodology_is_LastOccurrenceInAnchorMonth_and_FiscalYearNumberingConvention_is_CalendarYearOfAnchorMonth()
         {
             // Arrange
-            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth);
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth);
 
             var expectedReportingPeriod1 = new ReportingPeriod(27.August(2006).ToCalendarDay(), 25.August(2007).ToCalendarDay());
             var expectedReportingPeriod2 = new ReportingPeriod(26.August(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
@@ -261,10 +261,10 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_methodology_is_ClosestToLastDayOfAnchorMonth_and_FiscalYearNumberingConvention_is_CalendarYearOfAnchorMonth()
+        public static void GetCalendarDayPeriod___Should_return_reporting_period_that_ends_on_chosen_day_of_week_that_is_nearest_to_last_day_of_anchor_month_and_starts_on_day_after_last_years_ending_date___When_YearEndMethodology_is_ClosestToLastDayOfAnchorMonth_and_FiscalYearNumberingConvention_is_CalendarYearOfAnchorMonth()
         {
             // Arrange
-            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth);
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.August, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth);
 
             var expectedReportingPeriod1 = new ReportingPeriod(3.September(2006).ToCalendarDay(), 1.September(2007).ToCalendarDay());
             var expectedReportingPeriod2 = new ReportingPeriod(2.September(2007).ToCalendarDay(), 30.August(2008).ToCalendarDay());
@@ -315,9 +315,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetCalendarDayPeriod___Should_return_reporting_period_whose_anchor_month_is_in_the_calendar_year_after_the_fiscal_year___When_FiscalYearNumberingConvention_is_CalendarYearPriorToAnchorMonth()
         {
             // Arrange
-            var target = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth);
+            var target = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth);
 
-            var homeDepot = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Sunday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth);
+            var homeDepot = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Sunday, MonthOfYear.January, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth);
 
             var systemUnderTestAndExpected = new[]
             {
@@ -363,7 +363,7 @@ namespace OBeautifulCode.AccountingTime.Test
         public static void GetCalendarDayPeriod___Should_return_reporting_period_whose_anchor_month_is_in_the_same_calendar_year_as_the_fiscal_year___When_FiscalYearNumberingConvention_is_CalendarYearOfAnchorMonth()
         {
             // Arrange
-            var bestBuy = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth);
+            var bestBuy = new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth);
 
             var expected = new ReportingPeriod(4.February(2024).ToCalendarDay(), 1.February(2025).ToCalendarDay());
 
@@ -382,22 +382,22 @@ namespace OBeautifulCode.AccountingTime.Test
 
             var lastDayOfWeekInFiscalYear = A.Dummy<DayOfWeek>();
 
-            var anchorMonthsAndMethodologies = EnumExtensions.GetDefinedEnumValues<MonthOfYear>()
+            var anchorMonthsAndYearEndMethodologies = EnumExtensions.GetDefinedEnumValues<MonthOfYear>()
                 .Where(_ => (_ != MonthOfYear.Invalid) && (_ != MonthOfYear.December))
                 .SelectMany(_ => new[]
                 {
-                    new { AnchorMonth = _, Methodology = FiftyTwoFiftyThreeWeekMethodology.LastOccurrenceInAnchorMonth },
-                    new { AnchorMonth = _, Methodology = FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth },
+                    new { AnchorMonth = _, YearEndMethodology = FiftyTwoFiftyThreeWeekYearEndMethodology.LastOccurrenceInAnchorMonth },
+                    new { AnchorMonth = _, YearEndMethodology = FiftyTwoFiftyThreeWeekYearEndMethodology.ClosestToLastDayOfAnchorMonth },
                 })
                 .ToList();
 
-            var expected = anchorMonthsAndMethodologies
-                .Select(_ => new FiftyTwoFiftyThreeWeekFiscalYearScheme(lastDayOfWeekInFiscalYear, _.AnchorMonth, _.Methodology, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth).GetCalendarDayPeriod(new FiscalYear(year + 1)))
+            var expected = anchorMonthsAndYearEndMethodologies
+                .Select(_ => new FiftyTwoFiftyThreeWeekFiscalYearScheme(lastDayOfWeekInFiscalYear, _.AnchorMonth, _.YearEndMethodology, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth).GetCalendarDayPeriod(new FiscalYear(year + 1)))
                 .ToList();
 
             // Act
-            var actual = anchorMonthsAndMethodologies
-                .Select(_ => new FiftyTwoFiftyThreeWeekFiscalYearScheme(lastDayOfWeekInFiscalYear, _.AnchorMonth, _.Methodology, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth).GetCalendarDayPeriod(new FiscalYear(year)))
+            var actual = anchorMonthsAndYearEndMethodologies
+                .Select(_ => new FiftyTwoFiftyThreeWeekFiscalYearScheme(lastDayOfWeekInFiscalYear, _.AnchorMonth, _.YearEndMethodology, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth).GetCalendarDayPeriod(new FiscalYear(year)))
                 .ToList();
 
             // Assert

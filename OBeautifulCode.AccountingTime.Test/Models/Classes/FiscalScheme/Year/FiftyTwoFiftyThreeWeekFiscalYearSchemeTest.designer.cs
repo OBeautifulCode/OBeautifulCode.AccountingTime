@@ -48,7 +48,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.FiftyTwoFiftyThreeWeekFiscalYearScheme: LastDayOfWeekInFiscalYear = {systemUnderTest.LastDayOfWeekInFiscalYear.ToString() ?? "<null>"}, AnchorMonth = {systemUnderTest.AnchorMonth.ToString() ?? "<null>"}, Methodology = {systemUnderTest.Methodology.ToString() ?? "<null>"}, FiscalYearNumberingConvention = {systemUnderTest.FiscalYearNumberingConvention.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"OBeautifulCode.AccountingTime.FiftyTwoFiftyThreeWeekFiscalYearScheme: LastDayOfWeekInFiscalYear = {systemUnderTest.LastDayOfWeekInFiscalYear.ToString() ?? "<null>"}, AnchorMonth = {systemUnderTest.AnchorMonth.ToString() ?? "<null>"}, YearEndMethodology = {systemUnderTest.YearEndMethodology.ToString() ?? "<null>"}, FiscalYearNumberingConvention = {systemUnderTest.FiscalYearNumberingConvention.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -59,7 +59,7 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                 {
-                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'methodology' is FiftyTwoFiftyThreeWeekMethodology.Unknown",
+                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'yearEndMethodology' is FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>();
@@ -67,13 +67,13 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                              referenceObject.LastDayOfWeekInFiscalYear,
                                              referenceObject.AnchorMonth,
-                                             FiftyTwoFiftyThreeWeekMethodology.Unknown,
+                                             FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown,
                                              referenceObject.FiscalYearNumberingConvention);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentOutOfRangeException),
-                    ExpectedExceptionMessageContains = new[] { "methodology", "Unknown", },
+                    ExpectedExceptionMessageContains = new[] { "yearEndMethodology", "Unknown", },
                 })
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
@@ -86,7 +86,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                              referenceObject.LastDayOfWeekInFiscalYear,
                                              referenceObject.AnchorMonth,
-                                             referenceObject.Methodology,
+                                             referenceObject.YearEndMethodology,
                                              FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown);
 
                         return result;
@@ -109,7 +109,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             SystemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                                       referenceObject.LastDayOfWeekInFiscalYear,
                                                       referenceObject.AnchorMonth,
-                                                      referenceObject.Methodology,
+                                                      referenceObject.YearEndMethodology,
                                                       referenceObject.FiscalYearNumberingConvention),
                             ExpectedPropertyValue = referenceObject.LastDayOfWeekInFiscalYear,
                         };
@@ -131,7 +131,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             SystemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                                       referenceObject.LastDayOfWeekInFiscalYear,
                                                       referenceObject.AnchorMonth,
-                                                      referenceObject.Methodology,
+                                                      referenceObject.YearEndMethodology,
                                                       referenceObject.FiscalYearNumberingConvention),
                             ExpectedPropertyValue = referenceObject.AnchorMonth,
                         };
@@ -143,7 +143,7 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                 {
-                    Name = "Methodology should return same 'methodology' parameter passed to constructor when getting",
+                    Name = "YearEndMethodology should return same 'yearEndMethodology' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
                         var referenceObject = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>();
@@ -153,14 +153,14 @@ namespace OBeautifulCode.AccountingTime.Test
                             SystemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                                       referenceObject.LastDayOfWeekInFiscalYear,
                                                       referenceObject.AnchorMonth,
-                                                      referenceObject.Methodology,
+                                                      referenceObject.YearEndMethodology,
                                                       referenceObject.FiscalYearNumberingConvention),
-                            ExpectedPropertyValue = referenceObject.Methodology,
+                            ExpectedPropertyValue = referenceObject.YearEndMethodology,
                         };
 
                         return result;
                     },
-                    PropertyName = "Methodology",
+                    PropertyName = "YearEndMethodology",
                 })
             .AddScenario(() =>
                 new ConstructorPropertyAssignmentTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
@@ -175,7 +175,7 @@ namespace OBeautifulCode.AccountingTime.Test
                             SystemUnderTest = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                                       referenceObject.LastDayOfWeekInFiscalYear,
                                                       referenceObject.AnchorMonth,
-                                                      referenceObject.Methodology,
+                                                      referenceObject.YearEndMethodology,
                                                       referenceObject.FiscalYearNumberingConvention),
                             ExpectedPropertyValue = referenceObject.FiscalYearNumberingConvention,
                         };
@@ -229,18 +229,18 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                 {
-                    Name = "DeepCloneWithMethodology should deep clone object and replace Methodology with the provided methodology",
-                    WithPropertyName = "Methodology",
+                    Name = "DeepCloneWithYearEndMethodology should deep clone object and replace YearEndMethodology with the provided yearEndMethodology",
+                    WithPropertyName = "YearEndMethodology",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
                         var systemUnderTest = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>();
 
-                        var referenceObject = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().ThatIs(_ => !systemUnderTest.Methodology.IsEqualTo(_.Methodology));
+                        var referenceObject = A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().ThatIs(_ => !systemUnderTest.YearEndMethodology.IsEqualTo(_.YearEndMethodology));
 
                         var result = new SystemUnderTestDeepCloneWithValue<FiftyTwoFiftyThreeWeekFiscalYearScheme>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Methodology,
+                            DeepCloneWithValue = referenceObject.YearEndMethodology,
                         };
 
                         return result;
@@ -280,7 +280,7 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 ReferenceObjectForEquatableTestScenarios.LastDayOfWeekInFiscalYear,
                                 ReferenceObjectForEquatableTestScenarios.AnchorMonth,
-                                ReferenceObjectForEquatableTestScenarios.Methodology,
+                                ReferenceObjectForEquatableTestScenarios.YearEndMethodology,
                                 ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
                     },
                     ObjectsThatAreNotEqualToReferenceObject = new FiftyTwoFiftyThreeWeekFiscalYearScheme[]
@@ -288,22 +288,22 @@ namespace OBeautifulCode.AccountingTime.Test
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().Whose(_ => !_.LastDayOfWeekInFiscalYear.IsEqualTo(ReferenceObjectForEquatableTestScenarios.LastDayOfWeekInFiscalYear)).LastDayOfWeekInFiscalYear,
                                 ReferenceObjectForEquatableTestScenarios.AnchorMonth,
-                                ReferenceObjectForEquatableTestScenarios.Methodology,
+                                ReferenceObjectForEquatableTestScenarios.YearEndMethodology,
                                 ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 ReferenceObjectForEquatableTestScenarios.LastDayOfWeekInFiscalYear,
                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().Whose(_ => !_.AnchorMonth.IsEqualTo(ReferenceObjectForEquatableTestScenarios.AnchorMonth)).AnchorMonth,
-                                ReferenceObjectForEquatableTestScenarios.Methodology,
+                                ReferenceObjectForEquatableTestScenarios.YearEndMethodology,
                                 ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 ReferenceObjectForEquatableTestScenarios.LastDayOfWeekInFiscalYear,
                                 ReferenceObjectForEquatableTestScenarios.AnchorMonth,
-                                A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().Whose(_ => !_.Methodology.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Methodology)).Methodology,
+                                A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().Whose(_ => !_.YearEndMethodology.IsEqualTo(ReferenceObjectForEquatableTestScenarios.YearEndMethodology)).YearEndMethodology,
                                 ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention),
                         new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                 ReferenceObjectForEquatableTestScenarios.LastDayOfWeekInFiscalYear,
                                 ReferenceObjectForEquatableTestScenarios.AnchorMonth,
-                                ReferenceObjectForEquatableTestScenarios.Methodology,
+                                ReferenceObjectForEquatableTestScenarios.YearEndMethodology,
                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>().Whose(_ => !_.FiscalYearNumberingConvention.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FiscalYearNumberingConvention)).FiscalYearNumberingConvention),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -616,7 +616,7 @@ namespace OBeautifulCode.AccountingTime.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "LastDayOfWeekInFiscalYear", "AnchorMonth", "Methodology", "FiscalYearNumberingConvention" };
+                var propertyNames = new string[] { "LastDayOfWeekInFiscalYear", "AnchorMonth", "YearEndMethodology", "FiscalYearNumberingConvention" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
