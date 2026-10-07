@@ -23,10 +23,12 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="lastDayOfWeekInFiscalYear">The day of the week that the fiscal year always ends on.</param>
         /// <param name="anchorMonth">The month that the fiscal year end is anchored to.  See <see cref="Methodology"/>.</param>
         /// <param name="methodology">The methodology used to identify the last day of the accounting year.</param>
+        /// <param name="fiscalYearNumberingConvention">OPTIONAL convention that determines which calendar year is used to number the fiscal year.  DEFAULT is to use the calendar year of the anchor month.</param>
         public FiftyTwoFiftyThreeWeekFiscalYearScheme(
             DayOfWeek lastDayOfWeekInFiscalYear,
             MonthOfYear anchorMonth,
-            FiftyTwoFiftyThreeWeekMethodology methodology)
+            FiftyTwoFiftyThreeWeekMethodology methodology,
+            FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention fiscalYearNumberingConvention = FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth)
         {
             if (anchorMonth == MonthOfYear.Invalid)
             {
@@ -38,9 +40,20 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(Invariant($"'{nameof(methodology)}' == '{FiftyTwoFiftyThreeWeekMethodology.Unknown}'"), (Exception)null);
             }
 
+            if (fiscalYearNumberingConvention == FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(fiscalYearNumberingConvention)}' == '{FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown}'"), (Exception)null);
+            }
+
+            if ((fiscalYearNumberingConvention == FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth) && (anchorMonth == MonthOfYear.December))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(fiscalYearNumberingConvention)}' == '{FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth}' cannot be used when '{nameof(anchorMonth)}' == '{MonthOfYear.December}'."));
+            }
+
             this.LastDayOfWeekInFiscalYear = lastDayOfWeekInFiscalYear;
             this.AnchorMonth = anchorMonth;
             this.Methodology = methodology;
+            this.FiscalYearNumberingConvention = fiscalYearNumberingConvention;
         }
 
         /// <summary>
@@ -58,9 +71,14 @@ namespace OBeautifulCode.AccountingTime
         /// </summary>
         public FiftyTwoFiftyThreeWeekMethodology Methodology { get; private set; }
 
+        /// <summary>
+        /// Gets the convention that determines which calendar year is used to number the fiscal year.
+        /// </summary>
+        public FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention FiscalYearNumberingConvention { get; private set; }
+
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
-        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "year-1", Justification = "Overflow is impossible given constraint on year.")]
+        [SuppressMessage("Microsoft.Usage", "CA2233:OperationsShouldNotOverflow", MessageId = "calendarYearOfAnchorMonth-1", Justification = "Overflow is impossible given constraint on year.")]
         public override ReportingPeriod GetCalendarDayPeriod(
             FiscalYear fiscalYear)
         {
@@ -69,11 +87,34 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentNullException(nameof(fiscalYear));
             }
 
-            var firstDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year - 1).AddDays(1).ToCalendarDay();
+            var calendarYearOfAnchorMonth = this.GetCalendarYearOfAnchorMonth(fiscalYear.Year);
 
-            var lastDayInYear = this.GetAccountingYearEndDate(fiscalYear.Year).ToCalendarDay();
+            var firstDayInYear = this.GetAccountingYearEndDate(calendarYearOfAnchorMonth - 1).AddDays(1).ToCalendarDay();
+
+            var lastDayInYear = this.GetAccountingYearEndDate(calendarYearOfAnchorMonth).ToCalendarDay();
 
             var result = new ReportingPeriod(firstDayInYear, lastDayInYear);
+
+            return result;
+        }
+
+        private int GetCalendarYearOfAnchorMonth(
+            int fiscalYear)
+        {
+            int result;
+
+            if (this.FiscalYearNumberingConvention == FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth)
+            {
+                result = fiscalYear;
+            }
+            else if (this.FiscalYearNumberingConvention == FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth)
+            {
+                result = fiscalYear + 1;
+            }
+            else
+            {
+                throw new NotSupportedException(Invariant($"This {nameof(this.FiscalYearNumberingConvention)} is not supported: {this.FiscalYearNumberingConvention}."));
+            }
 
             return result;
         }

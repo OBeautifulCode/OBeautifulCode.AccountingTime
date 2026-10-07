@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FiscalYearNumberingConvention.cs" company="OBeautifulCode">
+// <copyright file="MonthEndFiscalYearNumberingConvention.cs" company="OBeautifulCode">
 //   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,10 +11,11 @@ namespace OBeautifulCode.AccountingTime
     using OBeautifulCode.CodeAnalysis.Recipes;
 
     /// <summary>
-    /// Determines which calendar year is used to number a fiscal year that spans two calendar years.
+    /// Determines which calendar year is used to number a fiscal year in a <see cref="MonthEndFiscalYearScheme"/>,
+    /// given that the fiscal year always spans two calendar years.
     /// </summary>
     [Serializable]
-    public enum FiscalYearNumberingConvention
+    public enum MonthEndFiscalYearNumberingConvention
     {
         /// <summary>
         /// Unknown (default).

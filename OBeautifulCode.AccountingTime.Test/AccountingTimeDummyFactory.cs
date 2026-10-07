@@ -45,8 +45,9 @@ namespace OBeautifulCode.AccountingTime.Test
         public AccountingTimeDummyFactory()
         {
             // Enums
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekMethodology.Unknown);
-            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiscalYearNumberingConvention.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthEndFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(TimeseriesGapKind.Unknown);
@@ -57,7 +58,26 @@ namespace OBeautifulCode.AccountingTime.Test
                 {
                     var result = new MonthEndFiscalYearScheme(
                         A.Dummy<MonthOfYear>().ThatIsNot(MonthOfYear.December),
-                        A.Dummy<FiscalYearNumberingConvention>());
+                        A.Dummy<MonthEndFiscalYearNumberingConvention>());
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var anchorMonth = A.Dummy<MonthOfYear>();
+
+                    // CalendarYearPriorToAnchorMonth cannot be used with a December anchor month
+                    var fiscalYearNumberingConvention = anchorMonth == MonthOfYear.December
+                        ? FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearOfAnchorMonth
+                        : A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention>();
+
+                    var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
+                        A.Dummy<DayOfWeek>(),
+                        anchorMonth,
+                        A.Dummy<FiftyTwoFiftyThreeWeekMethodology>(),
+                        fiscalYearNumberingConvention);
 
                     return result;
                 });

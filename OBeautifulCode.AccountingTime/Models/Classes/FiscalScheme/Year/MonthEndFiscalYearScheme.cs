@@ -22,7 +22,7 @@ namespace OBeautifulCode.AccountingTime
         /// <param name="fiscalYearNumberingConvention">OPTIONAL convention that determines which calendar year is used to number the fiscal year.  DEFAULT is to use the calendar year in which the fiscal year ends.</param>
         public MonthEndFiscalYearScheme(
             MonthOfYear lastMonthInFiscalYear,
-            FiscalYearNumberingConvention fiscalYearNumberingConvention = FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
+            MonthEndFiscalYearNumberingConvention fiscalYearNumberingConvention = MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
         {
             if (lastMonthInFiscalYear == MonthOfYear.Invalid)
             {
@@ -34,9 +34,9 @@ namespace OBeautifulCode.AccountingTime
                 throw new ArgumentOutOfRangeException(Invariant($"'{nameof(lastMonthInFiscalYear)}' == '{MonthOfYear.December}'"), (Exception)null);
             }
 
-            if (fiscalYearNumberingConvention == FiscalYearNumberingConvention.Unknown)
+            if (fiscalYearNumberingConvention == MonthEndFiscalYearNumberingConvention.Unknown)
             {
-                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(fiscalYearNumberingConvention)}' == '{FiscalYearNumberingConvention.Unknown}'"), (Exception)null);
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(fiscalYearNumberingConvention)}' == '{MonthEndFiscalYearNumberingConvention.Unknown}'"), (Exception)null);
             }
 
             this.LastMonthInFiscalYear = lastMonthInFiscalYear;
@@ -51,7 +51,7 @@ namespace OBeautifulCode.AccountingTime
         /// <summary>
         /// Gets the convention that determines which calendar year is used to number the fiscal year.
         /// </summary>
-        public FiscalYearNumberingConvention FiscalYearNumberingConvention { get; private set; }
+        public MonthEndFiscalYearNumberingConvention FiscalYearNumberingConvention { get; private set; }
 
         /// <inheritdoc />
         /// <exception cref="ArgumentNullException"><paramref name="fiscalYear"/> is null.</exception>
@@ -92,11 +92,11 @@ namespace OBeautifulCode.AccountingTime
         {
             int result;
 
-            if (this.FiscalYearNumberingConvention == FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
+            if (this.FiscalYearNumberingConvention == MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds)
             {
                 result = fiscalYear;
             }
-            else if (this.FiscalYearNumberingConvention == FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)
+            else if (this.FiscalYearNumberingConvention == MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)
             {
                 result = fiscalYear + 1;
             }

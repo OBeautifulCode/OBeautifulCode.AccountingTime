@@ -409,5 +409,33 @@ namespace OBeautifulCode.AccountingTime.Test
             actualReportingPeriod2Q3.Should().Be(expectedReportingPeriod2Q3);
             actualReportingPeriod2Q4.Should().Be(expectedReportingPeriod2Q4);
         }
+
+        [Fact]
+        public static void GetCalendarDayPeriod___Should_return_quarters_of_the_fiscal_year_whose_anchor_month_is_in_the_calendar_year_after_the_fiscal_quarters_year___When_FiscalYearNumberingConvention_is_CalendarYearPriorToAnchorMonth()
+        {
+            // Arrange
+            // Target: Saturday closest to the end of January; fiscal 2023 is a 53-week year that ends on Feb 3, 2024
+            var systemUnderTest = new FiftyTwoFiftyThreeWeekFiscalQuarterScheme(
+                new FiftyTwoFiftyThreeWeekFiscalYearScheme(DayOfWeek.Saturday, MonthOfYear.January, FiftyTwoFiftyThreeWeekMethodology.ClosestToLastDayOfAnchorMonth, FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.CalendarYearPriorToAnchorMonth),
+                new[] { 13, 13, 13, 13 },
+                QuarterNumber.Q4);
+
+            var expectedQ1 = new ReportingPeriod(29.January(2023).ToCalendarDay(), 29.April(2023).ToCalendarDay());
+            var expectedQ2 = new ReportingPeriod(30.April(2023).ToCalendarDay(), 29.July(2023).ToCalendarDay());
+            var expectedQ3 = new ReportingPeriod(30.July(2023).ToCalendarDay(), 28.October(2023).ToCalendarDay());
+            var expectedQ4 = new ReportingPeriod(29.October(2023).ToCalendarDay(), 3.February(2024).ToCalendarDay());
+
+            // Act
+            var actualQ1 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(2023, QuarterNumber.Q1));
+            var actualQ2 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(2023, QuarterNumber.Q2));
+            var actualQ3 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(2023, QuarterNumber.Q3));
+            var actualQ4 = systemUnderTest.GetCalendarDayPeriod(new FiscalQuarter(2023, QuarterNumber.Q4));
+
+            // Assert
+            actualQ1.Should().Be(expectedQ1);
+            actualQ2.Should().Be(expectedQ2);
+            actualQ3.Should().Be(expectedQ3);
+            actualQ4.Should().Be(expectedQ4);
+        }
     }
 }

@@ -59,14 +59,14 @@ namespace OBeautifulCode.AccountingTime.Test
             .AddScenario(() =>
                 new ConstructorArgumentValidationTestScenario<MonthEndFiscalYearScheme>
                 {
-                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'fiscalYearNumberingConvention' is FiscalYearNumberingConvention.Unknown",
+                    Name = "constructor should throw ArgumentOutOfRangeException when parameter 'fiscalYearNumberingConvention' is MonthEndFiscalYearNumberingConvention.Unknown",
                     ConstructionFunc = () =>
                     {
                         var referenceObject = A.Dummy<MonthEndFiscalYearScheme>();
 
                         var result = new MonthEndFiscalYearScheme(
                                              referenceObject.LastMonthInFiscalYear,
-                                             FiscalYearNumberingConvention.Unknown);
+                                             MonthEndFiscalYearNumberingConvention.Unknown);
 
                         return result;
                     },

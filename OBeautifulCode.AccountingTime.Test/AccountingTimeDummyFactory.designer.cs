@@ -122,7 +122,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 () => new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  A.Dummy<DayOfWeek>(),
                                  A.Dummy<MonthOfYear>(),
-                                 A.Dummy<FiftyTwoFiftyThreeWeekMethodology>()));
+                                 A.Dummy<FiftyTwoFiftyThreeWeekMethodology>(),
+                                 A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new FiscalMonth(
@@ -269,7 +270,7 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new MonthEndFiscalYearScheme(
                                  A.Dummy<MonthOfYear>(),
-                                 A.Dummy<FiscalYearNumberingConvention>()));
+                                 A.Dummy<MonthEndFiscalYearNumberingConvention>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RelativeCutoff(

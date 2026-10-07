@@ -140,7 +140,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public MonthEndFiscalYearScheme DeepCloneWithFiscalYearNumberingConvention(FiscalYearNumberingConvention fiscalYearNumberingConvention)
+        public MonthEndFiscalYearScheme DeepCloneWithFiscalYearNumberingConvention(MonthEndFiscalYearNumberingConvention fiscalYearNumberingConvention)
         {
             var result = new MonthEndFiscalYearScheme(
                                  this.LastMonthInFiscalYear.DeepClone(),

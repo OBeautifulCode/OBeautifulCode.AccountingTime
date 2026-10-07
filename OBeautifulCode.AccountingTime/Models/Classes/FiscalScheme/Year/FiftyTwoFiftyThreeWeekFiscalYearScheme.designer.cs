@@ -71,7 +71,8 @@ namespace OBeautifulCode.AccountingTime
 
             var result = this.LastDayOfWeekInFiscalYear.IsEqualTo(other.LastDayOfWeekInFiscalYear)
                       && this.AnchorMonth.IsEqualTo(other.AnchorMonth)
-                      && this.Methodology.IsEqualTo(other.Methodology);
+                      && this.Methodology.IsEqualTo(other.Methodology)
+                      && this.FiscalYearNumberingConvention.IsEqualTo(other.FiscalYearNumberingConvention);
 
             return result;
         }
@@ -84,6 +85,7 @@ namespace OBeautifulCode.AccountingTime
             .Hash(this.LastDayOfWeekInFiscalYear)
             .Hash(this.AnchorMonth)
             .Hash(this.Methodology)
+            .Hash(this.FiscalYearNumberingConvention)
             .Value;
 
         /// <inheritdoc />
@@ -116,7 +118,8 @@ namespace OBeautifulCode.AccountingTime
             var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  lastDayOfWeekInFiscalYear,
                                  this.AnchorMonth.DeepClone(),
-                                 this.Methodology.DeepClone());
+                                 this.Methodology.DeepClone(),
+                                 this.FiscalYearNumberingConvention.DeepClone());
 
             return result;
         }
@@ -148,7 +151,8 @@ namespace OBeautifulCode.AccountingTime
             var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  this.LastDayOfWeekInFiscalYear.DeepClone(),
                                  anchorMonth,
-                                 this.Methodology.DeepClone());
+                                 this.Methodology.DeepClone(),
+                                 this.FiscalYearNumberingConvention.DeepClone());
 
             return result;
         }
@@ -180,7 +184,41 @@ namespace OBeautifulCode.AccountingTime
             var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  this.LastDayOfWeekInFiscalYear.DeepClone(),
                                  this.AnchorMonth.DeepClone(),
-                                 methodology);
+                                 methodology,
+                                 this.FiscalYearNumberingConvention.DeepClone());
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="FiscalYearNumberingConvention" />.
+        /// </summary>
+        /// <param name="fiscalYearNumberingConvention">The new <see cref="FiscalYearNumberingConvention" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FiftyTwoFiftyThreeWeekFiscalYearScheme" /> using the specified <paramref name="fiscalYearNumberingConvention" /> for <see cref="FiscalYearNumberingConvention" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public FiftyTwoFiftyThreeWeekFiscalYearScheme DeepCloneWithFiscalYearNumberingConvention(FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention fiscalYearNumberingConvention)
+        {
+            var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
+                                 this.LastDayOfWeekInFiscalYear.DeepClone(),
+                                 this.AnchorMonth.DeepClone(),
+                                 this.Methodology.DeepClone(),
+                                 fiscalYearNumberingConvention);
 
             return result;
         }
@@ -192,7 +230,8 @@ namespace OBeautifulCode.AccountingTime
             var result = new FiftyTwoFiftyThreeWeekFiscalYearScheme(
                                  this.LastDayOfWeekInFiscalYear.DeepClone(),
                                  this.AnchorMonth.DeepClone(),
-                                 this.Methodology.DeepClone());
+                                 this.Methodology.DeepClone(),
+                                 this.FiscalYearNumberingConvention.DeepClone());
 
             return result;
         }
@@ -201,7 +240,7 @@ namespace OBeautifulCode.AccountingTime
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"OBeautifulCode.AccountingTime.FiftyTwoFiftyThreeWeekFiscalYearScheme: LastDayOfWeekInFiscalYear = {this.LastDayOfWeekInFiscalYear.ToString() ?? "<null>"}, AnchorMonth = {this.AnchorMonth.ToString() ?? "<null>"}, Methodology = {this.Methodology.ToString() ?? "<null>"}.");
+            var result = Invariant($"OBeautifulCode.AccountingTime.FiftyTwoFiftyThreeWeekFiscalYearScheme: LastDayOfWeekInFiscalYear = {this.LastDayOfWeekInFiscalYear.ToString() ?? "<null>"}, AnchorMonth = {this.AnchorMonth.ToString() ?? "<null>"}, Methodology = {this.Methodology.ToString() ?? "<null>"}, FiscalYearNumberingConvention = {this.FiscalYearNumberingConvention.ToString() ?? "<null>"}.");
 
             return result;
         }
@@ -262,6 +301,13 @@ namespace OBeautifulCode.AccountingTime
                 }
 
                 localValidationFailures = ValidatableExtensions.GetValidationFailures(this.Methodology, options, propertyPathTracker, nameof(this.Methodology));
+                result.AddRange(localValidationFailures);
+                if (stopOnFirstObjectWithFailures && result.Any())
+                {
+                    return;
+                }
+
+                localValidationFailures = ValidatableExtensions.GetValidationFailures(this.FiscalYearNumberingConvention, options, propertyPathTracker, nameof(this.FiscalYearNumberingConvention));
                 result.AddRange(localValidationFailures);
                 if (stopOnFirstObjectWithFailures && result.Any())
                 {

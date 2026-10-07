@@ -458,7 +458,7 @@ namespace OBeautifulCode.AccountingTime.Test
             {
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q1),
                     Expected = new ReportingPeriod(
                         1.February(2026).ToCalendarDay(),
@@ -466,7 +466,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q2),
                     Expected = new ReportingPeriod(
                         1.May(2026).ToCalendarDay(),
@@ -474,7 +474,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q3),
                     Expected = new ReportingPeriod(
                         1.August(2026).ToCalendarDay(),
@@ -482,7 +482,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.January, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2026, QuarterNumber.Q4),
                     Expected = new ReportingPeriod(
                         1.November(2026).ToCalendarDay(),
@@ -490,7 +490,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2023, QuarterNumber.Q4),
                     Expected = new ReportingPeriod(
                         1.December(2023).ToCalendarDay(),
@@ -498,7 +498,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.February, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2024, QuarterNumber.Q4),
                     Expected = new ReportingPeriod(
                         1.December(2024).ToCalendarDay(),
@@ -506,7 +506,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q1),
                     Expected = new ReportingPeriod(
                         1.July(2025).ToCalendarDay(),
@@ -514,7 +514,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.June, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q3),
                     Expected = new ReportingPeriod(
                         1.January(2026).ToCalendarDay(),
@@ -522,7 +522,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q1),
                     Expected = new ReportingPeriod(
                         1.December(2025).ToCalendarDay(),
@@ -530,7 +530,7 @@ namespace OBeautifulCode.AccountingTime.Test
                 },
                 new
                 {
-                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
+                    SystemUnderTest = new MonthEndFiscalQuarterScheme(new MonthEndFiscalYearScheme(MonthOfYear.November, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins)),
                     FiscalQuarter = new FiscalQuarter(2025, QuarterNumber.Q4),
                     Expected = new ReportingPeriod(
                         1.September(2026).ToCalendarDay(),
@@ -555,8 +555,8 @@ namespace OBeautifulCode.AccountingTime.Test
                 .Where(_ => (_ != MonthOfYear.Invalid) && (_ != MonthOfYear.December))
                 .SelectMany(_ => new[]
                 {
-                    new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds),
-                    new MonthEndFiscalYearScheme(_, FiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
+                    new MonthEndFiscalYearScheme(_, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearEnds),
+                    new MonthEndFiscalYearScheme(_, MonthEndFiscalYearNumberingConvention.CalendarYearInWhichFiscalYearBegins),
                 })
                 .ToList();
 
