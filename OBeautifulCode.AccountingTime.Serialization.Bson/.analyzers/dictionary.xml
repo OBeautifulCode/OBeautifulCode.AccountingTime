@@ -6,6 +6,10 @@
       <!-- We prefer 'Dropdown' (or 'drop-down') to 'DropDown'.  See <Deprecated><Term PreferredAlternate="Dropdown"> for more details  -->
       <Word>DropDown</Word>
 
+      <!-- We prefer 'YearEnd' (or 'year-end') to 'Yearend'.  In this case, we can't add <Deprecated><Term PreferredAlternate="YearEnd"> because we want the compound alternative -->
+      <Word>Yearend</Word>
+      <Word>Yearends</Word>
+
     </Unrecognized>
     <Recognized>
       <!-- Describes data that was made anonymous -->

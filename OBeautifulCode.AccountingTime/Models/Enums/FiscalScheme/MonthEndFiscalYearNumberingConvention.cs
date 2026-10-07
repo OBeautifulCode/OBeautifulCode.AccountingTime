@@ -27,7 +27,6 @@ namespace OBeautifulCode.AccountingTime
         /// For example, a fiscal year that runs from Feb 1, 2026 through Jan 31, 2027 is FY 2027.
         /// This is the most common convention.
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
         CalendarYearInWhichFiscalYearEnds,
 
         /// <summary>

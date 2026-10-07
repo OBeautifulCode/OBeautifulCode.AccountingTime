@@ -49,7 +49,6 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
         public static void GetCalendarDayPeriod___Should_return_calendar_quarters___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearEnds()
         {
             // Arrange

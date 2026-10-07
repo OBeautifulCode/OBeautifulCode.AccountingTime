@@ -112,7 +112,6 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
         public static void GetCalendarDayPeriod___Should_return_same_reporting_period_as_next_fiscal_year_numbered_by_CalendarYearInWhichFiscalYearEnds___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearBegins()
         {
             // Arrange
@@ -136,7 +135,6 @@ namespace OBeautifulCode.AccountingTime.Test
         }
 
         [Fact]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "YearEnds", Justification = ObcSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWords)]
         public static void GetCalendarDayPeriod___Should_return_reporting_period_beginning_first_of_the_month_after_LastMonthInFiscalYear_in_the_prior_year_and_ending_last_day_of_LastMonthInFiscalYear___When_FiscalYearNumberingConvention_is_CalendarYearInWhichFiscalYearEnds()
         {
             // Arrange
