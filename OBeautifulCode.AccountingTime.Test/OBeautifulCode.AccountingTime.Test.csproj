@@ -218,6 +218,9 @@
     <Compile Include="Models\Classes\FiscalScheme\Quarter\CalendarAlignedFiscalQuarterSchemeTest.designer.cs">
       <DependentUpon>CalendarAlignedFiscalQuarterSchemeTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FixedDayFiscalQuarterSchemeTest.designer.cs">
+      <DependentUpon>FixedDayFiscalQuarterSchemeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Classes\FiscalScheme\Year\CalendarAlignedFiscalYearSchemeTest.cs" />
     <Compile Include="Models\Classes\FiscalScheme\Year\CalendarAlignedFiscalYearSchemeTest.designer.cs">
       <DependentUpon>CalendarAlignedFiscalYearSchemeTest.cs</DependentUpon>
@@ -230,6 +233,8 @@
     <Compile Include="Models\Classes\FiscalScheme\Year\FiftyTwoFiftyThreeWeekFiscalYearSchemeTest.designer.cs">
       <DependentUpon>FiftyTwoFiftyThreeWeekFiscalYearSchemeTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Quarter\FixedDayFiscalQuarterSchemeTest.cs" />
+    <Compile Include="Models\Classes\FiscalScheme\Year\FixedDayFiscalYearSchemeTest.cs" />
     <Compile Include="Models\Classes\FiscalScheme\Quarter\FiscalQuarterSchemeBaseTest.cs" />
     <Compile Include="Models\Classes\FiscalScheme\Quarter\FiscalQuarterSchemeBaseTest.designer.cs">
       <DependentUpon>FiscalQuarterSchemeBaseTest.cs</DependentUpon>
@@ -253,6 +258,9 @@
     <Compile Include="Models\Classes\Cutoff\FixedCutoffTest.cs" />
     <Compile Include="Models\Classes\Cutoff\FixedCutoffTest.designer.cs">
       <DependentUpon>FixedCutoffTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Classes\FiscalScheme\Year\FixedDayFiscalYearSchemeTest.designer.cs">
+      <DependentUpon>FixedDayFiscalYearSchemeTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.cs" />
     <Compile Include="Models\Classes\Timeseries\Datapoint{T}Test.designer.cs">

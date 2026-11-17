@@ -47,6 +47,7 @@ namespace OBeautifulCode.AccountingTime.Test
             // Enums
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FiftyTwoFiftyThreeWeekYearEndMethodology.Unknown);
+            AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(FixedDayFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(MonthEndFiscalYearNumberingConvention.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodBoundsConstraint.Unknown);
             AutoFixtureBackedDummyFactory.ConstrainDummyToExclude(ReportingPeriodSpanConstraint.Unknown);
@@ -100,6 +101,47 @@ namespace OBeautifulCode.AccountingTime.Test
                         A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>(),
                         weeksPerQuarter,
                         A.Dummy<QuarterNumber>());
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var lastMonthInFiscalYear = A.Dummy<MonthOfYear>();
+
+                    // The day must occur in the month every year and must not always be the last day of the month.
+                    // The number of days in the month in a leap year, minus one, satisfies both constraints
+                    // (it's 28 for February and one less than the number of days in the month otherwise).
+                    var maxLastDayInFiscalYear = DateTime.DaysInMonth(2000, (int)lastMonthInFiscalYear) - 1;
+
+                    var result = new FixedDayFiscalYearScheme(
+                        lastMonthInFiscalYear,
+                        (DayOfMonth)ThreadSafeRandom.Next(1, maxLastDayInFiscalYear + 1),
+                        A.Dummy<FixedDayFiscalYearNumberingConvention>());
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var lastMonthInFiscalYear = A.Dummy<MonthOfYear>();
+
+                    // See the FixedDayFiscalYearScheme dummy creator for the year-level constraint.
+                    // In addition, the day must occur every year in each month in which a fiscal quarter ends.
+                    var maxLastDayInFiscalYear = Enumerable.Range(1, 3)
+                        .Select(_ => ((((int)lastMonthInFiscalYear - 1) + (3 * _)) % 12) + 1)
+                        .Select(_ => DateTime.DaysInMonth(2001, _))
+                        .Concat(new[] { DateTime.DaysInMonth(2000, (int)lastMonthInFiscalYear) - 1 })
+                        .Min();
+
+                    var fiscalYearScheme = new FixedDayFiscalYearScheme(
+                        lastMonthInFiscalYear,
+                        (DayOfMonth)ThreadSafeRandom.Next(1, maxLastDayInFiscalYear + 1),
+                        A.Dummy<FixedDayFiscalYearNumberingConvention>());
+
+                    var result = new FixedDayFiscalQuarterScheme(fiscalYearScheme);
 
                     return result;
                 });

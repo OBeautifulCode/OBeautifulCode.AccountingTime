@@ -80,6 +80,8 @@ namespace OBeautifulCode.AccountingTime.Test
                         A.Dummy<CalendarAlignedFiscalYearScheme>(),
                         A.Dummy<FiftyTwoFiftyThreeWeekFiscalQuarterScheme>(),
                         A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>(),
+                        A.Dummy<FixedDayFiscalQuarterScheme>(),
+                        A.Dummy<FixedDayFiscalYearScheme>(),
                         A.Dummy<MonthEndFiscalQuarterScheme>(),
                         A.Dummy<MonthEndFiscalYearScheme>(),
                     },

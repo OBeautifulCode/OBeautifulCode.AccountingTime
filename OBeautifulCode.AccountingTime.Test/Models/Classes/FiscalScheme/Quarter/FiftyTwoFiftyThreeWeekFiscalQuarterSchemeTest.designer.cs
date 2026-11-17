@@ -278,6 +278,8 @@ namespace OBeautifulCode.AccountingTime.Test
                         A.Dummy<CalendarAlignedFiscalQuarterScheme>(),
                         A.Dummy<CalendarAlignedFiscalYearScheme>(),
                         A.Dummy<FiftyTwoFiftyThreeWeekFiscalYearScheme>(),
+                        A.Dummy<FixedDayFiscalQuarterScheme>(),
+                        A.Dummy<FixedDayFiscalYearScheme>(),
                         A.Dummy<MonthEndFiscalQuarterScheme>(),
                         A.Dummy<MonthEndFiscalYearScheme>(),
                     },

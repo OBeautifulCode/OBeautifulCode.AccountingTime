@@ -142,6 +142,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         typeof(CalendarAlignedFiscalQuarterScheme),
                         typeof(FiftyTwoFiftyThreeWeekFiscalQuarterScheme),
+                        typeof(FixedDayFiscalQuarterScheme),
                         typeof(MonthEndFiscalQuarterScheme)
                     };
 
@@ -163,6 +164,8 @@ namespace OBeautifulCode.AccountingTime.Test
                         typeof(CalendarAlignedFiscalYearScheme),
                         typeof(FiftyTwoFiftyThreeWeekFiscalQuarterScheme),
                         typeof(FiftyTwoFiftyThreeWeekFiscalYearScheme),
+                        typeof(FixedDayFiscalQuarterScheme),
+                        typeof(FixedDayFiscalYearScheme),
                         typeof(MonthEndFiscalQuarterScheme),
                         typeof(MonthEndFiscalYearScheme)
                     };
@@ -210,6 +213,7 @@ namespace OBeautifulCode.AccountingTime.Test
                     {
                         typeof(CalendarAlignedFiscalYearScheme),
                         typeof(FiftyTwoFiftyThreeWeekFiscalYearScheme),
+                        typeof(FixedDayFiscalYearScheme),
                         typeof(MonthEndFiscalYearScheme)
                     };
 
@@ -225,6 +229,16 @@ namespace OBeautifulCode.AccountingTime.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new FixedCutoff(
                                  A.Dummy<UnitOfTime>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FixedDayFiscalQuarterScheme(
+                                 A.Dummy<FixedDayFiscalYearScheme>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FixedDayFiscalYearScheme(
+                                 A.Dummy<MonthOfYear>(),
+                                 A.Dummy<DayOfMonth>(),
+                                 A.Dummy<FixedDayFiscalYearNumberingConvention>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new GenericMonth(
